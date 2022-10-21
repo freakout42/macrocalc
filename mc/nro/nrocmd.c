@@ -26,6 +26,22 @@ char *p;
 	return(p);
 }
 
+/*
+ *	space vertically n lines
+ */
+void
+space(n)
+int n;
+{
+	brek();
+	if (pg.lineno > pg.bottom)
+		return;
+	if (pg.lineno == 0)
+		phead();
+	skip(min(n,pg.bottom+1-pg.lineno));
+	pg.lineno += n;
+	if (pg.lineno > pg.bottom) pfoot();
+}
 
 /*
  *	skip over word and punctuation
@@ -39,6 +55,7 @@ char *p;
 	return(p);
 }
 
+void
 comand(p)
 char *p;
 {
@@ -763,22 +780,3 @@ int defval,minval,maxval;
 	*param = min(*param,maxval);
 	*param = max(*param,minval);
 }
-
-
-/*
- *	space vertically n lines
- */
-
-space(n)
-int n;
-{
-	brek();
-	if (pg.lineno > pg.bottom)
-		return;
-	if (pg.lineno == 0)
-		phead();
-	skip(min(n,pg.bottom+1-pg.lineno));
-	pg.lineno += n;
-	if (pg.lineno > pg.bottom) pfoot();
-}
-

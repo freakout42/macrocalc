@@ -488,7 +488,47 @@ int pgno;
 	putlin(h,pout);
 }
 
+/*
+ *	spread words to justify right margin
+ */
+void
+spread(p,outp,nextra,outwds)
+char p[];
+int outp,nextra,outwds;
+{
+	int i,j;
+	int nb,ne,nholes;
 
+	if((nextra <= 0) || (outwds <= 1))
+		return;
+	dc.sprdir = ~dc.sprdir;
+	ne = nextra;
+	nholes = outwds - 1;	/* holes between words */
+	i = outp - 1;	/* last non-blank character */
+#ifdef MSDOS
+	j = min(MAXLINE-3,i+ne); /* leave room for CR, LF, '\0'  */
+#else
+	j = min(MAXLINE-2,i+ne); /* leave room for LF, '\0'  */
+#endif
+	while(i < j)
+	{
+		p[j] = p[i];
+		if(p[i] == ' ')
+		{
+			if(dc.sprdir == 0) nb = (ne - 1)/nholes + 1;
+			else nb = ne/nholes;
+			ne -= nb;
+			--nholes;
+			for(; nb>0; --nb)
+			{
+				--j;
+				p[j] = ' ';
+			}
+		}
+		--i;
+		--j;
+	}
+}
 
 /*
  *	put word in output buffer
@@ -559,50 +599,6 @@ int n;
 #ifdef MSDOS
 		prchar('\r',pout);
 #endif
-	}
-}
-
-
-
-/*
- *	spread words to justify right margin
- */
-
-spread(p,outp,nextra,outwds)
-char p[];
-int outp,nextra,outwds;
-{
-	int i,j;
-	int nb,ne,nholes;
-
-	if((nextra <= 0) || (outwds <= 1))
-		return;
-	dc.sprdir = ~dc.sprdir;
-	ne = nextra;
-	nholes = outwds - 1;	/* holes between words */
-	i = outp - 1;	/* last non-blank character */
-#ifdef MSDOS
-	j = min(MAXLINE-3,i+ne); /* leave room for CR, LF, '\0'  */
-#else
-	j = min(MAXLINE-2,i+ne); /* leave room for LF, '\0'  */
-#endif
-	while(i < j)
-	{
-		p[j] = p[i];
-		if(p[i] == ' ')
-		{
-			if(dc.sprdir == 0) nb = (ne - 1)/nholes + 1;
-			else nb = ne/nholes;
-			ne -= nb;
-			--nholes;
-			for(; nb>0; --nb)
-			{
-				--j;
-				p[j] = ' ';
-			}
-		}
-		--i;
-		--j;
 	}
 }
 
