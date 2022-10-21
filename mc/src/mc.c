@@ -13,6 +13,7 @@
 #include "mcinter.h"
 #include "mcrmacro.h"
 #include "mcmessag.h"
+#include "mccalc.h"
 #include "mcunit.h"
 #include "mcutil.h"
 
@@ -119,6 +120,7 @@ while ((c = getopt (argc, argv, opts)) != EOF)
 			errormsg (MSGNOMICROCALC);
 			exit (EXIT_FATAL);
 		 }
+    recalcworksheet();
 		if (c=='p') printfile (stdout, FALSE); else csvfile (stdout);
 		exit (EXIT_SUCCESS);
 	 case 'v':
