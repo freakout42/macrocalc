@@ -17,7 +17,7 @@ MacroCALC is the only spreadsheet that manages units: 1 mile + 1 km
 = 1.62 miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a
 physics engine.
 
-It's rcs-controlled, lint-clean ANSI-C source is based on yacc, lex
+It's git-maintained, lint-clean ANSI-C source is based on yacc, lex
 and [n]curses.  It runs on every terminal or emulation that has a
 correct terminfo-entry.  The user-interface is very convenient and
 well-known by 1-2-3 users.  Function- and cursor-keys and extended
