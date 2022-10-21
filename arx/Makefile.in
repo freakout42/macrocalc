@@ -23,29 +23,17 @@ CFLAGS=$Cflag $(CURSES) $(CFLAG)
 OSMISS=$Omiss
 CURINC=$Curinc
 
-usage:
-	@echo "Usage: make [all|clean|init]"
-
-new:
-	for D in $(DIRS); do arxmakeall $$D new; done
-
 all:
-	for D in $(DIRS); do arxmakeall $$D; done
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all; cd ..; done
 
 init:	Makefile.in
-	arxreport -t: -cMakefile Makefile.in <../sys.rdb
-
-port:
-	co Makefile.in
-	for D in $(DIRS); do cd $$D; arxmakeport $$D; cd ..; done
+	bin/arxreport -t: -cMakefile Makefile.in <../sys.rdb
 
 clean:
-	for D in $(DIRS); do cd $$D; arxmakeclean $$D; cd ..; done
-	rm -f Makefile.el Makefile.cf Makefile.lx Makefile.hp Makefile.fb \
-	      Makefile.hg Makefile.eg Makefile.co Makefile.le Makefile.so \
-	      Makefile.lg Makefile.gs Makefile.li Makefile.sl Makefile.ai \
-	      Makefile.lb Makefile.sx Makefile.lu Makefile.md Makefile.l6 \
-	      Makefile
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}clean; cd ..; done
+	mv Makefile.in Makefile.save
+	rm -f Makefile.?? Makefile
+	mv Makefile.save Makefile.in
 
 #-------------------------------------------------------------------------------
 binall:	soelim

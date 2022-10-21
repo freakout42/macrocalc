@@ -5,7 +5,6 @@ LC_CTYPE := ISO88591
 ARX=..
 ARXSRC=../../arx
 DIRS=nro src bin exm lib man tst
-PLATFORMS=el eg hp hg cf co fb lx le lg so gs li sl ai lb sx lu md l6
 
 #NROFF=ARX=$(ARX) ../nro/nro
 NROFF=$Nroff
@@ -34,16 +33,18 @@ AR=$Ar
 ARFLAGS=rsv
 
 all:
-	for D in $(DIRS); do arxmakeall $$D; done
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all; cd ..; done
 
 init:	Makefile.in
-	arxreport -t: -cMakefile Makefile.in <../sys.rdb
+	../arx/bin/arxreport -t: -cMakefile Makefile.in <../sys.rdb
 
 clean:
 	find . -name core\* -type f -exec rm {} \;
-	for D in $(DIRS); do cd $$D; arxmakeclean $$D; cd ..; done
-	for S in $(PLATFORMS); do rm -f Makefile.$${S}; done
-	rm -f Makefile
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}clean; cd ..; done
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}clean; cd ..; done
+	mv Makefile.in Makefile.save
+	rm -f Makefile.?? Makefile
+	mv Makefile.save Makefile.in
 
 #-------------------------------------------------------------------------------
 insall:
@@ -99,7 +100,7 @@ mc_io.o:	$(IOBJ) $(DOBJ) $(ARXCLIB)
 	$(LD) $(LDR) $(LDFLAGS) $(IOBJ) $(DOBJ) $(ARXCLIB) $(CURLIB) -o $@
 
 makefile:	mcuser.mk
-	arxreport -t: -cmakefile mcuser.mk <../../sys.rdb
+	../../arx/bin/arxreport -t: -cmakefile mcuser.mk <../../sys.rdb
 	ln -f makefile.$Sys $@
 
 libmcf.a:	$(BOBJ)

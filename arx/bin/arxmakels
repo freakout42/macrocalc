@@ -1,8 +1,0 @@
-#!/bin/sh
-# $Id: arxmakels,v 1.2 1995/03/26 11:00:50 axel Rel $
-# produce and maintain a list of files
-PWD=`pwd`
-DIRNAME=`basename $PWD`
-ls -1 | grep -v '^RCS$' >$DIRNAME.ls
-ci -t-"$DIRNAME files" $DIRNAME.ls
-exit $?
