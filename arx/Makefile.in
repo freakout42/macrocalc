@@ -7,7 +7,7 @@ ARXVER=1
 ARX=../../arx
 DIRS=inc src lib
 
-CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='"$(PLATFORM)"'
+CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='" $(PLATFORM)"'
 NROFF=$Nroff
 NFLAGS=$Nflag
 AR=$Ar

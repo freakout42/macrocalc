@@ -147,6 +147,10 @@ double lib_iee2 (double d);
 #define SERIALNO	"Serialno: 000000"
 #define ARXLICENSE	1
 
+#ifndef __PLATFORM__
+#define __PLATFORM__ ""
+#endif
+
 #ifdef __GNUC__
 #define CCOMPILER	" gcc " __VERSION__
 #else
@@ -163,7 +167,7 @@ double lib_iee2 (double d);
 #define PLATFORM	"HP-UX"
 
 #elif __FreeBSD__
-#define PLATFORM	"FreeBSD " __PLATFORM__
+#define PLATFORM	"FreeBSD" __PLATFORM__
 /* __PLATFORM__ */
 #undef ARXLICENSE
 
@@ -175,7 +179,7 @@ double lib_iee2 (double d);
 #ifdef __GLIBC__
 #define glibcs1(a, i) " glibc " #a "." #i
 #define glibcs(a, i) glibcs1(a, i)
-#define PLATFORM "Linux " __PLATFORM__ glibcs(__GLIBC__, __GLIBC_MINOR__)
+#define PLATFORM "Linux" __PLATFORM__ glibcs(__GLIBC__, __GLIBC_MINOR__)
 #else
 #define PLATFORM	"Linux ELF"
 #endif

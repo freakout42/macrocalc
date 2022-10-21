@@ -20,7 +20,6 @@ DISTID=mc-$VERSID-$PLATID-$HARDID
 echo "configuring for $DISTID" >&2
 cat >Makefile <<EOF
 export PATH := `pwd`/arx/bin:\$(PATH)
-export PLATFORM := ${HARDID}
 ARX=\$(DESTDIR)/opt
 all: dist/arx.tar.gz
 install: all
@@ -40,9 +39,9 @@ dist/arx.tar.gz: mc/bin/mc
 	cd dist; tar cf - arx | gzip -c >arx.tar.gz
 	test -d archive && cp dist/arx.tar.gz archive/$DISTID.tar.gz
 mc/bin/mc: arx/lib/libarx.a
-	cd mc; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all
+	cd mc; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
 arx/lib/libarx.a:
-	cd arx; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all
+	cd arx; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
 clean:
 	./configure clean
 EOF

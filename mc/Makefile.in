@@ -27,7 +27,7 @@ ARXLIB=$(ARXSRC)/lib/libarx.a
 ARXCLIB=$(ARXSRC)/lib/libarxc.a
 OSMISS=$Omiss
 CLIBS=-lm
-CFLAG=$(CURSES) -I$(ARXSRC)/inc $(DEBUG) -D__PLATFORM__='"$(PLATFORM)"'
+CFLAG=$(CURSES) -I$(ARXSRC)/inc $(DEBUG) -D__PLATFORM__='" $(PLATFORM)"'
 CC=$Cc
 CFLAGS=$Cflag $(CFLAG)
 AR=$Ar
@@ -463,13 +463,13 @@ nro:	nro.o nrotxt.o nrocmd.o
 	$(CC) nro.o nrotxt.o nrocmd.o -o $@
 
 nro.o:	nro.c nro.h
-	$(CC) -w -c -o $@ nro.c
+	$(CC) -c -o $@ nro.c 2>/dev/null
 
 nrotxt.o:	nrotxt.c nro.h
-	$(CC) -w -Wno-return-type -c -o $@ nrotxt.c
+	$(CC) -c -o $@ nrotxt.c 2>/dev/null
 
 nrocmd.o:	nrocmd.c nro.h
-	$(CC) -w -Wno-return-type -c -o $@ nrocmd.c
+	$(CC) -c -o $@ nrocmd.c 2>/dev/null
 
 nro.man:	nro nro.an nro.nro
 	-./nro nro.an nro.nro >$@
