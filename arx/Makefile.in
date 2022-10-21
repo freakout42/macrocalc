@@ -1,0 +1,124 @@
+# arx $Id: Makefile.in,v 1.99 2022/09/29 05:51:36 axel Exp $
+# for: $Os
+
+ARXREL=6
+ARXVER=1
+
+ARX=../../arx
+DIRS=inc src lib
+
+CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='"$(PLATFORM)"'
+NROFF=$Nroff
+NFLAGS=$Nflag
+AR=$Ar
+ARFLAGS=rsv
+
+CURSES=$Curses
+LEX=$Lex
+LFLAGS=$Lflag
+LEXLIB=$Llib
+CC=$Cc
+LDFLAGS=$Ldflag
+CFLAGS=$Cflag $(CURSES) $(CFLAG)
+OSMISS=$Omiss
+CURINC=$Curinc
+
+usage:
+	@echo "Usage: make [all|clean|init]"
+
+new:
+	for D in $(DIRS); do arxmakeall $$D new; done
+
+all:
+	for D in $(DIRS); do arxmakeall $$D; done
+
+init:	Makefile.in
+	arxreport -t: -cMakefile Makefile.in <../sys.rdb
+
+port:
+	co Makefile.in
+	for D in $(DIRS); do cd $$D; arxmakeport $$D; cd ..; done
+
+clean:
+	for D in $(DIRS); do cd $$D; arxmakeclean $$D; cd ..; done
+	rm -f Makefile.el Makefile.cf Makefile.lx Makefile.hp Makefile.fb \
+	      Makefile.hg Makefile.eg Makefile.co Makefile.le Makefile.so \
+	      Makefile.lg Makefile.gs Makefile.li Makefile.sl Makefile.ai \
+	      Makefile.lb Makefile.sx Makefile.lu Makefile.md Makefile.l6 \
+	      Makefile
+
+#-------------------------------------------------------------------------------
+binall:	soelim
+	@echo "$@ done"
+
+binclean:
+	rm -f soelim *.o
+
+soelim:	soelim.o
+	$(CC) $(LDFLAGS) $(CFLAGS) soelim.o -o $@
+	strip $@
+
+#-------------------------------------------------------------------------------
+incall:	key_def.h
+	@echo "$@ done"
+
+key_def.h:	key2_def.h
+	egrep -e 'define[\t ]*KEY_' -e 'define[\t ]*A_' <$(CURINC) | cat - key2_def.h >$@
+
+incclean:
+	rm -f key_def.h
+
+#-------------------------------------------------------------------------------
+srcall:	libarx_.a libarxc_.a
+	@echo "$@ done"
+
+srcclean:
+	rm -f libarx*_.a which cur_goll lib_dir *.o
+
+libarx_.a:	lib_akey.o lib_2iee.o lib_mesg.o \
+	lib_freo.o lib_twpo.o lib_path.o lib_stat.o lib_fsiz.o lib_mktm.o \
+	str_gets.o str_trim.o str_tlen.o str_repl.o str_upr.o str_chkd.o str_inc.o str_abbr.o \
+	rdb_open.o rdb_crea.o rdb_clos.o rdb_read.o rdb_writ.o rdb_2dbf.o \
+	dbf_open.o dbf_crea.o dbf_clos.o dbf_read.o dbf_writ.o dbf_2rdb.o \
+	dbf_from.o dbf_info.o dbf_afix.o \
+	utf82iso885915.o \
+	sql_crea.o sql_writ.o sql_crep.o sql_wrip.o sql_wrio.o yml_crea.o yml_writ.o \
+	$(OSMISS)
+	-$(AR) $(ARFLAGS) $@ $?
+	-sh -c "test "$(CC)" = "scocc" || ranlib $@"
+
+utf82iso885915.o: utf82iso885915.c oem2iso.h
+
+libarxc_.a:	\
+	cur_init.o cur_exit.o cur_getk.o cur_gets.o cur_satt.o \
+	cur_syst.o cur_goll.o cur_rest.o cur_fixt.o cur_gmnu.o
+	-$(AR) $(ARFLAGS) $@ $?
+	-sh -c "test "$(CC)" = "scocc" || ranlib $@"
+
+which:	lib_path.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DTEST lib_path.c -o $@
+
+lib_dir:	lib_dirs.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DTEST lib_dirs.c -o $@
+
+cur_goll:	cur_goll.c cur_rest.o cur_fixt.o
+	$(CC) $(LDFLAGS) $(CFLAGS) -DTEST cur_goll.c cur_rest.o cur_fixt.o \
+		-lcurses -o $@
+
+lib_akey.o:	lib_akey.c ../inc/arx_def.h
+	$(CC) $(CFLAGS) -DARXREL='"$(ARXREL)"' -DARXVER='"$(ARXVER)"' \
+		"`if [ "$Sys" = "gs" ]; then echo -DOSINFO='"'$Os'"'; else echo -UOSINFO; fi`" \
+		-c lib_akey.c
+
+#-------------------------------------------------------------------------------
+liball:	libarx.a libarxc.a
+	@echo "$@ done"
+
+libarx.a:	../src/libarx_.a
+	cp ../src/libarx_.a $@
+
+libarxc.a:	../src/libarxc_.a
+	cp ../src/libarxc_.a $@
+
+libclean:
+	rm -f libarx*.a

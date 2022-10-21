@@ -1,0 +1,22 @@
+#!/bin/sh
+mail -sadd lsm@execpc.com <<EOF
+Begin3
+Title:          MacroCALC
+Version:        v6.2a
+Entered-date:   15OCT99
+Description:    MacroCALC is a Lotus compatible character based spreadsheet
+                that supports 1000 rows, 64 columns, 40 functions, 8 display
+                formats, file linking, macro programming and user functions.
+                MacroCALC is fully integrated with [ntg]roff, awk, perl, sh.
+                It has a C programming interface and filters for Lotus WKS
+                and dBASE files. The own file-format is flat ASCII. It is
+                the only spreadsheet that manages units. The messages and
+                menus are multilingual.
+Keywords:       spreadsheet unit lotus dbase
+Author:         mc@freakout.de (Axel Reinhold)
+Primary-site:   http://www.freakout.de
+Copying-policy: Free unlimited license for Linux and FreeBSD.
+                Free copying of Linux distribution file.
+                For prices on SCO, HP-UX, Solaris, AIX, and others please ask.
+End
+EOF

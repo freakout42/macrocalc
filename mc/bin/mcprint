@@ -1,0 +1,36 @@
+#!/bin/sh
+# $Id: mcprint,v 1.1 1995/03/18 10:31:37 axel Rel $
+# print MacroCALC worksheet
+# is used by mc to print the worksheet
+# $1 is the filename or printer spooler if missing
+
+USAGE="usage: mcprint [filename]"
+EUSAGE=1
+MFILE='mcprint: cant open file.'
+EFILE=2
+TMP=/tmp/$$mcprint
+TMP2=/tmp/$$mcprint2
+trap "rm -f $TMP $TMP2" 0
+
+# choose FORMATTER and SPOOLER
+FORMATTER="nro -ms"	# mc's own formatter
+#FORMATTER="nroff -ms"	# if text processing system availbale
+SPOOLER=lp
+
+>$TMP
+# insert heades here
+echo ".nf" >>$TMP
+cat >>$TMP
+if test "$#" -lt 1
+then
+	eval "<$TMP $FORMATTER | $SPOOLER"
+elif test "$1" = "-"
+then
+	clear
+	eval "<$TMP $FORMATTER >$TMP2"
+	${PAGER-pg} $TMP2 </dev/tty
+else
+	eval "<$TMP $FORMATTER >$1"
+fi
+
+exit $?

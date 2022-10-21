@@ -1,0 +1,14 @@
+#!/bin/sh
+# $Id: arxmakeclean,v 1.5 2003/06/10 18:45:05 axel Exp $
+#for F in *
+#do
+#	if [ -w $F -a $F != "RCS" ]
+#	then
+#		test -f RCS/$F,v || rm -f $F
+#	else
+#		test -f RCS/$F,v && rm -f $F
+#	fi
+#done
+#rcsclean -q
+arxmake ${1}clean
+exit $?

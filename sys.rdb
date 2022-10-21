@@ -1,0 +1,21 @@
+Sys:Os:Cc:Cflag:Lx:Ldflag:Ldr:Lex:Lflag:Llib:Yywrap:Yacc:Yflag:Ylib:Curses:Curalib:Curslib:Curinc:Omiss:Nroff:Ar:Nflag
+lu:Linux:gcc:-Wall:ld::-r:flex:-8:-lfl::bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c
+lb:Linux glibc/bison:gcc:-Wall:ld::-r:flex:-8:/opt/flex/lib/libfl.a:libyywrap.o:bison:-d --yacc -Wno-conflicts-sr -Wno-conflicts-rr::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:
+gs:Linux static:gcc:-Wall -static:ld:-Bstatic:-r:flex:-8:/usr/lib/libfl.a:libyywrap.o:yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h::nroff:ar:
+hp:HP-UX 10.20:cc:-Aa -D_HPUX_SOURCE -D__YYSCLASS="":ld -aarchive:-L/usr/local/lib:-r:flex:-8:-lfl::yacc:-d:-ly:-I/usr/include/curses_colr:-lcur_colr::/usr/include/cur_colr/curses.h::nroff:ar:
+sx:Solaris9/x86:gcc::ld::-r:flex:-8:-lfl::bison:-d --yacc:::/usr/lib/libcurses.a::/usr/include/curses.h::nroff:ar:
+fb:FreeBSD:cc:-Wno-return-type -w:ld::-r:lex:-8:-ll::yacc:-d:-ly:-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses.h::nroff:ar:
+ai:AIX5 / gcc / ncurses:gcc:-O3:ld:-L/usr/local/lib:-r -bnoentry:flex:-8:/usr/local/lib/libfl.a:libyywrap.o:yacc:-d::-I/usr/local/include/ncurses:-lncurses::/usr/local/include/ncurses/ncurses.h::nroff:ar:
+sl:Solaris8 / gcc:gcc::ld::-r:lex::/usr/lib/libl.a::yacc:-d:-ly::-lcurses::/usr/include/curses.h::nroff:ar:
+el:UnixWare 1.1 SysV Rel4.2:cc:-Xa -v:ld:-L/opt/lib:-r:flex:-8:-lfl::yacc:-d:-ly::-lcurses::/usr/include/curses.h::nroff:ar:
+eg:UnixWare 1.1 SysV Rel4.2 / gcc:gcc:-ansi:ld:-L/opt/lib:-r:flex:-8:-lfl::yacc:-d:-ly::-lcurses::/usr/include/curses.h::nroff:ar:
+hg:HP-UX 9.x / gcc:gcc:-ansi -D_HPUX_SOURCE:ld -aarchive:-L/usr/local/lib:-r:flex:-8:-lfl::yacc:-d:-ly::-lcurses::/usr/include/curses.h::nroff:ar:
+cf:Coherent 4.2.10:gcc::ld:-L/usr/local/lib -L/lib/ndp -L/usr/lib/ndp:-r:flex:-8:-lfl::yacc:-d:-ly:-I/usr/include/ncurses:-lncurses -lsocket::/usr/include/ncurses.h:mktime.o:nroff:ar:
+co:Coherent 4.2.10:gcc::ld:-L/usr/local/lib -L/lib/ndp -L/usr/lib/ndp:-r:flex:-8:-lfl::yacc:-d:-ly::-lcurses::/usr/include/curses.h:cur_getc.o mktime.o:nroff:ar:
+lx:Linux:gcc:-Wall:ld::-r:flex:-8:-lfl::yacc:-d::-I/usr/include/ncurses:-lncurses::/usr/include/ncurses.h::nroff:ar:
+le:Linux ELF:gcc:-Wall:ld::-r:flex:-8:/usr/lib/libfl.a::yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h::nroff:ar:
+lg:Linux glibc:gcc:-Wall:ld::-r:flex:-8:/opt/flex/lib/libfl.a:libyywrap.o:yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h:/opt/libold/ctypeb.o:arxnroff:ar:
+so:SCO OpenServer 5.0:scocc::/opt/ccs/bin/ld::-r:/opt/ccs/bin/flex:-8:/opt/ccs/lib/libfl.a::/opt/ccs/bin/yacc:-d:::/opt/ccs/lib/libcurses.a::/usr/include/../../opt/ccs/include/curses.h::nroff:/opt/ccs/bin/ar:
+li:Linux icc:icc:-O3 -tpp5:ld::-r:flex:-8:/usr/lib/libfl.a::yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h::nroff:ar:
+md:MacOS Darwin:gcc:-arch i386:ld:-arch i386:-r:flex:-8:-lfl::bison:-d --yacc::::-lcurses:/usr/include/curses.h::nroff:ar:
+l6:Linux glibc/bison x64:gcc:-Wall:ld::-r:flex:-8:/usr/lib64/libfl.a:libyywrap.o:bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:

@@ -1,0 +1,25 @@
+#!/bin/sh
+# purchase: Copyright 1992 /ARX
+# - print purchase: sample mc-/rdb integration script
+
+USAGE="usage: purchase"
+EUSAGE=1
+
+TMP=/usr/tmp/$$pur
+trap "rm -f /usr/tmp/$$*pur" 0
+trap "rm -f /usr/tmp/$$*pur; exit 2" 1 2 3 15
+
+if test "$#" -gt 1
+then
+	echo $USAGE 1>&2
+	exit $EUSAGE
+fi
+
+# get order number
+MORDER='Order number '
+prompt "$MORDER"
+read ORDER
+export ORDER
+
+# call mc to process order with embedded /rdb-commands and the macro
+mc -c8 -x -opurchase.mcr purchase.mc

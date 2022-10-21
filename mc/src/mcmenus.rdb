@@ -1,0 +1,42 @@
+Mnuname	Mnulang	Mnutext
+-------	-------	--------------------------------------------------------------
+MENU	us	Worksheet Range Copy Move File Print Display Sys Quit
+MENU	ge	Arbeitsblatt Bereich Kopie Versetz Transfer Output Display Sys Ende
+MENU	fr	Feuille Intervalle Copier Deplacer Fichier iMprimer Afficher Sys Quitter
+MENU	pl	Arkusz Zakres Kopiuj Przenie¶ Plik Drukuj Wy¶wietl System Wyj¶cie
+WMENU	us	Insert Delete Column Autocalc Formula Erase Titles Page
+WMENU	ge	Einfuegen Loeschen Spalte Automatik Formel Radieren Titel Seite
+WMENU	fr	Inserer Deletion Colonne Autocalc Formule Effacer Titre Page
+WMENU	pl	Wstaw Usuñ Kolumna Autozliczanie Formu³a Wyczy¶æ Tytu³y Strona
+WIMENU	us	Column Row
+WIMENU	ge	Spalte Zeile
+WIMENU	fr	Colonne Ligne
+WIMENU	pl	Kolumna Wiersz
+WTMENU	us	Horizontal Clear
+WTMENU	ge	Horizontal Annullieren
+WTMENU	fr	Horizontal Effacer
+WTMENU	pl	Horyzontalnie Czy¶æ
+RMENU	us	Format Attrib Erase Name Prot Unprot Value
+RMENU	ge	Format Attribut Radieren Name Schutz Ungesch Wert
+RMENU	fr	Format Attrib Effacer Nom Prot Deprot Valeur
+RMENU	pl	Format Attrybuty Czy¶æ Nazwa Prot Unprot Warto¶æ
+RFMENU	us	Fixed Sci Currency ; Percent Date Edate /rdbdate Time Hidden Reset
+RFMENU	ge	Fest Exp Waehrung ; Prozent Datum Edatum /rdbdate Zeit Verbergen Zuruecksetzen
+RFMENU	fr	Monaie fixe ; Pourcent Date Edate /rdbdate Heure Cacher Effacer
+RFMENU	pl	Fixed Sci Currency , Procent Data Edata /rdbdate Czas Ukryj Resetuj
+RNMENU	us	Create Delete
+RNMENU	ge	Erstellen Loeschen
+RNMENU	fr	Creer Effacer
+RNMENU	pl	Twórz Kasuj
+RAMENU	us	Bold Italic Reset
+RAMENU	ge	Fett Kursiv Zuruecksetzen
+RAMENU	fr	Gras Italique Normal
+RAMENU	pl	Pogrubienie Kursywa Resetuj
+FMENU	us	Save Part Retrieve Merge
+FMENU	ge	Speichern Teil Laden Kombinieren
+FMENU	fr	Sauver Part Recuperer Fusionner
+FMENU	pl	Zapisz Part Pobierz Do³±cz
+YNMENU	us	No Yes
+YNMENU	ge	Nein Ja
+YNMENU	fr	Non Oui
+YNMENU	pl	Nie Tak

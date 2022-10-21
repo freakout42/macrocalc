@@ -1,0 +1,23 @@
+#!/bin/sh
+# $Id: arxmakeall,v 1.8 2003/04/12 16:13:56 axel Exp $
+DIR=$1
+if [ ! -d "$DIR" ]
+then
+	echo "no \"$DIR\" directory!" 1>&2
+	exit 2
+fi
+cd $DIR
+if [ "$2" = "new" ]
+then
+#	if [ ! -d RCS ]
+#	then
+#		echo "no RCS directory!" 1>&2
+#		exit 1
+#	fi
+#	rcsclean -q
+	arxmake ${DIR}clean
+#	co $DIR.ls
+#	test -s $DIR.ls && co -q $ARXREL `cat $DIR.ls`
+fi
+arxmake ${DIR}all
+exit $?

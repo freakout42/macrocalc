@@ -1,0 +1,5 @@
+#!/bin/sh
+# mnuh2rdb
+awk 'BEGIN	{FS=OFS="\t";}
+$2=="'$1'"	{print $3}' |
+sed 's/;/,/g'

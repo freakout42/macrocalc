@@ -1,0 +1,133 @@
+Date	Version	Modify	Comment
+------	-------	-------	-------------------------------------
+910909	2.00	Improve	lex string
+910909	2.00	Improve	Date/Time functions
+910911	2.00	Bug	Bug in /RE display fixed
+910911	2.00	Improve	Date/Time display format
+910912	2.00	Improve	/RF menu no dialog
+910913	2.00	Improve	link function
+910913	2.00	Bug	Bug in /M from empty cells
+910914	2.00	Improve	Sci display format
+910915	2.00	Improve	Integrate with [nt]roff
+910923	2.00	Bug	/WD[CR] on last row
+910923	2.00	Bug	linkcell on not found
+911011	2.01	Improve	units implementation
+911013	2.02	Bug	crash no filename
+911018	2.02	Improve	user functions
+911018	2.02	Bug	date plus 1 second
+911206	2.03	Bug	unit = " " at formula a*b
+920116	3.00	New	-l layout option
+920308	2.06	Bug	unit
+920406	3.01	Improve	suppress output of 23/79 screen position
+920501	4.0a	New	/WW[HC] horizontal windows
+920501	4.0a	New	-b suppress border display
+920501	4.0a	New	-s suppress cell content display
+920501	4.0a	New	-x execute all < at reading, all > at writing
+920502	4.0a	Improve	one space behind numbers like Lotus 1-2-3
+920505	4.0a	Improve	one space behind right just text like Lotus 1-2-3
+920505	4.0a	New	\ repeating operator
+920505	4.0a	New	string returning formulas
+920509	4.0a	New	cell<<command - insert pipe
+920515	4.0a	Improve	recalc at save
+920522	4.0a	New	macros with cur_maco
+920526	4.0a	Bug	recalc unit formulas
+920527	3.01	Bug	unit destroyed by parser
+920529	3.01	Bug	curses cannot handle long strings, mcput improved
+920529	4.0a	New	percent format
+920529	4.0a	Improve	message recalculation...
+920529	3.01	Bug	EOF display
+920531	4.0a	Improve	-o without message
+920531	4.0a	Improve	mcmacro comments
+920531	4.0a	Improve	mcmacro environment support
+920601	4.0b	Bug	startup -l windowline=borderline+1
+920604	4.0b	Improve	redirect standard error into messageline
+920605	3.01	MinBug	clear last column, last two lines!
+920606	4.0b	New	/rdb-date format
+920606	3.01	Bug	cols >= AA!
+920608	3.01	Bug	back tab does not work STAB->BTAB
+920620	4.0b	Improve	messages in mcmsg.rdb
+920620	4.0b	Improve	point-and-shoot menus
+920621	4.0b	Improve	menus in mcmenu.rdb
+920621	4.0b	MinBug	divide by labelcell -> unit!
+920624	4.0b	New	Range names
+920624	4.0b	New	Currency option
+920624	4.00	Bug	/wp ".bp" insert error message
+920624	4.00	Bug	eof recognition <-> range name
+920624	4.00	Bug	empty filename
+920624	4.00	Bug	adjust ranges, not formulas!
+920624	4.00	Improve	'=' for recalc instead of '#'
+920722	4.01	Bug	mc2wks @sum
+920723	4.01	Bug	no error message
+920723	4.01	Bug	empty macroname
+920802	4.02	Bug	empty fields in rdb-pipe-input
+920802	4.02	Bug	recalc after loading for strings
+920802	4.02	Bug	color for strings
+920802	4.02	Bug	pipeout strings
+920918	5.00	Improve	Port to COH 4
+921025	5.01	Improve	Allow #-Commentline in first line
+930123	5.01	Minibug	curses bug last line last col -> term driver?
+930123	5.01	Bug	ESPIPE msg after SYNERROR
+930123	5.01	Improve	ask for save until success
+930330	5.02	Bug	copied constants are not recalculated
+930330	5.02	Bug	frac time for display
+930409	5.03	Improve	let cursor move after input
+930411	5.03	New	highlight mark range option
+930516	5.04	Bug	get attribs from restored file
+930523	5.04	Bug	null units on unit stack
+930528	5.05	Minibug	clear curcelline for -ls option
+930612	5.05	Improve	display bold/italic long cells
+930709	5.05	Bug	show cursor in one-col-row marked ranges
+930709	5.05	Improve	leave editing with cursor right at end (cur_gets)
+930709	5.05	Bug	recalculation message was not displayed
+930717	5.05	Bug	/P "-" to screen did not work
+930831	5.06	Change	get KEY_F(10) also for menu
+931016	5.06	Minibug	display empty cells after attribut cells clean
+931016	5.06	Improve	work around curses bug to clean col 79 (mcput)
+950829	6.0b	Improve	Release	portable ANSI-C version for Linux, ...
+950830	6.0c	Improve	call to "man mc" -> "man argv[0]"
+950930	6.0c	Improve	db2rdb problems on hp-ux, ident for db2rdb and mc2wks
+970123	6.0h	Bug	link() does not work path problem
+970123	6.0h	Minibug	title misspelled in menu
+970125	6.0h	Bug	buffer overflow on big screens
+970410	6.1a	Improve	man page mc.1 groff ok
+970410	6.1a	Improve	mcread and <! cell-command
+970410	6.1a	Improve	/rv value command
+970410	6.1b	Improve	man page contents and quick navigate
+970410	6.1b	Improve	-Wall linted complete
+970509	6.1b	Minibug	floating point exception
+970509	6.1b	Improve	multiple ins/del col/row
+970520	6.1b	Improve	automatic format of above cell
+970524	6.1c	Improve	alone @link-cell not a formula (move, speed)
+970524	6.1c	Minibug	col/row insert out of worksheet move last col/row
+970619	6.1c	Minibug	invalid rangenames accepted
+970619	6.1c	Minibug	mcellval with named ranges
+991010	6.2a	Improve	Y2K
+991018	6.2b	Improve	flex with sco
+991024	6.3a	Improve	split lib in curses/others
+000131	6.3b	Y2k	db2rdb -v/-s
+010702	7.01	Port	sco cc
+011101	7.02	Port	icc (not finished - too many troubles)
+020228	7.03	Bug	fixed core dump with column shorter than columnname
+020701	7.04	Improve	column width form 0-screenwidth
+020907	7.05	Bug	restore input mode on after system/man
+020917	7.10	Improve	option -n autoexecute macros from commandline
+021211	7.11	Bug	column widths garbled on insert/delete column
+030525	7.12	Bug	destroyed unit from reference
+040120	7.13	Improve	700 cols a-z aa-zz
+040120	7.13	Improve	polish menu and messages
+040418	7.14	Port	AIX 5.2
+041101	7.20	Improve	new save/retrieve options
+041211	7.21	Bug	copy value of retrieved cell
+050107	7.22	Port	bison - required lex to parse pipe commands
+060928	7.23	Port	Solaris x86
+061016	7.24	Bug	empty mult units
+070615	7.30	Port	flex-5.2.33 buffer handling
+080610	7.50	Improve	bigger input buffer 32767
+090514	7.60	Feature	db2rdb create MySQL
+130812	7.61	Bug	parse &cell formulas
+150202	7.64	Feature	maintain ADS illegal chars
+160314	7.70	Bug	dbase plus mode format
+160314	7.80	Feature	european date
+161031	7.90	Improve	rolldate 1970
+161101	8.01	Improve	amd64
+161107	8.02	Improve	mcrdb

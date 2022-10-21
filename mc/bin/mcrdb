@@ -1,0 +1,51 @@
+#!/bin/sh
+# $Id: mcrdb,v 1.3 2017/07/11 15:02:09 axel Exp $
+
+# mcrdb locks a file by moving it to another name.  It then calls
+# mc and loads the /rdb-table so you can edit it.
+# When you return from mc, it moves the file back to its old name.
+# If anyone trys to mcrdb it while you have it,
+# they will get a message: file locked.
+
+USAGE='usage: mcrdb rdbtable'
+EUSAGE=1
+
+LOCKED="$1 is locked"
+ELOCKED=3
+
+NOFIND="$1 is unreadable, not in the directory, or non-existant."
+ENOFIND=4
+
+if test "$#" -lt 1
+then
+	echo $USAGE 1>&2
+	exit $EUSAGE
+fi
+
+TMP=/usr/tmp/$$$1
+TMPMC=/usr/tmp/$$mcrdb
+export TMP
+ARXPATH=/opt/arx
+export ARXPATH
+
+if test -f "$1" -a -r "$1"
+then
+	mv $1 $TMP
+	trap "mv $TMP $1; rm $TMPMC" 0 1 2 3 15
+	cp ${ARX-$ARXPATH}/lib/mcrdb.mc $TMPMC
+	COLUMN=65
+	for w in `width <$TMP | tail -1`
+	do
+		WIDTH=`expr $w + 1`
+		echo "`chr $COLUMN`	0	$WIDTH	0.0000000000000000e+00	coldef" >>$TMPMC
+		COLUMN=`expr $COLUMN + 1`
+	done
+	mc -xrlmbs -o${ARX-$ARXPATH}/lib/mcrdb.mac $TMPMC
+elif ls /tmp/[0-9]*$1 # 2> /dev/null 1> /dev/null
+then
+	echo $LOCKED
+	exit $ELOCKED
+else
+	echo $NOFIND
+	exit $ENOFIND
+fi

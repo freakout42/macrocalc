@@ -1,0 +1,48 @@
+#!/bin/sh
+# $Id: arxreport,v 1.6 2016/10/31 18:27:49 axel Exp $
+#set -x
+USAGE="Usage: report [ -t<fs> ] [ -c<name> ] file <table"
+FIELDSEP="	"
+while getopts "t:c:" o
+do
+	case $o in
+	 t)	FIELDSEP="$OPTARG";;
+	 c)	CNAME="$OPTARG";;
+	 \?)	echo $USAGE
+		exit 2;;
+	esac
+done
+shift `expr $OPTIND - 1`
+if [ $# -ne 1 ]
+then
+	echo $USAGE
+	exit 2
+fi
+if [ "$CNAME" ]
+then
+	INOUT="$1 >$CNAME."
+else
+	INOUT=$1
+fi
+
+gawk -F"$FIELDSEP" 'BEGIN	{}
+NR==1	{
+	fields=split($0,headers)
+	sedcmd=""
+	}
+NR==2&&/^[-'"$FIELDSEP"']*$/	{next}
+NR>1	{
+	for (c=1; c<=fields; c++) {
+		if (length($c) > length(headers[c])) len = length($c)-1
+		else len = length(headers[c])
+		sedcmd2 = sprintf("s%%\\$%s%%%s%%g\n", headers[c], $c)
+		sedcmd3 = sprintf("s%%<%-*s%%%-*s%%g\n", len, headers[c], len+1, $c)
+		sedcmd4 = sprintf("s%%%*s>%%%*s%%g\n", len, headers[c], len+1, $c)
+		sedcmd  = sedcmd sedcmd2 sedcmd3 sedcmd4
+		}
+	if (index("'"$INOUT"'", ">")) ext=$1
+	else ext=""
+	system("sed '\''" sedcmd "'\'' '"$INOUT"'" ext)
+	sedcmd=""
+	}'
+exit

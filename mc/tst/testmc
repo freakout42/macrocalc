@@ -1,0 +1,10 @@
+#!/bin/sh
+ARX=..
+export ARX
+../bin/db2rdb -r <../src/mcmessag.rdb |
+../bin/db2rdb -v |
+diff ../src/mcmessag.rdb -
+../bin/mc2wks <formula.mc |
+tee formula.wks |
+../bin/mc2wks -r |
+../bin/mc -p

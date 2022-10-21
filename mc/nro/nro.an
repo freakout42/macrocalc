@@ -1,0 +1,19 @@
+.de TH
+.he |$0|$1|$0|
+.fo |/ARX Manual|(c) 1995 /ARX cleanware|Page #|
+.po 0
+.in 5
+.rm 70
+.en
+.de PP
+.sp 1
+.ne 4
+.en
+.de SH
+.sp 1
+.ne 5
+.ti -5
+.bo
+$0
+.br
+.en

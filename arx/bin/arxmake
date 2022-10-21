@@ -1,0 +1,5 @@
+#!/bin/sh
+# $Id: arxmake,v 1.3 2017/07/11 13:13:40 axel Exp $
+MAKEFILE=../Makefile
+test -f $MAKEFILE || MAKEFILE=../Makefile.in
+make -f $MAKEFILE $*

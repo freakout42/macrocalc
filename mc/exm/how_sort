@@ -1,0 +1,30 @@
+When you want to sort a database do the following:
+
+- Put a EOF-Cell at the bottom of the database-range
+  (Simply by entering "EOF" into the cell under the
+   left-bottom cell of the database-range)
+
+- Pipe the database through "sort" by entering a command like:
+
+  'B2>sort -t"	" +3 >/tmp/sorteddata'
+   |          |
+   |          > this is a <tab> since mc pipes tabs between the columns!
+   > upper-left-most database cell
+
+  into any free cell of the worksheet
+
+- Once you entered the command into a cell, the database-range
+  starting with B2 (in this example) until the "EOF"-cell will
+  be piped into the command 'sort -t"	" +3 >/tmp/sorteddata'.
+  Which meens the database-range is sorted on the third column
+  and written into the file "/tmp/sorteddata".
+
+- Pipe the sorted database back into the worksheet
+  by entering a command like:
+
+  'B2<cat </tmp/sorteddata'
+  
+  into any other free cell of the worksheet.
+
+- You can reexecute the commands simply by editing (by F2 or !)
+  the cells with the commands and pressing ENTER.

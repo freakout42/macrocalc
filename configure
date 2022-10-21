@@ -1,0 +1,51 @@
+#!/bin/sh
+test -f mc/Name || exit 1
+PATH=`pwd`/arx/bin:$PATH
+VERSID=`awk '{print substr($2,2)}' mc/Name`
+case `uname -o` in
+  GNU/Linux) PLATID=lu; HARDID=`uname -i`;;
+  FreeBSD) PLATID=fb; HARDID=`uname -p`;;
+  *) echo 'unknown platform - please help porting' >&2;;
+esac
+
+for MODEID in arx mc; do
+  cd $MODEID
+    make -f Makefile.in clean >/dev/null 2>&1
+  cd ..
+done
+rm -rf Makefile dist
+test "$1" = "clean" && exit
+
+DISTID=mc-$VERSID-$PLATID-$HARDID
+echo "configuring for $DISTID" >&2
+cat >Makefile <<EOF
+export PATH := `pwd`/arx/bin:\$(PATH)
+export PLATFORM := ${HARDID}
+ARX=\$(DESTDIR)/opt
+all: dist/arx.tar.gz
+install: all
+	test ! -e \$(ARX)/arx
+	test ! -d \$(ARX) && mkdir \$(ARX)
+	gzip -cd <dist/arx.tar.gz | tar x -p -C \$(ARX) -f -
+dist/arx.tar.gz: mc/bin/mc
+	-mkdir dist
+	chmod g-s dist
+	-mkdir dist/arx dist/arx/man dist/arx/man/man1
+	for D in bin lib exm; do cp -r mc/\$\$D dist/arx; done
+	rm dist/arx/bin/.copied
+	ln dist/arx/bin/mc dist/arx/bin/321
+	for M in db2rdb mc mcunits; do cp mc/man/\$\$M.1 dist/arx/man/man1; done
+	cp mc/man/cat1/nro.1 dist/arx/man/man1
+	chmod -R u+rwX,g-w,g+rX,o-w,o+rX dist
+	cd dist; tar cf - arx | gzip -c >arx.tar.gz
+	test -d archive && cp dist/arx.tar.gz archive/$DISTID.tar.gz
+mc/bin/mc: arx/lib/libarx.a
+	cd mc; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all
+arx/lib/libarx.a:
+	cd arx; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all
+clean:
+	./configure clean
+EOF
+echo 'you can now run "make"' >&2
+
+exit

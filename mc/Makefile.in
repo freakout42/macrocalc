@@ -1,0 +1,484 @@
+# mc $Id: Makefile.in,v 1.135 2022/10/08 15:41:11 axel Exp $
+# for: $Os
+
+LC_CTYPE := ISO88591
+ARX=..
+ARXSRC=../../arx
+DIRS=nro src bin exm lib man tst
+PLATFORMS=el eg hp hg cf co fb lx le lg so gs li sl ai lb sx lu md l6
+
+#NROFF=ARX=$(ARX) ../nro/nro
+NROFF=$Nroff
+NFLAGS=$Nflag
+TROFF=troff
+LD=$Lx
+LDFLAGS=$Ldflag
+LDR=$Ldr
+LEX=$Lex
+LFLAGS=$Lflag
+LEXLIB=$Llib
+YACC=$Yacc
+YFLAGS=$Yflag
+YLIBS=$Ylib $(LEXLIB)
+YYWRAP=$Yywrap
+CURSES=$Curses
+CURLIB=$Curalib
+ARXLIB=$(ARXSRC)/lib/libarx.a
+ARXCLIB=$(ARXSRC)/lib/libarxc.a
+OSMISS=$Omiss
+CLIBS=-lm
+CFLAG=$(CURSES) -I$(ARXSRC)/inc $(DEBUG) -D__PLATFORM__='"$(PLATFORM)"'
+CC=$Cc
+CFLAGS=$Cflag $(CFLAG)
+AR=$Ar
+ARFLAGS=rsv
+
+all:
+	for D in $(DIRS); do arxmakeall $$D; done
+
+init:	Makefile.in
+	arxreport -t: -cMakefile Makefile.in <../sys.rdb
+
+clean:
+	find . -name core\* -type f -exec rm {} \;
+	for D in $(DIRS); do cd $$D; arxmakeclean $$D; cd ..; done
+	for S in $(PLATFORMS); do rm -f Makefile.$${S}; done
+	rm -f Makefile
+
+#-------------------------------------------------------------------------------
+insall:
+	@echo "$@ done"
+
+insclean:
+	@echo "$@ done"
+
+#-------------------------------------------------------------------------------
+srcall:	mc mcmsg mcmacro mcunits mcread mc2wks db2rdb
+	@echo "$@ done"
+
+srcclean:
+	rm -f	mcver.h f.tab.h l.tab.h y.tab.h lex.yy.c mcparl.c mcpary.c \
+		mc2parse.c mc2pary.c *.tab.? mcpary.vcg \
+		mcmsg.h mcmnu.h core y.output libmcf.a \
+		mc 321 mcmacro mcmsg mcunits mcread mc2wks db2rdb \
+		mcparse mcunit mcalign *.o *.a makefile*
+
+IOBJ=	mcrun.o mcmenu.o mcommand.o mcpipe.o mcrecalc.o mcellact.o mchelp.o mcwindow.o mcact.o
+FOBJ=	mcfileio.o mcprint.o mcpform.o mcrange.o mcrwalk.o
+OOBJ=	mccalc.o mcutil.o
+COBJ=	mcellstr.o mcell.o
+MOBJ=	mcgetmsg.o
+POBJ=	mcparse.o mc2parse.o mcparl.o
+XOBJ=	mcelladr.o mcunit.o mctime.o mcmisc.o
+YOBJ=	mcellpar.o mcellval.o
+BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
+PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
+# curses linked
+DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mcput.o
+MC2OBJ=	wksfio.o mconvert.o wksrecd.o mcell123.o pol2tex.o
+MCOBJ=	mcommon.o $(FOBJ) $(OOBJ) $(COBJ) $(MOBJ) $(POBJ) $(YOBJ) $(XOBJ) $(MC2OBJ)
+BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro
+SRC=	mc_kern.o mc_io.o mc.o mc2wks.o mcread.o mcpary.o mc2pary.o libmcf.a f.tab.h mcfunc.h mcftab.c mcuser.c makefile
+
+mc:	mc.o mcpary.o mc_kern.o mc_io.o mcftab.o libmcf.a makefile
+	make $@
+
+mc2wks:	mc2wks.o mc2pary.o mc_kern.o mcftab.o libmcf.a makefile
+	make $@
+
+mcread:	mcread.o mcpary.o mc_kern.o mcftab.o libmcf.a makefile
+	make $@
+
+mc.o:	mc.c mcver.h mc.h mcfileio.h mcprint.h mcinter.h mcrmacro.h \
+	mcmessag.h mcunit.h mcutil.h mcmisc.h
+
+mc_kern.o:	$(MCOBJ) $(YYWRAP) $(ARXLIB)
+	$(LD) $(LDR) $(LDFLAGS) $(MCOBJ) $(YYWRAP) $(ARXLIB) $(OSMISS) -o $@
+
+mc_io.o:	$(IOBJ) $(DOBJ) $(ARXCLIB)
+	$(LD) $(LDR) $(LDFLAGS) $(IOBJ) $(DOBJ) $(ARXCLIB) $(CURLIB) -o $@
+
+makefile:	mcuser.mk
+	arxreport -t: -cmakefile mcuser.mk <../../sys.rdb
+	ln -f makefile.$Sys $@
+
+libmcf.a:	$(BOBJ)
+	-$(AR) $(ARFLAGS) $@ $?
+
+mcmsg:	mcmsg.o
+	$(CC) $(CFLAGS) mcmsg.o -o $@
+
+mcmacro:	mcmacro.l
+	$(LEX) $(LFLAGS) mcmacro.l
+	$(CC) $(CFLAGS) -Wno-unused-function lex.yy.c $(ARXLIB) $(LEXLIB) -o $@
+
+db2rdb:	db2rdb.o db2use.o
+	$(CC) $(CFLAGS) db2rdb.o db2use.o $(ARXLIB) -o $@
+
+mcunit:	mcunit.c mc.h
+	$(CC) $(CFLAGS) -DTEST mcunit.c $(ARXLIB) -o $@
+
+mcunits:	mcunits.c
+	$(CC) $(CFLAGS) mcunits.c $(ARXLIB) -o $@
+
+mcelladr:	mcelladr.c mc.h mcparse.h
+	$(CC) $(CFLAGS) -DTEST mcelladr.c -o $@
+	
+mcparse:	$(PDOBJ) mcftab.o libmcf.a
+	$(CC) $(CFLAGS) $(PDOBJ) mcftab.o libmcf.a \
+	$(ARXLIB) $(YLIBS) $(CLIBS) -o $@
+
+mcalign:	mcalign.o lotus.h
+	$(CC) $(CFLAGS) mcalign.o -o $@
+
+$(YYWRAP):	$(LEXLIB)
+	ar x $(LEXLIB) $@
+
+mc2wks.o:	mc2wks.c mcver.h mc2wks.h \
+		mcmsg.h mcelldef.h mcommon.h mcell.h mcfileio.h mcutil.h mcmisc.h
+
+wksfio.o:	wksfio.c mc2wks.h lotus.h mcelldef.h mcommon.h mcfileio.h \
+		mcell.h mconvert.h wksrecd.h
+
+wksrecd.o:	wksrecd.c lotus.h lics.h mc2wks.h
+
+mconvert.o:	mconvert.c lotus.h lics.h mc2wks.h mcelldef.h mcparse.h
+
+mcread.o:	mcread.c mcver.h mcmsg.h mcelldef.h mcommon.h mcell.h \
+		mcfileio.h mcpform.h mcutil.h mcmisc.h mcelladr.h
+
+mcpform.o:	mcpform.c mc.h mcell.h mcommon.h mcfileio.h mcpform.h
+
+mcmsg.o:	mcmsg.c mc.h
+
+mcommon.o:	mcommon.c mc.h mcver.h
+
+mcinter.o:	mcinter.c mc.h mcgetmsg.h mcmessag.h mcfile.h mcrun.h \
+		mcgetmnu.h mcrmacro.h mcdisply.h
+
+mcrun.o:	mcrun.c mc.h mcell.h mcinput.h mchelp.h mcommand.h mcrmacro.h \
+		mcrecalc.h mcmenu.h mcact.h mcdisply.h mcmove.h mcfileio.h
+
+mcmove.o:	mcmove.c mc.h mcdisply.h mcwindow.h mcfileio.h
+
+mcmenu.o:	mcmenu.c mc.h mcgetmnu.h mcellact.h mcwindow.h mcommand.h \
+		mcfile.h mcdisply.h mchelp.h mcact.h mcput.h
+
+mcrmacro.o:	mcrmacro.c mc.h mcget.h mcmessag.h
+
+mcommand.o:	mcommand.c mc.h mcell.h mcmessag.h mcinput.h mcget.h \
+		mcdisply.h mcwindow.h mcrange.h mcrwalk.h mcact.h mcrecalc.h mcfileio.h
+
+mcrange.o:	mcrange.c mc.h
+
+mcrwalk.o:	mcrwalk.c mc.h mcutil.h mcmisc.h mcell.h mcelladr.h
+
+mchelp.o:	mchelp.c mc.h mcput.h mcdisply.h
+
+mcwindow.o:	mcwindow.c mc.h mcdisply.h mcmessag.h
+
+mcact.o:	mcact.c mc.h mcinput.h mcmessag.h mcparse.h \
+		mcell.h mcellact.h mcelladr.h mcpipe.h mcrecalc.h \
+		mcget.h mcfile.h mcdisply.h mcellpar.h
+
+mcfile.o:	mcfile.c mc.h mcinput.h mcmessag.h mccalc.h mcrecalc.h \
+		mcpipe.h mcput.h mcfileio.h mcget.h mcdisply.h mcprint.h
+
+mcfileio.o:	mcfileio.c mc.h mcell.h mcfilef.h mcrange.h
+
+mcprint.o:	mcprint.c mc.h mcell.h mcfilef.h mcutil.h mcmisc.h mcfileio.h
+
+mccalc.o:	mccalc.c mc.h mccalc.h mcdisply.h mcfileio.h
+
+mcrecalc.o:	mcrecalc.c mc.h mccalc.h mcdisply.h mcgetmsg.h mcmessag.h
+
+mcpipe.o:	mcpipe.c mc.h mcell.h mcparse.h mcfileio.h mcellpar.h
+
+mcutil.o:	mcutil.c mc.h mcell.h mcelladr.h mcfileio.h
+
+mcmisc.o:	mcmisc.c mc.h mcell.h mcelladr.h mcfileio.h
+
+mcellact.o:	mcellact.c mc.h mcparse.h mcutil.h mcell.h mccalc.h mcrecalc.h \
+		mcmessag.h mcdisply.h mcfileio.h
+
+mcellval.o:	mcellval.c mc.h mcell.h mcellstr.h mcellpar.h mcmessag.h
+
+mcellpar.o:	mcellpar.c mc.h mcell.h mcellstr.h mcparse.h
+
+mcellstr.o:	mcellstr.c mc.h mctime.h mcell.h mcellact.h
+
+mcell.o:	mcell.c mc.h mcunit.h mcfileio.h
+
+mcstderr.o:	mcstderr.c mc.h
+
+mcmessag.o:	mcmessag.c mc.h mcput.h mcget.h mcutil.h mcgetmsg.h mcmessag.h
+
+mcgetmsg.o:	mcgetmsg.c mc.h
+
+mcgetmnu.o:	mcgetmnu.c mc.h
+
+mcinput.o:	mcinput.c mc.h mcstderr.h mcgetmsg.h mcget.h mcmessag.h \
+		mcelladr.h mcgetmnu.h mcdisply.h
+
+mcdisply.o:	mcdisply.c mc.h mcput.h mcutil.h mcell.h mcwindow.h mcrecalc.h \
+		mcfileio.h
+
+mcget.o:	mcget.c mc.h
+
+mcput.o:	mcput.c mc.h
+
+mcparse.o:	mcparse.c mc.h mcell.h mcver.h
+
+mcell123.o:	mcell123.c lotus.h mc.h mcell123.h
+
+mc2parse.o:	mcparse.c mc.h mcell.h
+	cp mcparse.c mc2parse.c
+	$(CC) $(CFLAGS) -DLOTUS -c mc2parse.c
+	rm -f mc2parse.c
+
+pol2tex.o:	pol2tex.c lotus.h mcelldef.h mcelladr.h mcfunc.h \
+		f.tab.h mcell123.h
+
+mc2pary.o:	mcpary.c lotus.h mc.h
+	cp mcpary.c mc2pary.c
+	$(CC) $(CFLAGS) -DLOTUS -c mc2pary.c
+	rm -f mc2pary.c
+
+mcpary.o:	mcpary.c mc.h
+	$(CC) $(CFLAGS) -c mcpary.c
+
+y.tab.h mcpary.c:	mcpary.y
+	$(YACC) $(YFLAGS) mcpary.y
+	mv y.tab.c $@
+	cmp -s y.tab.h l.tab.h || cp y.tab.h l.tab.h
+
+f.tab.h: l.tab.h
+	grep 'define.FUNC' l.tab.h >$@
+
+mcparl.c:	mcparl.l mc.h mcinput.h mcell.h mcellact.h mcelladr.h mcparse.h mcftab.h mcfunc.h
+	$(LEX) $(LFLAGS) mcparl.l
+	mv lex.yy.c $@
+
+mcparl.o:	mcparl.c l.tab.h
+	$(CC) $(CFLAGS) -Wno-unused-function -c mcparl.c
+
+mcparyd.o:	mcpary.c
+	cp mcpary.c mcparyd.c
+	$(CC) -g $(CFLAGS) -DYYDEBUG -c mcparyd.c
+	rm mcparyd.c
+
+mcparld.o:	mcparl.c l.tab.h mc.h
+	cp mcparl.c mcparld.c
+	$(CC) -g $(CFLAGS) -DLEXDEBUG -c mcparld.c
+	rm mcparld.c
+
+mcelladr.o:	mcelladr.c mc.h mcparse.h mcutil.h
+
+mcunit.o:	mcunit.c mc.h
+
+mcftab.o:	mcftab.c mcfunc.h f.tab.h
+
+mc2ftab.o:	mcftab.c mcfunc.h f.tab.h
+	cp mcftab.c mc2ftab.c
+	$(CC) $(CFLAGS) -DLOTUS -c mc2ftab.c
+	rm -f mc2ftab.c
+
+mctime.o:	mctime.c mc.h
+
+mcfinc.o:	mcfinc.c mc.h
+
+mcstat.o:	mcstat.c mc.h mcrwalk.h
+
+mcstring.o:	mcstring.c mc.h
+
+mclogic.o:	mclogic.c mc.h
+
+mclink.o:	mclink.c mc.h
+
+mcuser.o:	mcuser.c mc.h
+
+mcver.h:	../Name
+	awk '	{printf "#define MCREL \"%s\"\n#define MCVER \"%s\"\n", \
+			substr($$2,2,2), substr($$2,5,2)}' \
+		<../Name >$@
+
+mc.h:	mcmsg.h mctext.h mcmnud.h mcmnu.h mcmnu.h mcolor.h mcbool.h \
+	mcelldef.h mckey.h mcommon.h
+	-chmod +w $@
+	touch $@
+
+mcell.h:	mcellact.h mcellstr.h mcelladr.h 
+	-chmod +w $@
+	touch $@
+
+mcmsg.h:	mcmessag.rdb
+	awk -F"	" '$$2=="us" {print "makemsg (" $$1 ", " $$3 ")"}' \
+		<mcmessag.rdb >$@
+
+mcmnu.h:	mcmenus.rdb
+	awk -F"	" '$$2=="us" {print "makemnu (" $$1 ", " $$3 ")"}' \
+		<mcmenus.rdb >$@
+
+#-------------------------------------------------------------------------------
+binall:	.copied
+	test -f ../src/mc.c
+	rm -rf ../mc
+	mkdir ../mc
+	mkdir ../mc/src
+	cd ../src; cp $(SRC) ../mc/src
+	sed '/^CC=/d' <../src/makefile >../mc/src/makefile
+	if [ "$Sys" = "so" -a -f /usr/local/bin/gzip-coff ]; then \
+	  cp /usr/local/bin/gzip-coff gzip; \
+	  chmod u+w gzip; \
+	fi
+	strip $(BIN) || scostrip $(BIN)
+	@echo "$@ done"
+
+.copied:	../src/makefile
+	cp -p ../src/mc ../src/mcmsg ../src/mcmacro ../src/mcunits ../src/mc2wks ../src/mcread \
+		../src/db2rdb ../nro/nro .
+	touch $@
+
+binclean:
+	test -f ../src/mc.c
+	rm -rf .copied $(BIN) gzip ../mc
+
+#-------------------------------------------------------------------------------
+mcall:
+	@echo "$@ done"
+
+mcclean:
+	rm -f $(SRC)
+
+#-------------------------------------------------------------------------------
+
+exmall:
+	@echo "$@ done"
+
+exmclean:
+	@echo "$@ done"
+
+#-------------------------------------------------------------------------------
+liball:	mcmsg_us.rdb mcmnu_us.rdb \
+	mcmsg_ge.rdb mcmnu_ge.rdb \
+	mcmsg_fr.rdb mcmnu_fr.rdb \
+	mcmsg_pl.rdb mcmnu_pl.rdb \
+	binunits
+	rm -f nro.*
+	cp ../nro/nro.s ../nro/nro.an .
+	@echo "$@ done"
+
+libclean:
+	rm -f mcmsg*.rdb mcmnu*.rdb binunits nro.*
+
+mcmsg.rdb:	msgh2rdb ../src/mcmsg.h
+	./msgh2rdb us <../src/mcmessag.rdb >$@
+
+mcmnu.rdb:	mnuh2rdb ../src/mcmnu.h
+	./mnuh2rdb us <../src/mcmenus.rdb | tr ';' , >$@
+
+mcmsg_us.rdb:	mcmsg.rdb
+	rm -f $@
+	ln mcmsg.rdb $@
+
+mcmnu_us.rdb:	mcmnu.rdb
+	rm -f $@
+	ln mcmnu.rdb $@
+
+mcmsg_ge.rdb:	msgh2rdb ../src/mcmsg.h
+	./msgh2rdb ge <../src/mcmessag.rdb >$@
+
+mcmnu_ge.rdb:	mnuh2rdb ../src/mcmnu.h
+	./mnuh2rdb ge <../src/mcmenus.rdb | tr ';' , >$@
+
+mcmsg_fr.rdb:	msgh2rdb ../src/mcmsg.h
+	./msgh2rdb fr <../src/mcmessag.rdb >$@
+
+mcmnu_fr.rdb:	mnuh2rdb ../src/mcmnu.h
+	./mnuh2rdb fr <../src/mcmenus.rdb | tr ';' , >$@
+
+mcmsg_pl.rdb:	msgh2rdb ../src/mcmsg.h
+	./msgh2rdb pl <../src/mcmessag.rdb >$@
+
+mcmnu_pl.rdb:	mnuh2rdb ../src/mcmnu.h
+	./mnuh2rdb pl <../src/mcmenus.rdb | tr ';' , >$@
+
+binunits:	mcunits.rdb
+	ARX=.. ../bin/mcunits -u
+
+#-------------------------------------------------------------------------------
+manall:	cat1/mc.1 cat1/mcunits.1 cat1/nro.1 cat1/db2rdb.1
+	@echo "$@ done"
+
+manclean:
+	-rm -f mcver.r mc.1 mc.pcl mc.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 cat1/*.1 tmac.an*
+
+tmac.an:	$(ARXSRC)/man/tmac.an
+	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.an >$@
+
+tmac.anp:	$(ARXSRC)/man/tmac.anp
+	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.anp >$@
+
+cat1/mc.1:	mc.1
+	$(NROFF) $(NFLAGS) -man mc.1 | col -b >$@
+
+mc.1:	tmac.an mc.r \
+	mcdesc.r mccont.r mcopt.r mcover.r mcfile.r mccalc.r mckey.r mcmove.r \
+	mcrange.r mcmenu.r mcmac.r mcform.r mctext.r mcformu.r mcoper.r \
+	mcunit.r mcpipe.r mcrdb.r mclink.r mcmath.r mclogic.r mcfinc.r \
+	mcstat.r mctime.r mcstring.r mcuser.r mclang.r mcprint.r mcattr.r \
+	mc2wks.r mcdbase.r mcsample.r mclimit.r mcfiles.r mcver.r
+	soelim <mc.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+
+mc.r:	mcver.r
+	-chmod +w $@
+	touch $@
+
+mcver.r:	../Name
+	awk '	{printf ".ds Vs %s\n.nr V %s\n", $$2, substr($$2,2,1)}' <../Name >$@
+
+db2rdb.1:	db2rdb.r dbdesc.r dbopt.r dbfile.r dbfiles.r dblimit.r dbsample.r
+	soelim <db2rdb.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+
+cat1/db2rdb.1:	db2rdb.1
+	$(NROFF) $(NFLAGS) -man db2rdb.1 | col -b >$@
+
+mcunits.1:	mcunits.r
+	soelim <mcunits.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+
+cat1/mcunits.1:	mcunits.1
+	$(NROFF) $(NFLAGS) -man mcunits.1 | col -b >$@
+
+cat1/nro.1:	../nro/nro.man
+	cp ../nro/nro.man $@
+
+#-------------------------------------------------------------------------------
+nroall:	nro nro.man
+	@echo "$@ done"
+
+nroclean:
+	rm -f nro *.o nro.man
+
+nro:	nro.o nrotxt.o nrocmd.o
+	$(CC) nro.o nrotxt.o nrocmd.o -o $@
+
+nro.o:	nro.c nro.h
+	$(CC) -w -c -o $@ nro.c
+
+nrotxt.o:	nrotxt.c nro.h
+	$(CC) -w -Wno-return-type -c -o $@ nrotxt.c
+
+nrocmd.o:	nrocmd.c nro.h
+	$(CC) -w -Wno-return-type -c -o $@ nrocmd.c
+
+nro.man:	nro nro.an nro.nro
+	-./nro nro.an nro.nro >$@
+
+#-------------------------------------------------------------------------------
+tstall:
+	./testmc
+	ident ../bin/mc
+	@echo "$@ done"
+
+tstclean:
+	rm -f core core.* formula.wks
