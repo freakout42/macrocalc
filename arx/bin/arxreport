@@ -1,7 +1,7 @@
 #!/bin/sh
 # $Id: arxreport,v 1.6 2016/10/31 18:27:49 axel Exp $
 #set -x
-USAGE="Usage: report [ -t<fs> ] [ -c<name> ] file <table"
+USAGE="Usage: report [ -t<fs> ] [ -c<name> ] file [ ext ] <table"
 FIELDSEP="	"
 while getopts "t:c:" o
 do
@@ -13,7 +13,7 @@ do
 	esac
 done
 shift `expr $OPTIND - 1`
-if [ $# -ne 1 ]
+if [ $# -ne 1 -a $# -ne 2 ]
 then
 	echo $USAGE
 	exit 2
@@ -24,7 +24,7 @@ then
 else
 	INOUT=$1
 fi
-
+RELEVANT=${2:-nYYa}
 awk -F"$FIELDSEP" 'BEGIN	{}
 NR==1	{
 	fields=split($0,headers)
@@ -42,7 +42,7 @@ NR>1	{
 		}
 	if (index("'"$INOUT"'", ">")) ext=$1
 	else ext=""
-	system("sed '\''" sedcmd "'\'' '"$INOUT"'" ext)
+	if ("'$RELEVANT'"=="nYYa" || ext=="'$RELEVANT'") system("sed '\''" sedcmd "'\'' '"$INOUT"'" ext)
 	sedcmd=""
 	}'
 exit

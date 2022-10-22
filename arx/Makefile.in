@@ -24,10 +24,10 @@ OSMISS=$Omiss
 CURINC=$Curinc
 
 all:
-	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all; cd ..; done
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all || break; cd ..; done
 
 init:	Makefile.in
-	bin/arxreport -t: -cMakefile Makefile.in <../sys.rdb
+	bin/arxreport -t: -cMakefile Makefile.in $(PLATID) <../sys.rdb
 
 clean:
 	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}clean; cd ..; done

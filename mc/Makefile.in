@@ -33,14 +33,13 @@ AR=$Ar
 ARFLAGS=rsv
 
 all:
-	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all; cd ..; done
+	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all PLATID=$(PLATID) || break; cd ..; done
 
 init:	Makefile.in
-	../arx/bin/arxreport -t: -cMakefile Makefile.in <../sys.rdb
+	../arx/bin/arxreport -t: -cMakefile Makefile.in $(PLATID) <../sys.rdb
 
 clean:
 	find . -name core\* -type f -exec rm {} \;
-	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}clean; cd ..; done
 	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}clean; cd ..; done
 	mv Makefile.in Makefile.save
 	rm -f Makefile.?? Makefile
@@ -100,7 +99,7 @@ mc_io.o:	$(IOBJ) $(DOBJ) $(ARXCLIB)
 	$(LD) $(LDR) $(LDFLAGS) $(IOBJ) $(DOBJ) $(ARXCLIB) $(CURLIB) -o $@
 
 makefile:	mcuser.mk
-	../../arx/bin/arxreport -t: -cmakefile mcuser.mk <../../sys.rdb
+	../../arx/bin/arxreport -t: -cmakefile mcuser.mk $(PLATID) <../../sys.rdb
 	cp makefile.$Sys $@
 
 libmcf.a:	$(BOBJ)

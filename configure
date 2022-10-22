@@ -9,7 +9,7 @@ case `uname -s` in
   *) echo 'unknown platform - please help porting' >&2;;
 esac
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done
-rm -rf Makefile dist
+rm -rf Makefile dist arx/lib
 test "$1" = "clean" && exit
 DISTID=mc-$VERSID-$PLATID-$HARDID
 echo "configuring for $DISTID" >&2
@@ -34,10 +34,10 @@ dist/arx.tar.gz: mc/bin/mc
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
 mc/bin/mc: arx/lib/libarx.a
 	-mkdir mc/man/cat1
-	cd mc; make -f Makefile.in init; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
+	cd mc; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}" PLATID="${PLATID}"
 arx/lib/libarx.a:
 	-mkdir arx/lib
-	cd arx; make -f Makefile.in init; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
+	cd arx; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
 clean:
 	./configure clean
 EOF
