@@ -20,102 +20,16 @@
 #include "nro.h"
 #include "nrodef.c"
 
-main(argc,argv)
-int argc;
-char *argv[];
-{
-	FILE *ifp, *ofp;
-	int i;
-	int swflg;
-
-	swflg = FALSE;
-	pout = stdout;
-	ifp = stdin;
-	ofp = stdout;
-	init();
-	for (i=1; i<argc; ++i)
-	{
-		if (*argv[i] == '-' || *argv[i] == '+')
-		{
-			if (pswitch(argv[i],&swflg) == ERR)
-				exit(2);
-		}
-	}
-	for (i=1; i<argc; ++i)
-	{
-		if (*argv[i] != '-' && *argv[i] != '+')
-		{
-			if ((ifp = sofile[0] = fopen(argv[i],"r")) == NULL)
-			{
-				fprintf (stderr, "nro: unable to open file %s\n",argv[i]);
-				exit(3);
-			}
-			else
-			{
-				profile();
-				fclose(sofile[0]);
-			}
-		}
-	}
-	if (ifp == stdin)
-	{
-		sofile[0] = ifp;
-		profile();
-		fclose(sofile[0]);
-	}
-	if (/*swflg ==*/ FALSE /*|| argc <= 1*/)
-	{
-		puts("Usage: nro [-n] [+n] [-pxx] [-v] [-b] [-mmacfile] infile ... [>outfile]\n");
-		exit(1);
-	}
-	if (pout != stdout)
-	{
-		fflush(pout);
-		fclose(pout);
-	}
-exit(0);
-}
-
-
-
-/*
- *	retrieve one line of input text
- */
-
-getlin(p, in_buf)
-char *p;
-FILE *in_buf;
-{
-	int i;
-	int c;
-	char *q;
-
-	q = p;
-	for (i=0; i<MAXLINE-1; ++i)
-	{
-		c = ngetc(in_buf);
-		if(c == EOF)
-		{
-			*q = '\0';
-			c = strlen(p);
-			return(c == 0 ? EOF : c);
-		}
-		*q++ = c;
-		if (c == '\n') break;
-	}
-	*q = '\0';
-#ifdef DEBUG
-	fprintf (stderr, "getlin: \"%s\"\n", p);
-#endif
-	return(strlen(p));
-}
-
-
+int ctod();
+void set();
+void space();
+void comand();
+void text();
 
 /*
  *	initialize parameters for nro word processor
  */
-
+void
 init()
 {
 	int i;
@@ -169,11 +83,10 @@ init()
 	mac.ppb = NULL;
 }
 
-
 /*
  *	get character from input file or push back buffer
  */
-
+int
 ngetc(infp)
 FILE *infp;
 {
@@ -189,12 +102,42 @@ FILE *infp;
 	return(c);
 }
 
+/*
+ *	retrieve one line of input text
+ */
+int
+getlin(p, in_buf)
+char *p;
+FILE *in_buf;
+{
+	int i;
+	int c;
+	char *q;
 
+	q = p;
+	for (i=0; i<MAXLINE-1; ++i)
+	{
+		c = ngetc(in_buf);
+		if(c == EOF)
+		{
+			*q = '\0';
+			c = strlen(p);
+			return(c == 0 ? EOF : c);
+		}
+		*q++ = c;
+		if (c == '\n') break;
+	}
+	*q = '\0';
+#ifdef DEBUG
+	fprintf (stderr, "getlin: \"%s\"\n", p);
+#endif
+	return(strlen(p));
+}
 
 /*
  *	process input files from command line
  */
-
+void
 profile()
 {
 	char ibuf[MAXLINE];
@@ -215,12 +158,10 @@ profile()
 		space(HUGE);
 }
 
-
-
 /*
  *	process switch values from command line
  */
-
+int
 pswitch(p,q)
 char *p;
 int *q;
@@ -301,4 +242,60 @@ int *q;
 		return(ERR);
 	}
 	return(OK);
+}
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+	FILE *ifp, *ofp;
+	int i;
+	int swflg;
+
+	swflg = FALSE;
+	pout = stdout;
+	ifp = stdin;
+	ofp = stdout;
+	init();
+	for (i=1; i<argc; ++i)
+	{
+		if (*argv[i] == '-' || *argv[i] == '+')
+		{
+			if (pswitch(argv[i],&swflg) == ERR)
+				exit(2);
+		}
+	}
+	for (i=1; i<argc; ++i)
+	{
+		if (*argv[i] != '-' && *argv[i] != '+')
+		{
+			if ((ifp = sofile[0] = fopen(argv[i],"r")) == NULL)
+			{
+				fprintf (stderr, "nro: unable to open file %s\n",argv[i]);
+				exit(3);
+			}
+			else
+			{
+				profile();
+				fclose(sofile[0]);
+			}
+		}
+	}
+	if (ifp == stdin)
+	{
+		sofile[0] = ifp;
+		profile();
+		fclose(sofile[0]);
+	}
+	if (/*swflg ==*/ FALSE /*|| argc <= 1*/)
+	{
+		puts("Usage: nro [-n] [+n] [-pxx] [-v] [-b] [-mmacfile] infile ... [>outfile]\n");
+		exit(1);
+	}
+	if (pout != stdout)
+	{
+		fflush(pout);
+		fclose(pout);
+	}
+exit(0);
 }

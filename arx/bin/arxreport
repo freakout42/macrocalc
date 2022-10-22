@@ -25,7 +25,7 @@ else
 	INOUT=$1
 fi
 
-gawk -F"$FIELDSEP" 'BEGIN	{}
+awk -F"$FIELDSEP" 'BEGIN	{}
 NR==1	{
 	fields=split($0,headers)
 	sedcmd=""

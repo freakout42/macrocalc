@@ -294,6 +294,6 @@ extern char *lib_path (char *path, char *file, int mode);
 
 #endif
 
-#ifdef _TIME_H
+#if defined(_TIME_H) || defined(_TIME_H_)
 time_t lib_mktm (struct tm *tp);
 #endif

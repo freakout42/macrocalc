@@ -8,10 +8,258 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include "nro.h"
 #include "nrocom.c"
 
+void brek();
+void expesc();
+
+/*
+ *	spread words to justify right margin
+ */
+void
+spread(p,outp,nextra,outwds)
+char p[];
+int outp,nextra,outwds;
+{
+	int i,j;
+	int nb,ne,nholes;
+
+	if((nextra <= 0) || (outwds <= 1))
+		return;
+	dc.sprdir = ~dc.sprdir;
+	ne = nextra;
+	nholes = outwds - 1;	/* holes between words */
+	i = outp - 1;	/* last non-blank character */
+#ifdef MSDOS
+	j = min(MAXLINE-3,i+ne); /* leave room for CR, LF, '\0'  */
+#else
+	j = min(MAXLINE-2,i+ne); /* leave room for LF, '\0'  */
+#endif
+	while(i < j)
+	{
+		p[j] = p[i];
+		if(p[i] == ' ')
+		{
+			if(dc.sprdir == 0) nb = (ne - 1)/nholes + 1;
+			else nb = ne/nholes;
+			ne -= nb;
+			--nholes;
+			for(; nb>0; --nb)
+			{
+				--j;
+				p[j] = ' ';
+			}
+		}
+		--i;
+		--j;
+	}
+}
+
+/*
+ *	compute width of character string
+ */
+int
+width(s)
+char *s;
+{
+	int w;
+
+	w = 0;
+	while (*s != '\0')
+	{
+		if(*s == '\b')
+			--w;
+		else if(*s != '\n' && *s != '\r')
+			++w;
+		++s;
+	}
+	return(w);
+}
+
+/*
+ *	put word in output buffer
+ */
+void
+putwrd(wrdbuf)
+char *wrdbuf;
+{
+	int w;
+	int last;
+	int llval;
+	char *p0, *p1;
+	int nextra;
+
+	w = width(wrdbuf);
+	last = strlen(wrdbuf) + co.outp;
+	llval = dc.rmval - dc.tival;
+	if(((co.outp > 0) && ((co.outw + w) > llval)) || (last > MAXLINE))
+	{
+		last -= co.outp;
+		if(dc.juval == YES)
+		{
+			nextra = llval - co.outw + 1;
+			/*
+			*	Check whether last word was end of
+			*	sentence and modify counts so that
+			*	it is right justified.
+			*/
+			if (co.outbuf[co.outp-2] == ' ')
+			{
+				--co.outp;
+				++nextra;
+			}
+			spread(co.outbuf,co.outp-1,nextra,co.outwds);
+			if((nextra > 0) && (co.outwds > 1))
+			{
+				co.outp += (nextra - 1);
+			}
+		}
+		brek();
+	}
+	p0 = wrdbuf;
+	p1 = co.outbuf + co.outp;
+	while(*p0 != '\0')
+		*p1++ = *p0++;
+	co.outp = last;
+	co.outbuf[co.outp++] = ' ';
+	co.outw += w + 1;
+	++co.outwds;
+}
+
+/*
+ *	delete leading blanks, set tival
+ */
+void
+leadbl(p)
+char *p;
+{
+	int i,j;
+
+	brek();
+	for (i=0; p[i] == ' '; ++i)
+		;
+	if(p[i] != '\n' && p[i] != '\r')
+		dc.tival = i;
+	for(j=0; p[i] != '\0'; ++j)
+		p[j] = p[i++];
+	p[j] = '\0';
+}
+
+/*
+ *	underline a line
+ */
+void
+underl(p0,p1,size)
+char *p0,*p1;
+int size;
+{
+	int i,j;
+
+	j = 0;
+	for (i=0; (p0[i] != '\n') && (j < size-1); ++i)
+	{
+		if (p0[i] >= ' ' && p0[i] <= '~')
+		{
+			if (isalpha(p0[i]) || isdigit(p0[i]) || dc.cuval > 0)
+			{
+				p1[j++] = '_';
+				p1[j++] = '\b';
+			}
+		}
+		p1[j++] = p0[i];
+	}
+	p1[j++] = '\n';
+	p1[j] = '\0';
+	while (*p1 != '\0') *p0++ = *p1++;
+	*p0 = '\0';
+}
+
+/*
+ *	insert bold face text
+ */
+void
+bold(p0,p1,size)
+char *p0, *p1;
+int size;
+{
+	int i, j;
+
+	j = 0;
+	for (i=0; (p0[i] != '\n') && (j < size-1); ++i)
+	{
+		if (isalpha(p0[i]) || isdigit(p0[i]))
+		{
+			p1[j++] = p0[i];
+			p1[j++] = '\b';
+		}
+		p1[j++] = p0[i];
+	}
+	p1[j++] = '\n';
+	p1[j] = '\0';
+	while (*p1 != '\0')
+		*p0++ = *p1++;
+	*p0 = '\0';
+}
+
+/*
+ *	center a line by setting tival
+ */
+void
+center(p)
+char *p;
+{
+	dc.tival = max((dc.rmval + dc.tival - width(p)) >> 1,0);
+}
+
+void put();
+
+/*
+ *	get non-blank word from p0 into p1.
+ *	return number of characters processed.
+ */
+int
+getwrd(p0,p1)
+char *p0,*p1;
+{
+	int i;
+	char *p, c;
+
+	i = 0;
+	while (*p0 == ' ' || *p0 == '\t')
+	{
+		++i;
+		++p0;
+	}
+	p = p0;
+	while (*p0 != ' ' && *p0 != '\0' && *p0 != '\t')
+	{
+		if(*p0 == '\n' || *p0 == '\r')
+			break;
+		*p1 = *p0++;
+		++p1;
+		++i;
+	}
+	c = *(p1-1);
+	if(c == '"')
+		c = *(p1-2);
+	if (c == '?' || c == '!')
+	{
+		*p1++ = ' ';
+		++i;
+	}
+	if (c == '.' && (*p0 == '\n' || *p0 == '\r' || islower(*p)))
+	{
+		*p1++ = ' ';
+		++i;
+	}
+	*p1 = '\0';
+	return(i);
+}
+
+void
 text(p)
 char *p;
 {
@@ -68,48 +316,6 @@ char *p;
 	}
 }
 
-
-/*
- *	insert bold face text
- */
-
-bold(p0,p1,size)
-char *p0, *p1;
-int size;
-{
-	int i, j;
-
-	j = 0;
-	for (i=0; (p0[i] != '\n') && (j < size-1); ++i)
-	{
-		if (isalpha(p0[i]) || isdigit(p0[i]))
-		{
-			p1[j++] = p0[i];
-			p1[j++] = '\b';
-		}
-		p1[j++] = p0[i];
-	}
-	p1[j++] = '\n';
-	p1[j] = '\0';
-	while (*p1 != '\0')
-		*p0++ = *p1++;
-	*p0 = '\0';
-}
-
-
-
-
-/*
- *	center a line by setting tival
- */
-
-center(p)
-char *p;
-{
-	dc.tival = max((dc.rmval + dc.tival - width(p)) >> 1,0);
-}
-
-
 /*
  *	expand title buffer to include character string
  */
@@ -159,56 +365,10 @@ char delim;
 	return(p);
 }
 
-
-
-/*
- *	get non-blank word from p0 into p1.
- *	return number of characters processed.
- */
-
-getwrd(p0,p1)
-char *p0,*p1;
-{
-	int i;
-	char *p, c;
-
-	i = 0;
-	while (*p0 == ' ' || *p0 == '\t')
-	{
-		++i;
-		++p0;
-	}
-	p = p0;
-	while (*p0 != ' ' && *p0 != '\0' && *p0 != '\t')
-	{
-		if(*p0 == '\n' || *p0 == '\r')
-			break;
-		*p1 = *p0++;
-		++p1;
-		++i;
-	}
-	c = *(p1-1);
-	if(c == '"')
-		c = *(p1-2);
-	if (c == '?' || c == '!')
-	{
-		*p1++ = ' ';
-		++i;
-	}
-	if (c == '.' && (*p0 == '\n' || *p0 == '\r' || islower(*p)))
-	{
-		*p1++ = ' ';
-		++i;
-	}
-	*p1 = '\0';
-	return(i);
-}
-
-
 /*
  *	convert integer to decimal ascii string
  */
-
+int
 itoda(value,p,size)
 int value;
 char *p;
@@ -233,11 +393,10 @@ int size;
 	return(i);
 }
 
-
 /*
  *	center title text into print buffer
  */
-
+void
 justcntr(p,q,limit)
 char *p, *q;
 int limit[];
@@ -249,8 +408,6 @@ int limit[];
 	while(*p != '\0')
 		*q++ = *p++;
 }
-
-
 
 /*
  *	left justify title text into print buffer
@@ -264,7 +421,6 @@ int limit;
 	while (*p != '\0')
 		*q++ = *p++;
 }
-
 
 /*
  *	right justify title text into print buffer
@@ -282,96 +438,10 @@ int limit;
 		*q++ = *p++;
 }
 
-
-
-
-/*
- *	delete leading blanks, set tival
- */
-
-leadbl(p)
-char *p;
-{
-	int i,j;
-
-	brek();
-	for (i=0; p[i] == ' '; ++i)
-		;
-	if(p[i] != '\n' && p[i] != '\r')
-		dc.tival = i;
-	for(j=0; p[i] != '\0'; ++j)
-		p[j] = p[i++];
-	p[j] = '\0';
-}
-/*
- *	put out page footer
- */
-
-pfoot()
-{
-	if (dc.prflg == TRUE)
-	{
-		skip(pg.m3val);
-		if (pg.m4val > 0)
-		{
-			if ((pg.curpag % 2) == 0)
-			{
-				puttl(pg.efoot,pg.eflim,pg.curpag);
-			}
-			else
-			{
-				puttl(pg.ofoot,pg.oflim,pg.curpag);
-			}
-			skip(pg.m4val - 1);
-		}
-	}
-}
-
-
-
-/*
- *	put out page header
- */
-
-phead()
-{
-	pg.curpag = pg.newpag;
-	if(pg.curpag >= pg.frstpg && pg.curpag <= pg.lastpg)
-	{
-		dc.prflg = TRUE;
-	}
-	else
-	{
-		dc.prflg = FALSE;
-	}
-	++pg.newpag;
-	if(dc.prflg == TRUE)
-	{
-		if(pg.m1val > 0)
-		{
-			skip(pg.m1val - 1);
-			if((pg.curpag % 2) == 0)
-			{
-				puttl(pg.ehead,pg.ehlim,pg.curpag);
-			}
-			else
-			{
-				puttl(pg.ohead,pg.ohlim,pg.curpag);
-			}
-		}
-		skip(pg.m2val);
-	}
-	/*
-	*	initialize lineno for the next page
-	*/
-	pg.lineno = pg.m1val + pg.m2val + 1;
-}
-
-
 /*
  *	print character with test for printer
  */
-
+void
 prchar(c,fp)
 char c;
 FILE *fp;
@@ -386,55 +456,32 @@ FILE *fp;
 	}
 }
 
-
-
-
 /*
- *	put out line with proper spacing and indenting
+ *	skips the number of lines specified by n.
  */
-
-put(p)
-char *p;
+void
+skip(n)
+int n;
 {
-	char os[MAXLINE];
-	int j;
+	int i;
 
-	if (pg.lineno == 0 || pg.lineno > pg.bottom)
+	if (dc.prflg == TRUE && n > 0)
 	{
-		phead();
-	}
-	if(dc.prflg == TRUE)
-	{
-		if (!dc.bsflg)
+		for(i=0; i<n; ++i)
 		{
-			if (strkovr(p,os) == TRUE)
-			{
-				for(j=0; j<pg.offset; ++j)
-					prchar(' ',pout);
-				for(j=0; j<dc.tival; ++j)
-					prchar(' ',pout);
-				putlin(os,pout);
-			}
+			prchar('\n',pout);
 		}
-		for(j=0; j<pg.offset; ++j)
-			prchar(' ',pout);
-		for(j=0; j<dc.tival; ++j)
-			prchar(' ',pout);
-		putlin(p,pout);
+#ifdef MSDOS
+		prchar('\r',pout);
+#endif
 	}
-	dc.tival = dc.inval;
-	skip(min(dc.lsval-1,pg.bottom-pg.lineno));
-	pg.lineno = pg.lineno + dc.lsval;
-	if (pg.lineno > pg.bottom)
-		pfoot();
 }
-
 
 /*
  *	output a null terminated string to the file
  *	specified by pbuf.
  */
-
+void
 putlin(p,pbuf)
 char *p;
 FILE *pbuf;
@@ -443,12 +490,10 @@ FILE *pbuf;
 		prchar(*p++,pbuf);
 }
 
-
-
 /*
  *	put out title or footer
  */
-
+void
 puttl(p,lim,pgno)
 char *p;
 int lim[];
@@ -489,125 +534,71 @@ int pgno;
 }
 
 /*
- *	spread words to justify right margin
+ *	put out page footer
  */
 void
-spread(p,outp,nextra,outwds)
-char p[];
-int outp,nextra,outwds;
+pfoot()
 {
-	int i,j;
-	int nb,ne,nholes;
-
-	if((nextra <= 0) || (outwds <= 1))
-		return;
-	dc.sprdir = ~dc.sprdir;
-	ne = nextra;
-	nholes = outwds - 1;	/* holes between words */
-	i = outp - 1;	/* last non-blank character */
-#ifdef MSDOS
-	j = min(MAXLINE-3,i+ne); /* leave room for CR, LF, '\0'  */
-#else
-	j = min(MAXLINE-2,i+ne); /* leave room for LF, '\0'  */
-#endif
-	while(i < j)
+	if (dc.prflg == TRUE)
 	{
-		p[j] = p[i];
-		if(p[i] == ' ')
+		skip(pg.m3val);
+		if (pg.m4val > 0)
 		{
-			if(dc.sprdir == 0) nb = (ne - 1)/nholes + 1;
-			else nb = ne/nholes;
-			ne -= nb;
-			--nholes;
-			for(; nb>0; --nb)
+			if ((pg.curpag % 2) == 0)
 			{
-				--j;
-				p[j] = ' ';
+				puttl(pg.efoot,pg.eflim,pg.curpag);
 			}
+			else
+			{
+				puttl(pg.ofoot,pg.oflim,pg.curpag);
+			}
+			skip(pg.m4val - 1);
 		}
-		--i;
-		--j;
 	}
 }
 
 /*
- *	put word in output buffer
+ *	put out page header
  */
-
-putwrd(wrdbuf)
-char *wrdbuf;
+void
+phead()
 {
-	int w;
-	int last;
-	int llval;
-	char *p0, *p1;
-	int nextra;
-
-	w = width(wrdbuf);
-	last = strlen(wrdbuf) + co.outp;
-	llval = dc.rmval - dc.tival;
-	if(((co.outp > 0) && ((co.outw + w) > llval)) || (last > MAXLINE))
+	pg.curpag = pg.newpag;
+	if(pg.curpag >= pg.frstpg && pg.curpag <= pg.lastpg)
 	{
-		last -= co.outp;
-		if(dc.juval == YES)
+		dc.prflg = TRUE;
+	}
+	else
+	{
+		dc.prflg = FALSE;
+	}
+	++pg.newpag;
+	if(dc.prflg == TRUE)
+	{
+		if(pg.m1val > 0)
 		{
-			nextra = llval - co.outw + 1;
-			/*
-			*	Check whether last word was end of
-			*	sentence and modify counts so that
-			*	it is right justified.
-			*/
-			if (co.outbuf[co.outp-2] == ' ')
+			skip(pg.m1val - 1);
+			if((pg.curpag % 2) == 0)
 			{
-				--co.outp;
-				++nextra;
+				puttl(pg.ehead,pg.ehlim,pg.curpag);
 			}
-			spread(co.outbuf,co.outp-1,nextra,co.outwds);
-			if((nextra > 0) && (co.outwds > 1))
+			else
 			{
-				co.outp += (nextra - 1);
+				puttl(pg.ohead,pg.ohlim,pg.curpag);
 			}
 		}
-		brek();
+		skip(pg.m2val);
 	}
-	p0 = wrdbuf;
-	p1 = co.outbuf + co.outp;
-	while(*p0 != '\0')
-		*p1++ = *p0++;
-	co.outp = last;
-	co.outbuf[co.outp++] = ' ';
-	co.outw += w + 1;
-	++co.outwds;
+	/*
+	*	initialize lineno for the next page
+	*/
+	pg.lineno = pg.m1val + pg.m2val + 1;
 }
-
-
-/*
- *	skips the number of lines specified by n.
- */
-
-skip(n)
-int n;
-{
-	int i;
-
-	if (dc.prflg == TRUE && n > 0)
-	{
-		for(i=0; i<n; ++i)
-		{
-			prchar('\n',pout);
-		}
-#ifdef MSDOS
-		prchar('\r',pout);
-#endif
-	}
-}
-
-
 
 /*
  *	split overstrikes (backspaces) into seperate buffer
  */
-
+int
 strkovr(p,q)
 char *p, *q;
 {
@@ -642,55 +633,43 @@ char *p, *q;
 	return(bsflg);
 }
 
-
-
 /*
- *	underline a line
+ *	put out line with proper spacing and indenting
  */
-
-underl(p0,p1,size)
-char *p0,*p1;
-int size;
+void
+put(p)
+char *p;
 {
-	int i,j;
+	char os[MAXLINE];
+	int j;
 
-	j = 0;
-	for (i=0; (p0[i] != '\n') && (j < size-1); ++i)
+	if (pg.lineno == 0 || pg.lineno > pg.bottom)
 	{
-		if (p0[i] >= ' ' && p0[i] <= '~')
+		phead();
+	}
+	if(dc.prflg == TRUE)
+	{
+		if (!dc.bsflg)
 		{
-			if (isalpha(p0[i]) || isdigit(p0[i]) || dc.cuval > 0)
+			if (strkovr(p,os) == TRUE)
 			{
-				p1[j++] = '_';
-				p1[j++] = '\b';
+				for(j=0; j<pg.offset; ++j)
+					prchar(' ',pout);
+				for(j=0; j<dc.tival; ++j)
+					prchar(' ',pout);
+				putlin(os,pout);
 			}
 		}
-		p1[j++] = p0[i];
+		for(j=0; j<pg.offset; ++j)
+			prchar(' ',pout);
+		for(j=0; j<dc.tival; ++j)
+			prchar(' ',pout);
+		putlin(p,pout);
 	}
-	p1[j++] = '\n';
-	p1[j] = '\0';
-	while (*p1 != '\0') *p0++ = *p1++;
-	*p0 = '\0';
+	dc.tival = dc.inval;
+	skip(min(dc.lsval-1,pg.bottom-pg.lineno));
+	pg.lineno = pg.lineno + dc.lsval;
+	if (pg.lineno > pg.bottom)
+		pfoot();
 }
 
-
-/*
- *	compute width of character string
- */
-
-width(s)
-char *s;
-{
-	int w;
-
-	w = 0;
-	while (*s != '\0')
-	{
-		if(*s == '\b')
-			--w;
-		else if(*s != '\n' && *s != '\r')
-			++w;
-		++s;
-	}
-	return(w);
-}

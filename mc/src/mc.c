@@ -13,6 +13,7 @@
 #include "mcinter.h"
 #include "mcrmacro.h"
 #include "mcmessag.h"
+#include "mcfileio.h"
 #include "mccalc.h"
 #include "mcunit.h"
 #include "mcutil.h"

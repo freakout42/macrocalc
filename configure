@@ -2,9 +2,10 @@
 test -f mc/Name || exit 1
 PATH=`pwd`/arx/bin:$PATH
 VERSID=`awk '{print substr($2,2)}' mc/Name`
-case `uname -o` in
-  GNU/Linux) PLATID=lu; HARDID=`uname -i`;;
+case `uname -s` in
+  Linux)   PLATID=lu; HARDID=`uname -i`;;
   FreeBSD) PLATID=fb; HARDID=`uname -p`;;
+  Darwin)  PLATID=md; HARDID=`uname -m`;;
   *) echo 'unknown platform - please help porting' >&2;;
 esac
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done
@@ -25,7 +26,7 @@ dist/arx.tar.gz: mc/bin/mc
 	-mkdir dist/arx dist/arx/man dist/arx/man/man1
 	for D in bin lib exm; do cp -r mc/\$\$D dist/arx; done
 	rm dist/arx/bin/.copied
-	ln dist/arx/bin/mc dist/arx/bin/321
+	-ln dist/arx/bin/mc dist/arx/bin/321
 	for M in db2rdb mc mcunits; do cp mc/man/\$\$M.1 dist/arx/man/man1; done
 	cp mc/man/cat1/nro.1 dist/arx/man/man1
 	chmod -R u+rwX,g-w,g+rX,o-w,o+rX dist
@@ -33,10 +34,10 @@ dist/arx.tar.gz: mc/bin/mc
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
 mc/bin/mc: arx/lib/libarx.a
 	-mkdir mc/man/cat1
-	cd mc; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
+	cd mc; make -f Makefile.in init; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
 arx/lib/libarx.a:
 	-mkdir arx/lib
-	cd arx; make -f Makefile.in init; ln Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
+	cd arx; make -f Makefile.in init; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
 clean:
 	./configure clean
 EOF
