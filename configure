@@ -8,6 +8,7 @@ case `uname -s` in
   Darwin)  PLATID=md; HARDID=`uname -m`;;
   *) echo 'unknown platform - please help porting' >&2;;
 esac
+HARDID=${HARDID:-x86}
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done
 rm -rf Makefile dist arx/lib
 test "$1" = "clean" && exit

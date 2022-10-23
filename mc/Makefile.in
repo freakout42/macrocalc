@@ -110,7 +110,7 @@ mcmsg:	mcmsg.o
 
 mcmacro:	mcmacro.l
 	$(LEX) $(LFLAGS) mcmacro.l
-	$(CC) $(CFLAGS) -Wno-unused-function lex.yy.c $(ARXLIB) $(LEXLIB) -o $@
+	$(CC) $(CFLAGS) -Wno-error lex.yy.c $(ARXLIB) $(LEXLIB) -o $@
 
 db2rdb:	db2rdb.o db2use.o
 	$(CC) $(CFLAGS) db2rdb.o db2use.o $(ARXLIB) -o $@
@@ -260,7 +260,7 @@ mcparl.c:	mcparl.l mc.h mcinput.h mcell.h mcellact.h mcelladr.h mcparse.h mcftab
 	mv lex.yy.c $@
 
 mcparl.o:	mcparl.c l.tab.h
-	$(CC) $(CFLAGS) -Wno-unused-function -c mcparl.c
+	$(CC) $(CFLAGS) -Wno-error -c mcparl.c
 
 mcparyd.o:	mcpary.c
 	cp mcpary.c mcparyd.c
