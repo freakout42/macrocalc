@@ -1,8 +1,0 @@
-#!/bin/sh
-# msgh2rdb
-awk 'BEGIN	{FS=OFS="\t"
-	print "Msgno", "Msgtext"
-	print "-----", "-------"
-	n = 0}
-$2=="'$1'"	{print n++, $3}' |
-sed 's/{NULL}//g'

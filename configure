@@ -21,6 +21,7 @@ install: all
 	test ! -d \$(ARX) && mkdir \$(ARX)
 	gzip -cd <dist/arx.tar.gz | tar x -p -C \$(ARX) -f -
 dist/arx.tar.gz: mc/bin/mc
+	rm mc/tst/.tested
 	-mkdir dist
 	chmod g-s dist
 	-mkdir dist/arx dist/arx/man dist/arx/man/man1

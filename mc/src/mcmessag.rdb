@@ -36,10 +36,10 @@ MSGNOOPEN	us	Cannot open the file
 MSGNOOPEN	ge	Datei kann nicht geoeffnet werden
 MSGNOOPEN	fr	Impossible d'ouvrir le fichier
 MSGNOOPEN	pl	Nie mogê otworzyæ pliku
-MSGMENUFILE	us	Cannot open $ARX/mcmnu.rdb
-MSGMENUFILE	ge	Cannot open $ARX/mcmnu.rdb
-MSGMENUFILE	fr	Impossible d'ouvrir $ARX/mcmnu.rdb
-MSGMENUFILE	pl	Nie mogê otworzyæ pliku $ARX/mcmnu.rdb
+MSGMENUFILE	us	Cannot open $ARX/lib/mcmnu.rdb
+MSGMENUFILE	ge	Cannot open $ARX/lib/mcmnu.rdb
+MSGMENUFILE	fr	Impossible d'ouvrir $ARX/lib/mcmnu.rdb
+MSGMENUFILE	pl	Nie mogê otworzyæ pliku $ARX/lib/mcmnu.rdb
 MSGOVERWRITE	us	The file exists. Do you want to overwrite it?
 MSGOVERWRITE	ge	Die Datei existiert. Wollen Sie sie ueberschreiben?
 MSGOVERWRITE	fr	Le fichier existe, voulez-vous l'ecraser?

@@ -358,11 +358,7 @@ exmclean:
 	@echo "$@ done"
 
 #-------------------------------------------------------------------------------
-liball:	mcmsg_us.rdb mcmnu_us.rdb \
-	mcmsg_ge.rdb mcmnu_ge.rdb \
-	mcmsg_fr.rdb mcmnu_fr.rdb \
-	mcmsg_pl.rdb mcmnu_pl.rdb \
-	binunits
+liball:	mcmsg.rdb mcmnu.rdb binunits
 	rm -f nro.*
 	cp ../nro/nro.s ../nro/nro.an .
 	@echo "$@ done"
@@ -370,37 +366,12 @@ liball:	mcmsg_us.rdb mcmnu_us.rdb \
 libclean:
 	rm -f mcmsg*.rdb mcmnu*.rdb binunits nro.*
 
-mcmsg.rdb:	msgh2rdb ../src/mcmsg.h
-	./msgh2rdb us <../src/mcmessag.rdb >$@
+mcmsg.rdb: ../src/mcmsg.h
+	awk -F"	" 'BEGIN {OFS=FS; print "Msgno", "Msgtext"; print "-----", "-------"; n = 0} \
+	     $$2=="us" {print n++, $$3}' <../src/mcmessag.rdb | sed 's/{NULL}//g' >$@
 
-mcmnu.rdb:	mnuh2rdb ../src/mcmnu.h
-	./mnuh2rdb us <../src/mcmenus.rdb | tr ';' , >$@
-
-mcmsg_us.rdb:	mcmsg.rdb
-	rm -f $@
-	ln mcmsg.rdb $@
-
-mcmnu_us.rdb:	mcmnu.rdb
-	rm -f $@
-	ln mcmnu.rdb $@
-
-mcmsg_ge.rdb:	msgh2rdb ../src/mcmsg.h
-	./msgh2rdb ge <../src/mcmessag.rdb >$@
-
-mcmnu_ge.rdb:	mnuh2rdb ../src/mcmnu.h
-	./mnuh2rdb ge <../src/mcmenus.rdb | tr ';' , >$@
-
-mcmsg_fr.rdb:	msgh2rdb ../src/mcmsg.h
-	./msgh2rdb fr <../src/mcmessag.rdb >$@
-
-mcmnu_fr.rdb:	mnuh2rdb ../src/mcmnu.h
-	./mnuh2rdb fr <../src/mcmenus.rdb | tr ';' , >$@
-
-mcmsg_pl.rdb:	msgh2rdb ../src/mcmsg.h
-	./msgh2rdb pl <../src/mcmessag.rdb >$@
-
-mcmnu_pl.rdb:	mnuh2rdb ../src/mcmnu.h
-	./mnuh2rdb pl <../src/mcmenus.rdb | tr ';' , >$@
+mcmnu.rdb: ../src/mcmnu.h
+	awk -F"	" '$$2=="us" {print $$3}' <../src/mcmenus.rdb  | tr ';' , >$@
 
 binunits:	mcunits.rdb
 	ARX=.. ../bin/mcunits -u
@@ -474,10 +445,13 @@ nro.man:	nro nro.an nro.nro
 	-./nro nro.an nro.nro >$@
 
 #-------------------------------------------------------------------------------
-tstall:
+tstall: .tested
 	./testmc
 	-ident ../bin/mc
 	@echo "$@ done"
 
+.tested:
+	touch $@
+
 tstclean:
-	rm -f core core.* formula.wks
+	rm -f core core.* formula.wks .tested
