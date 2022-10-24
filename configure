@@ -3,7 +3,7 @@ test -f mc/Name || exit 1
 PATH=`pwd`/arx/bin:$PATH
 VERSID=`awk '{print substr($2,2)}' mc/Name`
 case `uname -s` in
-  Linux)   PLATID=lu; HARDID=`uname -i`;;
+  Linux)   PLATID=lu; HARDID=`uname -i`; test "$HARDID" = "unknown" && HARDID=`uname -m`;;
   FreeBSD) PLATID=fb; HARDID=`uname -p`;;
   Darwin)  PLATID=md; HARDID=`uname -m`;;
   *) echo 'unknown platform - please help porting' >&2;;
@@ -18,8 +18,7 @@ cat >Makefile <<EOF
 ARX=\$(DESTDIR)/opt
 all: dist/arx.tar.gz
 install: all
-	test ! -e \$(ARX)/arx
-	test ! -d \$(ARX) && mkdir \$(ARX)
+	-mkdir \$(ARX)
 	gzip -cd <dist/arx.tar.gz | tar x -p -C \$(ARX) -f -
 dist/arx.tar.gz: mc/bin/mc
 	rm mc/tst/.tested
@@ -40,6 +39,7 @@ mc/bin/mc: arx/lib/libarx.a
 arx/lib/libarx.a:
 	-mkdir arx/lib
 	cd arx; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
+	test -f \$@
 clean:
 	./configure clean
 EOF

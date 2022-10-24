@@ -24,13 +24,15 @@
 
 static FILE *unitin = (FILE*)1;
 static FILE *unitout = NULL;
+char pcmd[MAXFILE+10];
 static int units = FALSE;
 
 int unitinit (void)
 /* init unit conversion */
 {
 #ifdef UNITPIPE
-units = !lib_twpo (&unitin, &unitout, "mcunits");
+sprintf (pcmd, "%s/bin/mcunits", libpath);
+units = !lib_twpo (&unitin, &unitout, pcmd);
 #else
 units = TRUE;
 #endif

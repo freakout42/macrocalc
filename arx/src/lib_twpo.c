@@ -14,7 +14,7 @@ int lib_twpo (FILE **in, FILE **out, char *cmd)
 {
 int	inpipe[2];
 int	outpipe[2];
-int	i;
+int	i, abspath=0;
 char	*parms[MAXPARM];
 char	ws[3] = " \t";
 char	mycmd[MAXPATH];
@@ -25,7 +25,10 @@ fprintf (stderr, "lib_twpo: start\n");
 
 strcpy(mycmd, cmd);
 parms[0] = strtok (mycmd, ws);
+if (*cmd == '/') { abspath = 1; }
+else {
 if (lib_path (getenv("PATH"), parms[0], X_OK) == NULL) return RET_FATAL;
+}
 #ifdef DEBUG
 fprintf (stderr, "lib_twpo: path done\n");
 #endif
@@ -48,7 +51,7 @@ switch (fork())
 		close (outpipe[WRITE])	||
 		close (inpipe[READ])	||
 		close (inpipe[WRITE])	)	exit (EXIT_FAILURE);
-	execvp (mycmd, parms);
+	if (abspath) execv (mycmd, parms); else execvp (mycmd, parms);
 	fprintf (stderr, "execv \"%s\" failed\n", cmd);
 	exit (EXIT_FATAL);
 	}
