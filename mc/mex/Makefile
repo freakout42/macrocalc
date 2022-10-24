@@ -18,10 +18,10 @@ term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/ncurses -c term.c
 
 curkeys.h: curkeys.c
-	$(CC) -E $< | sed -n 's/^YY /#define KEY_/p' >$@
+	$(CC) -E curkeys.c | sed -n 's/^YY /#define KEY_/p' >$@
 
 help.c: help_c.eng
-	cp $< $@
+	cp help_c.eng $@
 
 clean:
 	rm -f *.o core mex curkeys.h help.c
