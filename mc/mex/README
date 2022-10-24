@@ -1,0 +1,6 @@
+MEX is a tiny, simple, and portable Emacs-like screen Editor.
+It has a help screen and every feature an editor MUST have.
+It has no additional features, therefore it is fast and tiny.
+Ideal for editing a three line shell- or perl-script or a small
+config file - the best alternative for all vi-haters.
+Runs on terminal and in ssh and telnet sessions.

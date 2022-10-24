@@ -1,0 +1,744 @@
+/*
+ * This file supplies the help facilities.
+ * By Moshe braner, 8803.
+ */
+#include	<stdio.h>
+#include	"ed.h"
+
+#if HELP
+
+#if AtST
+
+char *help_menu[] = {
+" ",
+"\t\tMEX version " VERSION,
+" ",
+"\tCursor control\t\t\tInsert and delete",
+"\tMoving and copying\t\tSearching",
+"\tTransposition, caps\t\tUnprintable characters",
+"\tBuffers\t\t\t\tDisk Files",
+"\tWindow control\t\t\tEntering strings",
+"\tAlternate character set\t\tOther stuff",
+"\tFormatting\t\t\tQuitting MEX",
+""
+};
+
+char *curs_ctrl[] = {
+" ",
+"\tKeypad arrows: move cursor by characters",
+"\tShift horizontal arrows: move by words",
+#if EXTRA
+"\tShift vertical arrows: scroll window",
+"\tEsc vertical arrows: move by paragraph",
+#endif
+"\tEsc horizontal arrows: beginning & end of line",
+"\tF8:  scroll up     F9:  scroll down",
+"\tF10:  set MARK at current cursor position",
+"\tAlt-F10  (or Alt-X):  exchange mark and cursor",
+"\tEsc-Home: begining of file   Control-Home: end of file",
+""
+};
+
+char *insdel[] = {
+" ",
+"\tBackspace: Delete previous char,  Delete: Delete current char.",
+"\t  With Shift or Control: Delete to beginning or end of line.",
+"\t  Preceded by esc: Kill word by word.",
+"\tInsert:  Insert blank line.",
+#if EXTRA
+"\t  With Shift or control: Kill blank lines around cursor.",
+#endif
+"\tAlt-F4  (or ^W):  Cut (kill, wipe) region between mark and cursor.",
+"\tReturn:  Insert a newline.",
+"\tControl Return:  Insert a newline and indent.",
+"\tTab: Insert a tab character (with argument: set tab size).",
+"\t^X Delete: make Delete work like Backspace",
+""
+};
+
+char *search_cmds[] = {
+" ",
+"\tF7  Search forward. Type in a string to be searched for, end it with",
+"\t    <Return>.  A '.' matches any one character, ^W matches any amount",
+"\t    of white space (including none).  A '!' means NOT the next char.",
+"\tF6  As above, but Reverse search from cursor position back.",
+"\tAlt-C  Toggle case-sensitivity in searches.",
+" ",
+"\tAlt-G  or Esc-G  Goto line by number (precede with argument)",
+"\tAlt-F7 or Alt-)  Search forward for complementing brace",
+"\tAlt-F6 or Alt-(  Same - backwards    ('brace': (), [], {})",
+""
+};
+
+char *transp_cap[] = {
+" ",
+"\t^T      Transpose characters    Alt-T   Transpose lines",
+" ",
+"\tEsc U   UPPERCASE word          Esc L    lowercase word",
+"\tEsc C   Capitalize word",
+#if EXTRA
+"\t^X^U  Convert region into Uppercase",
+"\t^X^L  Convert region into Lowercase",
+#endif
+" ",
+"\t^Q or Esc Q   Quote next char as-is (to enter ctrl chars)",
+"\tAlt-A         Enter next char with MSB set (graphics chars)",
+""
+};
+
+char *move_cmds[] = {
+" ",
+"\tF4      (or ^K)     Kill to end of line (& save in Kill Buffer)",
+"\tAlt-F4  (or ^W)     Cut (kill) region, save in Kill Buffer",
+"\tAlt-F5  (or Alt-W)  Copy region to Kill Buffer",
+"\tF5      (or ^Y)     Paste contents of Kill Buffer back, at cursor",
+"\tUndo      Undo the Kill (or Paste) just done",
+"\tAlt-Undo  Flush Kill Buffer into a buffer called '[]'",
+""
+};
+
+char *wind_cmds[] = {
+" ",
+"Many WINDOWS may be active at once on the screen.  Windows may show",
+"different parts of one buffer, or different buffers.",
+" ",
+"Alt-2  Split current window in two   Alt-1  Remove all but current window",
+"Alt-N  Cursor to next window         Alt-P  Cursor to previous window",
+#if EXTRA
+"Alt-^   Enlarge current window",
+"Shift vertical arrows: Scroll window one line",
+#endif
+"Alt-F9  Scroll down, other window    Alt-F8  Scroll up, other window",
+"Home  Scroll current line to top (shft: bot) (or <argument>) position",
+""
+};
+
+char *buf_cmds[] = {
+" ",
+"A BUFFER is a named area containing a document being edited.  Many buffers",
+"may be activated at once.  Each buffer has a name, which is typically the",
+"lowercased disk filename of the document it contains",
+"F2 (or Alt-B)  Switch to another buffer, by name (default: previous one)",
+"Alt-K  Kill a non-displayed buffer",
+"^X^B   Enter a new name for current buffer",
+"^X^F   Enter a new default File name for buffer",
+"^X^H   Print buffer to parallel or serial port",
+"Shift-Help: List current buffers",
+""
+};
+
+char *disk_cmds[] = {
+"F3      Read file into current buffer, erasing its previous contents.",
+"         No new buffer will be created. Flag as editable.",
+"Alt-F2  (Also Alt-V.)  Visit a file.  Read it into a new buffer.",
+"         Flag as view-only (Alt-E to edit).",
+"Alt-F3  Write current buffer to disk.  Type a filename at the",
+"         prompt, or hit Return for the default.",
+"         Existing disk file of that name will be overwritten.",
+"Alt-S   Save current buffer to disk, using the buffer's filename.",
+"Alt-D   Directory listing.",
+"^X !    Change default path prefix.",
+""
+};
+
+char *formatting[] = {
+" ",
+"\tAlt-R    Set right margin (fill column)",
+"\tAlt-L    Set left margin",
+"\tAlt-F    (Re)Format paragraph so that text lies between margins",
+"\t         (with argument: double spaced)",
+" ",
+"\tEsc#-<tab> Set tab spacing to # characters between tabs stops",
+""
+};
+
+char *quitting[] = {
+" ",
+"Invoking MEX:  mex [options][-h for help] [file(s)]",
+" ",
+"\t^C     Exit MEX",
+"\t^Z     Save this buffer if changed, then Exit MEX",
+" ",
+"\tAlt-7  Play back log file (stop logging, replay it now)",
+""
+};
+
+char *other_cmds[] = {
+" ",
+"\tUndo   Cancel current command and return to top level of processing.",
+"\t       (Also undoes a kill, cut or paste.)",
+"\tEsc #  (or ^U #, with default of 4) - Enter numerical argument.",
+"\t       ('-' = -1) (Repeats the next command that many times.)",
+"\tAlt-F1 (or Alt-M)  Begin/End a macro definition: store keystrokes",
+"\tF1     Execute the defined macro",
+"\tAlt-=  Position report -- displays line number, column, ASCII code",
+"\t^X^D   Toggle DOS/UNIX format mode",
+"\tAlt-E  Toggle between edit & view-only modes",
+"\tAlt-I  Toggle between insert & overstrike modes",
+"\tAlt-Q  Toggle visibility of tabs, spaces & newlines",
+""
+};
+
+char *alt_chars[] = {
+"\t ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_    (Alt-A Control-)",
+"\t "
+    "\001\002\003\004\005\006\007"
+"\010\011\012\013\014\015\016\017"
+"\020\021\022\023\024\025\026\027"
+"\030\031\032\033\034\035\036\037",
+" ",
+"\t !\"#$%&'()*+,-./0123456789:;<=>?    (Alt-A)",
+"\t !\"#$%&'()*+,-./0123456789:;<=>?",
+" ",
+"\t@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+"\t@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_",
+" ",
+"\t`abcdefghijklmnopqrstuvwxyz{|}~",
+"\t`abcdefghijklmnopqrstuvwxyz{|}~",
+""
+};
+
+char *enter_str[] = {
+" ",
+" When entering filenames, buffer names, or search strings:",
+" ",
+" Up and down arrows scroll through defaults,",
+" Screen editing of string is possible with the usual keys,",
+" <Return> enters the string as displayed,",
+" <Undo> aborts the operation,",
+" \'\\\' or <Esc> enters the next character verbatim",
+" (in search strings, for \'.\', \'!\', and control chars).",
+""
+};
+
+#endif
+
+#if MSDOS
+
+char *help_menu[] = {
+"       MEX version " VERSION,
+"             ^A bedeutet Strg+A -- E- bedeutet Esc",
+" ",
+"Verlassen von mex",
+"Cursorsteuerung           Einfuegen und loeschen",
+"veRschieben und Kopieren  Suchen",
+"Transformieren            nichT abdruckbare zeichen",
+"Puffer                    Dateien",
+"Fenstersteuerung          naMenseingabe",
+"fOrmattierung             Anderes",
+"F1-Hilfe F2-2Fenster F3-Datei F4-1Fenster F5-Such F6-RSuch F7-KlammerS F8-Ende",
+""
+};
+
+char *curs_ctrl[] = {
+" ",
+"\tPfeiltasten: Cursor zeichenweise bewegen",
+"\tControl horizontale Pfeile: Wortweise bewegen",
+#if EXTRA
+"\tEsc verticale Pfeile: Paragraphweise bewegen",
+#endif
+"\tPos1 Ende: Anfang und Ende der Zeile",
+"\tBildtasten: Auf- und Abwaerts rollen",
+"\tF9: Markierung an Cursorposition setzen",
+"\tAlt-F9 (oder Alt-X): Markierung und Position tauschen",
+"\tStrg-Pos1: Dateianfang  Strg-Ende: Dateiende",
+""
+};
+
+char *insdel[] = {
+" ",
+"\tBackspace: Letztes Zeichen loeschen,  Entf: Aktuelles Zeichen loeschen",
+"\t  Mit Esc vorher: Woerter loeschen",
+"\tIns:  Umschalten Einfuege/Ueberschreibmodus",
+#if EXTRA
+"\t^X^O   Leere Zeilen am Cursor loeschen",
+#endif
+"\tAlt-F5  (oder ^W):  Bereich zwischen Markierung und Cursor loeschen",
+"\tEingabe:       Neue Zeile einfuegen",
+"\tStrg-Eingabe:  Neue Zeile einfuegen und einruecken",
+"\tTab: Tabulator einfuegen (mit Argument: Tabgroesse einstellen)",
+"\t^X Entf: Loeschentaste wirkt wie Backspace",
+""
+};
+
+char *search_cmds[] = {
+" ",
+"\tF5  Search forward. Type in a string to be searched for, end it with",
+"\t    <Return>.  A '.' matches any one character, ^W matches any amount",
+"\t    of white space (including none).  A '!' means NOT the next char.",
+"\tF6  As above, but Reverse search from cursor position back.",
+"\tAlt-C  Toggle case-sensitivity in searches.",
+" ",
+"\tAlt-G  or Esc-G  Goto line by number (precede with argument)",
+"\tF7     or Alt-)  Search backward for complementing brace",
+"\tAlt-F7 or Alt-(  Same - forwards    ('brace': (), [], {})",
+""
+};
+
+char *transp_cap[] = {
+" ",
+"\t^T      Transpose characters    Alt-T   Transpose lines",
+" ",
+"\tEsc U   UPPERCASE word          Esc L    lowercase word",
+"\tEsc C   Capitalize word",
+#if EXTRA
+"\t^X^U  Convert region into Uppercase",
+"\t^X^L  Convert region into Lowercase",
+#endif
+" ",
+"\t^Q or Esc Q   Quote next char as-is (to enter ctrl chars)",
+"\tAlt-A         Enter next char with MSB set (graphics chars)",
+""
+};
+
+char *move_cmds[] = {
+" ",
+"\t^K     Kill to end of line (& save in Kill Buffer)",
+"\tAlt-F5 (or ^W) Cut (kill) region, save in Kill Buffer",
+"\tAlt-W  Copy region to Kill Buffer",
+"\tAlt-F6 (or ^Y) Paste contents of Kill Buffer back, at cursor",
+"\tF2     Undo the Kill (or Paste) just done",
+"\tAlt-F2 Flush Kill Buffer into a buffer called '[]'",
+""
+};
+
+char *wind_cmds[] = {
+" ",
+"Many WINDOWS may be active at once on the screen.  Windows may show",
+"different parts of one buffer, or different buffers.",
+" ",
+"Alt-2  Split current window in two   Alt-1  Remove all but current window",
+"Alt-N  Cursor to next window         Alt-P  Cursor to previous window",
+#if EXTRA
+"Alt-^   Enlarge current window",
+#endif
+"Ctrl-PgDn Scroll down, other window    Ctrl-PgUp  Scroll up, other window",
+"Home: Scroll current line to top (End: bot) (or <argument>) position)",
+""
+};
+
+char *buf_cmds[] = {
+" ",
+"A BUFFER is a named area containing a document being edited.  Many buffers",
+"may be activated at once.  Each buffer has a name, which is typically the",
+"lowercased disk filename of the document it contains",
+"Alt-B  Switch to another buffer, by name (default: previous one)",
+"Alt-K  Kill a non-displayed buffer",
+"^X^B   Enter a new name for current buffer",
+"^X^F   Enter a new default File name for buffer",
+"^X^H   Print buffer to parallel or serial port",
+"Alt-F1 List current buffers",
+""
+};
+
+char *disk_cmds[] = {
+"^X^R     Read file into current buffer, erasing its previous contents.",
+"         No new buffer will be created. Flag as editable.",
+"F3       (Also Alt-V.)  Visit a file.  Read it into a new buffer.",
+"         Flag as view-only (Alt-E to edit).",
+"Alt-F4  Write current buffer to disk.  Type a filename at the",
+"         prompt, or hit Return for the default.",
+"         Existing disk file of that name will be overwritten.",
+"Alt-S   Save current buffer to disk, using the buffer's filename.",
+"Alt-D   Exit temporarily to MS-DOS (spawn a COMMAND.COM shell)",
+"Alt-Z   Issue an MS-DOS command (run COMMAND.COM on it)",
+""
+};
+
+char *formatting[] = {
+" ",
+"\tAlt-R    Set right margin (fill column)",
+"\tAlt-L    Set left margin",
+"\tAlt-F    (Re)Format paragraph so that text lies between margins",
+"\t         (with argument: double spaced)",
+" ",
+"\tEsc#-<tab> Set tab spacing to # characters between tabs stops",
+""
+};
+
+char *quitting[] = {
+" ",
+"Invoking MEX:  mex [options][-h for help] [file(s)]",
+" ",
+"\t^C     Exit MEX",
+"\tF8 (or ^Z) Save this buffer if changed, then Exit MEX",
+" ",
+"\tAlt-7      Play back log file (stop logging, replay it now)",
+""
+};
+
+char *other_cmds[] = {
+" ",
+"\t^C     Cancel current command and return to top level of processing.",
+"\t       (Also undoes a kill, cut or paste.)",
+"\tEsc #  (or ^U #, with default of 4) - Enter numerical argument.",
+"\t       ('-' = -1) (Repeats the next command that many times.)",
+"\tAlt-M  (or Alt-F10)  Begin/End a macro definition: store keystrokes",
+"\tF10    Execute the defined macro",
+"\tAlt-=  Position report -- displays line number, column, ASCII code",
+"\t^X^D   Toggle DOS/UNIX format mode",
+"\tAlt-E  Toggle between edit & view-only modes",
+"\tAlt-I  Toggle between insert & overstrike modes",
+"\tAlt-Q  Toggle visibility of tabs, spaces & newlines",
+""
+};
+
+char *alt_chars[] = {
+"\t ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_    (Alt-A Control-)",
+"\t "
+"\t "
+    "\001\002\003\004\005\006\007"
+"\010\011\012\013\014\015\016\017"
+"\020\021\022\023\024\025\026\027"
+"\030\031\032\033\034\035\036\037",
+" ",
+"\t !\"#$%&'()*+,-./0123456789:;<=>?    (Alt-A)",
+"\t !\"#$%&'()*+,-./0123456789:;<=>?",
+" ",
+"\t@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+"\t@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_",
+" ",
+"\t`abcdefghijklmnopqrstuvwxyz{|}~",
+"\t`abcdefghijklmnopqrstuvwxyz{|}~",
+""
+};
+
+char *enter_str[] = {
+" ",
+" When entering filenames, buffer names, or search strings:",
+" ",
+" Up and down arrows scroll through defaults,",
+" Screen editing of string is possible with the usual keys,",
+" <Return> enters the string as displayed,",
+" ^C aborts the operation,",
+" \'\\\' or <Esc> enters the next character verbatim",
+" (in search strings, for \'.\', \'!\', and control chars).",
+""
+};
+
+#endif
+
+#if (V7 | VMS | CPM)
+
+char *help_menu[] = {
+"       MEX version " VERSION,
+"             ^A bedeutet Strg+A -- E- bedeutet Esc",
+" ",
+"Verlassen von mex",
+"Cursorsteuerung           Einfuegen und loeschen",
+"veRschieben und Kopieren  Suchen",
+"Transformieren            nichT abdruckbare zeichen",
+"Puffer                    Dateien",
+"Fenstersteuerung          naMenseingabe",
+"fOrmattierung             Anderes",
+"F1-Hilfe F2-2Fenster F3-Datei F4-1Fenster F5-Such F6-RSuch F7-KlammerS F8-Ende",
+""
+};
+
+char *curs_ctrl[] = {
+" ",
+#if VT100
+"^F    Zeichen vorwaerts    E-F (or PF2)  Wort vorwaerts     Keypad Pfeile",
+"^B    Zeichen rueckwaerts  E-B (or PF1)  Wort rueckwaerts    sind aktiv!",
+#else
+"^F    Zeichen vorwaerts    E-F   Wort vorwaerts",
+"^B    Zechen vorwaerts     E-B   Wort rueckwaerts",
+#endif
+"^A    Zeilenanfang         ^E    Zeilenende",
+"^N    Zeile vorwaerts      ^P    Zeile rueckwaerts",
+#if EXTRA
+"E-N   Absatz vorwaerts     E-P   Absatz rueckwaerts",
+#endif
+"^V    Bild vorwaerts       E-V   Bild rueckwaerts",
+"E-<   Dateianfang          E->   Dateiende",
+#if VT100
+"E-.   (or PF3) Markierung an Curosposition setzen",
+#else
+"E-.   Markierung an Curosposition setzen",
+#endif
+"^X^X  Tauschen Markierung und Cursor",
+#if CURSES
+"Bei Bildschirmen mit Pfeiltasten koennen diese wie gewohnt benutzt werden",
+#endif
+""
+};
+
+char *insdel[] = {
+" ",
+"^H (BS) Rueckwaerts loeschen        ^D (DEL) Aktuelles Zeichen loeschen",
+"E-^H    Wort rueckwaerts loeschen   E-^D     Aktuelles Wort loeschen",
+"^O      Zeile einfuegen",
+#if EXTRA
+"^X^O    Leere Zeilen am Cursor loeschen",
+#endif
+"^K      Rest der Zeile loeschen (in Leerzeile: Zeile loeschen)",
+"^W      Loesche markierten Bereich (Setzen mit E-. und Cursor)",
+#if !CURSES
+"^J      Neue Zeile mit Einruecken",
+#endif
+"^I or <TAB>  Tabulator einfuegen (mit Argument: set tab size)",
+"^X DEL: Umschalten DEL wie BS",
+""
+};
+
+char *search_cmds[] = {
+" ",
+"E-S  Vorwaerts suchen. Suchwort eingeben und mit <Eingabe> abschliessen",
+"     Ein '.' trifft jeden Buchstaben, ^W trifft beliebig viel Leerraum,",
+"     Ein '!' bedeutet NICHT der naechste Buchstabe.",
+"E-R  Wie vor, nur rueckwaerts von Cursorposition",
+"^X C Umschalten Gross/Kleinschreibungsmodus",
+" ",
+"E-G  Zur Zeile gehen (vorher mit mit Argument: E-#-E-G)",
+"E-)  (oder E-}) Nach passender Klammer suchen",
+"E-(  (oder E-{) Wie vor - rueckwaerts",
+""
+};
+
+char *transp_cap[] = {
+" ",
+"^T     Tausche Zeichen         ^X T   Tausche Zeilen",
+" ",
+"E-U    Wort GROSSBUCHSTABEN    E-L    Wort kleinbuchstaben",
+"E-C    Wort Grossschreiben",
+#if EXTRA
+"^X^U   Bereich GROSSBUCHSTABEN",
+"^X^L   Bereich kleinbuchstaben",
+#endif
+" ",
+"E-Q    Naechsten Buchstaben direkt (fuer Controlzeichen)",
+""
+};
+
+char *move_cmds[] = {
+" ",
+"E-W   Bereich in Zwischenablage kopieren",
+"^Y    Zwischenablage an Cursorposition schreiben",
+"^X^Y  Letztes Schreiben zuruecknehmen",
+"E-Y   Schreibe Zwischenablage in Bereich '[]'",
+" ",
+"Allgemein ist die Vorgehensweise beim Kopieren oder Verschieben:",
+"    1)  Bereichsanfang mit E-. markieren und Cursor ans Ende",
+"    2)  Den Bereich mit ^W loeschen oder mit E-W in Puffer kopieren",
+"    3)  Cursor an gewuenschte Stelle positionieren und mit ^Y einfuegen",
+""
+};
+
+char *wind_cmds[] = {
+" ",
+"Viele Fenster koennen gleichzeitig auf dem Bildschirm stehen. Sie koennen",   
+"verschiedene Teile eines Puffers oder verschiedene Puffer anzeigen",
+" ",
+"^X 2   Fenster in zwei Teile teilen    ^X 1  Nur ein Fenster stehenlassen",
+"^X N   Naechstes Fenster               ^X P  Vorheriges Fenster",
+#if EXTRA
+"^X ^   Fenster vergroessern",
+"^X^N   Fenster nach unten rollen       ^X^P  Fenster nach oben rollen",
+#endif
+"^X V   Anderes Fenster nach unten      ^X Z  And. Fenster nach oben",
+"E-!    Aktuelle Zeile an Bildschirmanfang (oder <argument> Fensterposition)",
+""
+};
+
+char *buf_cmds[] = {
+" ",
+"Ein Puffer ist ein benannter Bereich, der mit einer zu editierenden Datei",
+"belegt ist. Viele Puffer koennen gleichzeitig aktiv sein. Normalerweise",
+"ist der Puffername der Dateiname des Inhalts",
+"^X B   Umschalten in einen anderen Puffer mit Name (Voreinstellung: letzter)",
+"^X ?   Liste der Puffer",
+"^X K   Loeschen eines Puffers mit Name",
+"^X^B   Puffername aendern",
+"^X^F   Puffer neuen Dateinamen geben",
+""
+};
+
+char *disk_cmds[] = {
+" ",
+"^X^R  Eine Datei in den aktuellen Puffer einlesen. Dabei wird der aktuelle",
+"      Pufferinhalt ueberschrieben. Der Puffer ist editierbar."
+"^X^V  Eine Datei in einen neuen Puffer einlesen. Dabei wird ein neuer",
+"      mit dem Namen der Datei angelegt. Der Puffer ist nicht editierbar",
+"^X S  Aktuellen Puffer auf Platte schreiben. Es wird der Dateiname",
+"      des Puffers benutzt. Dateien mit demselben Namen werden ueberschrieben",
+"^X^W  Aktuellen Puffer auf Platte schreiben. Es wird der Dateiname",
+"      vom Benutzer abgefragt. Es wird der neue Dateiname des Puffers",
+""
+};
+
+char *formatting[] = {
+" ",
+"^X R   Rechten Rand setzen",
+"^X L   Linken Rand setzen",
+"^X F   Absatz formattieren, dass er zwischen die Raender passt.",
+"       (mit Argument: doppelter Abstand)",
+" ",
+"E-#-<tab> Setzen Tabulatorabstand auf n Zeichen",
+""
+};
+
+char *quitting[] = {
+" ",
+"Aufruf MEX:  mex [optionen][-h fuer Hilfe] [Datei(en)]",
+" ",
+"^C     MEX Verlassen ohne zu Speichern",
+"^Z     MEX Verlassen mit Speichern des aktuellen Puffers",
+" ",
+"^X!    Ein Betriebssystemkommando eingeben",
+"^X^C   Mehrere Betriebssystemkommandos eingeben (mit Subshell)",
+" ",
+"^X&    Log-Datei abspielen (logging beenden, abspielen sofort)",
+""
+};
+
+char *other_cmds[] = {
+"^G    Laufende Kommandos abbrechen oder Loeschen zuruecknehmen",
+"Esc # (oder ^U #, mit Voreinstellung 4) - Numerisches Argument angeben.",
+"      ('-' = -1) (Wiederholt das naechste Kommando so oft.)",
+"^X M  Makro anfangen",
+#if VT100
+"^X E  (or PF4)  Execute the defined macro",
+#else
+"^X E  Makro ausfuehren",
+#endif
+"^X =  Positionsbericht -- zeigt Spalte, Zeile, ASCII code",
+"^X^D  Umschalten DOS/UNIX Formatmodus",
+"^X^D  Umschalten DOS/UNIX Format Mode",
+"^X^E  Umschalten Editier- und Ansehmodus",
+"E-I   Umschalten Einfuege/Ueberschreibmodus",
+"^X Q  Umschalten Sichtbarkeit von Leerzeichen, Tabulatoren & Zeilen",
+"^L    Bildschirm auffrischen",
+""
+};
+
+char *enter_str[] = {
+" ",
+"Waehrend der Eingabe von Datei-, Puffernamen oder Suchzeichen:",
+" ",
+" Auf- Abpfeiltasten gehen durch Voreinstellungen,",
+" Die Zeichenkette kann mit den ueblichen Tasten editiert werden,",
+" <Eingabe> gibt die Eingabe frei,",
+" ^G bricht die Operation ab,",
+" \'\\\' oder <Esc> gibt das naechste Zeichen direkt ein",
+" (in Suchzeichen, fuer \'.\', \'!\', and Controlzeichen).",
+""
+};
+
+#endif
+
+/*
+ * This routine rebuilds a help screen's text
+ * in the special secret buffer. It is called
+ * by help() via make_popup(). Returns TRUE if
+ * everything works. Returns FALSE if there is
+ * an error (if there is no memory).
+ */
+make_help(buffer, data)
+	BUFFER	*buffer;
+	char	*data[];	/* array of strings */
+{
+	register char	**dp;
+	register int	s;
+
+	bbclear(buffer);		/* Blow old text away */
+	for(dp=data; **dp != '\0'; ++dp) {
+		if (addline(*dp, buffer) == FALSE)
+			return (FALSE);
+	}
+	return (TRUE); 		/* All done */
+}
+
+/*
+ * Show help menu and then requested screens.
+ * Bound to "E-?". By mb:
+ */
+help(f, n)
+{
+	register int  c = 'J';
+	register char **helpscrn;
+
+	while (c != 'N') {
+
+		switch (c) {
+
+		case 'J':
+		case 'Y':
+			helpscrn = help_menu;
+			break;
+		case 'C':
+			helpscrn = curs_ctrl;
+			break;
+		case 'E':
+			helpscrn = insdel;
+			break;
+		case 'S':
+			helpscrn = search_cmds;
+			break;
+		case 'T':
+			helpscrn = transp_cap;
+			break;
+		case 'R':
+		case 'K':
+			helpscrn = move_cmds;
+			break;
+		case 'F':
+			helpscrn = wind_cmds;
+			break;
+		case 'P':
+			helpscrn = buf_cmds;
+			break;
+		case 'D':
+			helpscrn = disk_cmds;
+			break;
+		case 'O':
+			helpscrn = formatting;
+			break;
+		case 'V':
+			helpscrn = quitting;
+			break;
+		case 'A':
+			helpscrn = other_cmds;
+			break;
+#if (AtST | MSDOS)
+		case 'X':
+			helpscrn = alt_chars;
+			break;
+#endif
+		case 'M':
+			helpscrn = enter_str;
+			break;
+		default:
+			helpscrn = NULL;
+
+		} /* end of switch */
+
+		if (helpscrn == NULL)
+			break;
+		if (make_popup(bhelpp, make_help, helpscrn)==TRUE) {
+			update(FALSE);
+			if (c == 'J' || c == 'Y')
+				mlwrite("Auswahl mit Grossbuchstaben, "
+					"Beenden mit Leertaste: ");
+			else
+				mlwrite("mehr Hilfe? [j/n] ");
+			c = getkey();
+			if (c>='a' && c<='z')
+				c -= 0x20;
+		} else 
+			return (FALSE);
+
+	} /* end of while() */
+
+ 	if (helpscrn == NULL) {
+		mlwrite("[aborted]");
+		return (onlywind(f,n));
+	}
+#if (AtST | MSDOS)
+	mlwrite("[Alt-1 erzeugt nur ein Fenster]");
+#else
+	mlwrite("[F4 erzeugt nur ein Fenster]");
+#endif
+	return (TRUE);
+}
+
+#endif

@@ -4,7 +4,7 @@
 LC_CTYPE := ISO88591
 ARX=..
 ARXSRC=../../arx
-DIRS=nro src bin exm lib man tst
+DIRS=nro mex src bin exm lib man tst
 
 #NROFF=ARX=$(ARX) ../nro/nro
 NROFF=$Nroff
@@ -77,7 +77,7 @@ PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
 DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mcput.o
 MC2OBJ=	wksfio.o mconvert.o wksrecd.o mcell123.o pol2tex.o
 MCOBJ=	mcommon.o $(FOBJ) $(OOBJ) $(COBJ) $(MOBJ) $(POBJ) $(YOBJ) $(XOBJ) $(MC2OBJ)
-BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro
+BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro me
 SRC=	mc_kern.o mc_io.o mc.o mc2wks.o mcread.o mcpary.o mc2pary.o libmcf.a f.tab.h mcfunc.h mcftab.c mcuser.c makefile
 
 mc:	mc.o mcpary.o mc_kern.o mc_io.o mcftab.o libmcf.a makefile
@@ -335,12 +335,12 @@ binall:	.copied
 
 .copied:	../src/makefile
 	cp -p ../src/mc ../src/mcmsg ../src/mcmacro ../src/mcunits ../src/mc2wks ../src/mcread \
-		../src/db2rdb ../nro/nro .
+		../src/db2rdb ../nro/nro ../mex/me .
 	touch $@
 
 binclean:
 	test -f ../src/mc.c
-	rm -rf .copied $(BIN) gzip ../mc
+	rm -rf .copied $(BIN) ../mc
 
 #-------------------------------------------------------------------------------
 mcall:
@@ -443,6 +443,17 @@ nrocmd.o:	nrocmd.c nro.h
 
 nro.man:	nro nro.an nro.nro
 	-./nro nro.an nro.nro >$@
+
+#-------------------------------------------------------------------------------
+mexall:	me
+	@echo "$@ done"
+
+mexclean:
+	make clean
+
+me:	Makefile
+	make mex
+	mv mex $@
 
 #-------------------------------------------------------------------------------
 tstall: .tested

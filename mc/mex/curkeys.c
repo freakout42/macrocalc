@@ -1,0 +1,17 @@
+#include <curses.h>
+#define defkey(keyname) YY keyname KEY_##keyname
+defkey(BACKSPACE)
+defkey(NEXT)
+defkey(UP)
+defkey(DOWN)
+defkey(RIGHT)
+defkey(LEFT)
+defkey(PPAGE)
+defkey(NPAGE)
+defkey(LL)
+defkey(END)
+defkey(HOME)
+defkey(IC)
+defkey(DC)
+defkey(F0)
+YY F(n) (KEY_F0+(n))

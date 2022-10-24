@@ -74,7 +74,7 @@ libarx_.a:	lib_akey.o lib_2iee.o lib_mesg.o \
 	sql_crea.o sql_writ.o sql_crep.o sql_wrip.o sql_wrio.o yml_crea.o yml_writ.o \
 	$(OSMISS)
 	-$(AR) $(ARFLAGS) $@ $?
-	-sh -c "test "$(CC)" = "scocc" || ranlib $@"
+	ranlib $@
 
 utf82iso885915.o: utf82iso885915.c oem2iso.h
 
@@ -82,7 +82,7 @@ libarxc_.a:	\
 	cur_init.o cur_exit.o cur_getk.o cur_gets.o cur_satt.o \
 	cur_syst.o cur_goll.o cur_rest.o cur_fixt.o cur_gmnu.o
 	-$(AR) $(ARFLAGS) $@ $?
-	-sh -c "test "$(CC)" = "scocc" || ranlib $@"
+	ranlib $@
 
 which:	lib_path.c
 	$(CC) $(LDFLAGS) $(CFLAGS) -DTEST lib_path.c -o $@
