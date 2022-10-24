@@ -11,8 +11,8 @@
 #endif
 
 #if (__FreeBSD__ | __APPLE__)
-/*
 #include <termios.h>
+/*
 struct  termios  ostate;
 struct  termios  nstate;
  */
