@@ -11,11 +11,13 @@
 #endif
 
 #if (__FreeBSD__ | __APPLE__)
+/*
 #include <termios.h>
 struct  termios  ostate;
 struct  termios  nstate;
-/*
+ */
 #else
+/*
 #include <termio.h>
 struct  termio  ostate;
 struct  termio  nstate;
