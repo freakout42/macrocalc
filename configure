@@ -1,6 +1,5 @@
 #!/bin/sh
 test -f mc/Name || exit 1
-PATH=`pwd`/arx/bin:$PATH
 VERSID=`awk '{print substr($2,2)}' mc/Name`
 case `uname -s` in
   Linux)   PLATID=lu; HARDID=`uname -i`; test "$HARDID" = "unknown" && HARDID=`uname -m`;;
