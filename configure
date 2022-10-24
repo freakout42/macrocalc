@@ -35,6 +35,7 @@ dist/arx.tar.gz: mc/bin/mc
 mc/bin/mc: arx/lib/libarx.a
 	-mkdir mc/man/cat1
 	cd mc; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}" PLATID="${PLATID}"
+	test -f \$@
 arx/lib/libarx.a:
 	-mkdir arx/lib
 	cd arx; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}"
