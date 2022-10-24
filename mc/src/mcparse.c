@@ -21,20 +21,20 @@ int		yyparse();
 void		yysetbuf();
 void		yyclrbuf();
 
-int		origcol, origrow;	/* original column		*/
-int		errpos;			/* position of parsing error	*/
+#ifndef LOTUS
+int origcol, origrow; /* original column */
+int errpos; /* position of parsing error */
+double yyvalue;
+int yytype;
+char *yyunit;
+char *yybuf;
+char *yysparse; /* pointer to source formula */
+char *yybparse; /* pointer to parsed formula */
+char *yytoparse; /* pointer to left formular */
+int yyerrorflg; /* error flag for lex-parser */
+#endif
 
-double		yyvalue;
-int		yytype;
-char		*yyunit;
-char		*yybuf;
-
-char		*yysparse;		/* pointer to source formula	*/
-char		*yybparse;		/* pointer to parsed formula	*/
-char		*yytoparse;		/* pointer to left formular	*/
-int		yyerrorflg;		/* error flag for lex-parser	*/
-
-/*static char	instr;			   flag for "in-string"		*/
+/* static char instr; flag for "in-string" */
 
 static int gettoparse (char *err)
 {
