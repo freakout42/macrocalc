@@ -1,7 +1,5 @@
 #!/bin/sh
-# $Id: arxreport,v 1.6 2016/10/31 18:27:49 axel Exp $
-#set -x
-USAGE="Usage: report [ -t<fs> ] [ -c<name> ] file [ ext ] <table"
+USAGE="Usage: arxreport [ -t<fs> ] [ -c<name> ] file [ ext ] <table"
 FIELDSEP="	"
 while getopts "t:c:" o
 do

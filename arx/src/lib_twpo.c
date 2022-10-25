@@ -1,5 +1,4 @@
-/* $Id: lib_twpo.c,v 1.8 2001/11/18 10:58:43 axel Exp $
- */
+/* lib_twpo.c */
 
 #include <stdlib.h>
 #include <stdio.h>

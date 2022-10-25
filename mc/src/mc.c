@@ -1,5 +1,4 @@
-/* $Id: mc.c,v 1.22 2006/09/27 06:22:46 axel Exp $
- */
+/* mc.c */
 
 #include <unistd.h>
 #include <stdio.h>

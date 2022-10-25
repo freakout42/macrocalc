@@ -1,5 +1,4 @@
-/* $Id: mcparse.c,v 1.26 2013/08/12 05:54:01 axel Exp $
- */
+/* mcparse.c */
 
 #ifdef DEBUG
 #include <stdio.h>

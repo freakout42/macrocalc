@@ -1,4 +1,4 @@
-/* $Id: nro.c,v 1.4 2017/07/11 15:02:09 axel Exp $
+/* nro.c
  * Word Processor
  * similar to Unix NROFF or RSX-11M RNO -
  * adaptation of text processor given in

@@ -1,5 +1,4 @@
-/* $Id: mcunit.c,v 1.13 2006/10/16 12:42:50 axel Exp $
- */
+/* mcunit.c */
 
 #include <stdlib.h>
 #include <ctype.h>

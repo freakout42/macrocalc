@@ -1,5 +1,4 @@
-/* $Id: mcommon.c,v 1.17 2004/04/17 16:05:24 axel Exp $
- */
+/* mcommon.c */
 
 #include <stdio.h>
 #include <stddef.h>

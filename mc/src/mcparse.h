@@ -1,5 +1,4 @@
-/* $Id: mcparse.h,v 1.4 1999/10/18 09:55:32 axel Exp $
- */
+/* mcparse.h */
 
 extern int origcol, origrow; /* original column */
 extern int errpos; /* position of parsing error */

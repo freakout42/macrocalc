@@ -1,4 +1,4 @@
-/* $Id: mcinter.c,v 1.12 2003/05/25 09:38:30 axel Exp $
+/* mcinter.c
  * #define DEBUG
  */
 

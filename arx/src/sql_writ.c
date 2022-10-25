@@ -1,5 +1,5 @@
-/* $Id: sql_writ.c,v 1.7 2022/02/09 19:29:52 axel Exp $
- */
+/* sql_writ.c */
+
 #include <stdio.h>
 #include <string.h>
 #include "arx_def.h"

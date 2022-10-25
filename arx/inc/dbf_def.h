@@ -1,4 +1,4 @@
-/* $Id: dbf_def.h,v 1.14 2021/12/16 12:02:35 axel Exp $
+/* dbf_def.h
  * purpose:	header file defining structures
  * 		and error codes for dbase access routines.
  * notes:	this file must be included in any programs

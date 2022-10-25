@@ -1,4 +1,4 @@
-/* $Id: db2rdb.c,v 1.21 2021/12/16 11:44:51 axel Exp $
+/* db2rdb.c
  * program to list the records in a dbase ii/iii/iv/dbman file
  * to the /rdb database-format
  * usage:	db2rdb [-opts] <filename

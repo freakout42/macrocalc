@@ -1,5 +1,4 @@
-/* $Id: mcpary.y,v 1.19 2015/07/02 07:22:47 axel Exp $
- */
+/* mcpary.y */
 
 %{
 int yylex();

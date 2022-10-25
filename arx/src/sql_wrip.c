@@ -1,5 +1,5 @@
-/* $Id: sql_wrip.c,v 1.6 2022/02/09 19:29:52 axel Exp $
- */
+/* sql_wrip.c */
+
 #include <stdio.h>
 #include <string.h>
 #include "arx_def.h"

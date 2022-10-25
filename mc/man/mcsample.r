@@ -1,4 +1,4 @@
-.Id $Id: mcsample.r,v 1.4 1997/04/11 14:53:12 axel Exp $
+.Id Id: mcsample.r,v 1.4 1997/04/11 14:53:12 axel
 .SH Examples
 There are example worksheets in the directory
 \fI$ARX/exm\fP.
