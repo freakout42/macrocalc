@@ -36,16 +36,16 @@ portability lies in a flexible Makefile and a portability-layer (like apaches
 portable runtime). This layer lives in arx/. mc is an os-independent ansi-c
 source and lives in mc/.
 
-Building mc needs a c-development environment with curses-lib, lex and yacc
-(ncurses, flex and bison for GNU-systems). Run "./configure" followed by
-"make". All programs built in the ./dist/arx/bin work without sudo-
-installation when the environment-variable ARX is set from the build-dir:
+Building mc needs a ansi-C environment with curses-lib, lex and yacc (ncurses,
+flex and bison for GNU-systems). Run "./configure" followed by "make". All
+programs built in ./dist/arx/bin can run without sudo-installation when the
+environment-variable ARX is set to the build-destination:
 
   export ARX=<build-directory>/dist/arx
   PATH=$PATH:$ARX/bin
 
-INSTALL
-=======
+INSTALL (system-wide)
+=====================
 "sudo make install" will install systemwide in /opt/arx/ after a successfull
 build by simply untar'ing ./dist/arx.tar.gz into /opt. Nothing outside
 /opt/arx/ will be touched in any way by the installation. Removing mc is
