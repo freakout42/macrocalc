@@ -21,12 +21,12 @@ terminfo-entry. The user-interface is very convenient and well-known by 1-2-3
 users. Function- and cursor-keys and extended video attributes are supported.
 
 The menus and messages are in separate editable files and can be easily
-translated into any language (english and german are included in the
-distribution). Every command in the package has a detailed man-page.
+translated into any language. Every command in the package has a detailed
+man-page.
 
-mc is a professional product, sold a couple hundred times for UnixWare, SCO,
-Coherent and Interactive during the 1990-2005 years - now going open-source
-under the "Simplified BSD License".
+mc was a professional commercial product, sold a couple hundred times for AIX,
+UnixWare, SCO, Coherent and Interactive during the 1990-2005 years - now going
+open-source under the "Simplified BSD License".
 
 BUILD
 =====
@@ -38,11 +38,10 @@ source and lives in mc/.
 
 Building mc needs a ansi-C environment with curses-lib, lex and yacc (ncurses,
 flex and bison for GNU-systems). Run "./configure" followed by "make". All
-programs built in ./dist/arx/bin can run without sudo-installation when the
-environment-variable ARX is set to the build-destination:
+programs are built into ./dist/arx and can run without sudo-installation
+directly from the build-driectory. To start the spreadsheet simply:
 
-  export ARX=<build-directory>/dist/arx
-  PATH=$PATH:$ARX/bin
+  dist/arx/bin/321
 
 INSTALL (system-wide)
 =====================

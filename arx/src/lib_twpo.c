@@ -24,7 +24,7 @@ fprintf (stderr, "lib_twpo: start\n");
 
 strcpy(mycmd, cmd);
 parms[0] = strtok (mycmd, ws);
-if (*cmd == '/') { abspath = 1; }
+if (strchr(cmd,'/')) { abspath = 1; }
 else {
 if (lib_path (getenv("PATH"), parms[0], X_OK) == NULL) return RET_FATAL;
 }

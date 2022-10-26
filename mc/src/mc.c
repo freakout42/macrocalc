@@ -33,7 +33,6 @@ extern char *optarg;
 int c;
 char *arxpath;
 char runpath[MAXFILE+1];
-char libpath[MAXFILE+1] = ARXPATH;
 char *p;
 int l;
 
