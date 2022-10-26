@@ -75,7 +75,7 @@ extern char	*yybuf;
 %left			AND
 %left			EQUAL NEQUAL
 %left			GREATER LETHER GREATERE LETHERE
-%left			PLUS MINUS
+%left			PLUS MINUS PERIOD
 %left			TIMES DIVIDE
 %right			EXP
 %left			UNIT
