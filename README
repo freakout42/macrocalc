@@ -22,8 +22,8 @@ The menus and messages are in separate editable files and can be easily
 translated into any language. Every command in the package has a detailed
 man-page.
 
-BUILD
-=====
+BUILD (and run)
+===============
 Building mc needs an ANSI-C compiler with curses-lib, lex and yacc (ncurses,
 flex and bison for GNU-systems). Run "./configure" followed by "make". All
 programs are build into ./dist/arx and can run without sudo-installation
