@@ -1,51 +1,5 @@
-/*
- * $Id: mcunits.c,v 1.13 2017/07/11 15:02:09 axel Exp $
- * $Log: mcunits.c,v $
- * Revision 1.13  2017/07/11 15:02:09  axel
- * arxpath=/opt/arx
- *
- * Revision 1.12  2004/04/17 14:40:08  axel
- * opt is int
- *
- * Revision 1.11  2003/05/25 09:38:30  axel
- * bug in units, destroyed reference unit with strtok in parse()
- *
- * Revision 1.10  1997/04/11 13:25:35  axel
- * -Wall linted
- *
- * Revision 1.9  1996/10/16  18:56:02  axel
- * malloc returns NULL on error
- * uname -> ufname
- *
- * Revision 1.8  1995/06/26  17:26:57  axel
- * improved for allocation buffer for names
- *
- * Revision 1.7  1995/06/25  17:35:54  axel
- * more assert's cause of poor implementation
- *
- * Revision 1.6  1995/06/25  14:32:07  axel
- * coherent alloc(0) did not work
- *
- * Revision 1.2	89/02/22  05:09:42 	bin mwc
- * Changed memory allocation to work better on the atari.
- * Changed where it looks for units and binary units, using path.
- * 
- */
-char *rcsinfo = "$Id: mcunits.c,v 1.13 2017/07/11 15:02:09 axel Exp $";
-
-/*
+/* mcunits.c 1.13 2017/07/11 15:02:09 axel
  * units -- do multiplicative unit conversions
- * td 80.09.04
- * Modified to keep the intermediate format in a file and
- * update it automatically when it has changed.
- * (NOTE: program is setuid to bin)
- * rec 84.08.13
- * Changed Waiting for Godot ... to Rebuilding %s from %s.
- * (Nota Bene:
- *	cc -o units -f units.c
- *	chown bin /bin/units
- *	chmod 4755 /bin/units
- * )
  */
 
 #include <stdio.h>
@@ -246,6 +200,7 @@ char *pathn (char *name, char *envpath, char *deflpath, char *acs)
 	}
 	return(fullname);
 }
+
 /*
  * Attempt to read in the already-stored
  * binary information.  Return non-zero if

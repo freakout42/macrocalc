@@ -6,7 +6,6 @@ ARX=..
 ARXSRC=../../arx
 DIRS=nro mex src bin exm lib man tst
 
-#NROFF=ARX=$(ARX) ../nro/nro
 NROFF=$Nroff
 NFLAGS=$Nflag
 TROFF=troff

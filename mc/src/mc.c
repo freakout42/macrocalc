@@ -32,11 +32,40 @@ extern int optind;
 extern char *optarg;
 int c;
 char *arxpath;
+char runpath[MAXFILE+1];
+char libpath[MAXFILE+1] = ARXPATH;
+char *p;
+int l;
 
 license = lib_akey (logo, FALSE);
 progname = strrchr(argv[0],'/');
 if (progname==NULL) progname=argv[0]; else progname++;
-if ((arxpath = getenv("ARX")) != NULL) strcpy (libpath, arxpath);
+if ((arxpath = getenv("ARX")) == NULL) {
+  if (progname == argv[0]) {
+    if ((arxpath = lib_path (getenv("PATH"), progname, X_OK)) != NULL && strlen(arxpath) < MAXFILE) {
+      strcpy(runpath, arxpath);
+      if ((p = strrchr(runpath,'/')) != NULL) {
+        *p = '\0';
+        if ((p = strrchr(runpath,'/')) != NULL) {
+          *p = '\0';
+          if (lib_path (runpath, "lib/mcmnu.rdb", W_OK)) {
+            strcpy (libpath, runpath);
+          }
+        }
+      }
+    }
+  } else {
+    l = progname - argv[0];
+    if (l < MAXFILE) {
+      strncpy (libpath, argv[0], l-1);
+      libpath[l-1] = '\0';
+      strcat (libpath, "/..");
+    }
+  }
+  setenv("ARX", libpath, 0);
+} else {
+  strcpy (libpath, arxpath);
+}
 tzset(); /* set timezone */
 while ((c = getopt (argc, argv, opts)) != EOF)
 	switch (c)

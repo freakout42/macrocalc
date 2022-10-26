@@ -1,4 +1,4 @@
-/* $Id: lib_path.c,v 1.6 1997/04/06 10:53:32 axel Exp $
+/* lib_path.c,v 1.6 1997/04/06 10:53:32 axel
  * Path lookup.
  *
  * Path takes a path search list, a file name, and an access mode,
@@ -30,7 +30,7 @@ char sep[2] = {LISTSEP, '\0'};
 char search[MAXPATH+1];
 char *p = search;
 
-if (path == NULL) return NULL;
+if (path == NULL || strlen(path) >= MAXPATH) return NULL;
 strcpy (search, path);
 while ((dir = strtok (p, sep)))
 	{

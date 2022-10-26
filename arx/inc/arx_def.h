@@ -59,9 +59,7 @@ double lib_iee2 (double d);
 #define	YEAR	7
 #define	YEARLN	4
 
-#define	CORPORATION	"/ARX"
-#define SERIALNO	"Serialno: 000000"
-#define ARXLICENSE	1
+#define	CORPORATION	"AxelKReinhold"
 
 #ifndef __PLATFORM__
 #define __PLATFORM__ ""
@@ -85,7 +83,6 @@ double lib_iee2 (double d);
 #elif __FreeBSD__
 #define PLATFORM	"FreeBSD" __PLATFORM__
 /* __PLATFORM__ */
-#undef ARXLICENSE
 
 #elif linux
 #ifdef OSINFO
@@ -103,7 +100,6 @@ double lib_iee2 (double d);
 #define PLATFORM	"Linux"
 #endif
 #endif
-#undef ARXLICENSE
 
 #elif sparc
 #define PLATFORM	"Solaris"
@@ -118,7 +114,7 @@ double lib_iee2 (double d);
 #define PLATFORM	"ELF-i386"
 #endif
 
-#define	COPYRIGHT	PLATFORM " (c)" "2020" " " CORPORATION " " SERIALNO
+#define	COPYRIGHT	PLATFORM " (c)" "2022" " " CORPORATION
 #if defined(unix) || defined(__unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #define UNIX
 #endif

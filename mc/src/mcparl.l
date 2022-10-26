@@ -1,6 +1,5 @@
 %{
-/* $Id: mcparl.l,v 1.27 2007/06/15 09:43:37 axel Exp $
- */
+/* mcparl.l 1.27 2007/06/15 09:43:37 axel */
 
 #include <math.h>
 #include <ctype.h>
@@ -33,7 +32,7 @@ extern int  yyerrorflg;
 extern double parse();
 struct Range rg1 = {NULL, {{0,0},{0,0}}, "hello"};
 struct Range *rnames	= &rg1;
-char libpath[80] = ARXPATH;
+char libpath[MAXFILE+1] = ARXPATH;
 char *progname = "mcparse";
 
 int main()
