@@ -53,7 +53,7 @@ simply done by a recursive "rm -r /opt/arx". For convenience /opt/arx/bin
 should be added to the PATH in a system appropriate manner. mc can also be
 run by its alias "321" if "mc" is used for another program. If /opt/arx is
 not appropriate for the admin the arx-directory can be moved or renamed
-anywhere. In this case an environment-variable ARX should be exported with
+anywhere. In this case an environment-variable ARX must be exported with
 the full path of the moved directory. MANPATH should also get the
 man-directory. Here is an example for Linux/bash:
 
