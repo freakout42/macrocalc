@@ -1,0 +1,152 @@
+MSGCOMMAND	us	/-Menu ?-Help !-Edit .-Mark >-Goto $-Macro =-Calc
+MSGCOMMAND	ge	/-Menue ?-Hilfe !-Edit .-Mark >-Gehezu $-Makro =-Kalk
+MSGCOMMAND	fr	/-Menu ?-Aide !-Edit .-Marquer >-Aller $-Macro =-Calc
+MSGCOMMAND	pl	/-Menu ?-Pomoc !-Edycja .-Zaznacz >-Id¼ do $-Makro =-Calc
+MSGDEMO	us	Demo version - will load only 40 cells from files - please license
+MSGDEMO	ge	Demo version - laedt nur 40 Zellen aus Datei - bitte lizensieren
+MSGDEMO	fr	Version de demo limitee a 40 cellules - Prenez une license
+MSGDEMO	pl	Wersja demo - mo¿na za³adowaæ tylko 40 komórek z plików - zarejestruj
+MSGLOMEM	us	Not enough memory to allocate cell or cell protected
+MSGLOMEM	ge	Nicht genug Speicher oder Zelle geschuetzt
+MSGLOMEM	fr	Pas assez de memoire pour allouer la cellule, ou cellule protegee
+MSGLOMEM	pl	Za ma³o pamiêci aby za³adowaæ komórki lub komórki chronione
+MSGFILENAME	us	Enter the file name of the worksheet
+MSGFILENAME	ge	Geben Sie den Dateinamen des Arbeitsblatts an
+MSGFILENAME	fr	Entrez le nom de la feuille de calcul
+MSGFILENAME	pl	Podaj nazwê pliku z arkuszem
+MSGRANGENAME	us	Enter the range name
+MSGRANGENAME	ge	Geben Sie den Bereichsnamen an
+MSGRANGENAME	fr	Entrez le nom de l'intervalle
+MSGRANGENAME	pl	Podaj nazwê zakresu
+MSGRANGE	us	The range does not exist
+MSGRANGE	ge	Der Bereich existiert nicht
+MSGRANGE	fr	Cet intervalle n'existe pas
+MSGRANGE	pl	Taki zakres nie istnieje
+MSGUNRANGE	us	Not a valid rangename
+MSGUNRANGE	ge	Ungueltiger Bereichsname
+MSGUNRANGE	fr	Nom d'intervalle invilide
+MSGUNRANGE	pl	Niepoprawna nazwa zakresu
+MSGCOLWIDTH	us	Enter the new column width
+MSGCOLWIDTH	ge	Geben Sie die Spaltenweite an
+MSGCOLWIDTH	fr	Entrez la nouvelle largeur de colonne
+MSGCOLWIDTH	pl	Podaj now± szeroko¶æ kolumny
+MSGNOOPEN	us	Cannot open the file
+MSGNOOPEN	ge	Datei kann nicht geoeffnet werden
+MSGNOOPEN	fr	Impossible d'ouvrir le fichier
+MSGNOOPEN	pl	Nie mogê otworzyæ pliku
+MSGMENUFILE	us	Cannot open $ARX/lib/mcmnu.rdb
+MSGMENUFILE	ge	Cannot open $ARX/lib/mcmnu.rdb
+MSGMENUFILE	fr	Impossible d'ouvrir $ARX/lib/mcmnu.rdb
+MSGMENUFILE	pl	Nie mogê otworzyæ pliku $ARX/lib/mcmnu.rdb
+MSGOVERWRITE	us	The file exists. Do you want to overwrite it?
+MSGOVERWRITE	ge	Die Datei existiert. Wollen Sie sie ueberschreiben?
+MSGOVERWRITE	fr	Le fichier existe, voulez-vous l'ecraser?
+MSGOVERWRITE	pl	Taki plik istnieje. Czy chcesz go nadpisaæ?
+MSGFILELOMEM	us	Not enough memory for entire worksheet
+MSGFILELOMEM	ge	Nicht genuegend Platz fuer das Arbeitsblatt
+MSGFILELOMEM	fr	Pas assez de memoire pour toute la feuille de calcul
+MSGFILELOMEM	pl	Brak pamiêci do za³adowania ca³ego arkusza
+MSGNOMICROCALC	us	The file is not a mc worksheet file
+MSGNOMICROCALC	ge	Die Datei ist kein mc-Arbeitsblatt
+MSGNOMICROCALC	fr	Ce fichier n'est pas une feuille de calcul mc
+MSGNOMICROCALC	pl	Ten plik nie jest poprawnym arkuszem programu mc
+MSGNOEXIST	us	The file does not exist
+MSGNOEXIST	ge	Die Datei existiert nicht
+MSGNOEXIST	fr	Le fichier n'existe pas
+MSGNOEXIST	pl	Wskazany plik nie istnieje
+MSGGOTO	us	Enter the cell to go to
+MSGGOTO	ge	Geben Sie die Zelle an zu der gegangen werden soll
+MSGGOTO	fr	Entrez la cellule destination
+MSGGOTO	pl	Podaj numer komórki, do której chcesz przej¶æ
+MSGBADNUMBER	us	You must enter a number from %d to %d
+MSGBADNUMBER	ge	Sie muessen eine Zahl von %d bis %d eingeben
+MSGBADNUMBER	fr	Vous devez entrer un nombre entre %d et %d
+MSGBADNUMBER	pl	Musisz podaæ numer z zakresu od %d do %d
+MSGBADCELL	us	That is not a legal cell
+MSGBADCELL	ge	Das ist keine gueltige Zelle
+MSGBADCELL	fr	Cette cellule est incorrecte
+MSGBADCELL	pl	To nie jest prawid³owa komórka
+MSGSYNTAX	us	Formula syntax error
+MSGSYNTAX	ge	Formel Syntaxfehler
+MSGSYNTAX	fr	Erreur de syntaxe dans la formule
+MSGSYNTAX	pl	B³±d w formule
+MSGPLACES	us	How many decimal places should the number be rounded to?
+MSGPLACES	ge	Wie viele Nachkommastellen wollen Sie?
+MSGPLACES	fr	A combien de decimales voulez-vous arrondir?
+MSGPLACES	pl	Do którego miejsca po przecinku mam zaokr±gliæ?
+MSGINSDEL	us	How many columns/rows?
+MSGINSDEL	ge	Wie viele Spalten/Zeilen?
+MSGINSDEL	fr	A combien de colonnes?
+MSGINSDEL	pl	Ile kolumn/wierszy?
+MSGCOLUMNS	us	Do you want to print in 132 columns?
+MSGCOLUMNS	ge	Wollen Sie mit 132 Spalten drucken?
+MSGCOLUMNS	fr	Voulez-vous imprimer en 132 colonnes?
+MSGCOLUMNS	pl	Chcesz drukowaæ w 132 kolumnach?
+MSGPRINT	us	Enter the file name to print to or press [ENTER] to spool
+MSGPRINT	ge	Geben Sie einen Dateinamen an oder mit [EINGABE] zum Drucker
+MSGPRINT	fr	Entrez le nom du fichier a imprimer ou [ENTREE] pour la liste
+MSGPRINT	pl	Podaj nazwê pliku do którego mam drukowaæ, lub wci¶nij enter aby umie¶ciæ wydruk w kolejce
+MSGBORDER	us	Print the border?
+MSGBORDER	ge	Sollen die Raender gedruckt werden?
+MSGBORDER	fr	Imprimer la bordure?
+MSGBORDER	pl	Drukowaæ ramkê?
+MSGMACRONAME	us	Enter the file name of the macro
+MSGMACRONAME	ge	Geben Sie den Dateinamen des Makros an
+MSGMACRONAME	fr	Entrez le nom de fichier de la macro
+MSGMACRONAME	pl	Podaj nazwê pliku z makrem
+MSGWINDOW	us	Already window mode
+MSGWINDOW	ge	Schon im Fenstermodus
+MSGWINDOW	fr	Deja en mode fenetre
+MSGWINDOW	pl	Aktualnie jestem w trybie Window
+MSGLOADING	us	Loading...
+MSGLOADING	ge	Laden...
+MSGLOADING	fr	Chargement...
+MSGLOADING	pl	£adujê...
+MSGSAVING	us	Saving...
+MSGSAVING	ge	Speichern...
+MSGSAVING	fr	Sauvegarde...
+MSGSAVING	pl	Zapisujê...
+MSGPRINTING	us	Printing...
+MSGPRINTING	ge	Drucken...
+MSGPRINTING	fr	Impression...
+MSGPRINTING	pl	Drukujê...
+MSGRECALC	us	Recalculating...
+MSGRECALC	ge	Neuberechnen...
+MSGRECALC	fr	Calcul...
+MSGRECALC	pl	Przeliczam...
+MSGSAVESHEET	us	Erase current worksheet without saving?
+MSGSAVESHEET	ge	Aktuelles Arbeitsblatt verwerfen ohne speichern?
+MSGSAVESHEET	fr	Effacer la feuille courante sans sauver?
+MSGSAVESHEET	pl	Opu¶ciæ aktualny arkusz bez zapisywania?
+MSGERANGE	us	Out of range
+MSGERANGE	ge	Ausserhalb Rechenbereich
+MSGERANGE	fr	Hors intervalle
+MSGERANGE	pl	spoza zakresu
+MSGEDOM	us	Domain error
+MSGEDOM	ge	Parameter ungueltig
+MSGEDOM	fr	Erreur de domaine
+MSGEDOM	pl	B³±d domeny
+MSGUNRECUNIT	us	Unrecognised Unit
+MSGUNRECUNIT	ge	Unbekannte Einheit
+MSGUNRECUNIT	fr	Unite non reconnue
+MSGUNRECUNIT	pl	Nierozpoznany modu³
+MSGCONFUNIT	us	Unit conformability
+MSGCONFUNIT	ge	Einheitenverletzung
+MSGCONFUNIT	fr	Probleme d'unites
+MSGCONFUNIT	pl	Modu³ dopasowany
+MSGUNRECRANGE	us	Unknown Range
+MSGUNRECRANGE	ge	Unbekannter Bereich
+MSGUNRECRANGE	fr	Intervalle inconnu
+MSGUNRECRANGE	pl	Nieznany zakres
+MSGNOTIMPL	us	Not yet implemented
+MSGNOTIMPL	ge	Noch nicht implementiert
+MSGNOTIMPL	fr	Pas encore implemente
+MSGNOTIMPL	pl	Jeszcze nie zaimplementowane
+MSGNULL	us	{NULL}
+MSGNULL	ge	{NULL}
+MSGNULL	fr	{NULL}
+MSGNULL	pl	{NULL}
+MSGEND	us	{NULL}
+MSGEND	ge	{NULL}
+MSGEND	fr	{NULL}
+MSGEND	pl	{NULL}

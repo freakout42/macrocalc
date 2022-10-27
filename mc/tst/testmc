@@ -3,13 +3,16 @@ set -e
 ARX=..
 export ARX
 TMPF=/tmp/testmc.$$
+TMP2=/tmp/testm2.$$
 ../bin/db2rdb -r <../src/mcmessag.rdb |
 ../bin/db2rdb | sed '1,2d' >$TMPF
+cmp $TMPF mcmessag.dbf
 sed '1,2d' ../src/mcmessag.rdb |
 diff $TMPF -
 ../bin/mc2wks <formula.mc |
-tee formula.wks |
+tee $TMP2 |
 ../bin/mc2wks -r |
 ../bin/mc -p | diff formula.out - | wc -l >$TMPF
 echo 4 | diff -w $TMPF -
-rm $TMPF
+cmp $TMP2 formula.wks
+rm $TMPF $TMP2
