@@ -123,7 +123,7 @@ int defval,minval,maxval;
 /*
  *	Expand escape sequences
  */
-
+void
 expesc(p,q)
 char *p;
 char *q;
@@ -717,7 +717,7 @@ char *p;
 /*
  *	convert ascii character to decimal.
  */
-
+int
 atod(c)
 char c;
 {

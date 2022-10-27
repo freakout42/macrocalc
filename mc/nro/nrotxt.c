@@ -319,7 +319,7 @@ char *p;
 /*
  *	expand title buffer to include character string
  */
-
+void
 expand(p0,c,s)
 char *p0;
 char c;
@@ -412,7 +412,7 @@ int limit[];
 /*
  *	left justify title text into print buffer
  */
-
+void
 justleft(p,q,limit)
 char *p, *q;
 int limit;
@@ -425,7 +425,7 @@ int limit;
 /*
  *	right justify title text into print buffer
  */
-
+void
 justrite(p,q,limit)
 char *p, *q;
 int limit;

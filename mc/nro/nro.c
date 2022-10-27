@@ -244,6 +244,7 @@ int *q;
 	return(OK);
 }
 
+int
 main(argc,argv)
 int argc;
 char *argv[];
