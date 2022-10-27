@@ -35,7 +35,7 @@ all:
 	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all PLATID=$(PLATID) || break; cd ..; done
 
 init:	Makefile.in
-	../arx/bin/arxreport -t: -cMakefile Makefile.in $(PLATID) <../sys.rdb
+	../arx/bin/arxreport -t: -cMakefile Makefile.in $(PLATID) <../arx/sys.rdb
 
 clean:
 	find . -name core\* -type f -exec rm {} \;
@@ -98,7 +98,7 @@ mc_io.o:	$(IOBJ) $(DOBJ) $(ARXCLIB)
 	$(LD) $(LDR) $(LDFLAGS) $(IOBJ) $(DOBJ) $(ARXCLIB) $(CURLIB) -o $@
 
 makefile:	mcuser.mk
-	../../arx/bin/arxreport -t: -cmakefile mcuser.mk $(PLATID) <../../sys.rdb
+	../../arx/bin/arxreport -t: -cmakefile mcuser.mk $(PLATID) <../../arx/sys.rdb
 	cp makefile.$Sys $@
 
 libmcf.a:	$(BOBJ)
