@@ -64,7 +64,7 @@ extern char	*yybuf;
 %token			CMD
 %token			BAD
 
-%type	<value>		o e l
+%type	<value>		o e
 %type	<cell>		c
 %type	<range>		r
 %type	<string>	s t u y
@@ -83,17 +83,7 @@ extern char	*yybuf;
 %left			STRCAT
 
 %%
-o : l
-	{
-#ifdef	LOTUS
-	*yybuf++ = F_RETURN;
-#else
-	yyvalue = $1.value;
-	yyunit = $1.unit;
-	yytype = CONSTANT;
-#endif
-	}
-  | e
+o : e
 	{
 #ifdef	LOTUS
 	*yybuf++ = F_RETURN;
@@ -153,13 +143,6 @@ o : l
 	yytype = TEXT;
 	}
   | JUST CMD
-	{
-#ifndef	LOTUS
-	yyvalue = .0;
-#endif
-	yytype = TEXT;
-	}
-  | RANGEB
 	{
 #ifndef	LOTUS
 	yyvalue = .0;
@@ -391,7 +374,6 @@ e : e OR e
 	$$.unit = NULL;
 #endif
 	}
-  | l
   | OPAREN e CPAREN
 	{
 #ifdef	LOTUS
@@ -410,25 +392,6 @@ e : e OR e
 	$$.unit = NULL;
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: CON value=\"%f\"\n", $$.value);
-#endif
-#endif
-	}
-  | CON u %prec UNIT
-	{
-#ifdef	LOTUS
-	lib_cano($1.value);
-	$$.value = lib_2iee($1.value);
-	yyopcode (F_CONSTANT, &$$.value, sizeof(double));
-	$$.unit = yyopcode (F_UNIT, $2, strlen($2)+1);
-#else
-	$$.value = $1.value;
-	$$.unit = $2;
-#ifdef DEBUG
-	fprintf (stderr, "mcpary: CON u1 value=\"%f\"\n", $$.value);
-#endif
-	unitconv ($1.value,$2,$2);
-#ifdef DEBUG
-	fprintf (stderr, "mcpary: con u2 value=\"%f\"\n", $$.value);
 #endif
 #endif
 	}
@@ -460,8 +423,7 @@ e : e OR e
 		}
 #endif
 	}
-  ;
-l : FUNCSC s KOMMA c CPAREN
+  | FUNCSC s KOMMA c CPAREN
 	{
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
@@ -540,7 +502,7 @@ r : c PERIOD c
 #ifdef	LOTUS
 	CELLADR123 c123[2];
 #endif
-	errno = UNRECRANGE;
+/*	errno = UNRECRANGE; */
 	$$[0].col = 0;
 	$$[0].row = 0;
 	$$[1].col = 0;

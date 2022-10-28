@@ -464,4 +464,4 @@ tstall: .tested
 	touch $@
 
 tstclean:
-	rm -f core core.* formula.wks .tested
+	rm -f core core.* .tested

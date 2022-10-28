@@ -50,7 +50,7 @@ if ((arxpath = getenv("ARX")) != NULL)
 while (gets(s))
 	{
 	val = parse (s, &at, NULL, NULL);
-	printf ("s=%s val=%f unit=%s at=%d\n", s, val, yyunit, at);
+	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, val, yyunit, yytype, at);
 	}
 return at;
 }
@@ -74,7 +74,7 @@ double cellvalue (col, row)
 
 char *celltext (col, row)
 	int col; int row;
-{return NULL;}
+{return "lll";}
 
 void	rangevwalk (fcn, cell1, cell2)
 	int (*fcn)(); struct CELLADR cell1, cell2;
