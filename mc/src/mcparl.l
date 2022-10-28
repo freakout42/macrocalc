@@ -192,7 +192,12 @@ str	.+
 "EOF"		|
 "eof"		return (EOFCELL);
 
-{sd}.*{sd}	{
+{sd}{sd}	{
+	yylval.string = (char*)yytext+2;
+	return STR;
+	}
+
+{sd}[^"]+{sd}	{
 	yylval.string = (char*)yytext+1;
 	yylval.string[strlen(yylval.string)-1] = '\0';
 	return STR;

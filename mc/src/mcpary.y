@@ -67,7 +67,7 @@ extern char	*yybuf;
 %type	<value>		o e l
 %type	<cell>		c
 %type	<range>		r
-%type	<string>	s u y
+%type	<string>	s t u y
 
 %left			UEXPR
 %left			OR
@@ -471,7 +471,7 @@ l : FUNCSC s KOMMA c CPAREN
 #endif
 	}
   ;
-s : s s
+s : s t
 	{
 #ifdef	LOTUS
 #ifdef DEBUG
@@ -483,7 +483,9 @@ s : s s
 	yystr ($2);
 #endif
 	}
-  | STR
+  | t
+  ;
+t : STR
 	{
 #ifdef	LOTUS
 	yyopcode (F_STRING, $1, strlen($1)+1);
