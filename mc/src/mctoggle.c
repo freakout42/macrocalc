@@ -114,7 +114,7 @@ while (ps > 0 && st != ERRO && st != FINI) {
       } else st = ERRO; break;
     case ACOL:
       if (isalpha(y)) {
-        col += (toupper(y) - 'A') * icol;
+        col += (toupper(y) - 'A' + 1) * icol;
         icol *= 26;
       } else if (y == '[') {
         st = FINI;
@@ -158,6 +158,14 @@ int main(argc, argv)
 	int argc;
 	char *argv[];
 {
+#ifdef COLS
+int cl;
+char cs[3];
+for (cl=0; cl<110; cl++) {
+  colstring (cl, cs);
+  printf("%3d => %s\n", cl, cs);
+} 
+#else
 char formula[MAXFORMULA];
 char *np;
 
@@ -182,6 +190,12 @@ if (np!=formula+8 || strcmp("1+[-1,2]+2", formula)) exit(1);
 np = creftoggle(formula, formula+8);
 printf("4:%d:%s:\n-\n", np-formula, formula);
 if (np!=formula+7 || strcmp("1+[B,2]+2", formula)) exit(1);
+
+strcpy(formula, "1+AA102+2");
+np = creftoggle(formula, formula+7);
+printf("5:%d:%s:\n-\n", np-formula, formula);
+if (np!=formula+11 || strcmp("1+[+24,+99]+2", formula)) exit(1);
+#endif
 
 exit(0);
 }
