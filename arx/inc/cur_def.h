@@ -53,7 +53,7 @@ WINDOW *cur_init (int around);
 void cur_exit (int status);
 int cur_getk (WINDOW *w);
 int cur_getp (WINDOW *w);
-int cur_gets (WINDOW *w, int y, int x, int width, int att, char *s, int pos, char *legal, int maxlength, int *chg);
+int cur_gets (WINDOW *w, int y, int x, int width, int att, char *s, int pos, char *legal, int maxlength, int *chg, char *(*f4edit)(char *fml, char *pos));
 int cur_satt (WINDOW *w, unsigned int attrib);
 int cur_syst (WINDOW *w, char *cmd, int prompt);
 void cur_goll (void);

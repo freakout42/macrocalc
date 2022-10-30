@@ -14,7 +14,8 @@
 #include <cur_def.h>
 
 int cur_gets (WINDOW *w, int y, int x, int width, int att,
-	char *s, int pos, char *legal, int maxlength, int *chg)
+	char *s, int pos, char *legal, int maxlength, int *chg,
+	char *(*f4edit)(char *fml, char *pos))
 {
 int insert = TRUE;				/* insert mode		*/
 int done = FALSE;				/* end-of-loop flag	*/
@@ -28,7 +29,8 @@ char se[MAXINPUT];				/* my copy of string	*/
 char *so = se;					/* position in string	*/
 char tmp[MAXSCREENWIDTH+1];			/* output string	*/
 int endx = x + width - 1;			/* end position		*/
-
+char *f4pos; /* pos after f4-processing */
+if (strlen(s) > MAXINPUT) return(KEY_ESC);
 strcpy(se, s);					/* save input string	*/
 cur_satt(w, att);				/* set attribute	*/
 while (!done)					/* input loop		*/
@@ -112,6 +114,15 @@ while (!done)					/* input loop		*/
 		changed = FALSE;
 		done = TRUE;
 		break;
+	 case '$':
+	 case KEY_F(4):
+		if (f4edit && (f4pos = f4edit(se, se+pos))) {
+			len = strlen(se);
+			pos = f4pos - se;
+			sx	= x + pos;
+			changed = TRUE;
+			break;
+		}
 	 default:				/* char input?		*/
 		if     (    ((c >= ' ') && (c <= '~'))
 			 || (c == '\t')

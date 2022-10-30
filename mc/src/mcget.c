@@ -31,7 +31,7 @@ int editstringp (char *s, char *legal, int maxlength, int pos)
 int	c;
 
 c	= cur_gets (stdscr, inputline, 0, INPUTWIDTH, INPUTCOLOR,
-		s, pos, legal, maxlength, NULL);
+		s, pos, legal, maxlength, NULL, creftoggle);
 clearinput ();
 return c == ESC ? 0 : c;
 }

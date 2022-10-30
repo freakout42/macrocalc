@@ -37,7 +37,7 @@ while (isalpha(*s))
 	*col *= 26;
 	*col += toupper(*s++) - 'A' + 1;
 	}
-(*col)--;
+*col -= 1;
 if (*col>=MAXCOLS || *col<0) return 0;
 if (endp!=NULL) *col = -*col-1;
 return s-start;

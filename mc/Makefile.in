@@ -73,7 +73,7 @@ YOBJ=	mcellpar.o mcellval.o
 BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
 PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
 # curses linked
-DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mcput.o
+DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mctoggle.o mcput.o
 MC2OBJ=	wksfio.o mconvert.o wksrecd.o mcell123.o pol2tex.o
 MCOBJ=	mcommon.o $(FOBJ) $(OOBJ) $(COBJ) $(MOBJ) $(POBJ) $(YOBJ) $(XOBJ) $(MC2OBJ)
 BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro me

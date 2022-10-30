@@ -1,11 +1,13 @@
 /* mctoggle.c */
 
-#ifdef TEST
-#include <stdio.h>
-#endif
 #include "mc.h"
 #include <string.h>
 #include <ctype.h>
+#ifdef TEST
+#include <stdio.h>
+curcol = 2;
+currow = 2;
+#endif
 #define MAXFORMULA 256
 
 char *creftoggle(char *fml, char *pos) {
@@ -97,8 +99,10 @@ while (ps > 0 && st != ERRO && st != FINI) {
   }
 }
 if (st == FINI) {
+  col += icol ? curcol : -1;
+  row += irow ? currow : -1;
   strcpy(f, fml);
-  sprintf(fml+ps, "[%d,%d]", col, row);
+  sprintf(fml+ps, "[%+d,%+d]", col-curcol, row-currow);
   ln = strlen(fml);
   strcat(fml, f+(pos - fml));
   return(fml + ln);
@@ -123,7 +127,7 @@ if (np!=formula || strcmp("1+b2+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+4);
 printf(":%d:%s:\n", np-formula, formula);
-if (np!=formula+7 || strcmp("1+[2,2]+2", formula)) exit(1);
+if (np!=formula+9 || strcmp("1+[-1,-1]+2", formula)) exit(1);
 
 exit(0);
 }
