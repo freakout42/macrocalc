@@ -152,23 +152,6 @@ if ((l1 = celladr (s, &range->adr[0].col, &range->adr[0].row)) > 0 &&
 return 0;
 }
 
-int colstring (int col, char *colstr)
-/* Changes a column number to a string */
-{
-memset (colstr, 0, 3);
-if (col < 26)
-	{
-	colstr[0] = col + 'A';
-	return 1;
-	}
-else
-	{
-	colstr[0] = (col / 26) - 1 + 'A';
-	colstr[1] = (col % 26) + 'A';
-	return 2;
-	}
-} /* colstring */
-
 char *celladrstring (int col, int row, char *s)
 /* Changes a cell address to a string */
 {

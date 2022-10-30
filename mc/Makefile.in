@@ -60,7 +60,7 @@ srcclean:
 		mc2parse.c mc2pary.c *.tab.? mcpary.vcg \
 		mcmsg.h mcmnu.h core y.output libmcf.a \
 		mc 321 mcmacro mcmsg mcunits mcread mc2wks db2rdb \
-		mcparse mcunit mcalign *.o *.a makefile*
+		mcparse mctoggle mcunit mcalign *.o *.a makefile*
 
 IOBJ=	mcrun.o mcmenu.o mcommand.o mcpipe.o mcrecalc.o mcellact.o mchelp.o mcwindow.o mcact.o
 FOBJ=	mcfileio.o mcprint.o mcpform.o mcrange.o mcrwalk.o
@@ -68,12 +68,12 @@ OOBJ=	mccalc.o mcutil.o
 COBJ=	mcellstr.o mcell.o
 MOBJ=	mcgetmsg.o
 POBJ=	mcparse.o mc2parse.o mcparl.o
-XOBJ=	mcelladr.o mcunit.o mctime.o mcmisc.o
+XOBJ=	mcelladr.o mctoggle.o mcunit.o mctime.o mcmisc.o
 YOBJ=	mcellpar.o mcellval.o
 BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
 PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
 # curses linked
-DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mctoggle.o mcput.o
+DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mcput.o
 MC2OBJ=	wksfio.o mconvert.o wksrecd.o mcell123.o pol2tex.o
 MCOBJ=	mcommon.o $(FOBJ) $(OOBJ) $(COBJ) $(MOBJ) $(POBJ) $(YOBJ) $(XOBJ) $(MC2OBJ)
 BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro me
