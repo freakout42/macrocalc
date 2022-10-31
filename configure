@@ -9,7 +9,7 @@ case `uname -s` in
 esac
 HARDID=${HARDID:-x86}
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done
-rm -rf Makefile dist
+rm -rf Makefile mc/man/cat1 dist
 test "$1" = "clean" && exit
 DISTID=mc-$VERSID-$PLATID-$HARDID
 echo "configuring for $DISTID" >&2

@@ -1,7 +1,6 @@
 /* mcelldef.h 1.21 2016/10/31 06:35:14 axel */
 
 #define MAXCOLS		27*26 /* A-Z AA-ZZ */
-#define MAXROW		99999
 #define MAXROWS		99999
 #define MAXADR		8
 #define MAXINPUT	32767

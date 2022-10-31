@@ -68,7 +68,7 @@ OOBJ=	mccalc.o mcutil.o
 COBJ=	mcellstr.o mcell.o
 MOBJ=	mcgetmsg.o
 POBJ=	mcparse.o mc2parse.o mcparl.o
-XOBJ=	mcelladr.o mctoggle.o mcunit.o mctime.o mcmisc.o
+XOBJ=	mcelladr.o mcunit.o mctime.o mcmisc.o
 YOBJ=	mcellpar.o mcellval.o
 BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
 PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
@@ -123,6 +123,9 @@ mcunits:	mcunits.c
 mcelladr:	mcelladr.c mc.h mcparse.h
 	$(CC) $(CFLAGS) -DTEST mcelladr.c -o $@
 	
+mctoggle:	mcelladr.c mc.h
+	$(CC) $(CFLAGS) -DTOGGLE mcelladr.c -o $@
+
 mcparse:	$(PDOBJ) mcftab.o libmcf.a
 	$(CC) $(CFLAGS) $(PDOBJ) mcftab.o libmcf.a \
 	$(ARXLIB) $(YLIBS) $(CLIBS) -o $@
