@@ -79,7 +79,7 @@ MCOBJ=	mcommon.o $(FOBJ) $(OOBJ) $(COBJ) $(MOBJ) $(POBJ) $(YOBJ) $(XOBJ) $(MC2OB
 BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro me
 SRC=	mc_kern.o mc_io.o mc.o mc2wks.o mcread.o mcpary.o mc2pary.o libmcf.a f.tab.h mcfunc.h mcftab.c mcuser.c makefile
 
-mc:	mc.o mcpary.o mc_kern.o mc_io.o mcftab.o libmcf.a makefile
+mc:	mc.o mcpary.o mc_kern.o mc_io.o mcftab.o libmcf.a makefile mctoggle
 	make $@
 
 mc2wks:	mc2wks.o mc2pary.o mc_kern.o mcftab.o libmcf.a makefile
@@ -122,7 +122,7 @@ mcunits:	mcunits.c
 
 mcelladr:	mcelladr.c mc.h mcparse.h
 	$(CC) $(CFLAGS) -DTEST mcelladr.c -o $@
-	
+
 mctoggle:	mcelladr.c mc.h
 	$(CC) $(CFLAGS) -DTOGGLE mcelladr.c -o $@
 
@@ -459,11 +459,11 @@ me:	Makefile
 
 #-------------------------------------------------------------------------------
 tstall: .tested
-	./testmc
 	-ident ../bin/mc
 	@echo "$@ done"
 
 .tested:
+	./testmc
 	touch $@
 
 tstclean:

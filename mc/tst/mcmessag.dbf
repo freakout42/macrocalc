@@ -114,10 +114,10 @@ MSGRECALC	us	Recalculating...
 MSGRECALC	ge	Neuberechnen...
 MSGRECALC	fr	Calcul...
 MSGRECALC	pl	Przeliczam...
-MSGSAVESHEET	us	Erase current worksheet without saving?
-MSGSAVESHEET	ge	Aktuelles Arbeitsblatt verwerfen ohne speichern?
-MSGSAVESHEET	fr	Effacer la feuille courante sans sauver?
-MSGSAVESHEET	pl	Opu¶ciæ aktualny arkusz bez zapisywania?
+MSGSAVESHEET	us	Erase current worksheet without saving? (Esc to cancel)
+MSGSAVESHEET	ge	Aktuelles Arbeitsblatt verwerfen ohne speichern? (Esc Abbruch)
+MSGSAVESHEET	fr	Effacer la feuille courante sans sauver? (Esc to cancel)
+MSGSAVESHEET	pl	Opu¶ciæ aktualny arkusz bez zapisywania? (Esc to cancel)
 MSGERANGE	us	Out of range
 MSGERANGE	ge	Ausserhalb Rechenbereich
 MSGERANGE	fr	Hors intervalle

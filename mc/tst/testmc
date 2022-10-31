@@ -4,6 +4,7 @@ ARX=..
 export ARX
 TMPF=/tmp/testmc.$$
 TMP2=/tmp/testm2.$$
+../src/mctoggle >/dev/null
 ../bin/db2rdb -r <../src/mcmessag.rdb |
 ../bin/db2rdb | sed '1,2d' >$TMPF
 cmp $TMPF mcmessag.dbf

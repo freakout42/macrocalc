@@ -1,5 +1,4 @@
-/* $Id: mcinput.c,v 1.6 1997/05/21 14:59:11 axel Exp $
- */
+/* mcinput.c,v 1.6 1997/05/21 14:59:11 axel */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -56,8 +55,8 @@ return(TRUE);
 } /* getcell */
 
 int getyesno (int *yesno, int prompt)
-/* Prints a prompt and gets a yes or no answer - returns TRUE if ESC was
-   pressed, FALSE if not.
+/* Prints a prompt and gets a yes or no answer
+   returns FALSE if ESC was pressed, TRUE if not.
 */
 {
 int	accept;

@@ -1,5 +1,4 @@
-/* $Id: mcmenu.c,v 1.12 2016/03/14 18:53:42 axel Exp $
- */
+/* mcmenu.c 1.12 2016/03/14 18:53:42 axel */
 
 #include <stddef.h>
 #include <arx_def.h>
@@ -238,8 +237,7 @@ switch (getmenu(MENU))
 	mcsystem("${SHELL-/bin/sh}", FALSE);
 	break;
  case 8:
-	checkforsave();
-	stop = TRUE;
+	if (!checkforsave()) stop = TRUE;
 	break;
  }
 } /* mainmenu */

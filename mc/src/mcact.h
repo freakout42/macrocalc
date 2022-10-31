@@ -3,4 +3,4 @@
 
 int act (char *s);
 void getinput (int c);
-void checkforsave (void);
+int checkforsave (void);

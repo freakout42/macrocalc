@@ -1,5 +1,4 @@
-/* $Id: mcact.c,v 1.10 2003/05/25 09:38:30 axel Exp $
- */
+/* mcact.c 1.10 2003/05/25 09:38:30 axel */
 
 #include <stdio.h>
 #include <string.h>
@@ -106,12 +105,16 @@ s[2] = '\0';
 changed |= act (s);
 } /* getinput */
 
-void checkforsave (void)
+int checkforsave (void)
 /* If the spreadsheet has been changed, will ask the user if they want to
    save it.
 */
 {
-int	erase;
+int	erase = 'N';
 
-while (changed && getyesno(&erase, MSGSAVESHEET) && (erase != 'Y')) savesheet();
+while (changed && (erase != 'Y')) {
+  if (!getyesno(&erase, MSGSAVESHEET)) return TRUE;
+  if (erase == 'N') savesheet();
+}
+return FALSE;
 } /* checkforsave */
