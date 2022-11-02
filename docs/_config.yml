@@ -3,3 +3,4 @@ plugins:
 - jekyll-remote-theme
 title: MacroCALC
 show_downloads: true
+logo: /assets/logo.jpg
