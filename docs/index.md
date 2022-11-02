@@ -62,6 +62,7 @@ man-directory. Here is an example for Linux/bash:
 
 ### license
 
-Simplified BSD License 
-Copyright (c) 2022, Axel K. Reinhold 
-All rights reserved. 
+Simplified BSD License  
+Copyright (c) 2022, Axel K. Reinhold  
+All rights reserved.
+
