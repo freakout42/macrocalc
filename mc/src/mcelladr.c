@@ -212,8 +212,16 @@ char y;
 
 ln = strlen(fml);
 ps = pos - fml;
-enum state {SEAR,INIT,ACOL,NCOL,RCOL,RROW,SEPA,CLOS,FINI,ERRO};
-/*          0    1    2    3    4    5    6    7    8 */
+#define SEAR 0
+#define INIT 1
+#define ACOL 2
+#define NCOL 3
+#define RCOL 4
+#define RROW 5
+#define SEPA 6
+#define CLOS 7
+#define FINI 8
+#define ERRO 9
 if (ln > MAXINPUT || ps < 2 || ps > ln) return(pos);
 /* parse the cell-address backwards with a state-machine */
 st = SEAR;
