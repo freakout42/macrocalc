@@ -212,22 +212,29 @@ char y;
 
 ln = strlen(fml);
 ps = pos - fml;
-enum state {INIT,ACOL,NCOL,RCOL,RROW,SEPA,CLOS,FINI,ERRO};
+enum state {SEAR,INIT,ACOL,NCOL,RCOL,RROW,SEPA,CLOS,FINI,ERRO};
 /*          0    1    2    3    4    5    6    7    8 */
 if (ln > MAXINPUT || ps < 2 || ps > ln) return(pos);
 /* parse the cell-address backwards with a state-machine */
-st = INIT;
+st = SEAR;
 col = icol = row = irow = 0;
 #ifdef TOGGLE
   printf("\n0:ps:%d:y:%c:st:%d:col:%d:row:%d:icol:%d:irow:%d:\n", ps, fml[ps], st, col, row, icol, irow);
 #endif
-while (ps > 0 && st != ERRO && st != FINI) {
-  ps -= 1;
+while (ps >= 0 && st != ERRO && st != FINI) {
   y = fml[ps];
 #ifdef TOGGLE
   printf("\nA:ps:%d:y:%c:st:%d:col:%d:row:%d:icol:%d:irow:%d:\n", ps, y, st, col, row, icol, irow);
 #endif
   switch(st) {
+    case SEAR:
+      if (isdigit(y) || y == ']') {
+        ps += 2;
+      } else {
+        pos = fml + ps;
+        st = INIT;
+      }
+      break;
     case INIT:
       if (y == ']') {
         st = RROW;
@@ -321,6 +328,7 @@ while (ps > 0 && st != ERRO && st != FINI) {
 #ifdef TOGGLE
   printf("B:ps:%d:y:%c:st:%d:col:%d:row:%d:icol:%d:irow:%d:\n", ps, y, st, col, row, icol, irow);
 #endif
+  if (st != FINI) ps -= 1;
 }
 if (st == FINI) {
   col += icol ? curcol : -1;
@@ -333,8 +341,8 @@ if (st == FINI) {
   switch(icol*2 + irow) {
     case 0: sprintf(fml+ps, "[%+d,%+d]", col-curcol, row-currow); break;
     case 1: sprintf(fml+ps, "[%+d,%d]",  col-curcol, row+1);      break;
-    case 2: sprintf(fml+ps, "[%s,%d]",   c, row+1);               break;
-    case 3: sprintf(fml+ps, "[%s,%+d]",  c, row-currow);          break;
+    case 2: sprintf(fml+ps, "[%s,%d]",   c,          row+1);      break;
+    case 3: sprintf(fml+ps, "[%s,%+d]",  c,          row-currow); break;
   }
   ln = strlen(fml);
   strcat(fml, f+(pos - fml));
@@ -387,7 +395,7 @@ np = creftoggle(formula, formula);
 printf("0:%d:%s:\n-\n", np-formula, formula);
 if (np!=formula || strcmp("1+b2+2", formula)) exit(1);
 
-np = creftoggle(formula, formula+4);
+np = creftoggle(formula, formula+3);
 printf("1:%d:%s:\n-\n", np-formula, formula);
 if (np!=formula+9 || strcmp("1+[-1,-1]+2", formula)) exit(1);
 
