@@ -1,4 +1,3 @@
-# macrocalc
 mc - MacroCALC is a Lotus 1-2-3 compatible character based spreadsheet that
 supports 100000 rows, 700 columns, 40 functions, display formats, file
 linking, macro programming and user definable functions. MacroCALC is fully
@@ -26,3 +25,19 @@ man-page.
 mc was a professional commercial product, sold a couple hundred times for AIX,
 UnixWare, SCO, Coherent and Interactive during the 1990-2005 years - now going
 open-source under the "Simplified BSD License".
+
+## BUILD
+
+mc was born in 1992 on Coherent (16-bit 286 Unix-Clone) - there was no
+networking and a 64k (kilobyte!) address-room. So no automake. The
+portability lies in a flexible Makefile and a portability-layer (like apaches
+portable runtime). This layer lives in arx/. mc is an os-independent ansi-c
+source and lives in mc/.
+
+Building mc needs a ansi-C environment with curses-lib, lex and yacc (ncurses,
+flex and bison for GNU-systems). Run "./configure" followed by "make". All
+programs are built into ./dist/arx and can run without sudo-installation
+directly from the build-driectory. To start the spreadsheet simply:
+
+  dist/arx/bin/321
+
