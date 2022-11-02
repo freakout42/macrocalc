@@ -26,7 +26,7 @@ mc was a professional commercial product, sold a couple hundred times for AIX,
 UnixWare, SCO, Coherent and Interactive during the 1990-2005 years - now going
 open-source under the "Simplified BSD License".
 
-## BUILD
+### build
 
 mc was born in 1992 on Coherent (16-bit 286 Unix-Clone) - there was no
 networking and a 64k (kilobyte!) address-room. So no automake. The
@@ -39,5 +39,29 @@ flex and bison for GNU-systems). Run "./configure" followed by "make". All
 programs are built into ./dist/arx and can run without sudo-installation
 directly from the build-driectory. To start the spreadsheet simply:
 
-  dist/arx/bin/321
+    dist/arx/bin/321
 
+### install (system-wide)
+
+"sudo make install" will install systemwide in /opt/arx/ after a successfull
+build by simply untar'ing ./dist/arx.tar.gz into /opt. Nothing outside
+/opt/arx/ will be touched in any way by the installation. Removing mc is
+simply done by a recursive "rm -r /opt/arx". For convenience /opt/arx/bin
+should be added to the PATH in a system appropriate manner. mc can also be
+run by its alias "321" if "mc" is used for another program. If /opt/arx is
+not appropriate for the admin the arx-directory can be moved or renamed
+anywhere. In this case an environment-variable ARX must be exported with
+the full path of the moved directory. MANPATH should also get the
+man-directory. Here is an example for Linux/bash:
+
+    # /etc/profile.d/arx.sh
+    ARX=/opt/arx
+    export ARX
+    PATH=$PATH:$ARX/bin
+    MANPATH=$MANPATH:$ARX/man
+
+### license
+
+> Simplified BSD License
+Copyright (c) 2022, Axel K. Reinhold
+All rights reserved.
