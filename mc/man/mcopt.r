@@ -1,59 +1,59 @@
 .Id $Id: mcopt.r,v 1.14 2002/10/17 12:25:47 axel Exp $
 .SH Options
 .Ha Option_l ""
-.IP \\fI-l\\fP
+.IP -l
 Sets alternative screen layout with input line at the bottom.
 .Ha Option_b ""
-.IP \\fI-b\\fP
+.IP -b
 Suppress displaying the borders with column and row numbering.
 .Ha Option_s ""
-.IP \\fI-s\\fP
+.IP -s
 Suppress displaying current cell in line 1 of the screen.
 This is especially interesting on slow terminals,
 since moving around is much faster.
 .Ha Option_m ""
-.IP \\fI-m\\fP
+.IP -m
 Suppress displaying the menu, marked range and the recalculation message
 for slow terminal lines.
 .Ha Option_h ""
-.IP \\fI-h\\fP
+.IP -h
 Suppress highlighting of the marked range for slow terminal lines.
 .Ha Option_c ""
-.IP \\fI-c\\fP\\fBw\\fP
+.IP -cw
 Sets preset column width to \fBw\fP. Default is 11.
 .Ha Option_d ""
-.IP \\fI-d\\fP\\fBp\\fP
+.IP -dp
 Sets preset decimal places to \fBp\fP. Default is 2.
 .Ha Option_f ""
-.IP \\fI-f\\fP\\fBF\\fP
+.IP -fF
 Sets preset format to \fBF\fP. Default is General.
 Possible formats are:
 .ST
-.IP \\fBF\\fP
+.IP F
 Fixed
-.IP \\fBS\\fP
+.IP S
 Science
-.IP \\fBC\\fP
+.IP C
 Currency
-.IP \\fB,\\fP
+.IP ,
 Comma
-.IP \\fBP\\fP
+.IP P
 Percent
-.IP \\fBD\\fP
+.IP D
 Date
-.IP \\fBT\\fP
+.IP T
 Time
-.IP \\fBG\\fP
+.IP G
 General
 .ET
 .Ha Option_y ""
-.IP \\fI-y\\fP\\fBc\\fP
+.IP -yc
 Sets currency symbol to \fBc\fP. Default is dollar (\fB$\fP).
 .Ha Option_a ""
-.IP \\fI-a\\fP
+.IP -a
 No autocalc mode.
 .Ha Option_r ""
-.IP \\fI-r\\fP
+.IP -r
 Read-only mode.
 Worksheets cannot be saved.
 This is useful, when output is done by "cell>command" statements.
@@ -62,16 +62,16 @@ See shell-script
 .Hr \fBmcrdb\fP 
 for an example.
 .Ha Option_o ""
-.IP \\fI-o\\fP\\fBmacrofile\fP
+.IP -omacrofile\fP
 Auto-execute macro found in \fBmacrofile\fP after loading the worksheet.
 This option also suppresses the interactive startup message.
 The \fBmacrofile\fP "-" only suppresses the interactive startup message.
 .Ha Option_n ""
-.IP \\fI-n\\fP\\fBmacrocommands\fP
+.IP -nmacrocommands\fP
 Auto-execute macros in \fBmacrocommands\fP after loading the worksheet.
 This option also suppresses the interactive startup message.
 .Ha Option_x ""
-.IP \\fI-x\\fP
+.IP -x
 Sets command autoexec mode.
 All
 .Hr -symbolic Piping cell-commands
@@ -80,7 +80,7 @@ All
 "cell>command" found in a saved worksheet
 will be executed automatically.
 .Ha Option_u ""
-.IP \\fI-u\\fP
+.IP -u
 Starts
 .B $ARX/mcunits
 as a background process for
@@ -93,7 +93,7 @@ can only work with this option!
 Startup is slower with this option,
 so only use it if unit conversion is needed.
 .Ha Option_p ""
-.IP \\fI-p\\fP
+.IP -p
 Pipes the standard input (a worksheet file) into the standard
 output (\fB[nt]roff\fP source format) without interactive action.
 This \fBmust\fP be the last option when present!
@@ -112,11 +112,11 @@ or \fBawk\fP.
 You can also use \fB/rdb\fP's
 100-plus powerful database commands.
 .Ha Option_q ""
-.IP \\fI-q\\fP
+.IP -q
 Pipes the standard input (a worksheet file) into a
 "comma-separated-values" file
 without interactive action.
 This \fBmust\fP be the last option when present!
 .Ha Option_v ""
-.IP \\fI-v\\fP
+.IP -v
 Prints version information.

@@ -1,0 +1,3717 @@
+<HTML><HEAD><TITLE>Manpage of mc</TITLE>
+</HEAD><BODY>
+<H1>mc</H1>
+Section: MacroCALC (1)<BR>Updated: 2017/07/11<BR><A HREF="#index">Index</A>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>Name_</H2>
+
+
+
+
+
+<B>mc</B>
+
+- Command
+<BR>
+
+MacroCALC v10.11. Interactive spreadsheet calculator.
+<BR>
+
+On Systems where <B>mc</B> is used by other programs,
+<B>321</B> can be used as an alias for <B>mc</B>.
+<B>321</B> means 321 is more than 123.
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>Synopsis_</H2>
+
+
+
+
+
+<B>mc</B> [<I>-option...</I>] [<I>file</I>]
+
+
+
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>Description_</H2>
+
+
+
+
+
+<B>mc</B>
+
+is an interactive, macro-programmable spreadsheet calculator.
+<B>mc</B>
+
+has no graphic features, but therefore it can run also on terminals.
+It uses a convenient,
+well-known user interface and has some special features especially
+interesting in the
+<B>UNIX</B>
+
+environment.
+
+
+
+
+
+
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Options_</H2>
+
+
+
+
+
+
+
+
+
+
+
+
+<DL COMPACT>
+<DT>-l<DD>
+Sets alternative screen layout with input line at the bottom.
+
+
+
+
+
+
+
+<DT>-b<DD>
+Suppress displaying the borders with column and row numbering.
+
+
+
+
+
+
+
+<DT>-s<DD>
+Suppress displaying current cell in line 1 of the screen.
+This is especially interesting on slow terminals,
+since moving around is much faster.
+
+
+
+
+
+
+
+<DT>-m<DD>
+Suppress displaying the menu, marked range and the recalculation message
+for slow terminal lines.
+
+
+
+
+
+
+
+<DT>-h<DD>
+Suppress highlighting of the marked range for slow terminal lines.
+
+
+
+
+
+
+
+<DT>-cw<DD>
+Sets preset column width to <B>w</B>. Default is 11.
+
+
+
+
+
+
+
+<DT>-dp<DD>
+Sets preset decimal places to <B>p</B>. Default is 2.
+
+
+
+
+
+
+
+<DT>-fF<DD>
+Sets preset format to <B>F</B>. Default is General.
+Possible formats are:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>F<DD>
+Fixed
+<DT>S<DD>
+Science
+<DT>C<DD>
+Currency
+<DT>,<DD>
+Comma
+<DT>P<DD>
+Percent
+<DT>D<DD>
+Date
+<DT>T<DD>
+Time
+<DT>G<DD>
+General
+
+
+</DL>
+</DL>
+
+
+
+
+
+
+
+
+
+<DT>-yc<DD>
+Sets currency symbol to <B>c</B>. Default is dollar (<B>$</B>).
+
+
+
+
+
+
+
+<DT>-a<DD>
+No autocalc mode.
+
+
+
+
+
+
+
+<DT>-r<DD>
+Read-only mode.
+Worksheets cannot be saved.
+This is useful, when output is done by &quot;cell&gt;command&quot; statements.
+See shell-script
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<B>mcrdb</B>
+
+
+for an example.
+
+
+
+
+
+
+
+<DT>-omacrofile<DD>
+Auto-execute macro found in <B>macrofile</B> after loading the worksheet.
+This option also suppresses the interactive startup message.
+The <B>macrofile</B> &quot;-&quot; only suppresses the interactive startup message.
+
+
+
+
+
+
+
+<DT>-nmacrocommands<DD>
+Auto-execute macros in <B>macrocommands</B> after loading the worksheet.
+This option also suppresses the interactive startup message.
+
+
+
+
+
+
+
+<DT>-x<DD>
+Sets command autoexec mode.
+All
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cell-commands
+
+
+&quot;cell&lt;command&quot; found in a new loaded worksheet and
+&quot;cell&gt;command&quot; found in a saved worksheet
+will be executed automatically.
+
+
+
+
+
+
+
+<DT>-u<DD>
+Starts
+<B>$ARX/mcunits</B>
+
+as a background process for
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+unit conversion
+
+
+calculation.
+The &quot;units&quot; function of
+<B>mc</B>
+
+can only work with this option!
+Startup is slower with this option,
+so only use it if unit conversion is needed.
+
+
+
+
+
+
+
+<DT>-p<DD>
+Pipes the standard input (a worksheet file) into the standard
+output (<B>[nt]roff</B> source format) without interactive action.
+This <B>must</B> be the last option when present!
+This is especially interesting because
+<B>mc</B>
+
+uses a fully transparent, editable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ASCII file format,
+
+
+which is compatible with the
+<B>/rdb</B>
+
+database system.
+The worksheet file can easily be edited or manipulated with almost any UNIX
+command such as
+<B>sed</B>
+
+or <B>awk</B>.
+You can also use <B>/rdb</B>'s
+100-plus powerful database commands.
+
+
+
+
+
+
+
+<DT>-q<DD>
+Pipes the standard input (a worksheet file) into a
+&quot;comma-separated-values&quot; file
+without interactive action.
+This <B>must</B> be the last option when present!
+
+
+
+
+
+
+
+<DT>-v<DD>
+Prints version information.
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>General Overview_</H2>
+
+
+
+
+
+A worksheet is a table built from columns and rows.
+Every point of intersection between a column and a row is called a cell.
+A cell can be filled with text, constant values or formulas.
+<P>
+
+<B>mc</B>
+
+supports:
+
+<P>
+
+- 702 columns named A..Z and AA..ZZ
+<P>
+
+- 99999 rows named 1..99999.
+
+<P>
+
+Every cell has a unique cell address with column and row name ranging from
+A1..ZZ99999.
+<P>
+
+Since a monitor can only display 24 rows and 80 characters at any given time,
+only a small
+part of the worksheet is displayed.
+One cell, the
+<I>current cell,</I>
+
+is highlighted and its contents is displayed in line 1 of the screen
+(unless
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+option <I>-s</I>
+
+
+was given at startup).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Movement around
+
+
+through the worksheet is possible with the cursor keys.
+Line 2 of the screen is the edit line where cell input is displayed.
+Line 3 is the status and message line where information is displayed.
+The rest of the screen shows the worksheet.
+
+
+
+
+
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>File format_</H2>
+
+
+
+
+
+<B>mc</B>
+
+uses a fully transparent and easy-to-understand file format to store worksheets.
+It is organized like a table and is compatible with
+<B>/rdb</B>
+
+table database format.
+The columns of the table are separated with <B>&lt;tab&gt;</B>,
+the rows with <B>&lt;newline&gt;</B>.
+At the top of each column is a column name and a dashed row to separate the 
+names from the data.
+The columns are:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>Cell<DD>
+Cell address
+<DT>Attrib<DD>
+Cell attribute code
+<DT>Format<DD>
+Cell format code
+<DT>Value<DD>
+Cell value
+<DT>Text<DD>
+Cell string with justification sign
+
+
+</DL>
+</DL>
+
+
+
+
+<BR>
+
+
+<B>NOTE</B>
+
+<BR>
+
+
+Files produced by 
+<B>mc</B>
+
+V1.x must be transformed by the utility
+<B>mc2conv</B>
+
+with the command:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+mc2conv <I>&lt;mc1file &gt;mc2file</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+This command transforms the old file into a form that can be read by
+<B>mc</B>
+
+V2.x and its successors.
+It is also a example of processing an 
+<B>mc</B>
+
+file with <B>awk</B>.
+
+
+
+
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>Recalculation_</H2>
+
+
+
+
+
+To save memory, formulas are stored as text without any additional
+parsing information: therefore recalculation is slow.
+For large worksheets, autocalc mode should be turned off by using
+the menu command
+<I>/Worksheet Autocalc</I>
+
+or the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+option <I>-a</I>.
+
+
+Manual recalculation is started with
+<I>[Recalc]</I>
+
+after finishing with entries.
+
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>Function keys_</H2>
+
+
+
+
+
+In this manual the function keys are referenced by their names in square
+brackets.
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>F1 ?<DD>
+<I>[Help]</I>
+
+<BR>
+
+To access Help.
+<DT>F2 !<DD>
+<I>[Edit]</I>
+
+<BR>
+
+Places the contents of the current cell in the edit line and enters the
+edit mode.
+When finished editing, press
+<I>[Enter] 8</I>
+
+to accept the changes and return to the ready mode.
+<DT>F3 .<DD>
+<I>[Mark]</I>
+
+<BR>
+
+Marks the current cell for further usage (see also
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Range,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Copy,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Move
+
+
+).
+<DT>F4 %<DD>
+<I>[All]</I>
+
+<BR>
+
+Marks the whole worksheet for further usage (ie. for Print).
+<DT>F5 &gt;<DD>
+<I>[Goto]</I>
+
+<BR>
+
+Prompts for a destination cell.
+<DT>F6 $<DD>
+<I>[Macro]</I>
+
+<BR>
+
+Prompts for a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+macro
+
+
+file to execute.
+<DT>F9 =<DD>
+<I>[Recalc]</I>
+
+<BR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Recalculates
+
+
+all cells that contain a formula.
+<DT>F10 /<DD>
+<I>[Menu]</I>
+
+Enters command menu
+(also &quot;&lt;&quot; can be used for convenience with international keyboards).
+</DL>
+</DL>
+
+
+
+
+
+
+
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>Moving around_</H2>
+
+
+
+
+
+The following keys move through the worksheet.
+Moving is simply changing the
+<I>current cell,</I>
+
+which is displayed highlighted.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+Function-Key Control-Key Description
+<I>[Up]</I>         Ctrl+P      Move up one row
+<I>[Down]</I>       Ctrl+N      Move down one row    
+<I>[Left]</I>       Ctrl+B      Move left one column    
+<I>[Right]</I>      Ctrl+F      Move right one column  
+<I>[Tab]</I>        Ctrl+I      Move right one page 
+<I>[Shift-Tab]</I>  Ctrl+G      Move left one page
+<I>[Home]</I>       Ctrl+A      Move to cell A1
+<I>[End]</I>        Ctrl+E      Move to last cell
+<I>[Pgdn]</I>       Ctrl+V      Move down 20 rows
+<I>[Pgup]</I>       Ctrl+U      Move up 20 rows  
+
+</PRE>
+
+</DL>
+
+
+
+
+
+<BR>
+
+
+<B>NOTE</B>
+
+<BR>
+
+
+The Ctrl+Letter alternative keys are for terminals
+without special function keys.
+Most of them are the same as in the <I>EMACS</I>-Editor.
+
+
+
+
+
+
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>Range_</H2>
+
+
+
+
+
+A range is a rectangular sub-section of the worksheet which:
+<P>
+
+
+<P>
+
+- is defined by two cells at two corners of the range
+<P>
+
+- encompasses all of the cells inside this sub-section.
+
+<P>
+
+Several commands act upon a range of cells.
+The
+<I>[Mark]</I>
+
+key specifies a corner of the range.
+There is always a marked range shown at the top of the worksheet.
+The marked range is also displayed highlighted
+(unless
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+option <I>-h</I>
+
+
+was given at startup).
+Inside the marked range the current cell will be not highlighted.
+Before a command that acts on a range can be used,
+the correct range must be marked.
+<P>
+
+A range can be named with the
+<I>/Range Name</I>
+
+command.
+This name can be used in
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+formulas.
+
+
+A valid range name consists of a starting character and
+at least one more alphanumeric character or the special characters
+backslash (<B>\</B>), underscore (<B>_</B>) and dollar (<B>$</B>).
+When a named range is used for a cell,
+the upper left cell of the range is used.
+Named ranges are adjusted when moved or
+after inserting or deleting columns or rows.
+
+
+
+
+
+
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>Menu_</H2>
+
+
+
+
+
+With the
+<I>[Menu]</I>
+
+key,
+<B>mc</B>
+
+enters the command menu.
+Within the menu there are powerful commands to alter the worksheet.
+
+
+To choose a menu item move to it with the cursor-keys until
+it is highlighted and press the [ENTER] key,
+or press the highlighted character of the item.
+<DL COMPACT>
+<DT><I>Worksheet</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Insert</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Column</I><DD>
+Inserts columns at current position.
+<DT><I>Row</I><DD>
+Inserts rows at current position.
+
+</DL>
+</DL>
+
+<DT><I>Delete</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Column</I><DD>
+Deletes current column.
+<DT><I>Row</I><DD>
+Deletes current row.
+
+</DL>
+</DL>
+
+<DT><I>Column</I><DD>
+Sets current column width.
+<DT><I>Autocalc</I><DD>
+Turns
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+auto calculation
+
+
+mode on and off.
+<DT><I>Formula</I><DD>
+Turns formula display mode on and off.
+<DT><I>Erase</I><DD>
+Erases entire worksheet.
+<DT><I>Titels</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Horizontal</I><DD>
+Freezes the rows above the current cell on the screen as a title.
+<DT><I>Clear</I><DD>
+Clears the title.
+
+</DL>
+</DL>
+
+<DT><I>Page</I><DD>
+Inserts a page break.
+
+</DL>
+</DL>
+
+<DT><I>Range</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Format</I><DD>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Formats
+
+
+a range.
+<DT><I>Erase</I><DD>
+Erases a range.
+<DT><I>Name</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Create</I><DD>
+Creates a named
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range.
+
+
+<DT><I>Delete</I><DD>
+Deletes a named
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range.
+
+
+</DL>
+</DL>
+
+<DT><I>Prot</I><DD>
+Protects a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range.
+
+
+<DT><I>Unprot</I><DD>
+Unprotects a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range.
+
+
+<DT><I>Value</I><DD>
+Values a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range.
+
+
+All
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Formulas
+
+
+in the range are substituted by there actual value.
+
+</DL>
+</DL>
+
+
+
+
+
+
+
+
+<DT><I>Copy</I><DD>
+Copies marked range to current position.
+
+
+
+
+
+
+
+<DT><I>Move</I><DD>
+Moves marked
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range
+
+
+to current position.
+<DT><I>File</I><DD>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><I>Save</I><DD>
+Saves current worksheet to file.
+<DT><I>Part</I><DD>
+Saves only marked range of current worksheet to file.
+<DT><I>Retrieve</I><DD>
+Retrieves file and replace current worksheet.
+<DT><I>Merge</I><DD>
+Merges file with current worksheet.
+
+</DL>
+</DL>
+
+<DT><I>Print</I><DD>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prints
+
+
+marked range of current worksheet.
+<DT><I>Display</I><DD>
+Redisplays in case of a corrupted screen.
+<DT><I>Sys</I><DD>
+Opens a subshell.
+<DT><I>Quit</I><DD>
+Leaves <B>mc</B>.
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbAM">&nbsp;</A>
+<H2>Macros_</H2>
+
+
+
+
+
+A macro is a sequence of keystrokes or commands which can
+be  performed automatically, just like a program within the spreadsheet.
+Unlike most spreadsheets,
+macros in <B>mc</B> are stored in files instead of inside the worksheet.
+A macro can be executed with the [<I>Macro</I>]-key.
+The macro will continue to execute until end-of-file.
+An auto-execute macro (see
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+option <I>-o</I>
+
+
+) starts executing
+immediately after the worksheet is loaded.
+<P>
+
+Every letter in the macro is simply feeded into
+<B>mc</B>
+
+as normal input.
+Exceptions are
+<B>&lt;tab&gt;</B>
+
+and <B>&lt;newline&gt;</B>;
+they do nothing.
+All macro keys
+
+must be enclosed in curly braces {}.
+An optional repeat count can be appended.
+
+<BR>
+
+
+<B>MACRO KEYS</B>
+
+<BR>
+
+
+When encountered in a macro file while executing,
+they make <B>mc</B> behave as if the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+corresponding key
+
+
+was pressed.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+{LEFT}   - cursor left    {BIGLEFT}  - one page left
+{RIGHT}  - cursor right   {BIGRIGHT} - one page right
+{UP}     - cursor up      {PGUP}     - one page up
+{DOWN}   - cursor down    {PGDN}     - one page down
+
+{HOME}   - cursor to A1
+{EDIT}   - F2             {GOTO}     - F5
+{CALC}   - F9             ~          - Sub for [ENTER]
+{ESC}    - Escape         {END}      - End Key
+{INS}    - Insert key     {DEL}      - Del key
+{MENU}   - Call main menu {MARK}     - Mark cell
+
+</PRE>
+
+</DL>
+
+
+
+
+
+<BR>
+
+
+<B>ENVIRONMENT</B>
+
+<BR>
+
+
+Variables from the process-environment can be included in the macro
+by preceding them with &quot;$&quot;.
+
+<BR>
+
+
+<B>COMMENTS</B>
+
+<BR>
+
+
+Lines starting with &quot;#&quot; are completely ignored and are therefore comments.
+<P>
+
+Try the following simple macro which enters the string
+&quot;hello, world&quot; into the current cell and
+moves the cursor down one cell and right two cells.
+Type the following in file &quot;test.mcr&quot; with an editor of your choice:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+# this is a comment
+hello, world~
+{DOWN}{RIGHT 2}
+
+</PRE>
+
+</DL>
+
+
+
+
+and call the macro with [<I>Macro</I>] and the filename &quot;test.mcr&quot;.
+
+<BR>
+
+
+<B>LIMITATIONS</B>
+
+<BR>
+
+
+There are no higher macro statements implemented yet.
+
+
+
+
+
+
+
+<A NAME="lbAN">&nbsp;</A>
+<H2>Formatting_</H2>
+
+
+
+
+
+The formatting of a range of cells is set with the
+<I>/Range Format</I>
+
+command.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+Type       Example
+---------- -------------
+Fixed      123.12
+Science    1.234e+06
+Currency   $533.89
+,          2,400.90
+Percent    87.4%
+Date       May 31 1991
+/rdb-Date  970531
+Time       12:45:08
+General    123.1299
+Hidden     
+
+</PRE>
+
+</DL>
+
+
+
+<P>
+
+After Fixed or Science formats,
+<B>mc</B>
+
+prompts for the number of decimal places to be displayed.
+
+The default format for all new cells is <I>General</I>,
+which is a generic format.
+The default format and decimal places can be changed with the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<I>-f</I>
+
+
+and
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<I>-d</I> options
+
+
+at startup.
+When a new cell is entered and the cell above
+(one row higher) has a non-default format,
+the new cell is auto-formatted with that format.
+This helps setting up tables of data.
+
+Cells with no contents cannot be formatted.
+The cell value does not change when formatted.
+Bold and Italic are not formats, but are
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+attributes (see below).
+
+
+
+
+
+
+
+
+
+<A NAME="lbAO">&nbsp;</A>
+<H2>Text_</H2>
+
+
+
+
+
+Text can be entered in a cell simply by moving to the cell and typing in
+the text.
+With the
+<I>[Enter]</I>
+
+key,
+<B>mc</B>
+
+will put the text into the current cell and display its contents.
+
+
+
+
+
+
+
+
+<BR>
+
+
+<B>JUSTIFICATION</B>
+
+<BR>
+
+
+Text cells can be displayed left or right justified in a cell depending on the
+first character, the justification sign.
+If the first character is an apostrophe (<B>'</B>)
+the text will be left justified.
+If it is a quotation mark (<B>&quot;</B>) right justified.
+If no justification sign is specified at the start of the text,
+<B>mc</B>
+
+will add a left justification sign as default.
+
+
+
+
+
+
+
+
+<BR>
+
+
+<B>REPEATING</B>
+
+<BR>
+
+
+The special justification sign backslash (<B>\</B>) will
+cause the following character be repeated in the whole cell.
+
+
+
+
+
+
+
+<A NAME="lbAP">&nbsp;</A>
+<H2>Formulas_</H2>
+
+
+
+
+
+Formulas are entered like
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+text.
+
+
+<B>mc</B>
+
+will determine whether the entered string is a legal formula or
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+text.
+
+
+If a string starts like a formula,
+<B>mc</B>
+
+assumes a syntax error and put the cursor in the place where the error starts.
+If the cell is text and not a formula, simply press
+<I>[Escape]</I>
+
+or begin the text with one of the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+justification signs.
+
+
+<P>
+
+Cell names in formulas are typed in with the column followed by the row enclosed
+in square brackets separated by comma.
+Relative cell references start with a sign.
+An absolute cell reference can be written without brackets or comma.
+Toggle absolute cell references in formulas with relative references by pressing F4 (or $).
+Named Ranges can be used directly with the rangename.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. A1+[A,2]*[B,-1]^5/([+0,+2]+SUM(Myrange))
+
+</PRE>
+
+</DL>
+
+
+
+
+
+<BR>
+
+
+<B>SPECIAL</B>
+
+<BR>
+
+
+Formulas can be used recursively!
+That means that in spite of copying a formula cell,
+the absolute cell reference preceded by ampersand (<B>&amp;</B>) can be used.
+This saves memory and, when changing the formula,
+all formulas entered in this way
+will change automatically, because they refer to the same
+formula text string!
+Think of this as a way of defining user functions in a worksheet.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. A1: value:   1.00
+    B1: formula: 2*[-1,+0] = 2.00
+    A2: value:   2.00
+    B2: formula: &amp;B1       = 4.00
+
+</PRE>
+
+</DL>
+
+
+
+
+
+<BR>
+
+
+<B>CONSTANTS</B>
+
+<BR>
+
+
+<B>mc</B> recognizes the following special constant values in formulas:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>PI<DD>
+Value of PI = 3.141592.
+<DT>COL<DD>
+Current column number.
+<DT>ROW<DD>
+Current row number.
+
+
+</DL>
+</DL>
+
+
+
+
+
+
+
+
+
+
+
+<BR>
+
+
+<B>STRINGS</B>
+
+<BR>
+
+
+Strings in formulas are entered enclosed in 
+quotation marks (<B>&quot;</B>).
+If a cell is preceded by hash (<B>#</B>) it refers to the cell string
+instead of the value.
+Strings can be concatenated without any operator.
+
+
+
+
+
+
+
+<A NAME="lbAQ">&nbsp;</A>
+<H2>Dates_</H2>
+
+
+
+
+
+Dates can be entered as formulas like
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+@DATE(97,4,21)
+
+</PRE>
+
+</DL>
+
+
+
+
+As a shortcut for this function call,
+dates can be directly entered either the american way
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+04/21/97
+04/21/1997
+
+</PRE>
+
+</DL>
+
+
+
+
+or the european way
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+21.04.97
+21.04.1997
+
+</PRE>
+
+</DL>
+
+
+
+
+In both cases
+<B>mc</B>
+
+will determine the input as a constant date value,
+call the @DATE-function with the appropriate values
+and automatically
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+format the cell
+
+
+with the date format,
+unless the cell was formatted before with a different format.
+
+
+
+
+
+
+
+<A NAME="lbAR">&nbsp;</A>
+<H2>Operators_</H2>
+
+
+
+
+
+An operator is a function that  is built into
+<B>mc</B>
+
+formula language.
+It
+usually  relates  one  operand  to  another.
+The following is a table of the
+<B>mc</B>
+
+operators:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+Op  Description
+--  -----------------------------
+^   Power
+*   Multiplication
+/   Division
++   Addition
+-   Subtraction
+==  Equivalence
+!=  Inequality
+&lt;   Less than
+&lt;=  Less than or equal to
+&gt;   Greater than
+&gt;=  Greater than or equal to
+&amp;&amp;  Logical AND
+||  Logical OR
+
+</PRE>
+
+</DL>
+
+
+
+<P>
+
+In addition to these C-like operators,
+also operators known from other commonly used spreadsheet programs (e.g.:
+#AND#, #OR#, ...) can be used.
+
+<A NAME="lbAS">&nbsp;</A>
+<H2>Precedence_</H2>
+
+
+
+
+
+Precedence refers to  the order in  which
+<B>mc</B>
+
+executes operators.
+Cell formula languages assign a level of  precedence to each operator.
+Operators are  executed in the  order of their  precedence level,
+from highest to lowest.
+<P>
+
+The  following table  summarizes the  precedence of
+<B>mc</B>
+
+operators.
+They are listed in descending order of precedence:  those listed
+higher in the table are executed before those lower in the table.
+Operators  listed  on  the  same  line  have the  same  level  of
+precedence, and the  implementation determines the order in which
+they are executed.
+If you use  two or more such operators in the
+same expression, you would be wise to use parentheses to indicate
+exactly the order in which you want the operators executed.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+Operator      Precedence
+------------  -------------
+(  )          Left to right
+-             Right to left
+^             Right to left
+*  /          Left to right
++  -          Left to right
+&lt;  &lt;=  &gt;  &gt;=  Left to right
+==  !=        Left to right
+&amp;&amp;            Left to right
+||            Left to right
+
+</PRE>
+
+</DL>
+
+
+
+<P>
+
+<B>mc</B>
+
+always determines precedence in an expression by enclosing
+sub-expressions  within   parentheses:  the  expression  enclosed
+within the innermost parentheses is always executed first.
+
+<BR>
+
+
+<B>SIMPLY</B>
+
+<BR>
+
+
+All of the rules of basic algebra apply to expressions in <B>mc</B>.
+Remember to use parentheses to indicate exactly the order in which you want
+the operators executed.
+
+
+
+
+
+
+
+<A NAME="lbAT">&nbsp;</A>
+<H2>Units_</H2>
+
+
+
+
+
+<B>mc</B>
+
+has a unique feature called automatic unit conversion.
+If you use the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<I>-u</I> option
+
+
+at startup, then
+<B>$ARX/mcunits</B>
+
+acts as a background process to convert units.
+You can assign a unit to each constant value in a formula by placing it in curly
+brackets after the constant.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. 2.3{g} -- makes this 2.3 grams.
+
+</PRE>
+
+</DL>
+
+
+
+
+This will put the string of the unit in the cell right next to the cell with
+the constant.
+<B>mc</B>
+
+keeps track of all units you use in formulas and will refuse to calculate
+senseless expressions.
+When adding a unit (in curly brackets) at the end of a formula,
+the calculated value is converted to that unit.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. A1: value:   12.00{m}
+    A2: value:    1.00{sec}
+    A3: value:   12.00{mile/hour}
+    A4: formula: a1/a2       = 12.00 m/sec
+    A5: formula: a3+a4       = 38.84 mile/hour
+    A6: formula: a5+6{pound} = ERROR  Unit conformity
+    A7: formula: a5{m/min}   = 1041.87 m/min
+
+</PRE>
+
+</DL>
+
+
+
+
+The syntax of the units is the same as in <B>mcunits</B>.
+To add units to the database see the documentation of <B>mcunits</B>.
+
+<BR>
+
+
+<B>LIMITATIONS</B>
+
+<BR>
+
+
+Units are not implemented for the ^ (power) operator and for all
+nonstatistical functions like SQRT!
+
+
+
+
+
+
+
+<A NAME="lbAU">&nbsp;</A>
+<H2>Piping_</H2>
+
+
+
+
+
+<B>mc</B>
+
+has a very advanced interface to the operating system via piping.
+This offers unmatched flexibility based
+upon the Unix operating system's piping mechanism.
+Since the database
+<B>/rdb</B>
+
+is based upon the shell level this can be used perfectly for database
+interactions like queries or updates in tables.
+<P>
+
+A cell statement with the syntax:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+<I>cell</I>&lt;<I>command</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+is called a cell-command.
+When such a cell is entered,
+it will execute the command and put the command's output into
+the range of cells starting with cell as the upper-left corner.
+The output is read line by line into the rows of the range.
+The columns, which have to be separated by
+<B>&lt;tab&gt;</B>
+
+in the output of the command,
+are placed into the columns of the range.
+At the end of the data a special cell value designated 'EOF' (end of file)
+is placed in the cell below the data.
+Therefore,
+<B>/rdb</B>
+
+commands work especially well with
+<B>mc</B>
+
+because this is exactly the format of 
+<B>/rdb</B>
+
+tables.
+But also all other standard Unix commands like
+<B>sed, awk, cut, ...</B>
+
+can produce output of this format.
+It is also simple to produce input-files with any standard editor,
+or write own programs which can feed <B>mc</B>.
+Since formulas can be used recursively with the '&amp;' operator;
+you can also build flexible commands of querying or updating a database.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. B2&lt;cat expenses
+
+</PRE>
+
+</DL>
+
+
+
+
+Puts the table
+<I>expenses</I>
+
+into the cell range B2..F5.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. B2&lt;row 'Onhand &lt; &amp;F15' &lt;inventory
+
+</PRE>
+
+</DL>
+
+
+
+
+Select all rows in the
+<I>inventory</I>
+
+table in which
+<I>Onhand</I>
+
+is less than the value in the cell F15
+into the cell range B2..G5.
+<P>
+
+A cell statement of the form:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+<I>cell</I>&lt;&lt;<I>command</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+will act the same way but does not overwrite the data in the output range.
+The data is inserted into the worksheet
+by inserting a new row into the worksheet for every line in the commands output.
+Existing cell contents in the first row are copied into every inserted row.
+This is useful, when a formula should act on every line of the output.
+<P>
+
+A cell statement of the form:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+<I>cell</I>&lt;!<I>command</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+will act the same way but parses the incoming cells as formulas.
+This is especially useful with the <B>mcread</B> command.
+This command is part of the system
+and can extract the formulas
+of a given range or the whole worksheet
+from a <B>mc</B>-file from standard input.
+It inserts
+<B>&lt;tab&gt;</B>
+
+between the formulas of the selected columns.
+With this combination any
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+range
+
+
+from a extern worksheet-file
+can be easily copied to a range in the current worksheet.
+For example the command:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+f9&lt;!mcread -rb3-d7 &lt;somedata.mc
+
+</PRE>
+
+</DL>
+
+
+
+
+selects all constants/formulas from range B3.D7 in the worksheet-file
+<I>somedata.mc</I>
+
+and copies them to the range starting with cell F9
+into the current worksheet.
+
+This procedure has the advantage that the source file and range
+are stored in the command-cell,
+and can always be re-imported by re-editing and
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+re-executing the command (see below).
+
+
+The disadvantage is that the attributes and formats are not imported,
+but once they are set up,
+they are used by the next import and keep intact.
+
+Call
+<B>mcread</B>
+
+with the
+<I>-h</I>
+
+option to get a reference of the command.
+<P>
+
+A cell statement of the form:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+<I>cell</I>&gt;<I>command</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+will execute the command and feed the cell range starting with cell
+into the input of the command.
+The cell range starts with cell in the left upper corner until it
+reaches an empty cell right of the starting cell,
+and until it reaches the 'EOF'-cell on the way down the worksheet.
+<P>
+
+The cell statement:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+B2&gt;cat &gt;expenses
+
+</PRE>
+
+</DL>
+
+
+
+
+places the updated table from the worksheet back into the database.
+To determine where to stop, the special 'EOF'-cell must be found.
+It can be entered by placing the string &quot;EOF&quot; into the cell
+below the data, as long as it was not written by a former query.
+<P>
+
+
+
+
+
+
+
+
+To reexecute any cell-command simply reedit it with
+<I>[Edit] [Return].</I>
+
+
+<BR>
+
+
+<B>ERROR MESSAGES</B>
+
+<BR>
+
+
+All output to standard error of cell-commands is redirected to the
+<B>mc</B>
+
+error message line.
+
+
+
+
+
+
+
+<A NAME="lbAV">&nbsp;</A>
+<H2>mcrdb_</H2>
+
+
+
+
+
+The shell-script <B>mcrdb</B> uses
+<B>mc</B>
+
+as a table editor for structured text-files or <B>/rdb</B>-tables.
+With the command:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+mcrdb <I>table</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+the file (or <B>/rdb</B>-table) &quot;table&quot; is locked and loaded into a worksheet.
+<B>mc</B>
+
+is called for editing the table in a much more convenient way than with
+<B>ve</B>,
+the <B>/rdb</B> table-editor.
+The user can see more than one row simultaneously,
+and all spreadsheet-power can be used to modify the data.
+Inserting, copying and deleting rows or fields is very easy.
+It is a good idea to examine the shell-script how it works as an
+example of using the advanced integration possibilities of
+<B>mc</B>
+
+and <B>/rdb</B>.
+Of course
+<B>mcrdb</B>
+
+can only work when
+<B>/rdb</B>
+
+is installed.
+
+
+
+
+
+
+
+<A NAME="lbAW">&nbsp;</A>
+<H2>Linking_</H2>
+
+
+
+
+
+The worksheet currently in memory can be linked to worksheets on disk using the 
+<I>LINK</I>
+
+function of <B>mc</B>.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+    LINK(&quot;filename&quot;,cell)
+
+ex. LINK(&quot;/u/tom/sample.mc&quot;,A23)
+
+</PRE>
+
+</DL>
+
+
+
+
+Since file linking is slow, linked cells are not recalculated.
+However, if you enter a cell
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+ex. LINK(&quot;/u/tom/sample.mc&quot;,A23)+A12
+
+</PRE>
+
+</DL>
+
+
+
+
+then the link is recalculated every time because it is a formula!
+To avoid this, place only the link in one cell and put a formula in an
+additional cell which refers to the link-cell.
+Another advantage of this way is,
+that the cell in the link is not adjusted
+in column or row deletes or inserts or moves of the cell in the link.
+To avoid this misbehavior,
+it is also possible to use named cells and build the link with the name
+instead of the absolute reference.
+
+
+
+
+
+
+
+<A NAME="lbAX">&nbsp;</A>
+<H2>Mathematical functions_</H2>
+
+
+
+
+
+The  following functions act upon the argument 'x' within
+the parentheses. 'x' can be a value or a formula
+which references other cells within the worksheet.
+<DL COMPACT>
+<DT>ABS(x)<DD>
+Returns the absolute value of argument.
+<BR>
+
+ex. ABS(-10) = 10
+<DT>ACOS(x)<DD>
+Arc Cosine, returns radians.
+<BR>
+
+ex. ACOS(0.5) = 1.0471
+<DT>ASIN(x)<DD>
+Arc Sine, returns radians.
+<BR>
+
+ex. ASIN(0.866) = 1.0471
+<DT>ATAN(x)<DD>
+Arc Tangent, returns radians.
+<BR>
+
+ex. ATAN(1.732) = 1.047
+<DT>COS(x)<DD>
+Cosine of angle, x in radians.
+<BR>
+
+ex. COS(1.047) = 0.5
+<DT>EXP(x)<DD>
+Raises 'e' to the 'x'-th power.
+<BR>
+
+ex. <A HREF="http://localhost/cgi-bin/man/man2html?5+EXP">EXP</A>(5) = 148.4131591
+<DT>INT(x)<DD>
+Integer value of argument. The fractional
+part of the number is truncated  and  the
+integer remainder is returned.
+<BR>
+
+ex. INT(10.6) = 10
+<DT>LN(x)<DD>
+Natural Logarithm to base 'e'.
+<BR>
+
+ex. <A HREF="http://localhost/cgi-bin/man/man2html?6+LN">LN</A>(6) = 1.791...
+<DT>LOG(x)<DD>
+Logarithm to base '10'.
+<BR>
+
+ex. LOG(10) = 1
+<DT>SIN(x)<DD>
+Sine of angle, x in radians.
+<BR>
+
+ex. SIN(1.047) = 0.866
+<DT>SQRT(x)<DD>
+Square root of argument.
+<BR>
+
+ex. <A HREF="http://localhost/cgi-bin/man/man2html?2+SQRT">SQRT</A>(2) = 1.4142135624
+<DT>TAN(x)<DD>
+Tangent of angle, x in radians.
+<BR>
+
+ex. TAN(1.047) = 1.732
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbAY">&nbsp;</A>
+<H2>Logical functions_</H2>
+
+
+
+
+
+<DL COMPACT>
+<DT>IF(Condition,arg1,arg2)<DD>
+Value of arg1 if Condition is true.
+Value of arg2 if Condition is false.
+<BR>
+
+ex. IF(10&gt;2,3*2,4+5) = 6
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbAZ">&nbsp;</A>
+<H2>Financial functions_</H2>
+
+
+
+
+
+<DL COMPACT>
+<DT>CTERM(INTerest,FutureValue,PresentValue)<DD>
+The number of compounding periods required for an
+investment of PV (present value) to grow to FV (future
+value), if the investment is earning INT interest per
+compounding period.
+<DT>DDB(Cost,Salvage,Life,Period)<DD>
+Accelerated depreciation value for an asset, given the
+initial cost, the life expectancy, the end value and the
+depreciation period.  The depreciation is calculated
+using the double declining balance method.
+<DT>FV(Annuity,interest rate,period)<DD>
+Returns the future value corresponding to  an  annuity
+occurring over the specified period.  Reverse of the
+above.
+<BR>
+
+ex. FV(700,0.0925,30) = 99979.77
+<DT>PMT(Principal,interest,period)<DD>
+Returns the amount of an annuity equal to the
+principal amortized over the period.
+<BR>
+
+ex. PMT(75000,0.0925,30) = 7462.61
+<DT>PV(Annuity,interest rate,period)<DD>
+Returns the present value corresponding  to  an  annuity
+occurring over the specified period.  Reverse of the
+above.
+<BR>
+
+ex. PV(700,0.0925,30) = 7035.08
+<DT>RATE(FutureValue,PresentValue,N)<DD>
+Interest rate required for an investment of PVAL to be
+worth FVAL, in N compounding periods.
+<DT>SLN(Cost,Salvage,Life)<DD>
+Straight line depreciation of an asset over ONE period
+of LIFE.
+<DT>SYD(Cost,Salvage,Life,Period)<DD>
+Depreciation of an asset using the Sum-of-Years
+depreciation method.
+<DT>TERM(Payment,Interest,FutureValue)<DD>
+Number of periods required to accumulate an investment
+of FVAL making regular payments of PMT and accruing
+interest at the rate of INT per period.
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbBA">&nbsp;</A>
+<H2>Statistical functions_</H2>
+
+
+
+
+
+Statistical  functions  operate  on  a  range  of  values.
+A range specifies a rectangular block of data in the worksheet.
+Only ONE range may be used as an argument.
+<BR>
+
+ex. Range = A1..B10 defines the block of data from:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+      a1...b1
+       .   .
+       .   .
+       .   .
+     a10...b10
+
+</PRE>
+
+</DL>
+
+
+
+
+Presented  below  are  the  statistical  functions
+available  within mc.
+To illustrate the use  of
+each  function  an  example  is included.
+All  examples will operate on the numbers contained in the
+portion of the worksheet duplicated below, A1..C3.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+              A        B        C
+        1       1.1      5.6      8.2
+        2       2.3      7.5       10
+        3       3.5      4.4        2
+        4
+
+</PRE>
+
+</DL>
+
+
+
+
+<DL COMPACT>
+<DT>AVG(Range)<DD>
+Average value of the range.
+<BR>
+
+ex. AVG(A1..C3) = 4.955555
+<DT>COUNT(Range)<DD>
+Count the number of elements in the range.  Blank cells ignored.
+<BR>
+
+ex. COUNT(A1..C3) = 9; COUNT(A1..A4) = 3
+<DT>MAX(Range)<DD>
+Maximum value in the range.
+<BR>
+
+ex. MAX(A1..C3) = 10
+<DT>MIN(Range)<DD>
+Minimum value in the range.
+<BR>
+
+ex. MIN(A1..C3) = 1.1
+<DT>STD(Range)<DD>
+Standard deviation of the range.
+<BR>
+
+ex. STD(A1..C3) =  2.904827
+<DT>SUM(Range)<DD>
+Sum of values in the range.
+<BR>
+
+ex. SUM(A1..C3) = 44.6
+<BR>
+
+or   A1..C3 = 44.6
+<DT>VAR(Range)<DD>
+Returns the population variance of the range.
+<BR>
+
+ex. VAR(A1..C3) = 8.438024
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbBB">&nbsp;</A>
+<H2>Date/Time functions_</H2>
+
+
+
+
+
+<DL COMPACT>
+<DT>DATE(YY,MM,DD)<DD>
+Serial number of days from Jan 1 1900 to Year = YY,
+Month = MM, Day = DD.
+YY from 0 to 37 will be transformed automatically to 2000 to 2037.
+To get a date before 1938 enter 19YY into the year value.
+(Note: Cell need to be in date format to display dates)
+<BR>
+
+ex. DATE(87,5,20) = 31917
+<DT>TODAY()<DD>
+Returns the serial number of days to now.
+<DT>TIME(HR,MIN,SEC)<DD>
+<BR>
+
+Fraction of day corresponding to HR:MIN:SEC
+<DT>DAY(X)<DD>
+The Day in X.
+<BR>
+
+ex. DAY(31917) = 20.
+<DT>HOUR(X)<DD>
+The Hours in the fractional part of X
+<DT>MINUTE(X)<DD>
+The Minutes in the fractional part of X
+<DT>MONTH(X)<DD>
+The Month in X.MONTH(31917) = 5 (May)
+<DT>SECOND(X)<DD>
+The Seconds in the fractional part of X
+<DT>YEAR(X)<DD>
+The Year in X.
+<BR>
+
+ex. YEAR(31917) = 87
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbBC">&nbsp;</A>
+<H2>String functions_</H2>
+
+
+
+
+
+<DL COMPACT>
+<DT>LENGTH(string) or LENGTH(Cell)<DD>
+Number of characters in string.
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbBD">&nbsp;</A>
+<H2>User functions_</H2>
+
+
+
+
+
+User functions are functions developed in the C programming language.
+They must be compiled with the C compiler and linked with the kernel of
+<B>mc</B>.
+Everything that is needed to build a special version with user functions
+is included in the registered version of
+<B>mc</B>.
+To build a new
+<B>mc</B>
+
+the following steps must be completed:
+<DL COMPACT>
+<DT>1.<DD>
+
+Change into the directory <I>$ARX/mc/src</I>.
+This directory contains following files:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>makefile<DD>
+Makefile for the new mc
+<DT>mc_kern.o<DD>
+kernel of mc
+<DT>libmcf.a<DD>
+archive with mc functions
+<DT>f.tab.h<DD>
+header for function types
+<DT>mcfunc.h<DD>
+header for functions
+<DT>mcftab.c<DD>
+function table
+<DT>mcuser.c<DD>
+user functions source code
+
+
+</DL>
+</DL>
+
+
+
+<DT>2.<DD>
+Develop your functions in C in the module <I>mcuser.c</I>.
+Every function must be a double returning function with up to four double
+parameters or a single string parameter.
+<DT>3.<DD>
+Add description entries in the files
+<I>mcftab.c</I>
+
+and
+<I>mcfunc.h</I>
+
+for every developed function.
+Carefully read the comments in these files that explain how to describe
+your function correctly.
+<DT>4.<DD>
+Simply compile and link the new
+<B>mc</B>
+
+with
+<I>make</I>
+
+<DT>5.<DD>
+Test the new
+<B>mc</B>
+
+and the new functions with
+<I>./mc</I>
+
+<DT>6.<DD>
+Copy the new
+<B>mc</B>
+
+into the bin directory with
+<BR>
+
+<I>cp $ARX/mc/src/mc $ARX/bin</I>
+
+
+
+
+
+
+
+
+
+
+</DL>
+<A NAME="lbBE">&nbsp;</A>
+<H2>Language support_</H2>
+
+
+
+
+
+<B>mc</B>
+
+is language configurable.
+The error messages and the menus are held in separate editable files,
+which are read in at startup of <B>mc</B>.
+The files can be translated into any language and can be altered
+by the &quot;bin&quot; user with any editor.
+<P>
+
+The messages are held in the Message file
+<I>$ARX/lib/mcmsg.rdb</I>.
+This file is a <B>/rdb</B>-table (see
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+File format
+
+
+).
+To alter the file simply reedit only the messages without altering
+the rest of the file.
+<P>
+
+The menus are in the Menu file
+<I>$ARX/lib/mcmnu.rdb</I>.
+This is a simple list of the available menus.
+To alter the file simply reedit every menu keyword without altering
+the order of the keywords!
+The &quot;hot-key&quot; for every menu item is the first uppercase or
+non-alphabetic character in every keyword.
+
+<BR>
+
+
+<B>PLEASE</B>
+
+<BR>
+
+
+If you translate the files to any language,
+please send the translated files to me via Email or on a disk.
+They will then be distributed with <B>mc</B>.
+
+
+
+
+
+
+
+<A NAME="lbBF">&nbsp;</A>
+<H2>Printing_</H2>
+
+
+
+
+
+<B>mc</B>
+
+uses
+<B>[nt]roff</B>
+
+to do the hard work of text formatting.
+The marked range is piped to the shell procedure
+<I>$ARX/lib/mcprint</I>
+
+with the command
+<I>/Print</I>
+
+This procedure passes its input to
+<B>nroff</B>
+
+as the default.
+<I>$ARX/lib/mcprint</I>
+
+can be modified
+to the user's needs, for example to add a standard header to every printed
+worksheet or to change
+<B>nroff</B>
+
+to
+<B>troff</B>
+
+and
+<B>lpr</B>
+
+to <B>hpr</B>.
+<P>
+
+<B>[nt]roff</B>
+
+commands can be used by putting them directly into the
+left side cells of the printing range.
+For example, the menu command
+<I>/Worksheet Page</I>
+
+simply adds a &quot;.bp&quot;
+<I>break page</I>
+
+command into the worksheet.
+
+
+
+
+
+
+
+
+<A NAME="lbBG">&nbsp;</A>
+<H2>Attributes_</H2>
+
+
+
+
+
+The  appearance  of  a cell on printed output can be set with the
+<I>/Range Attrib</I>
+
+command.
+Every cell can have a
+<B>Bold</B>
+
+or
+<I>Italic</I>
+
+attribute.
+<B>mc</B>
+
+puts
+<B>nroff</B>
+
+font controlling commands in the output, which is piped through <B>[nt]roff</B>.
+
+
+
+
+
+
+
+
+<A NAME="lbBH">&nbsp;</A>
+<H2>Lotus WKS-files_</H2>
+
+
+
+
+
+A conversion program for the most popular DOS spreadsheet file format WKS
+(Lotus 1-2-3) is included in <B>mc</B>.
+<B>mc2wks</B>
+
+converts
+<B>mc</B>-files
+to and from binary WKS-files.
+With the command
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+mc2wks [-<I>option</I>] &lt;<I>mcfile</I> &gt;<I>wksfile</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+every worksheet produced with
+<B>mc</B>
+
+can be converted to a WKS-file.
+<B>mc2wks</B>
+
+can handle also the <B>mc</B>-options <I>-c -d -f -v</I> and <I>-x</I>
+the same way
+<B>mc</B>
+
+does.
+
+<P>
+
+With the command
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+mc2wks -r &lt;<I>wksfile</I> &gt;<I>mcfile</I>
+
+</PRE>
+
+</DL>
+
+
+
+
+every worksheet produced with
+a DOS spreadsheet which has been transferred to UNIX
+(or is on a UNIX-DOS shared device)
+can be converted to a <B>mc</B>-file.
+
+
+
+<BR>
+
+
+<B>LIMITATIONS</B>
+
+<BR>
+
+
+<B>mc2wks</B>
+
+can only convert Lotus-WKS- and -WK1-files produced by
+Lotus Versions 1-2-3 V&lt;=2.x.
+The newer WK3-files must be converted to WK1-format by the
+1-2-3 utility-program
+<B>TRANS.EXE</B>
+
+before using
+<B>mc2wks</B>
+
+with them.
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>units<DD>
+Since no DOS spreadsheet can handle units, all unit information is lost
+when converting from
+<B>mc</B>
+
+to WKS.
+<DT>range names<DD>
+Range names longer than 16 characters will be shortened to 16 chars
+when transferred to WKS.
+Since range names in
+<B>mc</B>
+
+are case sensitive and in DOS spreadsheets not,
+they are converted to uppercase
+when transferred to WKS.
+<DT>user functions<DD>
+User functions and functions special for
+<B>mc</B>
+
+(i.e. @LINK()) will probably generate error messages when loaded with the DOS
+spreadsheet, but conversion is done.
+<DT>functions<DD>
+Cells containing functions of DOS spreadsheets
+that are not implemented in
+<B>mc</B>
+
+can not be transferred to mc-file-format.
+The rest of the worksheet is transferred and an error message is displayed.
+
+
+<DT>arguments<DD>
+Multiple arguments of statistical functions are not implemented in <B>mc</B>.
+Therefore only the first argument is recognized when converting to
+mc-file-format.
+
+
+</DL>
+</DL>
+
+
+<P>
+
+<B>Lotus 1-2-3</B>
+
+is a trademark of Lotus Development Corp.
+
+
+
+
+
+
+
+<A NAME="lbBI">&nbsp;</A>
+<H2>Dbase files_</H2>
+
+
+
+
+
+<B>db2rdb</B>
+
+is a program, that comes with the registered version of <B>mc</B>.
+It fully supports the use of <B>Dbase</B>-files with
+<B>mc</B>
+
+and other UNIX-commands.
+See in the docs of
+<B>db2rdb</B>
+
+for further information.
+<P>
+
+<B>Dbase</B>
+
+is a trademark of dBase LLC.
+
+
+
+
+
+
+
+<A NAME="lbBJ">&nbsp;</A>
+<H2>Examples_</H2>
+
+
+
+
+
+There are example worksheets in the directory
+<I>$ARX/exm</I>.
+
+This directory contains the following files:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>sort.mc<DD>
+<BR>
+
+Sorting a database.
+Must be loaded with:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+mc sort.mc
+
+</PRE>
+
+</DL>
+
+
+
+<DT>how_sort<DD>
+<BR>
+
+Description for sorting a database within <B>mc</B>.
+<DT>unit.mc<DD>
+<BR>
+
+Unit conversion.
+Must be loaded with:
+<BR>
+
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+mc -u unit.mc
+
+</PRE>
+
+</DL>
+
+
+
+<DT>purchase<DD>
+<BR>
+
+Shellscript-Example of <B>/rdb</B> integration with <B>mc</B>.
+<B>/rdb</B> must be installed in $RDB
+(usually is $RDB=/usr/rdb, set $RDB in /etc/profile).
+The <B>/rdb</B> example project <B>/act</B> must be installed in $RBD/act.
+<DT>purchase.mc<DD>
+<BR>
+
+Worksheet for purchase.
+<DT>purchase.mcr<DD>
+<BR>
+
+Macro for purchase.
+
+
+</DL>
+</DL>
+
+
+
+
+
+
+
+
+
+<A NAME="lbBK">&nbsp;</A>
+<H2>Limitations_</H2>
+
+
+
+
+
+
+The date and time functions do not work with dates prior to Dec 14, 1902.
+The date display format does not work with dates prior to Jan 1, 1970
+and after Jan 18, 2038 due to UNIX's date limits.
+<P>
+
+Since there is a bug in cursor positioning of the COHERENT curses-library,
+the lower-right position of the screen is never displayed.
+<P>
+
+The function shortcut for SUM(Range) to write only Range (mc V&lt;=3.01)
+was removed from mc V4 due to parser problems with range names.
+
+
+
+<A NAME="lbBL">&nbsp;</A>
+<H2>Terminal_</H2>
+
+
+
+
+
+Since this product is based on the
+<B>curses</B>
+
+library,
+the program run on the console as well as on terminals.
+<P>
+
+The following table list the keys and their corresponding entries in
+<I>/etc/termcap</I>
+
+or
+<I>/usr/lib/terminfo/?/*.</I>
+
+COHERENT-3.x versions work with
+<B>termcap,</B>
+
+all others with
+<B>terminfo.</B>
+
+<P>
+
+The table also lists the used screen attributes.
+If you want color output you can change the entries to sequences
+for colors colors on your terminal.
+<P>
+
+The keys and screen attributes can only work
+if their correct entries are made in the terminals description,
+which is identified by the environment variable
+<B>TERM.</B>
+
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<PRE>
+Key      termcap terminfo Comment
+-------- ------- -------- ------------------------------
+UP       ku      kcuu1    Move one line/item up.
+DOWN     kd      kcud1    Move one line/item down.
+LEFT     kl      kcub1    Move one character/item left.
+RIGHT    kr      kc       Move one character/item right.
+PGUP     Kp      kpp      Move one screen up.
+PGDOWN   KP      knp      Move one screen down.
+BACKTAB  bt      cbt      Move one screen left.
+HOME     kh      kc       Move to begin.
+END      KE      kll      Move to end.
+INSERT   Ku      kich1    Insert mode.
+DELETE   Kd      kdch1    Delete item.
+F1       k1      kf1      Function 1 = Help.
+F2       k2      kf2      Function 2.
+F3       k3      kf3      Function 3.
+F4       k4      kf4      Function 4.
+F5       k5      kf5      Function 5.
+F6       k6      kf6      Function 6.
+F7       k7      kf7      Function 7.
+F8       k8      kf8      Function 8.
+F9       k9      kf9      Function 9.
+F10      k0      kf0      Function 10 = Exit.
+
+Attribut termcap terminfo Comment
+-------- ------- -------- ------------------------------
+Blink    mb      blink    Blink mode on
+Bold     md      bold     Bold mode on
+Reverse  so      rev      Reverse mode on
+Standout so      smso     Standout mode on
+Underlin us      smul     Underline mode on
+Normal   me      sgr0     Normal mode on
+Standard se      rmse     Standout mode off
+Standard se      rmso     Standout mode off
+Standard ue      rmul     Underline mode off
+
+</PRE>
+
+</DL>
+
+
+
+
+
+<BR>
+
+
+<B>CAUTION</B>
+
+<BR>
+
+
+Since most terminal keys start with the &lt;ESC&gt;-character (octal 033),
+the ESCAPE-Keys itself needs one second to be decoded!
+
+
+
+
+
+
+
+<A NAME="lbBM">&nbsp;</A>
+<H2>Files_</H2>
+
+
+
+
+
+The installation of
+<B>mc</B>
+
+creates the following files:
+
+<BR>
+
+<P>
+
+<DL COMPACT><DT><DD>
+
+
+<DL COMPACT>
+<DT>$ARX/bin/mc<DD>
+the spreadsheet program.
+<DT>$ARX/bin/mcunits<DD>
+the unit conversion program,
+which is used by the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<I>-u</I> option
+
+
+of <B>mc</B>.
+<DT>$ARX/bin/mcunits.rdb<DD>
+the unit conversion programs units table
+(see <B>mcunits</B> for more information).
+<DT>$ARX/bin/mcrdb<DD>
+script for editing <B>/rdb</B>-tables with <B>mc</B>.
+<DT>$ARX/bin/mc2conv<DD>
+script for converting from <B>mc</B> V1.x to V2.x
+(compatible with all higher versions).
+<DT>$ARX/bin/mc2wks<DD>
+file conversion program from and to Lotus WKS-file-format.
+<DT>$ARX/bin/mcread<DD>
+<B>mc</B> file reader for copying ranges from external files
+into the current worksheet via the cell-command &quot;&lt;!&quot;.
+<DT>$ARX/lib/mcsample.tar<DD>
+example worksheets to demonstrate the power of <B>mc</B>.
+<DT>$ARX/lib/mcrdb.mc<DD>
+worksheet for script <B>mcrdb</B>.
+<DT>$ARX/lib/mcmacro<DD>
+program for reading macros.
+<DT>$ARX/lib/mcprint<DD>
+script for printing.
+<DT>$ARX/lib/mcellval<DD>
+script for linking.
+<DT>$ARX/lib/mcmsg<DD>
+program for reading message file.
+<DT>$ARX/lib/mcmsg.rdb<DD>
+Message file.
+<DT>$ARX/lib/mcmenu.rdb<DD>
+Menu file.
+<DT>$ARX/mc/src/*<DD>
+development library files, see
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+User functions.
+
+
+<DT>$ARX/bin/arxactiv<DD>
+program to add the serial number and the license key to the binary.
+
+
+</DL>
+</DL>
+
+
+
+
+<A NAME="lbBN">&nbsp;</A>
+<H2>See Also_</H2>
+
+
+
+
+
+awk, db2rdb, dos, make, me, mcunits, nro, nroff, sed, termcap, terminfo, /rdb
+
+
+<A NAME="lbBO">&nbsp;</A>
+<H2>Author_</H2>
+
+
+
+
+
+<PRE>
+Axel Reinhold
+Franz-Heinrich-Str. 20
+95100 Selb
+Germany
+Fax:      +49-9287-8244
+
+
+
+
+
+
+eMail:    <A HREF="mailto:axel@freakout.de">axel@freakout.de</A>
+
+
+
+
+
+Internet: <A HREF="http://www.freakout.de">http://www.freakout.de</A></PRE>
+
+
+(c)&nbsp;&nbsp;<B>Axel K. Reinhold</B>.
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">Name_</A><DD>
+<DT><A HREF="#lbAC">Synopsis_</A><DD>
+<DT><A HREF="#lbAD">Description_</A><DD>
+<DT><A HREF="#lbAE">Options_</A><DD>
+<DT><A HREF="#lbAF">General Overview_</A><DD>
+<DT><A HREF="#lbAG">File format_</A><DD>
+<DT><A HREF="#lbAH">Recalculation_</A><DD>
+<DT><A HREF="#lbAI">Function keys_</A><DD>
+<DT><A HREF="#lbAJ">Moving around_</A><DD>
+<DT><A HREF="#lbAK">Range_</A><DD>
+<DT><A HREF="#lbAL">Menu_</A><DD>
+<DT><A HREF="#lbAM">Macros_</A><DD>
+<DT><A HREF="#lbAN">Formatting_</A><DD>
+<DT><A HREF="#lbAO">Text_</A><DD>
+<DT><A HREF="#lbAP">Formulas_</A><DD>
+<DT><A HREF="#lbAQ">Dates_</A><DD>
+<DT><A HREF="#lbAR">Operators_</A><DD>
+<DT><A HREF="#lbAS">Precedence_</A><DD>
+<DT><A HREF="#lbAT">Units_</A><DD>
+<DT><A HREF="#lbAU">Piping_</A><DD>
+<DT><A HREF="#lbAV">mcrdb_</A><DD>
+<DT><A HREF="#lbAW">Linking_</A><DD>
+<DT><A HREF="#lbAX">Mathematical functions_</A><DD>
+<DT><A HREF="#lbAY">Logical functions_</A><DD>
+<DT><A HREF="#lbAZ">Financial functions_</A><DD>
+<DT><A HREF="#lbBA">Statistical functions_</A><DD>
+<DT><A HREF="#lbBB">Date/Time functions_</A><DD>
+<DT><A HREF="#lbBC">String functions_</A><DD>
+<DT><A HREF="#lbBD">User functions_</A><DD>
+<DT><A HREF="#lbBE">Language support_</A><DD>
+<DT><A HREF="#lbBF">Printing_</A><DD>
+<DT><A HREF="#lbBG">Attributes_</A><DD>
+<DT><A HREF="#lbBH">Lotus WKS-files_</A><DD>
+<DT><A HREF="#lbBI">Dbase files_</A><DD>
+<DT><A HREF="#lbBJ">Examples_</A><DD>
+<DT><A HREF="#lbBK">Limitations_</A><DD>
+<DT><A HREF="#lbBL">Terminal_</A><DD>
+<DT><A HREF="#lbBM">Files_</A><DD>
+<DT><A HREF="#lbBN">See Also_</A><DD>
+<DT><A HREF="#lbBO">Author_</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 12:03:53 GMT, November 03, 2022
+</BODY>
+</HTML>
