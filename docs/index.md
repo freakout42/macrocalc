@@ -15,8 +15,9 @@ miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
 
 It's git-maintained, lint-clean ANSI-C source is based on yacc, lex and
 [n]curses. It runs on every terminal or emulation that has a correct
-terminfo-entry. The user-interface is very convenient and well-known by 1-2-3
-users. Function- and cursor-keys and extended video attributes are supported.
+terminfo-entry. The user-interface is very convenient and well-known by Lotus
+1-2-3 users. Function- and cursor-keys and extended video attributes are
+supported.
 
 The menus and messages are in separate editable files and can be easily
 translated into any language. Every command in the package has a detailed
