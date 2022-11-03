@@ -383,7 +383,7 @@ manall:	cat1/mc.1 cat1/mcunits.1 cat1/nro.1 cat1/db2rdb.1
 	@echo "$@ done"
 
 manclean:
-	-rm -f mcver.r mc.1 mc.pcl mc.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 cat1/*.1 tmac.an*
+	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 cat1/*.1 tmac.an*
 
 tmac.an:	$(ARXSRC)/man/tmac.an
 	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.an >$@
@@ -396,6 +396,7 @@ cat1/mc.1:	mc.1
 
 mc1.html:	mc.1
 	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | man2html | sed 1,2d | grep -v 'Return to Main Contents' >$@
+	cp $@ ../../docs
 
 mc.1:	tmac.an mc.r \
 	mcdesc.r mccont.r mcopt.r mcover.r mcfile.r mccalc.r mckey.r mcmove.r \
