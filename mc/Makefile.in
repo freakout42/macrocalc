@@ -395,8 +395,8 @@ cat1/mc.1:	mc.1
 	$(NROFF) $(NFLAGS) -man mc.1 | col -b >$@
 
 mc1.html:	mc.1
-	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | man2html | sed 1,2d | grep -v 'Return to Main Contents' >$@
-	cp $@ ../../docs
+	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/css/style.css?v=9a59dae3a19ae58758d7e7d56729879dc07ba6ad">' >$@
+	diff $@ ../../docs/$@
 
 mc.1:	tmac.an mc.r \
 	mcdesc.r mccont.r mcopt.r mcover.r mcfile.r mccalc.r mckey.r mcmove.r \
