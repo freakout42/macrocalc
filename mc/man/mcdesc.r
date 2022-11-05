@@ -10,7 +10,7 @@ interesting in the
 .B UNIX
 environment.
 It is the only spreadsheet that can handle units in calculations -
-so 1 m + 1 km = 1001 m.
+so 1m + 1km = 1001m.
 .ig
 .br
 .B UNIX
