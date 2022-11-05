@@ -10,8 +10,8 @@ file-format is flat ASCII, easy to understand and can therefore be directly
 manipulated with awk, perl or other standard UNIX-tools, or even with editors
 like vi.
 
-MacroCALC is the only spreadsheet that manages units: 1 mile + 1 km = 1.62
-miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
+MacroCALC is the only spreadsheet that manages units: 1 mile + 1 km = 1.62 miles;
+1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
 
 It's git-maintained, lint-clean ANSI-C source is based on yacc, lex and
 [n]curses. It runs on every terminal or emulation that has a correct
@@ -24,13 +24,13 @@ translated into any language. Every command in the package has a detailed
 man-page.
 
 mc was a professional commercial product, sold a couple hundred times for AIX,
-UnixWare, SCO, Coherent and Interactive during the 1990-2005 years - now going
+UnixWare, SCO, Coherent and Interactive during the 1991-2005 years - now going
 open-source under the "Simplified BSD License".
 
 ### build
 
-mc was born in 1992 on Coherent (16-bit 286 Unix-Clone) - there was no
-networking and a 64k (kilobyte!) address-room. So no automake. The
+mc was born in 1991 on Coherent (16-bit 286 Unix-Clone) - there was no
+networking and an only 64k (kilobyte!) address-room. So no automake. The
 portability lies in a flexible Makefile and a portability-layer (like apaches
 portable runtime). This layer lives in arx/. mc is an os-independent ansi-c
 source and lives in mc/.
@@ -65,5 +65,4 @@ man-directory. Here is an example for Linux/bash:
 
 Simplified BSD License  
 Copyright (c) 2022, Axel K. Reinhold  
-All rights reserved.
-
+All rights reserved.  
