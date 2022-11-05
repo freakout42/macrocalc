@@ -9,6 +9,8 @@ well-known user interface and has some special features especially
 interesting in the
 .B UNIX
 environment.
+It is the only spreadsheet that can handle units in calculations -
+so 1 m + 1 km = 1001 m.
 .ig
 .br
 .B UNIX

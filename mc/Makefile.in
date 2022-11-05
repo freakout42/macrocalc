@@ -395,7 +395,7 @@ cat1/mc.1:	mc.1
 	$(NROFF) $(NFLAGS) -man mc.1 | col -b >$@
 
 mc1.html:	mc.1
-	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' >$@
+	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' | sed '/^This document was created by/,/^Time: /d' >$@
 	diff $@ ../../docs/$@
 
 mc2.html:	mc.1
