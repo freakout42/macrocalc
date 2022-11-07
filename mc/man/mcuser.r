@@ -4,7 +4,7 @@ User functions are functions developed in the C programming language.
 They must be compiled with the C compiler and linked with the kernel of
 \fBmc\fP.
 Everything that is needed to build a special version with user functions
-is included in the registered version of
+is included in
 \fBmc\fP.
 To build a new
 .B mc
