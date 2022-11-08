@@ -1,4 +1,4 @@
-.Id $Id: mcformu.r,v 1.5 1997/06/28 15:25:45 axel Exp $
+.Id mcformu.r
 .SH Formulas
 Formulas are entered like
 .Hr -symbolic Text text.

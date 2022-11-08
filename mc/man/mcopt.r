@@ -1,4 +1,4 @@
-.Id $Id: mcopt.r,v 1.14 2002/10/17 12:25:47 axel Exp $
+.Id mcopt.r
 .SH Options
 .Ha Option_l ""
 .IP -l

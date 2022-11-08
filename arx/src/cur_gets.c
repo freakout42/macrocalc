@@ -1,4 +1,4 @@
-/* $Id: cur_gets.c,v 1.9 2008/06/11 06:22:56 axel Exp $
+/* cur_gets.c
  * Allows the user to edit a string with only certain characters allowed
  * pos == -1 signals only output no interaction
  * ESC cancels any changes

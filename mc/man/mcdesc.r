@@ -1,4 +1,4 @@
-.Id $Id: mcdesc.r,v 1.3 1997/06/28 12:24:09 axel Exp $
+.Id mcdesc.r
 .SH Description
 .B mc
 is an interactive, macro-programmable spreadsheet calculator.

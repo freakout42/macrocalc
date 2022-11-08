@@ -1,4 +1,4 @@
-.Id $Id: mcuser.r,v 1.11 1997/04/11 14:53:12 axel Exp $
+.Id mcuser.r
 .SH "User functions"
 User functions are functions developed in the C programming language.
 They must be compiled with the C compiler and linked with the kernel of

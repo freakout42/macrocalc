@@ -1,5 +1,4 @@
-/* $Id: mcget.c,v 1.5 1997/05/09 17:35:25 axel Exp $
- */
+/* mcget.c */
 
 #include <string.h>
 #include <arx_def.h>

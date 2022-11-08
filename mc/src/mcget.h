@@ -1,5 +1,4 @@
-/* $Id: mcget.h,v 1.2 1995/02/16 21:57:19 axel Rel $
- */
+/* mcget.h */
 
 int getkey (void);
 void clearinput (void);
