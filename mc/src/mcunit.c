@@ -95,9 +95,19 @@ char		*starp;
 if (!units) return s;
 #ifdef DEBUG
 fprintf (stderr, "unitconv: %f [%s] = ? [%s]\n", s, su, tu);
-#endif
+/* unitconv: 1.000000 [(null)] = ? [ m] [Key]
+   unitconv: 1.000000 [ m] = ? [ m /h] [Key]
+You have:  m
+You want:  m /h
+Conformability
+1 metre
+1.50916e+30 metre-1 gramme-1 second
 if ((su==NULL || !*su) && (tu==NULL || !*tu)) return s;
 if (su==NULL || tu==NULL) {errno = CONFUNIT; return HUGE_VAL;}
+ */
+#endif
+if (su==NULL || !*su) return s;
+if (tu==NULL || !*tu) {errno = CONFUNIT; return HUGE_VAL;}
 
 #ifdef UNITPIPE
 if (mode == FIRST)
