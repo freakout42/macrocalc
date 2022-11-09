@@ -138,7 +138,7 @@ mode = unitread (inbuf);
 #ifdef DEBUG
 fprintf (stderr, "unitconv: get mcunits: \"%s\"\n", inbuf);
 #endif
-if ((starp = strchr(inbuf, '*')) && sscanf(starp, "* %f / %f", &m, &d) != 2)
+if (((starp = strchr(inbuf, '*'))==NULL) || sscanf(starp, "* %f / %f", &m, &d) != 2)
 	{
 	errno = strstr (inbuf, "onformability") ? CONFUNIT : UNRECUNIT;
 	return HUGE_VAL;

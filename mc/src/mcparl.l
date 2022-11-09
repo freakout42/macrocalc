@@ -34,6 +34,8 @@ struct Range rg1 = {NULL, {{0,0},{0,0}}, "hello"};
 struct Range *rnames	= &rg1;
 char libpath[MAXFILE+1] = ARXPATH;
 char *progname = "mcparse";
+int curcol = 1;
+int currow = 1;
 
 int main()
 {
