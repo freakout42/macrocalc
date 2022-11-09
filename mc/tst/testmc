@@ -16,4 +16,5 @@ tee $TMP2 |
 ../bin/mc -p | diff formula.out - | wc -l >$TMPF
 echo 4 | diff -w $TMPF -
 cmp $TMP2 formula.wks
+../bin/mc -u -p <../exm/unit.mc | diff unit.out -
 rm $TMPF $TMP2

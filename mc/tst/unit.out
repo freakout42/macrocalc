@@ -1,0 +1,18 @@
+mcsample/unit.mc                                                            
+A long way from Vancouver, British Columbia to San Francisco, Californa     
+
+                                                     metric                 
+distance:                   3000  mile                 4828  km             
+hours driving:                50  hour                                      
+average speed:              60.0  mile /hour           96.6  km /hour       
+gas needed:                  100  gallon                379  l              
+consumption:                  30  mile /gallon        0.078  l /km          
+
+Now I want to drive from San Francisco to San Diego                         
+
+distance:                   1000  mile                 1609  km             
+hours driving:              16.7  hour                                      
+gas needed:                   33  gallon                126  l              
+
+
+Look at the formulas, how the calculations are set up.                      
