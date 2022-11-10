@@ -1,4 +1,5 @@
-.\" /ARX man-macros $Id: tmac.an,v 1.13 2001/04/13 15:54:49 axel Exp $
+.\" /ARX man-macros tmac.an
+.ta 0 10
 .nr y4 1900+\n(yr
 .nr yr \n(y4-2000
 .nr C 0 1

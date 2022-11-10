@@ -63,7 +63,6 @@ separators or record terminators.
 .IP 3.
 Data types are stored in ASCII format as follows:
 .DS
-.ta 0 10
 DATA TYPE	DATA RECORD STORAGE
 ---------	--------------------------------------------
 Character	(ASCII characters)

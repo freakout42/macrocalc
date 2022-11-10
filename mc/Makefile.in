@@ -383,7 +383,7 @@ manall:	cat1/mc.1 cat1/mcunits.1 cat1/nro.1 cat1/db2rdb.1
 	@echo "$@ done"
 
 manclean:
-	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 cat1/*.1 tmac.an*
+	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 nro.1 cat1/*.1 tmac.an*
 
 tmac.an:	$(ARXSRC)/man/tmac.an
 	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.an >$@
@@ -428,7 +428,10 @@ mcunits.1:	mcunits.r
 cat1/mcunits.1:	mcunits.1
 	$(NROFF) $(NFLAGS) -man mcunits.1 | col -b >$@
 
-cat1/nro.1:	../nro/nro.man
+nro.1: ../nro/nro.nro
+	soelim <../nro/nro.nro | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+
+cat1/nro.1:	../nro/nro.man nro.1
 	cp ../nro/nro.man $@
 
 #-------------------------------------------------------------------------------

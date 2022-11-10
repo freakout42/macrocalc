@@ -27,12 +27,10 @@ ofile
 is present
 in the command line; otherwise, the output will appear at
 the user console.
-.de DY
-Directing the output to the special filename,
+Directing the output to the special filename
 .bo
 $P,
 will cause the output to be sent to the printer.
-.en
 .sp
 The
 .ul
