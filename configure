@@ -16,6 +16,7 @@ echo "configuring for $DISTID" >&2
 cat >Makefile <<EOF
 ARX=\$(DESTDIR)/opt
 all: dist/arx.tar.gz
+	@echo 'you can now run "sudo make install"'
 install: all
 	-mkdir \$(ARX)
 	gzip -cd <dist/arx.tar.gz | tar x -p -C \$(ARX) -f -

@@ -39,8 +39,9 @@
         </ul>
         <p class="view"><a href="{{ site.github.repository_url }}/releases/tag/v{{ site.latestrel }}">Latest release <small>macrocalc-v{{ site.latestrel }}</small></a></p>
         <ul class="downloads">
-          <li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.latestrel }}.zip">Download <strong>ZIP File</strong></a></li>
-          <li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.latestrel }}.tar.gz">Download <strong>TAR Ball</strong></a></li>
+          <!--li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.latestrel }}.zip">Download <strong>ZIP File</strong></a></li-->
+          <li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.latestrel }}.tar.gz">Source <strong>TAR Ball</strong></a></li>
+          <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.latestrel }}/mc-{{ site.latestrel }}-fb-amd64.tar.gz">FreeBSD binary <strong>TAR Ball</strong></a></li>
           <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.latestrel }}/mc-{{ site.latestrel }}-lu-x86_64.tar.gz">Linux binary <strong>TAR Ball</strong></a></li>
         </ul>
         {% endif %}
