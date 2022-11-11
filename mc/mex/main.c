@@ -617,6 +617,7 @@ void edinit(fname)
 int
 execute(c, f, n)
 	register int	c;
+  int f, n;
 {
 	register KEYTAB *ktp;
 	register int	k;
