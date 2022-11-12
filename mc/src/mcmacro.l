@@ -1,6 +1,7 @@
+%option nounput
+%option noinput
 %{
-/* $Id: mcmacro.l,v 1.4 1997/04/11 13:25:35 axel Exp $
- */
+/* mcmacro.l */
 
 #include <stdlib.h>
 #include <string.h>

@@ -1,5 +1,4 @@
-/* $Id: mcread.c,v 1.10 2006/09/27 06:22:46 axel Exp $
- */
+/* mcread.c 1.10 2006/09/27 06:22:46 axel Exp */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -61,12 +60,16 @@ extern char *optarg;
 int c;
 
 int loaded;
+#ifdef LICENSED
 int license;
+#endif
 char *rangespec = NULL;
 struct Range range;
 
 progname = "mcread";
+#ifdef LICENSED
 license = lib_akey ("000000", FALSE);
+#endif
 tzset(); /* set timezone */
 while ((c = getopt (argc, argv, opts)) != EOF)
 	switch (c)

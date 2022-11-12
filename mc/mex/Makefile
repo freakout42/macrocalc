@@ -1,6 +1,6 @@
 # Makefile for MEX on Unix
 
-CFLAGS=-O3 -Wall -Werror
+CFLAGS=-O3 -Wall -Wno-error
 LIBS=-lcurses
 SRC=buffer.c cursor.c display.c files.c line.c main.c random.c search.c term.c window.c word.c
 OBJ=buffer.o cursor.o display.o files.o line.o main.o random.o search.o term.o window.o word.o help.o
@@ -18,7 +18,7 @@ term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/ncurses -c term.c
 
 curkeys.h: curkeys.c
-	$(CC) -E curkeys.c | sed -n 's/^YY */#define KEY_/p' >$@
+	$(CC) -I/usr/include/ncurses -E curkeys.c | sed -n 's/^YY */#define KEY_/p' >$@
 
 help.c: help_c.eng
 	cp help_c.eng $@

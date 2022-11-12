@@ -33,7 +33,7 @@ char	*p;
 if ((p = strchr (s, '.')) != NULL) *d = atoi (p+1);
 }
 
-char		opts[] = "234+I:ABC:D:N:F:L:0a:bcdef:ghijklm:n:opqrs:tuvx:yz?";
+char		opts[] = "+ABN:F:0a:bcdef:ghijklm:n:opqrs:tuvx:yz?";
 char		tmpfname[81]	= "";
 
 int main (int argc, char *argv[])
@@ -53,7 +53,6 @@ int		external= FALSE;
 char		*afile;
 char		*table	= NULL;
 char		fieldse = '\t';
-char		dbver	= DB3FILE;
 int		nullpa	= FALSE;
 int		plus	= FALSE;
 int		adsill	= FALSE;
@@ -78,13 +77,10 @@ int		dotrim	= TRUE;
 enum TODROP	todrop	= DROPIT;
 enum TOWHAT	to_	= LEAVE;
 int		verbose	= FALSE;
-int		charlen	= 20;
-int		datelen	= 8;
 int		numlen	= 9;
 int		numdec	= 2;
 int		floatlen= 9;
 int		floatdec= 2;
-int		boollen	= 1;
 char		*filename= NULL;
 int		year	= 0;
 int		month	= 0;
@@ -92,35 +88,19 @@ int		day	= 0;
 time_t		now;
 struct tm	*tmdb;
 struct file	*fi;
+#ifdef LICENSED
 int		license;
 
 license = lib_akey ("000000", FALSE);
+#endif
 while ((c = getopt (argc, argv, opts)) != EOF)
 	switch (c)
 	 {
-	 case '2':	dbver	= DB2FILE;
-			break;
-	 case '3':	dbver	= DB3FILE;
-			break;
-	 case '4':	dbver	= DB4FILE;
-			break;
 	 case '+':	plus	= TRUE;
-			break;
-	 case 'I':	if (strcmp (optarg, "I") == 0) dbver = DB2FILE;
-			else if (strcmp (optarg, "II") == 0) dbver = DB3FILE;
-			else if (strcmp (optarg, "II+") == 0) dbver = DB3FILE;
-			else if (strcmp (optarg, "V") == 0) dbver = DB4FILE;
-			else usage();
-			break;
-	 case 'C':	charlen	= atoi (optarg);
-			break;
-	 case 'D':	datelen	= atoi (optarg);
 			break;
 	 case 'N':	dblen (optarg, &numlen, &numdec);
 			break;
 	 case 'F':	dblen (optarg, &floatlen, &floatdec);
-			break;
-	 case 'L':	boollen	= atoi (optarg);
 			break;
 	 case 'x':	external= TRUE;
 			/*FALLTHRU*/

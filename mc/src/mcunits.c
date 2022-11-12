@@ -493,7 +493,6 @@ char *getname (b)
 {
 	register char *s, *t;
 	register int c;
-	register char *v;
 
 	do {
 		c = nextc();
@@ -505,7 +504,7 @@ char *getname (b)
 	}
 	*s = '\0';
 	peekc = c;
-	v = t = b;
+	t = b;
 	s = buf;
 	while ((*t++ = *s++))
 		;

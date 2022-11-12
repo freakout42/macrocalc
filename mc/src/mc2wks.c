@@ -55,24 +55,31 @@ int main (int argc, char *argv[])
 extern int optind;
 extern char *optarg;
 int c;
-
+#ifdef LICS2IBM
 int bits = DEFAULTBITS;
+#endif
 int reverse = FALSE;
 int loaded;
+#ifdef LICENSED
 int license;
+#endif
 
 progname = "mc2wks";
+#ifdef LICENSED
 license = lib_akey ("000000", FALSE);
+#endif
 tzset(); /* set timezone */
 while ((c = getopt (argc, argv, opts)) != EOF)
 	switch (c)
 	 {
+#ifdef LICS2IBM
 	 case '7':
 	 	bits		= 7;
 		break;
 	 case '8':
 	 	bits		= 8;
 		break;
+#endif
 	 case 'r':
 	 	reverse		= TRUE;
 		break;
@@ -115,7 +122,9 @@ memset (colwidth, defaultwidth, sizeof(colwidth));
 inithash();
 if (reverse==TRUE)
 	{
-/*	lics2ibm (bits); */
+#ifdef LICS2IBM
+	lics2ibm (bits);
+#endif
 	fromwks (stdin);
 	savefile (stdout, FULL);
 	}
@@ -133,7 +142,9 @@ else
 	 case RET_SUCCESS:
 		break;
 	 }
-/*	ibm2lics (bits); */
+#ifdef LICS2IBM
+	ibm2lics (bits);
+#endif
 	towks (stdout);
 	}
 

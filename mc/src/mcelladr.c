@@ -400,33 +400,33 @@ char *np;
 strcpy(formula, "1+b2+2");
 printf(":%s:\n", formula);
 np = creftoggle(formula, formula);
-printf("0:%d:%s:\n-\n", np-formula, formula);
+printf("0:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula || strcmp("1+b2+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+3);
-printf("1:%d:%s:\n-\n", np-formula, formula);
+printf("1:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula+9 || strcmp("1+[-1,-1]+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+9);
-printf("2:%d:%s:\n-\n", np-formula, formula);
+printf("2:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula+8 || strcmp("1+[B,-1]+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+8);
-printf("3:%d:%s:\n-\n", np-formula, formula);
+printf("3:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula+8 || strcmp("1+[-1,2]+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+8);
-printf("4:%d:%s:\n-\n", np-formula, formula);
+printf("4:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula+7 || strcmp("1+[B,2]+2", formula)) exit(1);
 
 strcpy(formula, "1+AA102+2");
 np = creftoggle(formula, formula+7);
-printf("5:%d:%s:\n-\n", np-formula, formula);
+printf("5:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula+11 || strcmp("1+[+24,+99]+2", formula)) exit(1);
 
 strcpy(formula, "A2+2");
 np = creftoggle(formula, formula+2);
-printf("6:%d:%s:\n-\n", np-formula, formula);
+printf("6:%d:%s:\n-\n", (int)(np-formula), formula);
 if (np!=formula+7 || strcmp("[-2,-1]+2", formula)) exit(1);
 #endif
 
