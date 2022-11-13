@@ -66,18 +66,18 @@ man-directory. Here is an example for Linux/bash:
 Navigate through the sheet with the cursor-keys. The dot (.) marks the
 beginning and end of a range, which can be copied or manipulated with the
 menu by the slash (/). The apostrophe (') starts a text-cell, any other
-key a number or formula. Open "mc" and type (<dn> is cursor-down):
+key a number or formula. Open "mc" and type (|v| is cursor-down):
 
-    .'hello<dn>  
+    .'hello|v|  
 
 you have marked A1 as range starting point and set A1 to text "hello".
 Lets enter some numbers and a formula by typing:
 
-    1<dn>2<dn>.a2+a3$<dn>  
+    1|v|2|v|.a2+a3$|v|  
 
 you have now A2=1 A3=2 A4=3 and A1..A4 as range. Now navigate to B1 and:
 
-    /c<dn>3<dn>4<dn>  
+    /c|v|3|v|4|v|  
 
 you have copied the range A1..A4 to B1..B4 and B2=3 B3=4 and B4=5.
 Why is B3=5 and not 3 or 7? Because you typed $ after a3 this makes it
