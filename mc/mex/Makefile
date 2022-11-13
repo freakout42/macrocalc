@@ -18,7 +18,9 @@ term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/ncurses -c term.c
 
 curkeys.h: curkeys.c
-	$(CC) -I/usr/include/ncurses -E curkeys.c | sed -n 's/^YyY */#define KEY_/p' >$@
+	$(CC) -I/usr/include/ncurses -E curkeys.c | tee curkeys.a | sed -n 's/^YyY */#define KEY_/p' >$@
+	cat curkeys.a >&2
+	rm curkeys.a
 
 help.c: help_c.eng
 	cp help_c.eng $@

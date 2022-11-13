@@ -316,9 +316,8 @@ int getunit (UNIT *u, char *prompt)
 	double factor;
 
 Again:
-	if (prompt != NULL)
-		printf("%s", prompt);
-		if (dflag) fprintf(stderr, "%s", prompt);
+	if (prompt != NULL) printf("%s", prompt);
+	if (dflag) fprintf(stderr, "%s", prompt);
 	u->u_val = 1.;
 	for (i=0; i != NDIM; i++)
 		u->u_dim[i] = 0;

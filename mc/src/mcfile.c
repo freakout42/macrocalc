@@ -1,5 +1,4 @@
-/* $Id: mcfile.c,v 1.11 2004/05/16 09:15:54 axel Exp $
- */
+/* $Id: mcfile.c 1.11 2004/05/16 09:15:54 axel */
 
 #include <stdio.h>
 #include <string.h>
@@ -135,7 +134,7 @@ void printsheet (int prompt)
 int	border			= 'N';
 char	filenpr[MAXFILE+1]	= "";
 FILE	*file;
-char	pcmd[MAXFILE+10];
+char	pcmd[MAXFILE+128];
 
 if (prompt)
 	{

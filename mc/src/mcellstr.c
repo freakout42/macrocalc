@@ -1,5 +1,6 @@
-/* $Id: mcellstr.c,v 1.12 2016/03/14 18:53:42 axel Exp $
- */
+/* mcellstr.c */
+
+#pragma GCC diagnostic ignored "-Wformat-overflow"
 
 #include <stdio.h>
 #include <string.h>

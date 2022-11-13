@@ -327,6 +327,7 @@ void mlputi(i, r)
  */
 void mlputli(l, r)
 long l;
+int r;
 {
 	register long q;
 
