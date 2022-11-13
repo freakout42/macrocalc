@@ -1,17 +1,16 @@
 #include <curses.h>
-#define defkey(keyname) YY keyname KEY_##keyname
-defkey(BACKSPACE)
-defkey(NEXT)
-defkey(UP)
-defkey(DOWN)
-defkey(RIGHT)
-defkey(LEFT)
-defkey(PPAGE)
-defkey(NPAGE)
-defkey(LL)
-defkey(END)
-defkey(HOME)
-defkey(IC)
-defkey(DC)
-defkey(F0)
-YY F(n) (KEY_F0+(n))
+YyY BACKSPACE KEY_BACKSPACE
+YyY NEXT KEY_NEXT
+YyY UP KEY_UP
+YyY DOWN KEY_DOWN
+YyY RIGHT KEY_RIGHT
+YyY LEFT KEY_LEFT
+YyY PPAGE KEY_PPAGE
+YyY NPAGE KEY_NPAGE
+YyY LL KEY_LL
+YyY END KEY_END
+YyY HOME KEY_HOME
+YyY IC KEY_IC
+YyY DC KEY_DC
+YyY F0 KEY_F0
+YyY F(n) (KEY_F0+(n))
