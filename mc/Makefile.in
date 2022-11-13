@@ -336,8 +336,8 @@ binall:	.copied
 	@echo "$@ done"
 
 .copied:	../src/makefile
-	cp -p ../src/mc ../src/mcmsg ../src/mcmacro ../src/mcunits ../src/mc2wks ../src/mcread \
-		../src/db2rdb ../nro/nro ../mex/me .
+	cp -p ../src/mc ../src/mcmsg ../src/mcmacro ../src/mcunits ../src/mc2wks ../src/mcread ../src/db2rdb .
+	-cp -p ../nro/nro ../mex/me .
 	touch $@
 
 binclean:
@@ -464,8 +464,8 @@ mexclean:
 	make clean
 
 me:	Makefile
-	make mex
-	mv mex $@
+	-make mex
+	-mv mex $@
 
 #-------------------------------------------------------------------------------
 tstall: .tested

@@ -1,4 +1,4 @@
-/*
+/* display.c
  * The functions in this file
  * handle redisplay. There are two halves,
  * the ones that update the virtual display
@@ -107,6 +107,7 @@ void vtinit()
  * Update "ttrow" and "ttcol".
  */
 void movecursor(row, col)
+	int row, col;
 {
 	if (row!=ttrow || col!=ttcol) {
 		ttrow = row;
@@ -179,6 +180,7 @@ vvtputc(c, wvsbl)
 }
 
 void vtputc(c)				/* mb: split */
+	int c;
 {
 	vvtputc(c, 0);
 }
@@ -202,6 +204,7 @@ modeput (cp, n)
  */
 int
 visitog(f,n)
+	int f, n;
 {
 	visible = !visible;
 	sgarbf = TRUE;
@@ -221,6 +224,7 @@ visitog(f,n)
  * idea during the early stages.
  */
 void vtmove(row, col)
+	int row, col;
 {
 	vtrow = row;
 	vtcol = col;
@@ -302,6 +306,7 @@ register char	*s;
  * negative numbers; maybe it should.
  */
 void mlputi(i, r)
+	int i, r;
 {
 	register int	q;
 	static char hexdigits[] = "0123456789ABCDEF";

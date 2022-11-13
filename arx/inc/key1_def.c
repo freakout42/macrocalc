@@ -1,5 +1,4 @@
 #include <curses.h>
-#line 101
 YyY BACKSPACE KEY_BACKSPACE
 YyY NEXT KEY_NEXT
 YyY UP KEY_UP

@@ -1,6 +1,4 @@
-/*
- * file basic.c:
- *
+/* cursor.c
  * The routines in this file
  * move the cursor around on the screen.
  * They compute a new value for the cursor, then
@@ -121,6 +119,7 @@ int getregion(rp)
  * Trivial.
  */
 int gotobol(f, n)
+	int f, n;
 {
 	curwp->w_doto  = 0;
 	return (TRUE);
@@ -137,6 +136,7 @@ int gotobol(f, n)
  * for dot changes.
  */
 int forwchar(f, n)
+	int f;
 register int	n;
 {
 	if (n < 0)
@@ -164,6 +164,7 @@ register int	n;
  * line pointer for dot changes.
  */
 int backchar(f, n)
+	int f;
 register int	n;
 {
 	register LINE	*lp;
@@ -189,6 +190,7 @@ register int	n;
  * No errors.
  */
 int gotoeol(f, n)
+	int f, n;
 {
 	curwp->w_doto  = llength(curwp->w_dotp);
 	return (TRUE);
@@ -201,7 +203,9 @@ int gotoeol(f, n)
  * value of dot is the same as the new value of dot.
  * Normally bound to "M-<".
  */
-int gotobob(f, n) {
+int gotobob(f, n)
+	int f, n;
+{
 	curwp->w_dotp  = lforw(curbp->b_linep);
 	curwp->w_doto  = 0;
 	curwp->w_flag |= WFHARD;
@@ -215,7 +219,9 @@ int gotobob(f, n) {
  * most of the hard parts of update. Bound to 
  * "M->".
  */
-int gotoeob(f, n) {
+int gotoeob(f, n)
+	int f, n;
+{
 	curwp->w_dotp  = curbp->b_linep;
 	curwp->w_doto  = 0;
 	curwp->w_flag |= WFHARD;
@@ -229,6 +235,7 @@ int gotoeob(f, n) {
  * Bound to "C-N". No errors are possible.
  */
 int forwline(f, n)
+	int f;
 	register int n;
 {
 	register LINE	*dlp;
@@ -261,6 +268,7 @@ int forwline(f, n)
  * mb: drastically simplified!
  */
 int backline(f, n)
+	int f, n;
 {
 	return (forwline(f, -n));
 }
@@ -269,6 +277,7 @@ int backline(f, n)
  * mb: added.
  */
 int gotolinum(f, n)
+	int f, n;
 {
 	int s;
 
@@ -287,6 +296,7 @@ int gotolinum(f, n)
  * window, we have to do a hard update.
  */
 int forwpage(f, n) 
+	int f;
 	register int	n;
 {
 	register LINE	*lp;
@@ -326,6 +336,7 @@ int backpage(f, n)
  * are possible. Bound to "M-.".
  */
 int setmark(f, n)
+	int f, n;
 {
 	curwp->w_markp = curwp->w_dotp;
 	curwp->w_marko = curwp->w_doto;
@@ -341,6 +352,7 @@ int setmark(f, n)
  * "no mark". Bound to "C-X C-X".
  */
 int swapmark(f, n)
+	int f, n;
 {
 	register LINE	*odotp;
 	register int	odoto;
@@ -359,16 +371,12 @@ int swapmark(f, n)
 	return (TRUE);
 }
 
-
-/* file region.c:
- *
- * The routines in this file
+/* The routines in this file
  * deal with the region, that magic space
  * between "." and mark. Some functions are
  * commands. Some functions are just for
  * internal use.
  */
-
 
 /*
  * Kill the region. Ask "getregion"
@@ -377,6 +385,7 @@ int swapmark(f, n)
  * Bound to "C-W".
  */
 int killregion(f, n)
+	int f, n;
 {
 	register int	s;
 	REGION		region;
@@ -406,6 +415,7 @@ int killregion(f, n)
  * by a yank. Bound to "M-W".
  */
 int copyregion(f, n)
+	int f, n;
 {
 	register LINE	*linep;
 	register int	loffs;
@@ -449,8 +459,9 @@ int copyregion(f, n)
  * "C-X C-L".
  */
 /* mb: the common portion of the two: */
-int caseregion(f) {
-
+int caseregion(f)
+	int f;
+{
 	register LINE	*linep;
 	register int	loffs;
 	register int	c;
@@ -481,11 +492,15 @@ int caseregion(f) {
 	return (TRUE);
 }
 
-int lowerregion(f, n) {
+int lowerregion(f, n)
+	int f, n;
+{
 	return (caseregion(FALSE));
 }
 
-int upperregion(f, n) {
+int upperregion(f, n)
+	int f, n;
+{
 	return (caseregion(TRUE));
 }
 #endif

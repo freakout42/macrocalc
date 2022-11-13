@@ -1,6 +1,4 @@
-/*
- * file files.c:
- *
+/* files.c:
  * The routines in this file
  * handle the reading and writing of
  * disk files.
@@ -735,6 +733,7 @@ char    *fn;
  * Bound to "C-X C-R".   mb: added keep&insert stuff.
  */
 int fileread(f, n)
+	int f, n;
 {
 	register BUFFER	*bp;
 	register int	s, ins;
@@ -782,6 +781,7 @@ int fileread(f, n)
  *	added "fileindex" stuff.
  */
 int filevisit(f, n)
+	int f, n;
 {
 	register BUFFER *bp;
 	char		fname[NFILEN];
@@ -904,6 +904,7 @@ char    fname[];
  * mb: added default filename.
  */
 int filewrite(f, n)
+	int f, n;
 {
 	int	s;
 	char	fname[NFILEN];
@@ -934,6 +935,7 @@ int filewrite(f, n)
  * get called by "C-Z".
  */
 int filesave(f, n)
+	int f, n;
 {
 	register WINDOW *wp;
 	register int    s;
@@ -965,6 +967,7 @@ int filesave(f, n)
  * as needing an update.
  */
 int filename(f, n)
+	int f, n;
 {
 	register WINDOW *wp;
 	char		fname[NFILEN];
@@ -1405,6 +1408,7 @@ extern	short	iochan;				/* In "termio.c"	*/
  * free when DCL starts up.
  */
 int spawncli(f, n)
+	int f, n;
 {
 #if	VMS
 	if (playback == TRUE)
@@ -1555,6 +1559,7 @@ dirout(c, e)
  * Bound to "C-X !".
  */
 int spawn(f, n)
+	int f, n;
 {
 #if	VMS
 	register int	s;

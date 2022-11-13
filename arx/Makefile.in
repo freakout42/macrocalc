@@ -1,7 +1,7 @@
 # arx $Id: Makefile.in,v 1.99 2022/09/29 05:51:36 axel Exp $
 # for: $Os
 
-ARXREL=6
+ARXREL=8
 ARXVER=1
 
 ARX=../../arx
@@ -51,8 +51,8 @@ soelim:	soelim.o
 incall:	key_def.h
 	@echo "$@ done"
 
-key_def.h:	key2_def.h
-	egrep -e 'define[\t ]*KEY_' -e 'define[\t ]*A_' <$(CURINC) | cat - key2_def.h >$@
+key_def.h: key1_def.c key2_def.h
+	$(CC) $Curses -E key1_def.c | sed -n 's/^YyY */#define KEY_/p' | cat - key2_def.h >$@
 
 incclean:
 	rm -f key_def.h

@@ -1,4 +1,4 @@
-/*
+/* buffer.c
  * Buffer management.
  * Some of the functions are internal,
  * and some are actually attached to user
@@ -186,6 +186,7 @@ gotobuf(bp)
 }
 
 int usebuffer(f, n)
+	int f, n;
 {
 	BUFFER	*bp;
 	char	bufn[NBUFN];
@@ -233,6 +234,7 @@ void freebuf(bp)			/* must bclear() the text first! */
 }
 
 int killbuffer(f, n)
+	int f, n;
 {
 	register BUFFER	*bp;
 	char bufn[NBUFN];
@@ -258,6 +260,7 @@ int killbuffer(f, n)
 /* ar: added function to toggle format mode */
 
 int fortog(f,n)
+	int f, n;
 {
 	register WINDOW *wp;
 
@@ -280,6 +283,7 @@ int fortog(f,n)
 /* mb: added function to toggle edit/view */
 
 int editog(f,n)
+	int f, n;
 {
 	register WINDOW *wp;
 
@@ -439,6 +443,7 @@ int makelist(buffer, data)
  * List all of the active buffers. Bound to "C-X ?".
  */
 int listbuffers(f, n)
+	int f, n;
 {
 	return (make_popup (blistp, makelist, (char **) NULL));
 }
@@ -493,6 +498,7 @@ void dtmpbufs()
 BUFFER	*
 bfind(bname, cflag, bflag)
 register char	*bname;
+	int cflag, bflag;
 {
 	register BUFFER	*bp;
 	register LINE	*lp;
@@ -563,6 +569,7 @@ void bbclear(bp)
  * mb: added.
  */
 int renambuf(f, n)
+	int f, n;
 {
 	register WINDOW	*wp;
 	register char   *cp1;

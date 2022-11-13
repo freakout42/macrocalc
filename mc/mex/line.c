@@ -1,4 +1,4 @@
-/*
+/* line.c
  * The functions in this file
  * are a general set of line management
  * utilities. They are the only routines that
@@ -152,6 +152,7 @@ register int	flag;
  * mb: added overstrike capability.
  */
 int linsert(n, c, overstrike)
+	int n, c, overstrike;
 {
 	register char	*cp1;
 	register char	*cp2;
@@ -455,6 +456,7 @@ int kinsert(c)
  * should be put in the kill buffer.
  */
 int ldelete(n, kflag)
+	int n, kflag;
 {
 	register char	*cp1;
 	register char	*cp2;
@@ -544,6 +546,7 @@ void kdelete()
  * just scan along until it gets a "-1" back.
  */
 int kremove(n)
+	int n;
 {
 	if (n >= kused)
 		return (-1);
@@ -558,8 +561,9 @@ int kremove(n)
  * Real easy: switch pointers.
  * Bound to C-X C-T.
  */
-int ltwiddle(f,n) {
-
+int ltwiddle(f,n)
+	int f, n;
+{
 	register LINE *lp;
 	register LINE *tp;
 
