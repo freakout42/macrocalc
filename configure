@@ -29,6 +29,7 @@ dist/arx.tar.gz: mc/bin/mc
 	rm dist/arx/bin/.copied
 	-ln dist/arx/bin/mc dist/arx/bin/321
 	for M in db2rdb mc mcunits nro; do cp mc/man/\$\$M.1 dist/arx/man/man1; done
+	-strip dist/arx/bin/* 2>/dev/null
 	chmod -R u+rwX,g-w,g+rX,o-w,o+rX dist
 	cd dist; tar cf - arx | gzip -c >arx.tar.gz
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
