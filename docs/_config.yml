@@ -3,5 +3,7 @@ plugins:
 - jekyll-remote-theme
 title: MacroCALC
 show_downloads: true
+show_edgerelease: false
 logo: /assets/logo.jpg
 latestrel: "10.15"
+edgerelease: "10.20"
