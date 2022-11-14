@@ -8,7 +8,7 @@
 
 #define KEYLENGTH	4
 
-char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " $";
+char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " " __DATE__ " $";
 
 int lib_akey (char *logo, int show)
 {
