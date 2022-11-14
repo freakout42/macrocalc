@@ -68,7 +68,7 @@ man-directory. Here is an example for Linux/bash:
 Navigate through the sheet with the cursor-keys. The dot (.) marks the
 beginning and end of a range, which can be copied or manipulated with the
 menu by the slash (/). The apostrophe (') starts a text-cell, any other
-key a number or formula. Open "mc" and type (|v| is cursor-down):
+key a number or formula. Open "mc" and type (|v| is cursor-down-key):
 
     . ' h e l l o |v|  
 
