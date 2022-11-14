@@ -1,4 +1,4 @@
-/*
+/* word.c
  * The routines in this file
  * implement commands that work word at
  * a time. Sentence and/or paragraph
@@ -112,6 +112,7 @@ void wrapword(c)
  * mb: added.
  */
 int forwparag(f, n)
+	int f, n;
 {
 	register LINE	*dlp;
 
@@ -127,6 +128,7 @@ int forwparag(f, n)
 }
 
 int backparag(f, n)
+	int f, n;
 {
 	register LINE	*tlp;
 	register LINE	*dlp;
@@ -223,6 +225,7 @@ int ppkill(blp,elp)
  */
 int
 reformat(f,n)
+	int f, n;
 {
 	register char ch;
 	register char *tcp;
@@ -358,6 +361,7 @@ reformat(f,n)
  */
 int forwword(int f, int n);
 int backword(f, n)
+	int f, n;
 {
 	if (n < 0)
 		return (forwword(f, -n));
@@ -383,6 +387,7 @@ int backword(f, n)
  * try and move beyond the buffer's end.
 */
 int forwword(f, n)
+	int f, n;
 {
 	if (n < 0)
 		return (backword(f, -n));
@@ -403,6 +408,7 @@ int forwword(f, n)
  * mb: the common part of upperword() & lowerword():
  */
 int caseword(f, n, touc, cap)
+	int f, n;
 	register int	touc;
 	register int	cap;
 {
@@ -448,6 +454,7 @@ int caseword(f, n, touc, cap)
  * buffer. Bound to "M-U". mb: cut off from the meat.
  */
 int upperword(f, n)
+	int f, n;
 {
 	return( caseword(f, n, TRUE, FALSE) );
 }
@@ -456,6 +463,7 @@ int upperword(f, n)
  * mb: drastically simplified
  */
 int lowerword(f, n)
+	int f, n;
 {
 	return( caseword(f, n, FALSE, FALSE) );
 }
@@ -469,6 +477,7 @@ int lowerword(f, n)
  * Bound to "M-C".  mb: drastically simplified.
  */
 int capword(f, n)
+	int f, n;
 {
 	return( caseword(f, n, FALSE, TRUE) );
 }
@@ -481,6 +490,7 @@ int capword(f, n)
  * right number of characters. Bound to "M-D".
  */
 int delfword(f, n)
+	int f, n;
 {
 	register int	size;
 	register LINE	*dotp;
@@ -517,6 +527,7 @@ int delfword(f, n)
  * to "M-Backspace".
  */
 int delbword(f, n)
+	int f, n;
 {
 	register int	size;
 
@@ -545,6 +556,7 @@ int delbword(f, n)
 /* mb: added */
 int
 fbwdel(f, n)
+	int f, n;
 {
 	if (deldir)
 		return (delbword(f, n));

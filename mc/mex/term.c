@@ -1,6 +1,4 @@
-/*
- * file termio.c:
- *
+/* termio.c
  * The functions in this file
  * negotiate with the operating system
  * for characters, and write characters in
@@ -336,6 +334,7 @@ return 0;
  * output routine).
  */
 int ttputc(c)
+	int c;
 {
 #ifdef DEBUG
 	fprintf (stderr, "putc:%c\n",c);

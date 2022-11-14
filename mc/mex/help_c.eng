@@ -645,6 +645,7 @@ int make_help(buffer, data)
  * Bound to "E-?". By mb:
  */
 int help(f, n)
+	int f, n;
 {
 	register int  c = 'Y';
 	register char **helpscrn;

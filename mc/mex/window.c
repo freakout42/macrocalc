@@ -1,4 +1,4 @@
-/*
+/* window.c
  * Window management.
  * Some of the functions are internal,
  * and some are attached to keys that the
@@ -18,6 +18,7 @@
  * Gosling.
  */
 int reposition(f, n)
+	int f, n;
 {
 	curwp->w_force = n;
 	curwp->w_flag |= WFFORCE;
@@ -31,6 +32,7 @@ int reposition(f, n)
  * window. Bound to "C-L".
  */
 int refresh(f, n)
+	int f, n;
 {
 	if (f == FALSE) {
 		sgarbf = TRUE;
@@ -50,6 +52,7 @@ int refresh(f, n)
  * the screen. Bound to "C-X C-N".
  */
 int nextwind(f, n)
+	int f, n;
 {
 	register WINDOW	*wp;
 
@@ -76,6 +79,7 @@ int nextwind(f, n)
  * if there is 1 window.
  */
 int prevwind(f, n)
+	int f, n;
 {
 	register WINDOW	*wp1;
 	register WINDOW	*wp2;
@@ -109,6 +113,7 @@ int prevwind(f, n)
  * to "C-X C-P".
  */
 int mvupwind(f, n)
+	int f;
 register int	n;
 {
 	register LINE	*lp;
@@ -151,6 +156,7 @@ register int	n;
  * to "move up".  Bound to "C-X C-N".
  */
 int mvdnwind(f, n)
+	int f;
 register int	n;
 {
 	return (mvupwind(f, -n));
@@ -169,6 +175,7 @@ register int	n;
  * become undisplayed.
  */
 int onlywind(f, n)
+	int f, n;
 {
 	register WINDOW	*wp;
 	register LINE	*lp;
@@ -217,6 +224,7 @@ int onlywind(f, n)
  * for the new window. Bound to "C-X 2".
  */
 int splitwind(f, n)
+	int f, n;
 {
 	register WINDOW	*wp;
 	register LINE	*lp;
@@ -299,6 +307,7 @@ int splitwind(f, n)
  * mb: generalized for n<0.
  */
 int enlargewind(f, n)
+	int f, n;
 {
 	register WINDOW	*adjwp;
 	register LINE	*lp;
@@ -374,6 +383,7 @@ wpopup()
  * Bound to C-X V.
  */
 void page_nextw(f, n)
+	int f, n;
 {
 	nextwind(FALSE, 1);
 	forwpage(f, n);
@@ -383,6 +393,7 @@ void page_nextw(f, n)
 /* Bound to C-X Z. */
 
 void back_nextw(f, n)
+	int f, n;
 {
 	page_nextw(TRUE, -n);
 }

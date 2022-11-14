@@ -1,4 +1,4 @@
-/*
+/* search.c
  * The functions in this file
  * implement commands that search in the
  * forward and backward directions. There are
@@ -102,6 +102,7 @@ start:
  * Bound to "M-S".
  */
 int forwsearch(f, n)
+	int f, n;
 {
 	register LINE *clp;
 	register int  *pp;
@@ -203,6 +204,7 @@ int forwsearch(f, n)
  * was matched]. Bound to "M-R".
  */
 int backsearch(f, n)
+	int f, n;
 {
 	register LINE *clp;
 	register int  *pp;
@@ -309,6 +311,7 @@ int backsearch(f, n)
  * Bound to "M-]", "M-)" and "M-}".
  */
 int forw_brace(f, n)
+	int f, n;
 {
 	register char	ch;
 	register char	oldch='\0';
@@ -394,6 +397,7 @@ int forw_brace(f, n)
  * Bound to "M-[", "M-(" and "M-{".
  */
 int back_brace(f, n)
+	int f, n;
 {
 	register char	ch;
 	register char	oldch='\0';

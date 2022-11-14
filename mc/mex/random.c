@@ -13,6 +13,7 @@ extern int kused;
 
 int
 instog(f,n)
+	int f, n;
 {
 	ovrstrk = !ovrstrk;
 	if (ovrstrk)
@@ -26,6 +27,7 @@ instog(f,n)
 
 int
 casestog(f,n)
+	int f, n;
 {
 	casesens = !casesens;
 	if (casesens)
@@ -39,6 +41,7 @@ casestog(f,n)
  * Set fill column to n.   mb: added the ifs.
  */
 int setfillcol(f, n)
+	int f, n;
 {
 	if (n==1)  n=0;
 	if ( (n!=0) && (n < lmargin + tabsize) ) {
@@ -55,6 +58,7 @@ int setfillcol(f, n)
  * Set lmargin to n. mb: added.
  */
 int setlmargin(f, n)
+	int f, n;
 {
 	if (n==1)  n=0;
 	if ( (n!=0) && (n > fillcol - tabsize) ) {
@@ -77,6 +81,7 @@ int setlmargin(f, n)
  * is bound to "C-X =".
  */
 int showcpos(f, n)
+	int f, n;
 {
 	register LINE	*clp;
 	register int	cbo;
@@ -150,6 +155,7 @@ int bflg;
  * "WFEDIT" is good enough.
  */
 int twiddle(f, n)
+	int f, n;
 {
 	register LINE	*dotp;
 	register int	doto;
@@ -178,6 +184,7 @@ int twiddle(f, n)
  * bit code) already. Bound to "C-I".
  */
 int tab(f, n)		/* mb: simplified */
+	int f;
 	register int n;
 {
 	if (n < 1)
@@ -203,6 +210,7 @@ int tab(f, n)		/* mb: simplified */
  * this is bound to "C-O".
  */
 int openline(f, n)
+	int f, n;
 {
 	register int	i;
 	register int	s;
@@ -231,6 +239,7 @@ int openline(f, n)
  * more efficient.
  */
 int tnewline(f, n)
+	int f, n;
 {
 	register LINE	*lp;
 	register int	s;
@@ -262,6 +271,7 @@ int tnewline(f, n)
  * is bound to "C-X C-O". Any argument is ignored.
  */
 int deblank(f, n)
+	int f, n;
 {
 	register LINE	*lp1;
 	register LINE	*lp2;
@@ -294,6 +304,7 @@ int deblank(f, n)
  * to "C-J".
  */
 int indent(f, n)
+	int f, n;
 {
 	register int	nicol;
 	register int	i;
@@ -322,6 +333,7 @@ int indent(f, n)
  * mb: generalized for n<0.
  */
 int forwdel(f, n)
+	int f, n;
 {
 	int s;
 
@@ -338,6 +350,7 @@ int forwdel(f, n)
  * Bound to "C-H" and also may be called by fbdel().
  */
 int backdel(f, n)
+	int f, n;
 {
 	return (forwdel(f, -n));
 }
@@ -354,6 +367,7 @@ int backdel(f, n)
  * bound to "C-K".
  */
 int killtxt(f, n)
+	int f, n;
 {
 	register int	chunk, s;
 	register LINE	*nextp;
@@ -387,6 +401,7 @@ int killtxt(f, n)
 /* mb: added.
  */
 int bkill(f, n)
+	int f, n;
 {
 	return (killtxt(TRUE, 0));
 }
@@ -403,6 +418,7 @@ int bkill(f, n)
  * yanked back from the kill buffer.
  */
 int yank(f, n)
+	int f, n;
 {
 	register int	c, i, reframe;
 
@@ -438,6 +454,7 @@ int yank(f, n)
  * Bound to C-X C-Y.
  */
 int unyank(f, n)
+	int f, n;
 {
 	if ((lastflag&CFYANK) == 0)	/* If last command wasn't Yank */
 		return (FALSE);
@@ -448,6 +465,7 @@ int unyank(f, n)
  * Bound to E-Y.
  */
 int flush_kbuf(f, n)
+	int f, n;
 {
 	register int s, wflag;
 	BUFFER	*bp;
@@ -596,17 +614,18 @@ myfree (ap)
 
 #endif
 
-
 /* mb: added the following functions */
 
 int
 negrepos(f, n)
+	int f, n;
 {
 	return (reposition (1, -n));
 }
 
 int
 togdeldir(f, n)
+	int f, n;
 {
 	deldir = (! deldir);
 	if (deldir)
@@ -618,6 +637,7 @@ togdeldir(f, n)
 
 int
 fbdel(f, n)
+	int f, n;
 {
 	if (deldir)
 		return (backdel(f, n));
@@ -627,6 +647,7 @@ fbdel(f, n)
 
 int
 undo(f, n)
+	int f, n;
 {
 	if ((lastflag&CFKILL))		/* If last command was Kill */
 		return (yank(0, 1));
