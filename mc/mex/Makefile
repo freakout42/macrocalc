@@ -18,12 +18,12 @@ term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/ncurses -c term.c
 
 curkeys.h: curkeys.c
-	$(CC) -I/usr/include/ncurses -E curkeys.c | tee curkeys.a | sed -n 's/^YyY */#define KEY_/p' >$@
-	cat curkeys.a >&2
-	rm curkeys.a
+	$(CC) -I/usr/include/ncurses curkeys.c -o curkey2
+	./curkey2 >$@
+	rm curkey2
 
 help.c: help_c.eng
 	cp help_c.eng $@
 
 clean:
-	rm -f *.o core mex me curkeys.h help.c
+	rm -f *.o core mex me curkeys.h help.c curkey2
