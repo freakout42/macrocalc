@@ -5,7 +5,7 @@
 #define defke2(keyname, keyvalue) defke3(keyname, keyvalue)
 #define defkey(keyname)           defke2(#keyname, KEY_##keyname)
 
-main() {
+int main() {
 defkey(BACKSPACE)
 defkey(NEXT)
 defkey(UP)
@@ -21,5 +21,5 @@ defkey(IC)
 defkey(DC)
 defkey(F0)
 defkey(F(n))
-exit(0);
+return 0;
 }

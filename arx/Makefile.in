@@ -52,7 +52,10 @@ incall:	key_def.h
 	@echo "$@ done"
 
 key_def.h: key1_def.c key2_def.h
-	$(CC) $Curses -E key1_def.c | sed -n 's/^YyY */#define KEY_/p' | cat - key2_def.h >$@
+	$(CC) $Curses -DCURKEY2 key1_def.c -o curkey2
+	./curkey2 >$@
+	rm curkey2
+#	$(CC) $Curses -E key1_def.c | sed -n 's/^YyY */#define KEY_/p' | cat - key2_def.h >$@
 
 incclean:
 	rm -f key_def.h
