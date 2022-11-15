@@ -1,5 +1,5 @@
 Sys:Os:Cc:Cflag:Lx:Ldflag:Ldr:Lex:Lflag:Llib:Yywrap:Yacc:Yflag:Ylib:Curses:Curalib:Curslib:Curinc:Omiss:Nroff:Ar:Nflag
-lu:Linux:gcc:-Wall:ld::-r:flex:-8:-lfl::bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c
+lu:Linux:gcc:-Os -Wall:ld::-r:flex:-8:-lfl::bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c
 fb:FreeBSD:cc:-Wno-return-type -w:ld::-r:lex:-8:-ll::yacc:-d:-ly:-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses.h::nroff:ar:
 md:MacOS Darwin:gcc:-Wno-address-of-packed-member:ld::-r:flex:-8:-ll::bison:-d --yacc::::-lcurses:/usr/include/curses.h::nroff:ar:
 lb:Linux glibc/bison:gcc:-Wall:ld::-r:flex:-8:/opt/flex/lib/libfl.a:libyywrap.o:bison:-d --yacc -Wno-conflicts-sr -Wno-conflicts-rr::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:

@@ -1,6 +1,6 @@
 # Makefile for MEX on Unix
 
-CFLAGS=-O3 -Wall -Wno-error
+CFLAGS=-Os -Wall -Wno-error
 LIBS=-lcurses
 SRC=buffer.c cursor.c display.c files.c line.c main.c random.c search.c term.c window.c word.c
 OBJ=buffer.o cursor.o display.o files.o line.o main.o random.o search.o term.o window.o word.o help.o

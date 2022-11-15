@@ -34,7 +34,7 @@ GETTING STARTED
 Navigate through the sheet with the cursor-keys. The dot (.) marks the
 beginning and end of a range, which can be copied or manipulated with the
 menu by the slash (/). The apostrophe (') starts a text-cell, any other
-key a number or formula. Open "mc" and type (<dn> is cursor-down):
+key a number or formula. Open "mc" and type (<dn> is the down-arrow-key):
   . ' h e l l o <dn>  
 you have marked A1 as range starting point and set A1 to text "hello".
 Lets enter some numbers and a formula by typing:
