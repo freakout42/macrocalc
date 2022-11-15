@@ -3,7 +3,7 @@ supports 100000 rows, 700 columns, 40 functions, display formats, file
 linking, macro programming and user definable functions. MacroCALC is fully
 integrated with [nt]roff, units, man, awk, perl and sh.
 
-**mc** can act as a filter to use pipes to perform complex transforms on streams of data.
+mc can act as a filter to use pipes to perform complex transforms on streams of data.
 It contains a C-interface as well as Lotus WKS and dBASE file support.
 mc's own file-format is flat ASCII, easy to understand and can therefore be directly
 manipulated with awk, perl or other standard UNIX-tools, or even with editors like vi.
@@ -31,9 +31,8 @@ open-source under the "Simplified BSD License".
 mc was born in 1991 on Coherent (16-bit 286 Unix-Clone) - there was no
 networking and an only 64k (kilobyte!) address-room. So no automake.
 The portability lies in a flexible Makefile and a portability-layer
-(like apaches portable runtime).
-This layer lives in arx/.
-**mc** itself is an os-independent ANSI-C source and lives in mc/.
+(like apaches portable runtime). This layer lives in arx/.
+mc itself is an os-independent ANSI-C source and lives in mc/.
 
 Building mc needs a ANSI-C environment with curses-lib, lex and yacc
 (ncurses, flex and bison for GNU-systems).
