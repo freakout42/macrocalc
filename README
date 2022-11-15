@@ -10,7 +10,7 @@ and functions. So sqrt(-1) = i (coming soon).
 It's git-maintained, lint-clean ANSI-C source is based on yacc, lex and
 [n]curses. It runs on every terminal or emulation that has a correct
 terminfo-entry. The user-interface is very convenient and well-known by 1-2-3
-users. Function- and cursor-keys and extended video attributes are supported.
+users. Function- and arrow-keys and extended video attributes are supported.
 
 BUILD (and run)
 ===============
@@ -31,7 +31,7 @@ should be added to the PATH in a system appropriate manner. After that
 
 GETTING STARTED
 ===============
-Navigate through the sheet with the cursor-keys. The dot (.) marks the
+Navigate through the sheet with the arrow-keys. The dot (.) marks the
 beginning and end of a range, which can be copied or manipulated with the
 menu by the slash (/). The apostrophe (') starts a text-cell, any other
 key a number or formula. Open "mc" and type (<dn> is the down-arrow-key):
