@@ -63,7 +63,7 @@ Here is an example for Linux/bash:
 
 ### getting started
 
-Navigate through the sheet with the cursor-keys. The dot (.) marks the
+Navigate through the sheet with the arrow-keys. The dot (.) marks the
 beginning and end of a range, which can be copied or manipulated with the
 menu by the slash (/). The apostrophe (') starts a text-cell, any other
 key a number or formula. Open "mc" and type (|v| is the down-arrow-key):
