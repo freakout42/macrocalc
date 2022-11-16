@@ -90,37 +90,38 @@ struct CELLADR
 	int	row;
 	};
 
-union CELLVAL
-	{
-	struct CELLVALUE	{
-		double	value;
-		char	*unit;
-		} v;
-	struct CELLSTRING	{
-		short	length;
-		char	*string;
-		} s;
-	};
+struct CELLVAL {
+  int type;
+  union CELLUNION {
+    struct CELLVALUE {
+      double value;
+      double cimag;
+      char *unit;
+    } v;
+    struct CELLSTRING {
+      short length;
+      char *string;
+    } s;
+  } u;
+};
 
 #define	cpv(cp)		(cp->val)
-#define	cpval(cp)	((cp->val)->v)
-#define	cpvalue(cp)	(cp->val?(cp->val)->v.value:0.)
-#define	lcpvalue(cp)	((cp->val)->v.value)
-#define	cpu(cp)		(cp->val?(cp->val)->v.unit:NULL)
-#define	lcpu(cp)	((cp->val)->v.unit)
-#define	cplength(cp)	(cp->val?(cp->val)->s.length:0)
-#define	lcplength(cp)	((cp->val)->s.length)
-#define	cpstring(cp)	(cp->val?(cp->val)->s.string:NULL)
-#define	lcpstring(cp)	((cp->val)->s.string)
-#define	cpunit(cp)	(cp->attrib & UNITF ? (cp->val)->v.unit : NULL)
+#define	cpval(cp)	((cp->val)->u.v)
+#define	cpvalue(cp)	(cp->val?(cp->val)->u.v.value:0.)
+#define	lcpvalue(cp)	((cp->val)->u.v.value)
+#define	cpu(cp)		(cp->val?(cp->val)->u.v.unit:NULL)
+#define	lcpu(cp)	((cp->val)->u.v.unit)
+#define	cplength(cp)	(cp->val?(cp->val)->u.s.length:0)
+#define	lcplength(cp)	((cp->val)->u.s.length)
+#define	cpstring(cp)	(cp->val?(cp->val)->u.s.string:NULL)
+#define	lcpstring(cp)	((cp->val)->u.s.string)
+#define	cpunit(cp)	(cp->attrib & UNITF ? (cp->val)->u.v.unit : NULL)
 #define	cpatt(cp)	(cp->attrib)
 #define	cpattrib(cp)	(cp->attrib & ATTRIBM)
 #define	cpunitf(cp)	(cp->attrib & UNITF)
 #define	cptype(cp)	(cp->attrib & TYPEM)
 #define	cpformula(cp)	(cptype(cp) == FORMULA || cptype(cp) == STRING)
-#define	cpnumber(cp)	(cptype(cp) == FORMULA || \
-			 cptype(cp) == CONSTANT || \
-			 cptype(cp) == VRETRIEVED)
+#define	cpnumber(cp)	(cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED)
 #define	cpprotect(cp)	(cp->format & PROTECT)
 #define	cpfor(cp)	(cp->format)
 #define	cpformat(cp)	(cp->format & FORMATM)
@@ -136,7 +137,7 @@ struct CELLREC
 	unsigned char	attrib;
 	unsigned char	format;
 	char		*text;
-	union CELLVAL	*val;
+	struct CELLVAL *val;
 	};
 
 typedef struct CELLREC *CELLPTR;

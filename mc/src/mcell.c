@@ -17,13 +17,13 @@
 #include "mcell.h"
 
 #define	COLBITS		6
-#define COLHASH		1<<COLBITS
+#define COLHASH		(1<<COLBITS)
 #define	ROWBITS		10
-#define ROWHASH		1<<ROWBITS
-#define HASHCELLS	((COLHASH)*(ROWHASH))
+#define ROWHASH		(1<<ROWBITS)
+#define HASHCELLS	(COLHASH*ROWHASH)
 
 static CELLPTR hashcell [HASHCELLS];
-#define hashindex(col,row) ((row & (ROWHASH-1)) << COLBITS | (col & (COLHASH-1)))
+#define hashindex(col,row) (((row & (ROWHASH-1)) << COLBITS) | (col & (COLHASH-1)))
 
 void inithash (void)
 {
@@ -210,7 +210,7 @@ switch (att & TYPEM)
  case CONSTANT:
  case VRETRIEVED:
  case FORMULA:
-	if ((cpv(cp) = (union CELLVAL*)(malloc(sizeof(union CELLVAL))))==NULL)
+	if ((cpv(cp) = (struct CELLVAL*)(malloc(sizeof(struct CELLVAL))))==NULL)
 		return NULL;
 	break;
  default:
