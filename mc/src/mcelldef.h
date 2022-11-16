@@ -104,6 +104,7 @@ struct CELLVAL {
     } s;
   } u;
 };
+typedef struct CELLVAL cellv;
 
 #define	cpv(cp)		(cp->val)
 #define	cpval(cp)	((cp->val)->u.v)
@@ -139,6 +140,7 @@ struct CELLREC
 	char		*text;
 	struct CELLVAL *val;
 	};
+typedef struct CELLREC cellr;
 
 typedef struct CELLREC *CELLPTR;
 

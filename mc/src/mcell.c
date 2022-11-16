@@ -191,7 +191,7 @@ assert (col>=0 && col<MAXCOLS && row>=0 && row<MAXROWS);
 unitc	= (att==CONSTANT || att==FORMULA || att & UNITF)
 		&& unit!=NULL && unit[0]!='\0';
 if (deletecell (col, row)) return NULL;
-if ((cp = (CELLPTR)(malloc(sizeof(struct CELLREC)))) == NULL) return NULL;
+if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "init: cp=%08x\n", cp);
 #endif
@@ -210,7 +210,7 @@ switch (att & TYPEM)
  case CONSTANT:
  case VRETRIEVED:
  case FORMULA:
-	if ((cpv(cp) = (struct CELLVAL*)(malloc(sizeof(struct CELLVAL))))==NULL)
+	if ((cpv(cp) = (cellv*)(malloc(sizeof(cellv))))==NULL)
 		return NULL;
 	break;
  default:
