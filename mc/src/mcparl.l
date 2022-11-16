@@ -20,7 +20,9 @@
 
 #include "l.tab.h"
 
+#ifdef WIERD
 extern int  yytype;
+#endif
 extern int  yyerrorflg;
 
 #ifndef FLEX_SCANNER
@@ -134,29 +136,25 @@ str	.+
 {udate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 {uldate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 {edate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext+3), (double)atoi((char*)yytext));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 {eldate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext+3), (double)atoi((char*)yytext));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 ({n})+({p}{n}*)?({e})?	|

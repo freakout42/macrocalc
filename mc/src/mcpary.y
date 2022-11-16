@@ -28,9 +28,13 @@ static char	*yyopcode();
 #else
 static char	*yystr();
 #endif
+#ifdef WIERD
 extern double	yyvalue;
 extern int	yytype;
 extern char	*yyunit;
+#else
+extern CELLPTR pc;
+#endif
 extern char	*yybuf;
 
 %}
@@ -47,7 +51,7 @@ extern char	*yybuf;
 	char			*string;
 }
 
-%token	<value>		CON
+%token	<value>		CON DAT
 %token	<string>	STR UNIT RANGEB JUST
 %token	<cell>		CELL
 %token	<range>		RANGE
@@ -88,8 +92,8 @@ o : e
 #ifdef	LOTUS
 	*yybuf++ = F_RETURN;
 #else
-	yyvalue = $1.value;
-	yyunit = $1.unit;
+	lcpvalue(pc) = $1.value;
+	lcpunit(pc) = $1.unit;
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: o value=\"%f %s\"\n", $1.value, $1.unit);
 #endif
@@ -101,7 +105,7 @@ o : e
 	yyopcode (F_UNIT, $2, strlen($2)+1);
 	*yybuf++ = F_RETURN;
 #else
-	yyvalue = unitconv ($1.value, $1.unit, $2); yyunit = $2;
+	lcpvalue(pc) = unitconv ($1.value, $1.unit, $2); lcpunit(pc) = $2;
 #endif
 	}
   | s
@@ -109,52 +113,52 @@ o : e
 #ifdef	LOTUS
 	*yybuf++ = F_RETURN;
 #else
-	yyvalue = .0;
-	yyunit = $1;
-	yytype = STRING;
+	lcpvalue(pc) = .0;
+	lcpunit(pc) = $1;
+	cptyp(pc) = STRING;
 #endif
 	}
   | INCMD CMD
 	{
 #ifndef	LOTUS
-	yyvalue = .0;
+	lcpvalue(pc) = .0;
 #endif
-	yytype = INCOMMAND;
+	cptyp(pc) = INCOMMAND;
 	}
   | OUTCMD CMD
 	{
 #ifndef	LOTUS
-	yyvalue = .0;
+	lcpvalue(pc) = .0;
 #endif
-	yytype = OUTCOMMAND;
+	cptyp(pc) = OUTCOMMAND;
 	}
   | EOFCELL
 	{
 #ifndef	LOTUS
-	yyvalue = .0;
+	lcpvalue(pc) = .0;
 #endif
-	yytype = EOFPIPE;
+	cptyp(pc) = EOFPIPE;
 	}
   | BAD CMD
 	{
 #ifndef	LOTUS
-	yyvalue = .0;
+	lcpvalue(pc) = .0;
 #endif
-	yytype = TEXT;
+	cptyp(pc) = TEXT;
 	}
   | JUST CMD
 	{
 #ifndef	LOTUS
-	yyvalue = .0;
+	lcpvalue(pc) = .0;
 #endif
-	yytype = TEXT;
+	cptyp(pc) = TEXT;
 	}
   | error
 	{
 #ifndef	LOTUS
-	yyvalue = .0;
+	lcpvalue(pc) = .0;
 #endif
-	yytype = SYNERROR;
+	cptyp(pc) = SYNERROR;
 	}
   ;
 e : e OR e
@@ -362,7 +366,7 @@ e : e OR e
 	*yybuf++ = 1;
 #else
 	$$.value = (*$1.f) ($2[0], $2[1]);
-	$$.unit = yyunit;
+	$$.unit = cpunit(pc);
 #endif
 	}
   | FUNCS s CPAREN
@@ -394,6 +398,20 @@ e : e OR e
 	fprintf (stderr, "mcpary: CON value=\"%f\"\n", $$.value);
 #endif
 #endif
+	}
+  | DAT
+	{
+#ifdef	LOTUS
+	$$.value = lib_2iee($1.value);
+	yyopcode (F_CONSTANT, &$$.value, sizeof(double));
+#else
+	$$.value = $1.value;
+	$$.unit = NULL;
+#ifdef DEBUG
+	fprintf (stderr, "mcpary: CON value=\"%f\"\n", $$.value);
+#endif
+#endif
+	cptyp(pc) = DATETYPE;
 	}
   | c
 	{
@@ -483,7 +501,7 @@ r : c PERIOD c
 	$$[0].row = adrval($1.row);
 	$$[1].col = adrval($3.col);
 	$$[1].row = adrval($3.row);
-	yytype = FORMULA;
+	cptyp(pc) = FORMULA;
 	}
   | RANGE
 	{
@@ -495,7 +513,7 @@ r : c PERIOD c
 	yyopcode (F_RANGE, &c123, sizeof(c123));
 #endif
 	memcpy ($$, $1, sizeof(struct CELLADR)*2);
-	yytype = FORMULA;
+	cptyp(pc) = FORMULA;
 	}
   | RANGEB
 	{
@@ -512,7 +530,7 @@ r : c PERIOD c
 	convertcelladr (&c123[1], &$$[1]);
 	yyopcode (F_RANGE, &c123, sizeof(c123));
 #endif
-	yytype = FORMULA;
+	cptyp(pc) = FORMULA;
 	}
   ;
 c : CELL
@@ -521,7 +539,7 @@ c : CELL
 	fprintf (stderr, "mcpary: cell col=%d row=%d\n", $1.col, $1.row);
 #endif
 	$$ = $1;
-	yytype = FORMULA;
+	cptyp(pc) = FORMULA;
 	}
   | r
 	{
@@ -536,7 +554,7 @@ u : UNITS y UNITE
 y : UNIT
 	{
 #ifdef	LOTUS
-	$$ = strcpy (yyunit, $1);
+	$$ = strcpy (lcpunit(pc), $1);
 #else
 	$$ = yybuf;
 	yybuf = unitnorm (yybuf, $1);
@@ -545,7 +563,7 @@ y : UNIT
   | y UNIT
 	{
 #ifdef	LOTUS
-	$$ = strcat (yyunit, $2);
+	$$ = strcat (lcpunit(pc), $2);
 #else
 	$$ = yybuf;
 	yybuf = unitmult (yybuf, $1, $2);

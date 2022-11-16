@@ -10,7 +10,7 @@
 
 static int	n;
 static double	value, qvalue, maxvalue, minvalue;
-extern char	*yyunit;
+static char	*yyunit;
 
 void statinit (void)
 {

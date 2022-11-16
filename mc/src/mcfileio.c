@@ -86,7 +86,7 @@ int savefile (FILE *file, int scope)
 {
 char		cols[3];
 int		col, row;
-int		acol, arow, ecol, erow;
+int		acol=0, arow=0, ecol=0, erow=0;
 CELLPTR		cp;
 struct Range	*r;
 

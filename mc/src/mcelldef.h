@@ -31,7 +31,7 @@ enum	{
 	TEXT,
 	CONSTANT,
 	FORMULA,
-	UNITT, /* the side cell */
+	UNITT, /* sidecar cell */
 	SYNERROR,
 	INCOMMAND,
 	OUTCOMMAND,
@@ -106,30 +106,34 @@ struct CELLVAL {
 };
 typedef struct CELLVAL cellv;
 
-#define	cpv(cp)		(cp->val)
-#define	cpval(cp)	((cp->val)->u.v)
-#define	cpvalue(cp)	(cp->val?(cp->val)->u.v.value:0.)
-#define	lcpvalue(cp)	((cp->val)->u.v.value)
-#define	cpu(cp)		(cp->val?(cp->val)->u.v.unit:NULL)
-#define	lcpu(cp)	((cp->val)->u.v.unit)
-#define	cplength(cp)	(cp->val?(cp->val)->u.s.length:0)
-#define	lcplength(cp)	((cp->val)->u.s.length)
+#define	cpv(cp)       (cp->val)
+#define	cpval(cp)     ((cp->val)->u.v)
+#define	cptyp(cp)     ((cp->val)->type)
+#define	cpvalue(cp)   (cp->val?(cp->val)->u.v.value:0.)
+#define	lcpvalue(cp)  ((cp->val)->u.v.value)
+#define	cpcimag(cp)   (cp->val?(cp->val)->u.v.cimag:0.)
+#define	lcpcimag(cp)  ((cp->val)->u.v.cimag)
+#define	cpu(cp)       (cp->val?(cp->val)->u.v.unit:NULL)
+#define	lcpu(cp)      ((cp->val)->u.v.unit)
+#define	cplength(cp)  (cp->val?(cp->val)->u.s.length:0)
+#define	lcplength(cp) ((cp->val)->u.s.length)
 #define	cpstring(cp)	(cp->val?(cp->val)->u.s.string:NULL)
 #define	lcpstring(cp)	((cp->val)->u.s.string)
-#define	cpunit(cp)	(cp->attrib & UNITF ? (cp->val)->u.v.unit : NULL)
-#define	cpatt(cp)	(cp->attrib)
-#define	cpattrib(cp)	(cp->attrib & ATTRIBM)
-#define	cpunitf(cp)	(cp->attrib & UNITF)
-#define	cptype(cp)	(cp->attrib & TYPEM)
-#define	cpformula(cp)	(cptype(cp) == FORMULA || cptype(cp) == STRING)
-#define	cpnumber(cp)	(cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED)
-#define	cpprotect(cp)	(cp->format & PROTECT)
-#define	cpfor(cp)	(cp->format)
-#define	cpformat(cp)	(cp->format & FORMATM)
-#define	cpform(cp)	(cp->format & (FORMATM|PLACES))
-#define	cpplaces(cp)	(cp->format & PLACES)
-#define	cptext(cp)	(cp->text)
-#define	cptextstr(cp)	(cpnumber(cp)?cp->text:cp->text+1)
+#define	cpunit(cp)    (cp->attrib & UNITF ? (cp->val)->u.v.unit : NULL)
+#define	lcpunit(cp)   ((cp->val)->u.v.unit)
+#define	cpatt(cp)     (cp->attrib)
+#define	cpattrib(cp)  (cp->attrib & ATTRIBM)
+#define	cpunitf(cp)   (cp->attrib & UNITF)
+#define	cptype(cp)    (cp->attrib & TYPEM)
+#define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
+#define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED)
+#define	cpprotect(cp) (cp->format & PROTECT)
+#define	cpfor(cp)     (cp->format)
+#define	cpformat(cp)  (cp->format & FORMATM)
+#define	cpform(cp)    (cp->format & (FORMATM|PLACES))
+#define	cpplaces(cp)  (cp->format & PLACES)
+#define	cptext(cp)    (cp->text)
+#define	cptextstr(cp) (cpnumber(cp)?cp->text:cp->text+1)
 
 struct CELLREC
 	{
