@@ -28,7 +28,8 @@ double yyvalue;
 int yytype;
 char *yyunit;
 #else
-CELLPTR pc;
+cellr cr;
+CELLPTR pc = &cr;
 #endif
 char *yybuf;
 char *yysparse; /* pointer to source formula */
