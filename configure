@@ -20,8 +20,7 @@ all: dist/arx.tar.gz
 install: all
 	-mkdir \$(ARX)
 	gzip -cd <dist/arx.tar.gz | tar x -p -C \$(ARX) -f -
-dist/arx.tar.gz: mc/bin/mc
-	rm mc/tst/.tested
+dist/arx.tar.gz: mc/tst/.tested
 	-mkdir dist
 	chmod g-s dist
 	-mkdir dist/arx dist/arx/man dist/arx/man/man1
@@ -33,7 +32,8 @@ dist/arx.tar.gz: mc/bin/mc
 	chmod -R u+rwX,g-w,g+rX,o-w,o+rX dist
 	cd dist; tar cf - arx | gzip -c >arx.tar.gz
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
-mc/bin/mc: arx/lib/libarx.a
+mc/tst/.tested: arx/lib/libarx.a
+	-rm \$@
 	-mkdir mc/man/cat1
 	cd mc; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}" PLATID="${PLATID}"
 	test -f \$@

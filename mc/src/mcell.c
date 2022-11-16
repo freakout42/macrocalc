@@ -16,12 +16,13 @@
 #include "mcfileio.h"
 #include "mcell.h"
 
-#define COLHASH		16
-#define ROWHASH		128
-#define	COLBITS		4
-#define HASHCELLS	(COLHASH*ROWHASH)
+#define	COLBITS		6
+#define COLHASH		1<<COLBITS
+#define	ROWBITS		10
+#define ROWHASH		1<<ROWBITS
+#define HASHCELLS	((COLHASH)*(ROWHASH))
 
-static CELLPTR	hashcell [HASHCELLS];
+static CELLPTR hashcell [HASHCELLS];
 #define hashindex(col,row) ((row & (ROWHASH-1)) << COLBITS | (col & (COLHASH-1)))
 
 void inithash (void)

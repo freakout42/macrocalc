@@ -223,13 +223,14 @@ if (cp == NULL)
 		newcol>=0 && (cp = cell(newcol, row))==NULL;
 		newcol--	)
 		;
+	typ = (cp!=NULL) ? cptype(cp) : EMPTY;
 	if (formatting==NOCOLUMN)
 		{
 		s[0] = '\0';
 		*color = BLANKCOLOR;
 		}
-	typ = (cp!=NULL) ? cptype(cp) : EMPTY;
-	if (formatting==NOFORMAT || formatting==NOCOLUMN || newcol<0 ||
+	else
+	if (formatting==NOFORMAT || newcol<0 ||
 	    (typ!=TEXT && typ!=RETRIEVED && typ!=STRING) ||
 	    (cpform(cp)==(SPECIAL|HIDDEN)))
 		{
