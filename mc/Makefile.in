@@ -52,7 +52,7 @@ insclean:
 	@echo "$@ done"
 
 #-------------------------------------------------------------------------------
-srcall:	mc mcmsg mcmacro mcunits mcread mc2wks db2rdb
+srcall:	mc mcmsg mcmacro mcunits mcread mc2wks db2rdb mcparse
 	@echo "$@ done"
 
 srcclean:

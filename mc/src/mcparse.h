@@ -2,13 +2,7 @@
 
 extern int origcol, origrow; /* original column */
 extern int errpos; /* position of parsing error */
-#ifdef WIERD
-extern double yyvalue;
-extern int yytype;
-extern char *yyunit;
-#else
 extern CELLPTR pc;
-#endif
 extern char *yybuf;
 extern char *yysparse; /* pointer to source formula */
 extern char *yybparse; /* pointer to parsed formula */

@@ -20,9 +20,7 @@
 
 #include "l.tab.h"
 
-#ifdef WIERD
-extern int  yytype;
-#endif
+extern CELLPTR pc;
 extern int  yyerrorflg;
 
 #ifndef FLEX_SCANNER
@@ -56,7 +54,7 @@ if ((arxpath = getenv("ARX")) != NULL)
 while (gets(s))
 	{
 	val = parse (s, &at, NULL, NULL);
-	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, val, yyunit, yytype, at);
+	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, val, cpunit(pc), cptyp(pc), at);
 	}
 return at;
 }

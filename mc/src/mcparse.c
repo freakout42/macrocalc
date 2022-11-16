@@ -23,14 +23,8 @@ void		yyclrbuf();
 #ifndef LOTUS
 int origcol, origrow; /* original column */
 int errpos; /* position of parsing error */
-#ifdef WIERD
-double yyvalue;
-int yytype;
-char *yyunit;
-#else
 cellr cr;
 CELLPTR pc = &cr;
-#endif
 char *yybuf;
 char *yysparse; /* pointer to source formula */
 char *yybparse; /* pointer to parsed formula */
@@ -103,14 +97,9 @@ yybuf = polform = (char*)(formula + 1);
 #endif
 yysetbuf(yybparse);
 
-#ifdef WIERD
-yyunit = NULL;
-yytype = CONSTANT;
-#else
 pc->val = &yycellv;
 lcpunit(pc) = NULL;
 cptyp(pc) = CONSTANT;
-#endif
 errno = 0;
 #ifdef YYDEBUG
 yydebug = 1;

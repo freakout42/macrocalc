@@ -28,13 +28,8 @@ static char	*yyopcode();
 #else
 static char	*yystr();
 #endif
-#ifdef WIERD
-extern double	yyvalue;
-extern int	yytype;
-extern char	*yyunit;
-#else
+
 extern CELLPTR pc;
-#endif
 extern char	*yybuf;
 
 %}
