@@ -31,7 +31,7 @@ enum	{
 	TEXT,
 	CONSTANT,
 	FORMULA,
-	UNITT,
+	UNITT, /* the side cell */
 	SYNERROR,
 	INCOMMAND,
 	OUTCOMMAND,
@@ -112,46 +112,6 @@ union CELLVAL
 #define	lcplength(cp)	((cp->val)->s.length)
 #define	cpstring(cp)	(cp->val?(cp->val)->s.string:NULL)
 #define	lcpstring(cp)	((cp->val)->s.string)
-
-#ifdef LINKS
-#define	cpunit(cp)	((cp->cell)->attrib & UNITF ? (cp->val)->v.unit : NULL)
-#define	cplink(cp)	((cp->cell)->link)
-#define	cpatt(cp)	((cp->cell)->attrib)
-#define	cpattrib(cp)	((cp->cell)->attrib & ATTRIBM)
-#define	cpunitf(cp)	((cp->cell)->attrib & UNITF)
-#define	cptype(cp)	((cp->cell)->attrib & TYPEM)
-#define	cpformula(cp)	(cptype(cp) == FORMULA || cptype(cp) == STRING)
-#define	cpnumber(cp)	(cptype(cp) == FORMULA || \
-			 cptype(cp) == CONSTANT || \
-			 cptype(cp) == VRETRIEVED)
-#define	cpprotect(cp)	((cp->cell)->format & PROTECT)
-#define	cpfor(cp)	((cp->cell)->format)
-#define	cpformat(cp)	((cp->cell)->format & FORMATM)
-#define	cpform(cp)	((cp->cell)->format & (FORMATM|PLACES))
-#define	cpplaces(cp)	((cp->cell)->format & PLACES)
-#define	cptext(cp)	((cp->cell)->text)
-#define	cptextstr(cp)	(cpnumber(cp)?(cp->cell)->text:((cp->cell)->text)+1)
-
-struct CELLREC
-	{
-	short		link;
-	unsigned char	attrib;
-	unsigned char	format;
-	char		*text;
-	};
-
-struct CPREC
-	{
-	struct CPREC	*next;
-	struct CELLADR	adr;
-	struct CELLREC	*cell;
-	union CELLVAL	*val;
-	};
-
-typedef struct CELLREC *CELLRECPTR;
-typedef struct CPREC *CELLPTR;
-
-#else
 #define	cpunit(cp)	(cp->attrib & UNITF ? (cp->val)->v.unit : NULL)
 #define	cpatt(cp)	(cp->attrib)
 #define	cpattrib(cp)	(cp->attrib & ATTRIBM)
@@ -180,7 +140,6 @@ struct CELLREC
 	};
 
 typedef struct CELLREC *CELLPTR;
-#endif
 
 #define adrval(col) (col>=0?col:-col-1)
 

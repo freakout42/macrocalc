@@ -143,9 +143,6 @@ switch (cptype(cp))
 	free (cpv(cp));
  }
 if (cptext(cp)) free (cptext(cp));
-#ifdef LINKS
-free (cp->cell);
-#endif
 free (cp);
 }
 
@@ -194,13 +191,7 @@ assert (col>=0 && col<MAXCOLS && row>=0 && row<MAXROWS);
 unitc	= (att==CONSTANT || att==FORMULA || att & UNITF)
 		&& unit!=NULL && unit[0]!='\0';
 if (deletecell (col, row)) return NULL;
-#ifdef LINKS
-if ((cp = (CELLPTR)(malloc(sizeof(struct CPREC)))) == NULL) return NULL;
-if ((cp->cell = (CELLRECPTR)(malloc(sizeof(struct CELLREC)))) == NULL)
-	return NULL;
-#else
 if ((cp = (CELLPTR)(malloc(sizeof(struct CELLREC)))) == NULL) return NULL;
-#endif
 #ifdef DEBUG
 fprintf (stderr, "init: cp=%08x\n", cp);
 #endif

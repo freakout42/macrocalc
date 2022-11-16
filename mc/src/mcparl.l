@@ -62,13 +62,7 @@ return at;
 CELLPTR	cell (col, row)
 	int col, row;
 {
-#ifdef LINKS
-static struct CPREC	cellrec	=
-	{1, NULL, {0, 0}, NULL, {2.71828, "e"}};
-#else
-static struct CELLREC	cellrec	/*=
-	{NULL, {0, 0}, {2.71828, "e"}, 0, 0, "2.71828"}*/;
-#endif
+static struct CELLREC	cellrec;
 return &cellrec;
 }
 
