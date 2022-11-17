@@ -106,7 +106,31 @@ struct CELLVAL {
 };
 typedef struct CELLVAL cellv;
 
+struct CELLREC {
+  struct CELLADR adr;
+  struct CELLREC *next;
+  unsigned char attrib;
+  unsigned char format;
+  char *text;
+  cellv *val;
+  };
+typedef struct CELLREC cellr;
+
+typedef struct CELLREC *CELLPTR;
+
+#define adrval(col) (col>=0?col:-col-1)
+
+struct Range
+	{
+	struct Range	*next;
+	struct CELLADR	adr[2];
+	char		*name;
+	};
+
 #define	cpv(cp)       (cp->val)
+#define	cpnext(cp)    (cp->next)
+#define	cpcol(cp)     ((cp->adr).col)
+#define	cprow(cp)     ((cp->adr).row)
 #define	cpval(cp)     ((cp->val)->u.v)
 #define	cptyp(cp)     ((cp->val)->type)
 #define	cpvalue(cp)   (cp->val?(cp->val)->u.v.value:0.)
@@ -134,25 +158,3 @@ typedef struct CELLVAL cellv;
 #define	cpplaces(cp)  (cp->format & PLACES)
 #define	cptext(cp)    (cp->text)
 #define	cptextstr(cp) (cpnumber(cp)?cp->text:cp->text+1)
-
-struct CELLREC
-	{
-	struct CELLREC	*next;
-	struct CELLADR	adr;
-	unsigned char	attrib;
-	unsigned char	format;
-	char		*text;
-	struct CELLVAL *val;
-	};
-typedef struct CELLREC cellr;
-
-typedef struct CELLREC *CELLPTR;
-
-#define adrval(col) (col>=0?col:-col-1)
-
-struct Range
-	{
-	struct Range	*next;
-	struct CELLADR	adr[2];
-	char		*name;
-	};

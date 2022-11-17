@@ -20,7 +20,6 @@
 
 #include "l.tab.h"
 
-extern CELLPTR pc;
 extern int  yyerrorflg;
 
 #ifndef FLEX_SCANNER
@@ -31,7 +30,7 @@ extern int  yyerrorflg;
 #endif
 
 #ifdef LEXDEBUG
-extern double parse();
+extern int parse();
 struct Range rg1 = {NULL, {{0,0},{0,0}}, "hello"};
 struct Range *rnames	= &rg1;
 char libpath[MAXFILE+1] = ARXPATH;
@@ -42,19 +41,19 @@ int currow = 1;
 int main()
 {
 extern int 	yydebug;
-extern char 	*yyunit;
-int		at;
-double		val;
+int at = 0;
+CELLPTR cp;
 char		s[80];
 char		*arxpath;
 
 yydebug = 1;
 if ((arxpath = getenv("ARX")) != NULL)
 	strcpy(libpath, arxpath); /* set my path */
+cp = newcell();
 while (gets(s))
 	{
-	val = parse (s, &at, NULL, NULL);
-	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, val, cpunit(pc), cptyp(pc), at);
+	at = parse (cp, s, NULL);
+	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, cpvalue(cp), lcpunit(cp), cptyp(cp), at);
 	}
 return at;
 }

@@ -13,5 +13,5 @@ extern int yyerrorflg; /* error flag for lex-parser */
 int parse2 (char *s, short *formula);
 #else
 int mcinput (void);
-double parse (char *s, int *t, char *unit, char *parsed);
+int parse (CELLPTR pc, char *s, char *parsed);
 #endif

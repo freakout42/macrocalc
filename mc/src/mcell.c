@@ -1,5 +1,4 @@
-/* $Id: mcell.c,v 1.12 2001/07/02 10:23:58 axel Exp $
- */
+/* mcell.c 1.12 2001/07/02 10:23:58 axel */
 
 #ifdef DEBUG
 #include <stdio.h>

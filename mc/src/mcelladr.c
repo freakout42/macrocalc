@@ -11,6 +11,25 @@
 #include "mcparse.h"
 
 #ifndef TOGGLE
+CELLPTR newcell() {
+/* New empty cell */
+CELLPTR	cp;
+
+if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
+if ((cpv(cp) = (cellv *)(malloc(sizeof(cellv)))) == NULL) return NULL;
+cpcol(cp) = -1;
+cprow(cp) = -1;
+cpnext(cp) = NULL;
+cpatt(cp) = CONSTANT;
+cpfor(cp) = DEFAULTFORMAT;
+cptext(cp) = NULL;
+cptyp(cp) = CONSTANT;
+lcpvalue(cp) = .0;
+lcpcimag(cp) = .0;
+lcpunit(cp) = NULL;
+return cp;
+}
+
 int coladr (char *s, int *col)
 /* Returns 0 if the string is not a valid col address,
  * length of colstring otherwise.

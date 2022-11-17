@@ -1,5 +1,4 @@
-/* $Id: mcell.h,v 1.5 2001/07/02 10:23:58 axel Exp $
- */
+/* mcell.h 1.5 2001/07/02 10:23:58 axel */
 
 #define	alloctext(col,row,s)	\
 	if (initcell (col, row, TEXT, defaultformat, s, .0, NULL) == NULL) \

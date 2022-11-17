@@ -23,8 +23,7 @@ void		yyclrbuf();
 #ifndef LOTUS
 int origcol, origrow; /* original column */
 int errpos; /* position of parsing error */
-cellr cr;
-CELLPTR pc = &cr;
+CELLPTR pc;
 char *yybuf;
 char *yysparse; /* pointer to source formula */
 char *yybparse; /* pointer to parsed formula */
@@ -61,18 +60,13 @@ return s - yysparse;
 
 #ifdef LOTUS
 int parse2 (char *s, short *formula)
-/* Parses the string s - returns the formula of the evaluated string
- */
+/* Parses the string s - returns the formula of the evaluated string */
 #else
-double parse (char *s, int *t, char *unit, char *parsed)
-/* Parses the string s - returns the value of the evaluated string
- * and puts type unit and parsed formula
- */
+int parse (CELLPTR c, char *s, char *parsed)
+/* Parses the string s into the cell c and parsed formula */
 #endif
 
 {
-cellv yycellv;
-
 #ifdef LOTUS
 char *polform;
 short len;
@@ -81,6 +75,7 @@ char yybuffer[MAXPARSED+1];
 #endif
 char yyinput[MAXPARSED+1];
 
+pc = c;
 yysparse = s;
 yybparse = yytoparse = yyinput;
 yyerrorflg = 0;
@@ -97,9 +92,6 @@ yybuf = polform = (char*)(formula + 1);
 #endif
 yysetbuf(yybparse);
 
-pc->val = &yycellv;
-lcpunit(pc) = NULL;
-cptyp(pc) = CONSTANT;
 errno = 0;
 #ifdef YYDEBUG
 yydebug = 1;
@@ -123,12 +115,7 @@ fprintf(stderr, "parse:\"%s\" -> %f type: %d error:%d\n",
                 yybparse, cpvalue(pc), cptyp(pc), errno);
 perror("parse");
 #endif
-if (t != NULL) *t = cptyp(pc);
-if (unit != NULL && cpunit(pc) != NULL)
-	{
-	if (cptyp(pc)!=STRING && strspn(cpunit(pc), " ")==strlen(cpunit(pc))) *unit = '\0'; else strcpy(unit, cpunit(pc));
-	}
-return errno ? HUGE_VAL : cpvalue(pc);
+return errno;
 #endif
 } /* parse */
 
