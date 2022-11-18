@@ -1,4 +1,4 @@
-/* mcelldef.h 1.21 2016/10/31 06:35:14 axel */
+/* mcelldef.h */
 
 #define MAXCOLS		27*26 /* A-Z AA-ZZ */
 #define MAXROWS		99999
@@ -40,7 +40,9 @@ enum	{
 	EOFPIPE,
 	STRING,
 	DATETYPE,	/* only temporary used for date format */
-	EMPTY
+	EMPTY,
+	COMPLEX,
+	ERRORT
 	};
 
 #define EPOCH		25569.
@@ -51,11 +53,8 @@ enum	{
 #define STRCENTER	'^'
 #define STRREPEAT	'\\'
 
-#define	ATTRIBM		0xc0u
-#define	TYPEM		0x1fu
 #define	BOLD		0x40u
 #define	ITALIC		0x80u
-#define UNITF		0x20u
 
 #define PROTECT		0x80u
 #define FORMATM		0x70u
@@ -88,33 +87,27 @@ struct CELLADR {
   int	col;
   int	row;
   };
-
-struct CELLVAL {
-  int type;
-  union CELLUNION {
-    struct CELLVALUE {
-      double value;
-      double cimag;
-      char *unit;
-    } v;
-    struct CELLSTRING {
-      short length;
-      char *string;
-    } s;
-  } u;
-};
-typedef struct CELLVAL cellv;
+struct CELLVALUE {
+  double value;
+  double cimag;
+  char  *unit;
+  };
+struct CELLSTRING {
+  short length;
+  char *string;
+  };
 
 struct CELLREC {
   struct CELLADR adr;
   struct CELLREC *next;
+  unsigned char type;
   unsigned char attrib;
   unsigned char format;
   char *text;
-  cellv *val;
+  struct CELLVALUE v;
+  struct CELLSTRING s;
   };
 typedef struct CELLREC cellr;
-
 typedef struct CELLREC *CELLPTR;
 
 #define adrval(col) (col>=0?col:-col-1)
@@ -125,34 +118,23 @@ struct Range {
   char *name;
   };
 
-#define	cpv(cp)       (cp->val)
 #define	cpnext(cp)    (cp->next)
 #define	cpcol(cp)     ((cp->adr).col)
 #define	cprow(cp)     ((cp->adr).row)
-#define	cpval(cp)     ((cp->val)->u.v)
-#define	cptyp(cp)     ((cp->val)->type)
-#define	cpvalue(cp)   (cp->val?(cp->val)->u.v.value:0.)
-#define	lcpvalue(cp)  ((cp->val)->u.v.value)
-#define	cpcimag(cp)   (cp->val?(cp->val)->u.v.cimag:0.)
-#define	lcpcimag(cp)  ((cp->val)->u.v.cimag)
-#define	cpu(cp)       (cp->val?(cp->val)->u.v.unit:NULL)
-#define	lcpu(cp)      ((cp->val)->u.v.unit)
-#define	cplength(cp)  (cp->val?(cp->val)->u.s.length:0)
-#define	lcplength(cp) ((cp->val)->u.s.length)
-#define	cpstring(cp)	(cp->val?(cp->val)->u.s.string:NULL)
-#define	lcpstring(cp)	((cp->val)->u.s.string)
-#define	cpunit(cp)    (cp->attrib & UNITF ? (cp->val)->u.v.unit : NULL)
-#define	lcpunit(cp)   ((cp->val)->u.v.unit)
-#define	cpatt(cp)     (cp->attrib)
-#define	cpattrib(cp)  (cp->attrib & ATTRIBM)
-#define	cpunitf(cp)   (cp->attrib & UNITF)
-#define	cptype(cp)    (cp->attrib & TYPEM)
-#define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
-#define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED)
+#define	cptype(cp)    (cp->type)
+#define	cpvalue(cp)   ((cp->v).value)
+#define	cpcimag(cp)   ((cp->v).cimag)
+#define	cpunit(cp)    ((cp->v).unit)
+#define	cplength(cp)  ((cp->s).length)
+#define	cpstring(cp)	((cp->s).string)
+#define	cpattrib(cp)  (cp->attrib)
+/*efine	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)*/
+/*efine	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED)*/
 #define	cpprotect(cp) (cp->format & PROTECT)
-#define	cpfor(cp)     (cp->format)
+#define	cpfor(cp   )  (cp->format)
 #define	cpformat(cp)  (cp->format & FORMATM)
 #define	cpform(cp)    (cp->format & (FORMATM|PLACES))
 #define	cpplaces(cp)  (cp->format & PLACES)
 #define	cptext(cp)    (cp->text)
-#define	cptextstr(cp) (cpnumber(cp)?cp->text:cp->text+1)
+#define	cpliteral(cp) (cptype(cp) == TEXT)
+#define	cptextstr(cp) (cpliteral(cp)?cp->text+1:cp->text)

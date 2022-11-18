@@ -29,8 +29,7 @@ fprintf (stderr, "recalcell2: %s -> %f %s\n", cptext(cp), value, unit);
 switch (cptype(cp))
  {
  case FORMULA:
-	if (cpunit(cp)!=NULL) lcpvalue(cp) = unitconv (value, unit, cpunit(cp));
-	else lcpvalue(cp) = value;
+	cpvalue(cp) = (cpunit(cp)!=NULL) ? unitconv (value, unit, cpunit(cp)) : value;
 	break;
  case STRING:
 	if (strlen(unit)>(size_t)cplength(cp))

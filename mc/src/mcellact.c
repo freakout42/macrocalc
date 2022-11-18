@@ -47,7 +47,7 @@ if ((scp = cell (scol, srow)) != NULL)
 		cptype(scp)==STRING ? cpstring(scp) : cpunit(scp));
 	if (tcp == NULL) return RET_ERROR;
 	if (cptype(scp)==CONSTANT || cptype(scp)==VRETRIEVED)
-		lcpvalue(tcp) = cpvalue(scp);
+		cpvalue(tcp) = cpvalue(scp);
 	else
 		recalcell (tcol, trow);
 	}

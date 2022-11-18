@@ -53,7 +53,7 @@ cp = newcell();
 while (gets(s))
 	{
 	at = parse (cp, s, NULL);
-	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, cpvalue(cp), lcpunit(cp), cptyp(cp), at);
+	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, cpvalue(cp), cpunit(cp), cptype(cp), at);
 	}
 return at;
 }

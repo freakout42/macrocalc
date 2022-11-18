@@ -135,11 +135,6 @@ switch (cptype(cp))
  {
  case STRING:
 	free (cpstring(cp));
-	/*FALLTHRU*/
- case CONSTANT:
- case VRETRIEVED:
- case FORMULA:
-	free (cpv(cp));
  }
 if (cptext(cp)) free (cptext(cp));
 free (cp);
@@ -154,21 +149,14 @@ fprintf (stderr, "kill: c=%d r=%d\n", col, row);
 freecell (linkcell (col, row, (CELLPTR)NULL));
 } /* killcell */
 
-static unsigned char	attrib;
-static unsigned char	format;
-
 int deletecell (int col, int row)
 /* Deletes a cell */
 {
 CELLPTR		cp = cell (col, row);
 
-attrib	= 0x00;
-format	= 0xff;
 if (cp==NULL) return RET_SUCCESS;
-attrib	= cpatt(cp);
-format	= cpfor(cp);
 if (cpprotect(cp)) return RET_ERROR;
-if (cpunitf(cp)) {killcell (col+1, row); lcpu(cp) = NULL;}
+if (cpunitf(cp)) {killcell (col+1, row);}
 killcell (col, row);
 return RET_SUCCESS;
 } /* deletecell */
@@ -194,30 +182,12 @@ if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "init: cp=%08x\n", cp);
 #endif
-cpatt(cp) = (att & TYPEM) | (unitc ? UNITF : 0) | ((att | attrib) & ATTRIBM);
-cpfor(cp) = format == 0xff ? form : format;
+cpatt(cp) = att | (unitc ? UNITF : 0);
+cpfor(cp) = form;
 cptext(cp) = strdup (s);
 if (cptext(cp)==NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "init: att=%08x att & TYPEM=%08x\n", att, att & TYPEM);
-#endif
-switch (att & TYPEM)
- {
- case STRING:
-	if (unit==NULL) return NULL;
-	/*FALLTHRU*/
- case CONSTANT:
- case VRETRIEVED:
- case FORMULA:
-	if ((cpv(cp) = (cellv*)(malloc(sizeof(cellv))))==NULL)
-		return NULL;
-	break;
- default:
-	cpv(cp)	= NULL;
-	break;
- }
-#ifdef DEBUG
-fprintf (stderr, "init: cpv=%08x\n", cpv(cp));
 #endif
 switch (att & TYPEM)
  {

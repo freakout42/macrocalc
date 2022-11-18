@@ -16,17 +16,16 @@ CELLPTR newcell() {
 CELLPTR	cp;
 
 if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
-if ((cpv(cp) = (cellv *)(malloc(sizeof(cellv)))) == NULL) return NULL;
-cpcol(cp) = -1;
-cprow(cp) = -1;
+cpcol(cp) = 0;
+cprow(cp) = 0;
 cpnext(cp) = NULL;
-cpatt(cp) = CONSTANT;
+cptype(cp) = CONSTANT;
+cpattrib(cp) = 0;
 cpfor(cp) = DEFAULTFORMAT;
 cptext(cp) = NULL;
-cptyp(cp) = CONSTANT;
-lcpvalue(cp) = .0;
-lcpcimag(cp) = .0;
-lcpunit(cp) = NULL;
+cpvalue(cp) = .0;
+cpcimag(cp) = .0;
+cpunit(cp) = NULL;
 return cp;
 }
 

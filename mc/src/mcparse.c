@@ -106,13 +106,13 @@ yyclrbuf();
 len = yybuf - polform;
 memcpy(formula, &len, sizeof(short));
 #ifdef DEBUG
-fprintf(stderr, "parse:\"%s\"=%d len=%d\n", s, cptyp(pc), len);
+fprintf(stderr, "parse:\"%s\"=%d len=%d\n", s, cptype(pc), len);
 #endif
-return cptyp(pc);
+return cptype(pc);
 #else
 #ifdef DEBUG
 fprintf(stderr, "parse:\"%s\" -> %f type: %d error:%d\n",
-                yybparse, cpvalue(pc), cptyp(pc), errno);
+                yybparse, cpvalue(pc), cptype(pc), errno);
 perror("parse");
 #endif
 return errno;
