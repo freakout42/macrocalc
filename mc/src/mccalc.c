@@ -1,5 +1,4 @@
-/* $Id: mccalc.c,v 1.7 2005/08/04 06:21:50 axel Exp $
- */
+/* mccalc.c 1.7 2005/08/04 06:21:50 axel */
 
 #include <stdlib.h>
 #include <string.h>
@@ -15,8 +14,6 @@ CELLPTR recalcell (int col, int row)
 /* Recalculates one single cell */
 {
 CELLPTR	cp;
-double	value;
-char	unit[MAXINPUT+1]	= "";
 
 cp = cell (col, row);
 if (cp == NULL || !cpformula(cp)) return cp;

@@ -1,5 +1,4 @@
-/* $Id: mcellact.c,v 1.13 2004/12/11 16:21:11 axel Exp $
- */
+/* mcellact.c 1.13 2004/12/11 16:21:11 axel */
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -61,7 +60,8 @@ return RET_SUCCESS;
 
 int inrange (int col, int row, int scol, int srow, int ecol, int erow)
 {
-return 	adrval(col) >= min (scol, ecol) &&
+return
+ 	adrval(col) >= min (scol, ecol) &&
 	adrval(col) <= max (scol, ecol) &&
 	adrval(row) >= min (srow, erow) &&
 	adrval(row) <= max (srow, erow);

@@ -84,11 +84,10 @@ enum	{
 #define DEFAULT		0x0fu
 #define DEFAULTFORMAT	((0&PROTECT) | (FORMATM&SPECIAL) | (PLACES&DEFAULT))
 
-struct CELLADR
-	{
-	int	col;
-	int	row;
-	};
+struct CELLADR {
+  int	col;
+  int	row;
+  };
 
 struct CELLVAL {
   int type;
@@ -120,12 +119,11 @@ typedef struct CELLREC *CELLPTR;
 
 #define adrval(col) (col>=0?col:-col-1)
 
-struct Range
-	{
-	struct Range	*next;
-	struct CELLADR	adr[2];
-	char		*name;
-	};
+struct Range {
+  struct Range *next;
+  struct CELLADR adr[2];
+  char *name;
+  };
 
 #define	cpv(cp)       (cp->val)
 #define	cpnext(cp)    (cp->next)
