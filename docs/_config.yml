@@ -2,6 +2,7 @@ remote_theme: pages-themes/minimal@v0.2.0
 plugins:
 - jekyll-remote-theme
 title: MacroCALC
+url: https://mc.freakout.de
 show_downloads: true
 show_edgerelease: false
 logo: /assets/logo.jpg
