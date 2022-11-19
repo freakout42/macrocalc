@@ -53,6 +53,8 @@ enum	{
 #define STRCENTER	'^'
 #define STRREPEAT	'\\'
 
+#define	ATTRIBM		0xc0u
+#define	TYPEM		0x1fu
 #define	BOLD		0x40u
 #define	ITALIC		0x80u
 

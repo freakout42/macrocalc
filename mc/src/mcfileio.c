@@ -1,5 +1,4 @@
-/* $Id: mcfileio.c,v 1.10 2004/07/04 04:03:31 axel Exp $
- */
+/* mcfileio.c 1.10 2004/07/04 04:03:31 axel */
 
 #include <string.h>
 #include <stdio.h>
@@ -59,7 +58,6 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 	else
 		{
 		celladr (cols, &col, &row);
-		if (!(att & UNITF)) unit[0] = '\0';
 		if ((att & TYPEM) == UNITT)
 			{
 			unit[0]	= ' ';
@@ -67,6 +65,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 			}
 		else	
 			{
+			unit[0] = '\0';
 			if (!initcell(col, row, att, form, tex, val, unit))
 				return RET_ERROR;
 			}
