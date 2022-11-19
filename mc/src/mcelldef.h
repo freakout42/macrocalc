@@ -57,6 +57,7 @@ enum	{
 #define	TYPEM		0x1fu
 #define	BOLD		0x40u
 #define	ITALIC		0x80u
+#define UNITF		0x20u
 
 #define PROTECT		0x80u
 #define FORMATM		0x70u
@@ -124,14 +125,16 @@ struct Range {
 #define	cpcol(cp)     ((cp->adr).col)
 #define	cprow(cp)     ((cp->adr).row)
 #define	cptype(cp)    (cp->type)
+#define	cpval(cp)     (cp->v)
 #define	cpvalue(cp)   ((cp->v).value)
 #define	cpcimag(cp)   ((cp->v).cimag)
 #define	cpunit(cp)    ((cp->v).unit)
 #define	cplength(cp)  ((cp->s).length)
 #define	cpstring(cp)	((cp->s).string)
 #define	cpattrib(cp)  (cp->attrib)
-/*efine	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)*/
-/*efine	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED)*/
+#define	cpsidecar(cp) (cp->attrib & UNITF)
+#define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
+#define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED || cptype(cp) == COMPLEX)
 #define	cpprotect(cp) (cp->format & PROTECT)
 #define	cpfor(cp   )  (cp->format)
 #define	cpformat(cp)  (cp->format & FORMATM)

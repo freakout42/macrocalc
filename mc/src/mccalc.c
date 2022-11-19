@@ -14,6 +14,7 @@ CELLPTR recalcell (int col, int row)
 /* Recalculates one single cell */
 {
 CELLPTR	cp;
+int typ;
 
 cp = cell (col, row);
 if (cp == NULL || !cpformula(cp)) return cp;
@@ -22,10 +23,11 @@ fprintf (stderr, "recalcell1: %s -> %f\n", cptext(cp), cpvalue(cp));
 #endif
 origcol	= col;
 origrow	= row;
-value = parse (cptext(cp), NULL, unit, NULL);
+typ = parse (cp, NULL, NULL);
 #ifdef DEBUG
-fprintf (stderr, "recalcell2: %s -> %f %s\n", cptext(cp), value, unit);
+fprintf (stderr, "recalcell2: %s -> %f %s\n", cptext(cp), cpvalue(cp), cpunit(cp));
 #endif
+#ifdef NOMORENEEDED
 switch (cptype(cp))
  {
  case FORMULA:
@@ -40,6 +42,7 @@ switch (cptype(cp))
 	strcpy (lcpstring(cp), unit);
 	break;
  }
+#endif
 #ifdef DEBUG
 fprintf (stderr, "recalcell3: %s -> %f\n", cptext(cp), cpvalue(cp));
 #endif

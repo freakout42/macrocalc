@@ -272,7 +272,7 @@ for (row = 0; row <= lastrow; row++)
 		fprintf (stderr, "towks: &r.data.formula.size=%d\n",
 			&r.data.formula.size);
 #endif
-		type = parse2 (cptext(cp), &r.data.formula.size);
+		type = parse2 (cp, &r.data.formula.size);
 		if (type!=FORMULA && type!=STRING && type!=CONSTANT) goto texttype;
 		r.reclen = r.data.formula.size + LL_formula - sizeof(r.data.formula.code);
 		lib_cano(r.data.formula.size);

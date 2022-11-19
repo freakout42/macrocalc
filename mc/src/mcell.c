@@ -156,7 +156,7 @@ CELLPTR		cp = cell (col, row);
 
 if (cp==NULL) return RET_SUCCESS;
 if (cpprotect(cp)) return RET_ERROR;
-if (cpunitf(cp)) {killcell (col+1, row);}
+if (cpsidecar(cp)) {killcell (col+1, row);}
 killcell (col, row);
 return RET_SUCCESS;
 } /* deletecell */
@@ -182,7 +182,7 @@ if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "init: cp=%08x\n", cp);
 #endif
-cpatt(cp) = att | (unitc ? UNITF : 0);
+cpattrib(cp) = att | (unitc ? UNITF : 0);
 cpfor(cp) = form;
 cptext(cp) = strdup (s);
 if (cptext(cp)==NULL) return NULL;
@@ -192,22 +192,22 @@ fprintf (stderr, "init: att=%08x att & TYPEM=%08x\n", att, att & TYPEM);
 switch (att & TYPEM)
  {
  case STRING:
-	lcpstring(cp)	= strdup (unit);
-	lcplength(cp)	= strlen (unit);
+	cpstring(cp)	= strdup (unit);
+	cplength(cp)	= strlen (unit);
 	break;
  case CONSTANT:
  case VRETRIEVED:
  case FORMULA:
-	lcpvalue(cp)	= val;
+	cpvalue(cp)	= val;
 	if (unitc)
 		{
 		if ((cput = initcell (col+1, row, UNITT,
 				(unsigned char)(defaultformat|PROTECT),
 				unit, .0, (char*)NULL))
 			== NULL) return NULL;
-		lcpu(cp) = cptext(cput);
+		cpunit(cp) = cptext(cput);
 		}
-	else	lcpu(cp) = NULL;
+	else	cpunit(cp) = NULL;
 	break;
  }
 linkcell (col, row, cp);

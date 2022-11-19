@@ -59,7 +59,7 @@ return s - yysparse;
 }
 
 #ifdef LOTUS
-int parse2 (char *s, short *formula)
+int parse2 (CELLPTR c, short *formula)
 /* Parses the string s - returns the formula of the evaluated string */
 #else
 int parse (CELLPTR c, char *s, char *parsed)
