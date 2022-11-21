@@ -28,7 +28,6 @@ int	form;
 char	tex[MAXINPUT+1];
 double	val;
 char	unit[MAXINPUT+1];
-int	loaded = 0;
 
 str_gets (file, line, sizeof(line));
 if (strcmp(line, colnames) != 0) return RET_FATAL;
@@ -58,21 +57,12 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 	else
 		{
 		celladr (cols, &col, &row);
-		if ((att & TYPEM) == UNITT)
-			{
-			unit[0]	= ' ';
-			strcpy (unit+1, tex);
-			}
-		else	
-			{
 			unit[0] = '\0';
 			if (!initcell(col, row, att, form, tex, val, unit))
 				return RET_ERROR;
-			}
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
 		}
-	if (loaded++>40 && license!=0) break;
 	}
 omarkcol = omarkrow = 0;
 markcol = lastcol = reallastcol;
@@ -137,8 +127,8 @@ for (row = arow; row <= erow; row++)
 	fprintf (file, "%s%d\t%d\t%d\t%+.*e\t%s\n",
 		cols,
 		row+1,
-		cpatt(cp),
-		cpfor(cp),
+		cpattrib(cp),
+		cpformat(cp),
 		MAXPLACES,
 		cpnumber(cp) ? cpvalue(cp) : .0,
 		cptext(cp));

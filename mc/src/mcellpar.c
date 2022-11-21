@@ -8,11 +8,13 @@
 #include "mcellstr.h"
 #include "mcparse.h"
 #include "mcell.h"
+#include "mcelladr.h"
 
 CELLPTR parsecell (char *strvalue, int col, int row)
 /* Parses a cell */
 {
-int	type;
+double	value;
+int	pstatus;
 unsigned char format		= defaultformat;
 char	vbuf[MAXINPUT+1]	= "";
 char	unit[MAXINPUT+1]	= "";
@@ -25,9 +27,9 @@ origrow	= row;
 s = vbuf+1;
 strcpy(s, strvalue);
 cp = newcell();
-type = parse (cp, s, parsed);
+pstatus = parse (cp, s, parsed);
 #ifdef DEBUG
-fprintf (stderr, "par: %s->%e type:%d unit=%s errno:%d\n", s, cpvalue(cp), type, cpunit(cp), errno);
+fprintf (stderr, "par: %s->%e type:%d unit=%s errno:%d\n", s, cpvalue(cp), cptype(cp), cpunit(cp), pstatus);
 #endif
 
 /* set format of new cell depending of cell above new cell
@@ -35,13 +37,13 @@ if (row>0 && cell(col, row)==NULL && (cp = cell(col, row-1))!=NULL) {
 	format = cpform(cp);
 	}
  */
-switch (type) {
+switch (cptype(cp)) {
  case DATETYPE:
-	type = CONSTANT;
+	cptype(cp) = CONSTANT;
 	format = SPECIAL|DATE;
 	break;
  case SYNERROR:
-	type = TEXT;
+	cptype(cp) = TEXT;
 	/*FALLTHRU*/
  case TEXT:
 	switch (*s) {
@@ -55,7 +57,7 @@ switch (type) {
 	 }
 	break;
  }
-allocated = initcell (col, row, type, format, s, value, unit);
+allocated = initcell (col, row, cptype(cp), format, s, cpvalue(cp), cpunit(cp));
 #ifdef DEBUG
 fprintf (stderr, "inited: type:%d\n", cptype(allocated));
 #endif

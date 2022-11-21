@@ -27,12 +27,13 @@ CELLPTR pc;
 char *yybuf;
 char *yysparse; /* pointer to source formula */
 char *yybparse; /* pointer to parsed formula */
-char *yytoparse; /* pointer to left formular */
+char *yytoparse; /* pointer to left formula */
 int yyerrorflg; /* error flag for lex-parser */
 #endif
 
 /* static char instr; flag for "in-string" */
 
+/* build parse string with references embedded */
 static int gettoparse (char *err)
 {
 int		col, row;
@@ -59,7 +60,7 @@ return s - yysparse;
 }
 
 #ifdef LOTUS
-int parse2 (CELLPTR c, short *formula)
+int parse2 (CELLPTR c, char *s, short *formula)
 /* Parses the string s - returns the formula of the evaluated string */
 #else
 int parse (CELLPTR c, char *s, char *parsed)

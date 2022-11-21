@@ -26,14 +26,13 @@ int act (char *s)
 extern int	errpos;
 int		type;
 CELLPTR		allocated;
-#ifdef DEBUG
-double		value;
-#endif
+CELLPTR cp;
 char		parsed[MAXPARSED+1];
 char		unit[MAXINPUT+1]	= "";
 int		col, row, clen, edi;
 int		first	= TRUE;
 
+cp = newcell();
 origcol	= curcol;
 origrow	= currow;
 s++;
@@ -41,14 +40,8 @@ errpos = strlen(s);
 do	{
 	edi	= editstringp(s, "", MAXINPUT, errpos);
 	if ((first && !edi) || !*s) return FALSE;
-#ifdef DEBUG
-	value	=
-#endif
-          parse(s, &type, unit, parsed);
-#ifdef DEBUG
-fprintf(stderr, "act: %s->%le %s type:%d errno:%d\n", s, value, unit, type, errno);
-#endif
-	if (type == SYNERROR)
+	parse(cp, s, parsed);
+	if (cptype(cp) == SYNERROR)
 		{
 		if (!edi)	type = TEXT;
 		else		errormsg(MSGSYNTAX);

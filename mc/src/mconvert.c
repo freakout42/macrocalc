@@ -17,13 +17,13 @@ unsigned char convertformat (unsigned char format)
 {
 switch (format & FORMATM)
  {
- case FIXED:
+ case L_FIXED:
  case SCIENTIFIC:
  case CURRENCY:
  case PERCENT:
  case COMMA:
 	return (format);
- case SPECIAL:
+ case L_SPECIAL:
 	switch (format & PLACES)
 	 {
 	 case HIDDEN:
@@ -43,7 +43,7 @@ switch (format & FORMATM)
 	 case TIMEI1:
 	 case TIMEI2:
 		return ((format & (PROTECT | FORMATM)) | TIME);
-	 case DEFAULT:
+	 case L_DEFAULT:
 		return (DEFAULTFORMAT);
 	 }
  }

@@ -11,21 +11,12 @@
 #include "mcparse.h"
 
 #ifndef TOGGLE
-CELLPTR newcell() {
 /* New empty cell */
+CELLPTR newcell() {
 CELLPTR	cp;
 
 if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
-cpcol(cp) = 0;
-cprow(cp) = 0;
-cpnext(cp) = NULL;
-cptype(cp) = CONSTANT;
-cpattrib(cp) = 0;
-cpfor(cp) = DEFAULTFORMAT;
-cptext(cp) = NULL;
-cpvalue(cp) = .0;
-cpcimag(cp) = .0;
-cpunit(cp) = NULL;
+memset (cp, 0, sizeof(cellr));
 return cp;
 }
 

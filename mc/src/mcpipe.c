@@ -145,7 +145,7 @@ for (row = 0; row <= lastrow; row++)
 	{
 	origcol	= col;
 	origrow	= row;
-	parse(cptext(cp), &type, NULL, parsed);
+	parse(cp, cptext(cp), parsed);
 	if (type == INCOMMAND)
 		{
 		clen = celladr(parsed, &dcol, &drow);
@@ -174,7 +174,7 @@ for (row = 0; row <= lastrow; row++)
 	{
 	origcol	= col;
 	origrow	= row;
-	parse(cptext(cp), &type, NULL, parsed);
+	parse(cp, cptext(cp), parsed);
 	if (type == OUTCOMMAND)
 		{
 		clen = celladr(parsed, &dcol, &drow);

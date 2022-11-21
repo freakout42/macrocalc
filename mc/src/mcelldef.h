@@ -27,11 +27,12 @@
 #define UNRECRANGE	66
 
 enum	{
-	COLWIDTH,
+	EMPTY,      /* =0 new empty */
+	COLWIDTH,   /* only for fileio coldef */
 	TEXT,
 	CONSTANT,
 	FORMULA,
-	UNITT, /* sidecar cell */
+	UNITT,      /* sidecar cell */
 	SYNERROR,
 	INCOMMAND,
 	OUTCOMMAND,
@@ -39,8 +40,7 @@ enum	{
 	VRETRIEVED,
 	EOFPIPE,
 	STRING,
-	DATETYPE,	/* only temporary used for date format */
-	EMPTY,
+	DATETYPE,	  /* only temporary used for date format */
 	COMPLEX,
 	ERRORT
 	};
@@ -53,38 +53,68 @@ enum	{
 #define STRCENTER	'^'
 #define STRREPEAT	'\\'
 
-#define	ATTRIBM		0xc0u
-#define	TYPEM		0x1fu
-#define	BOLD		0x40u
-#define	ITALIC		0x80u
-#define UNITF		0x20u
+#define ATTRIBM	 0xc0u
+#define TYPEM    0x1fu
+#define BOLD     0x40u
+#define ITALIC   0x80u
+#define UNITF	   0x20u /* has sidecar */
 
-#define PROTECT		0x80u
-#define FORMATM		0x70u
-#define FIXED		0x00u
-#define SCIENTIFIC	0x10u
-#define CURRENCY	0x20u
-#define PERCENT		0x30u
-#define COMMA		0x40u
-#define SPECIAL		0x70u
-#define PLACES		0x0fu
-#define BAR		0x00u
-#define GENERAL		0x01u
-#define DATE		0x02u
-#define DAYMONTH	0x03u
-#define MONTHYEAR	0x04u
-#define TEXTF		0x05u
-#define HIDDEN		0x06u
-#define TIME		0x07u
-#define HOURMIN		0x08u
-#define DATEI1		0x09u
-#define EDATE		0x09u
-#define DATEI2		0x0au
-#define RDBDATE		0x0au
-#define TIMEI1		0x0bu
-#define TIMEI2		0x0cu
-#define DEFAULT		0x0fu
+#define PROTECT    0x80u
+
+#define FORMATM    0x70u
+#define SPECIAL    0x00u
+#define SCIENTIFIC 0x10u
+#define CURRENCY   0x20u
+#define PERCENT    0x30u
+#define COMMA      0x40u
+#define FIXED      0x50u
+
+#define L_FIXED    0x00u
+#define L_SPECIAL  0x70u
+#define L_DEFAULT  0x0fu
+
+#define PLACES     0x0fu
+#define DEFAULT    0x00u
+#define GENERAL    0x01u
+#define DATE       0x02u
+#define DAYMONTH   0x03u
+#define MONTHYEAR  0x04u
+#define TEXTF      0x05u
+#define HIDDEN     0x06u
+#define TIME       0x07u
+#define HOURMIN    0x08u
+#define DATEI1     0x09u
+#define EDATE      0x09u
+#define DATEI2     0x0au
+#define RDBDATE    0x0au
+#define TIMEI1     0x0bu
+#define TIMEI2     0x0cu
+#define BAR        0x0du
+
 #define DEFAULTFORMAT	((0&PROTECT) | (FORMATM&SPECIAL) | (PLACES&DEFAULT))
+
+#ifdef ISSUECOLOR
+#define NCURSES_BITS(mask,shift) ((mask) << ((shift) + NCURSES_ATTR_SHIFT))
+#define A_NORMAL  0L
+#define A_ATTRIBUTES  NCURSES_BITS(~(1UL - 1UL),0)
+#define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
+#define A_COLOR   NCURSES_BITS(((1UL) << 8) - 1UL,0)
+#define A_STANDOUT  NCURSES_BITS(1UL,8)
+#define A_UNDERLINE NCURSES_BITS(1UL,9)
+#define A_REVERSE NCURSES_BITS(1UL,10)
+#define A_BLINK   NCURSES_BITS(1UL,11)
+#define A_DIM   NCURSES_BITS(1UL,12)
+#define A_BOLD    NCURSES_BITS(1UL,13)
+#define A_PROTECT NCURSES_BITS(1UL,16)
+#define COLOR_BLACK	0
+#define COLOR_RED	1
+#define COLOR_GREEN	2
+#define COLOR_YELLOW	3
+#define COLOR_BLUE	4
+#define COLOR_MAGENTA	5
+#define COLOR_CYAN	6
+#define COLOR_WHITE	7
+#endif
 
 struct CELLADR {
   int	col;

@@ -187,9 +187,9 @@ cpfor(cp) = form;
 cptext(cp) = strdup (s);
 if (cptext(cp)==NULL) return NULL;
 #ifdef DEBUG
-fprintf (stderr, "init: att=%08x att & TYPEM=%08x\n", att, att & TYPEM);
+fprintf (stderr, "init: att=%08x type==%d\n", cpattrib(cp), cptype(cp));
 #endif
-switch (att & TYPEM)
+switch (cptype(cp))
  {
  case STRING:
 	cpstring(cp)	= strdup (unit);

@@ -255,7 +255,7 @@ for (row = 0; row <= lastrow; row++)
   if (cp != NULL)
 	{
 	type	= cptype(cp);
-	if (!cpunitf(cp)) unit[0] = '\0';
+	if (!cpsidecar(cp)) unit[0] = '\0';
 	origcol = col;
 	origrow = row;
 #ifdef DEBUG
@@ -272,7 +272,7 @@ for (row = 0; row <= lastrow; row++)
 		fprintf (stderr, "towks: &r.data.formula.size=%d\n",
 			&r.data.formula.size);
 #endif
-		type = parse2 (cp, &r.data.formula.size);
+		type = parse2 (cp, cptext(cp), &r.data.formula.size);
 		if (type!=FORMULA && type!=STRING && type!=CONSTANT) goto texttype;
 		r.reclen = r.data.formula.size + LL_formula - sizeof(r.data.formula.code);
 		lib_cano(r.data.formula.size);

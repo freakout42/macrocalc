@@ -43,7 +43,7 @@ CELLPTR	scp, tcp;
 if (tcol<0 || tcol>=MAXCOLS || trow<0 || tcol>=MAXROWS) return RET_SUCCESS;
 if ((scp = cell (scol, srow)) != NULL)
 	{
-	tcp = initcell (tcol, trow, cpatt(scp), cpfor(scp), cptext(scp), 0.,
+	tcp = initcell (tcol, trow, cpattrib(scp), cpformat(scp), cptext(scp), 0.,
 		cptype(scp)==STRING ? cpstring(scp) : cpunit(scp));
 	if (tcp == NULL) return RET_ERROR;
 	if (cptype(scp)==CONSTANT || cptype(scp)==VRETRIEVED)

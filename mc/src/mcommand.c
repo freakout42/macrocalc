@@ -1,5 +1,4 @@
-/* $Id: mcommand.c,v 1.11 2001/06/06 14:30:37 axel Exp $
- */
+/* mcommand.c 1.11 2001/06/06 14:30:37 axel */
 
 #include <stdlib.h>
 #include <string.h>

@@ -10,7 +10,7 @@ extern char *yytoparse; /* pointer to left formular */
 extern int yyerrorflg; /* error flag for lex-parser */
 
 #ifdef LOTUS
-int parse2 (CELLPTR pc, short *formula);
+int parse2 (CELLPTR pc, char *s, short *formula);
 #else
 int mcinput (void);
 int parse (CELLPTR pc, char *s, char *parsed);
