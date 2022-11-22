@@ -157,27 +157,35 @@ killcell (col, row);
 return RET_SUCCESS;
 } /* deletecell */
 
+static void strdupi(char **t, char *s) {
+if (s == NULL) {
+ free(*t);
+ *t = NULL;
+} else if (*t == NULL) {
+ *t = strdup(s);
+} else {
+ if (strcmp(*t, s)) {
+  if (strlen(*t) < strlen(s)) {
+   realloc(*t, strlen(s)+1);
+  }
+ strcpy(*t, s);
+ }
+}
+return;
+}
 CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 /* Migrate a cell */
 if (ct == NULL) {
   ct = newcell();
   linkcell (cpcol(cs), cprow(cs), ct);
 }
-if ((cptext(ct)==NULL) || strcmp(cptext(ct), cptext(cs))) {
-  cptype(ct) = cptype(cs);
-  free(cptext(ct));
-  cptext(ct) = strdup(cptext(cs));
-  cpvalue(ct) = cpvalue(cs);
-  cpcimag(ct) = cpcimag(cs);
-  if (cpunit(cs) && ((cpunit(ct)==NULL || !strcmp(cpunit(ct), cpunit(cs))))) {
-    free(cpunit(ct));
-    cpunit(ct) = strdup(cpunit(cs));
-  }
-  cplength(ct) = cplength(cs);
-  if (cpstring(cs) && ((cpstring(ct)==NULL || !strcmp(cpstring(ct), cpstring(cs))))) {
-    free(cpstring(ct));
-    cpstring(ct) = strdup(cpstring(cs));
-  }
+cptype(ct) = cptype(cs);
+strdupi(&cptext(ct), cptext(cs));
+cpvalue(ct) = cpvalue(cs);
+cpcimag(ct) = cpcimag(cs);
+strdupi(&cpunit(ct), cpunit(cs));
+cplength(ct) = cplength(cs);
+strdupi(&cpstring(ct), cpstring(cs));
 /*
 		if ((cput = initcell (col+1, row, UNITT,
 				(unsigned char)(defaultformat|PROTECT),
@@ -185,7 +193,6 @@ if ((cptext(ct)==NULL) || strcmp(cptext(ct), cptext(cs))) {
 			== NULL) return NULL;
 		cpunit(cp) = cptext(cput);
  */
-}
 return ct;
 }
 
@@ -239,7 +246,7 @@ switch (cptype(cp))
 	break;
  }
 linkcell (col, row, cp);
-#ifdef DEBUG
+#ifdef DEBUGNO
 fprintf (stderr, "idon: c=%3d r=%3d a=%3d f=%3d s=%-16s v=%10le u=\"%-8s\"\n",
 	col, row, cpatt(cp), cpfor(cp), cptext(cp), cpvalue(cp),
 	cpunitf(cp) ? cpunit(cp) : "");

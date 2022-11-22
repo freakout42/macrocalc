@@ -30,7 +30,7 @@ enum	{
 	EMPTY,      /* =0 new empty */
 	TEXT,       /* =1 literal with just [0]=['"] */
 	CONSTANT,   /* =2 default before yyparse */
-	FORMULA,    /* */
+	FORMULA,    /* =3 */
 	UNITT,      /* sidecar cell */
 	SYNERROR,   /* temporary returned by parse */
 	INCOMMAND,

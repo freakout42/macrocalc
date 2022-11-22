@@ -70,6 +70,7 @@ do {
 	 }
 	first	= FALSE;
 } while (cptype(&cp) == SYNERROR);
+cptext(&cp) = s;
 allocated = migratcell(allocated, &cp);
 if (allocated)
 	{
