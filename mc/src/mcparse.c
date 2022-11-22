@@ -75,6 +75,7 @@ char yybuffer[MAXPARSED+1];
 char yyinput[MAXPARSED+1];
 
 pc = c;
+cptype(pc) = CONSTANT;
 origcol = cpcol(pc);
 origrow = cprow(pc);
 yysparse = s;

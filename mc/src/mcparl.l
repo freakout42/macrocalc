@@ -41,7 +41,6 @@ int currow = 1;
 int main()
 {
 extern int 	yydebug;
-int at = 0;
 CELLPTR cp;
 char		s[80];
 char		*arxpath;
@@ -52,10 +51,10 @@ if ((arxpath = getenv("ARX")) != NULL)
 cp = newcell();
 while (gets(s))
 	{
-	at = parse (cp, s, NULL);
-	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, cpvalue(cp), cpunit(cp), cptype(cp), at);
+	parse (cp, s, NULL);
+	printf ("s=%s val=%f unit=%s ty=%d\n", s, cpvalue(cp), cpunit(cp), cptype(cp));
 	}
-return at;
+return 0;
 }
 
 CELLPTR	cell (col, row)

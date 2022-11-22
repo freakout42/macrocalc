@@ -7,7 +7,7 @@ TMP2=/tmp/testm2.$$
 ../src/mctoggle >/dev/null
 cat >$TMPF <<'EOF'
 s=3+4
- val=7.000000 unit=(null) ty=2 at=2
+ val=7.000000 unit=(null) ty=2
 EOF
 echo '3+4' | ../src/mcparse 2>/dev/null | tail -2 | diff $TMPF -
 ../bin/db2rdb -r <../src/mcmessag.rdb |

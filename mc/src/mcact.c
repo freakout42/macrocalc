@@ -34,7 +34,6 @@ char *s;
 memset (&cp, 0, sizeof(cellr));
 cpcol(&cp) = curcol;
 cprow(&cp) = currow;
-cptype(&cp) = CONSTANT;
 s1[0] = '\0';
 s1[1] = c;
 s1[2] = '\0';
