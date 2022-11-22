@@ -1,5 +1,5 @@
 /* mcact.h */
 
-int act (char *s);
+int act (char c);
 void getinput (int c);
 int checkforsave (void);

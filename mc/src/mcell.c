@@ -14,6 +14,7 @@
 #include "mcunit.h"
 #include "mcfileio.h"
 #include "mcell.h"
+#include "mcelladr.h"
 
 #define	COLBITS		6
 #define COLHASH		(1<<COLBITS)
@@ -92,9 +93,8 @@ for (row = lastrow; row >= 0; row--)
 lastrow = 0;
 } /* setlastrow */
 
-static CELLPTR linkcell (int col, int row, CELLPTR cellptr)
+static CELLPTR linkcell (int col, int row, CELLPTR cellptr) {
 /* Links a cell */
-{
 CELLPTR	*cpp;
 CELLPTR	cp;
 
@@ -102,8 +102,7 @@ for (	cpp = &hashcell [hashindex (col, row)];
 	(cp = *cpp) != NULL;
 	cpp = &cp->next	)
 
-	if (col == cp->adr.col && row == cp->adr.row)
-		{
+	if (col == cpcol(cp) && row == cprow(cp)) {
 		if (cellptr == NULL)
 			{
 			*cpp		= cp->next;
@@ -118,25 +117,22 @@ for (	cpp = &hashcell [hashindex (col, row)];
 if (cellptr != NULL)
 	{
 	*cpp		= cellptr;
-	cellptr->adr.col= col;
-	cellptr->adr.row= row;
-	cellptr->next	= cp ? cp->next : NULL;
+	cpcol(cellptr) = col;
+	cprow(cellptr) = row;
+	cpnext(cellptr) = cp ? cpnext(cp) : NULL;
 	if (col > lastcol) lastcol = col;
 	if (row > lastrow) lastrow = row;
 	}
 return cp;
 } /* linkcell */
 
-static void freecell (CELLPTR cp)
+void freecell (CELLPTR cp)
 /* Free a cell */
 {
 if (cp==NULL) return;
-switch (cptype(cp))
- {
- case STRING:
-	free (cpstring(cp));
- }
-if (cptext(cp)) free (cptext(cp));
+if (cptext(cp)) free(cptext(cp));
+if (cpunit(cp)) free(cpunit(cp));
+if (cpstring(cp)) free(cpstring(cp));
 free (cp);
 }
 
@@ -160,6 +156,38 @@ if (cpsidecar(cp)) {killcell (col+1, row);}
 killcell (col, row);
 return RET_SUCCESS;
 } /* deletecell */
+
+CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
+/* Migrate a cell */
+if (ct == NULL) {
+  ct = newcell();
+  linkcell (cpcol(cs), cprow(cs), ct);
+}
+if ((cptext(ct)==NULL) || strcmp(cptext(ct), cptext(cs))) {
+  cptype(ct) = cptype(cs);
+  free(cptext(ct));
+  cptext(ct) = strdup(cptext(cs));
+  cpvalue(ct) = cpvalue(cs);
+  cpcimag(ct) = cpcimag(cs);
+  if (cpunit(cs) && ((cpunit(ct)==NULL || !strcmp(cpunit(ct), cpunit(cs))))) {
+    free(cpunit(ct));
+    cpunit(ct) = strdup(cpunit(cs));
+  }
+  cplength(ct) = cplength(cs);
+  if (cpstring(cs) && ((cpstring(ct)==NULL || !strcmp(cpstring(ct), cpstring(cs))))) {
+    free(cpstring(ct));
+    cpstring(ct) = strdup(cpstring(cs));
+  }
+/*
+		if ((cput = initcell (col+1, row, UNITT,
+				(unsigned char)(defaultformat|PROTECT),
+				unit, .0, (char*)NULL))
+			== NULL) return NULL;
+		cpunit(cp) = cptext(cput);
+ */
+}
+return ct;
+}
 
 CELLPTR initcell (int col, int row, unsigned char att, unsigned char form,
 		char *s, double val, char *unit)

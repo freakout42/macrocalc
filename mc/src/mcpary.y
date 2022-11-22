@@ -548,7 +548,7 @@ u : UNITS y UNITE
 y : UNIT
 	{
 #ifdef	LOTUS
-	$$ = strcpy (lcpunit(pc), $1);
+	$$ = strcpy (cpunit(pc), $1);
 #else
 	$$ = yybuf;
 	yybuf = unitnorm (yybuf, $1);
@@ -557,7 +557,7 @@ y : UNIT
   | y UNIT
 	{
 #ifdef	LOTUS
-	$$ = strcat (lcpunit(pc), $2);
+	$$ = strcat (cpunit(pc), $2);
 #else
 	$$ = yybuf;
 	yybuf = unitmult (yybuf, $1, $2);

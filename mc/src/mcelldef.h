@@ -28,12 +28,11 @@
 
 enum	{
 	EMPTY,      /* =0 new empty */
-	COLWIDTH,   /* only for fileio coldef */
-	TEXT,
-	CONSTANT,
-	FORMULA,
+	TEXT,       /* =1 literal with just [0]=['"] */
+	CONSTANT,   /* =2 default before yyparse */
+	FORMULA,    /* */
 	UNITT,      /* sidecar cell */
-	SYNERROR,
+	SYNERROR,   /* temporary returned by parse */
 	INCOMMAND,
 	OUTCOMMAND,
 	RETRIEVED,
@@ -42,6 +41,7 @@ enum	{
 	STRING,
 	DATETYPE,	  /* only temporary used for date format */
 	COMPLEX,
+	COLWIDTH,   /* only for fileio coldef */
 	ERRORT
 	};
 
@@ -151,25 +151,26 @@ struct Range {
   char *name;
   };
 
-#define	cpnext(cp)    (cp->next)
-#define	cpcol(cp)     ((cp->adr).col)
-#define	cprow(cp)     ((cp->adr).row)
-#define	cptype(cp)    (cp->type)
-#define	cpval(cp)     (cp->v)
-#define	cpvalue(cp)   ((cp->v).value)
-#define	cpcimag(cp)   ((cp->v).cimag)
-#define	cpunit(cp)    ((cp->v).unit)
-#define	cplength(cp)  ((cp->s).length)
-#define	cpstring(cp)	((cp->s).string)
-#define	cpattrib(cp)  (cp->attrib)
-#define	cpsidecar(cp) (cp->attrib & UNITF)
+#define	cpnext(cp)    ((cp)->next)
+#define	cpadr(cp)     ((cp)->adr)
+#define	cpcol(cp)     (((cp)->adr).col)
+#define	cprow(cp)     (((cp)->adr).row)
+#define	cptype(cp)    ((cp)->type)
+#define	cpval(cp)     ((cp)->v)
+#define	cpvalue(cp)   (((cp)->v).value)
+#define	cpcimag(cp)   (((cp)->v).cimag)
+#define	cpunit(cp)    (((cp)->v).unit)
+#define	cplength(cp)  (((cp)->s).length)
+#define	cpstring(cp)	(((cp)->s).string)
+#define	cpattrib(cp)  ((cp)->attrib)
+#define	cpsidecar(cp) ((cp)->attrib & UNITF)
 #define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
 #define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED || cptype(cp) == COMPLEX)
-#define	cpprotect(cp) (cp->format & PROTECT)
-#define	cpfor(cp   )  (cp->format)
-#define	cpformat(cp)  (cp->format & FORMATM)
-#define	cpform(cp)    (cp->format & (FORMATM|PLACES))
-#define	cpplaces(cp)  (cp->format & PLACES)
-#define	cptext(cp)    (cp->text)
+#define	cpprotect(cp) ((cp)->format & PROTECT)
+#define	cpfor(cp   )  ((cp)->format)
+#define	cpformat(cp)  ((cp)->format & FORMATM)
+#define	cpform(cp)    ((cp)->format & (FORMATM|PLACES))
+#define	cpplaces(cp)  ((cp)->format & PLACES)
+#define	cptext(cp)    ((cp)->text)
 #define	cpliteral(cp) (cptype(cp) == TEXT)
-#define	cptextstr(cp) (cpliteral(cp)?cp->text+1:cp->text)
+#define	cptextstr(cp) (cpliteral(cp)?(cp)->text+1:(cp)->text)

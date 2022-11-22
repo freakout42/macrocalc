@@ -23,19 +23,9 @@
 void newpage (void)
 /* Adds new page sign */
 {
-alloctext (curcol, currow, ".bp");
+if (initcell (curcol, currow, TEXT, defaultformat, ".bp", .0, NULL) == NULL) errormsg (MSGLOMEM);
 changed = TRUE;
 } /* newpage */
-
-void editcell (CELLPTR ecell)
-/* Edits a selected cell */
-{
-char s[MAXINPUT + 2];
-
-if (ecell == NULL) return;
-strcpy (s+1, ecell->text);
-changed |= act (s);
-} /* editcell */
 
 void setcolwidth (int col)
 /* Sets the new column width for a selected column */

@@ -20,32 +20,44 @@
 #include "mcdisply.h"
 #include "mcact.h"
 
-int act (char *s)
+int act (char c) {
 /* Acts on a particular input */
-{
-extern int	errpos;
-int		type;
-CELLPTR		allocated;
-CELLPTR cp;
-char		parsed[MAXPARSED+1];
-char		unit[MAXINPUT+1]	= "";
-int		col, row, clen, edi;
-int		first	= TRUE;
+extern int errpos;
+CELLPTR allocated;
+cellr cp;
+char parsed[MAXPARSED+1];
+int col, row, clen, edi;
+int first = TRUE;
+char s1[MAXINPUT + 1];
+char *s;
 
-cp = newcell();
-origcol	= curcol;
-origrow	= currow;
-s++;
+memset (&cp, 0, sizeof(cellr));
+cpcol(&cp) = curcol;
+cprow(&cp) = currow;
+cptype(&cp) = CONSTANT;
+s1[0] = '\0';
+s1[1] = c;
+s1[2] = '\0';
+s = s1+1;
+if ((allocated = cell(curcol, currow))) {
+  if (c == '\0') {
+    strncpy(s1, cptext(allocated), MAXINPUT);
+    s1[MAXINPUT] = '\0';
+    s = s1;
+  } else { return FALSE; }
+}
 errpos = strlen(s);
-do	{
+do {
 	edi	= editstringp(s, "", MAXINPUT, errpos);
-	if ((first && !edi) || !*s) return FALSE;
-	parse(cp, s, parsed);
-	if (cptype(cp) == SYNERROR)
-		{
-		if (!edi)	type = TEXT;
-		else		errormsg(MSGSYNTAX);
+	if ((first && !edi) || !*s) { return FALSE; }
+	parse(&cp, s, parsed);
+	if (cptype(&cp) == SYNERROR) {
+		if (!edi) {
+			cptype(&cp) = TEXT;
+			*--s = STRLEFT;
 		}
+		else errormsg(MSGSYNTAX);
+	}
 	switch(errno)
 	 {
 	 case 0:						break;
@@ -57,12 +69,12 @@ do	{
 	 default:		errorstr(strerror(errno));	break;
 	 }
 	first	= FALSE;
-	} while (type == SYNERROR);
-allocated = parsecell(s, curcol, currow);
+} while (cptype(&cp) == SYNERROR);
+allocated = migratcell(allocated, &cp);
 if (allocated)
 	{
 	clen	= celladr(parsed, &col, &row);
-	switch(type)
+	switch(cptype(&cp))
 	 {
 	 case INCOMMAND:
 		if (inpipe(col, row, parsed+clen+1) == EOF) allocated = NULL;
@@ -91,17 +103,6 @@ switch(edi)
  }
 return TRUE;
 } /* act */
-
-void getinput (int c)
-/* Reads and acts on an input string from the keyboard that started with c. */
-{
-char s[MAXINPUT + 2];
-
-s[0] = '\0';
-s[1] = (char)c;
-s[2] = '\0';
-changed |= act (s);
-} /* getinput */
 
 int checkforsave (void)
 /* If the spreadsheet has been changed, will ask the user if they want to

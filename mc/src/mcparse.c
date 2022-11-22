@@ -31,8 +31,6 @@ char *yytoparse; /* pointer to left formula */
 int yyerrorflg; /* error flag for lex-parser */
 #endif
 
-/* static char instr; flag for "in-string" */
-
 /* build parse string with references embedded */
 static int gettoparse (char *err)
 {
@@ -77,6 +75,8 @@ char yybuffer[MAXPARSED+1];
 char yyinput[MAXPARSED+1];
 
 pc = c;
+origcol = cpcol(pc);
+origrow = cprow(pc);
 yysparse = s;
 yybparse = yytoparse = yyinput;
 yyerrorflg = 0;
@@ -106,16 +106,8 @@ yyclrbuf();
 #ifdef LOTUS
 len = yybuf - polform;
 memcpy(formula, &len, sizeof(short));
-#ifdef DEBUG
-fprintf(stderr, "parse:\"%s\"=%d len=%d\n", s, cptype(pc), len);
-#endif
 return cptype(pc);
 #else
-#ifdef DEBUG
-fprintf(stderr, "parse:\"%s\" -> %f type: %d error:%d\n",
-                yybparse, cpvalue(pc), cptype(pc), errno);
-perror("parse");
-#endif
 return errno;
 #endif
 } /* parse */
@@ -130,14 +122,6 @@ fprintf(stderr, "input: %s\n", yytoparse);
 #endif
 
 c = *yytoparse++;
-/*switch (c)
- *{
- *case '\"':	instr = !instr; break;
- *case '{':	instr = TRUE; break;
- *case '}':	instr = FALSE; break;
- *}
- *if (!instr && islower(c)) c = toupper(c);
- */
 return c ? c : '\n';
 }
 
