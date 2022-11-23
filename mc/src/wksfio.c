@@ -118,8 +118,7 @@ while (getwksrecord (&r) != L_EOF)
 #ifdef DEBUG
 		col	=  r.data.label.cell.col;
 		row	=  r.data.label.cell.row;
-/*		fprintf (stderr, "formula: c=%d r=%d v=%f\n", col, row, val);*/
-		fprintf (stderr, "formula: c=%d r=%d\n", col, row);
+		fprintf (stderr, "formula: c=%d r=%d v=%f\n", col, row, val);
 #endif
 		if (pol2tex (tex, r.data.formula.code)) break;
 		goto allocate;

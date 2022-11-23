@@ -26,6 +26,7 @@ unsigned char convertformat (unsigned char format)
 switch (format & FORMATM)
  {
  case L_FIXED:
+	return (format & (0xffu ^ (PROTECT|FORMATM))) | FIXED;
  case SCIENTIFIC:
  case CURRENCY:
  case PERCENT:
