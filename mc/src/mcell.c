@@ -217,6 +217,7 @@ if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "init: cp=%08x\n", cp);
 #endif
+cptype(cp) = att & TYPEM;
 cpattrib(cp) = att | (unitc ? UNITF : 0);
 cpfor(cp) = form;
 cptext(cp) = strdup (s);

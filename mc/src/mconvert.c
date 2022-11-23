@@ -1,4 +1,4 @@
-/* $Id: mconvert.c,v 1.10 2008/06/11 09:15:43 axel Exp $
+/* mconvert.c 1.10 2008/06/11 09:15:43 axel
  * convert format
  * convert label with tab[]
  */
@@ -12,6 +12,14 @@
 #include "mc2wks.h"
 #include "mcelldef.h"
 #include "mcparse.h"
+
+unsigned char convertlformat (unsigned char form) {
+switch (form & FORMATM) {
+  case FIXED:   form = (form & (0xffu ^ FORMATM)) | L_FIXED;   break;
+  case SPECIAL: form = (form & (0xffu ^ FORMATM)) | L_SPECIAL; break;
+}
+return form;
+}
 
 unsigned char convertformat (unsigned char format)
 {

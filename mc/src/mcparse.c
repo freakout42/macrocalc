@@ -78,7 +78,7 @@ pc = c;
 cptype(pc) = CONSTANT;
 origcol = cpcol(pc);
 origrow = cprow(pc);
-yysparse = s;
+yysparse = s ? s : cptext(c);
 yybparse = yytoparse = yyinput;
 yyerrorflg = 0;
 gettoparse(NULL);

@@ -24,6 +24,7 @@ int lmarkcol= 0;
 int lmarkrow= 0;
 
 do {
+  curcell = cell (curcol, currow);
   input = generalprompt();
   switch (input)
    {

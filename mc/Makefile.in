@@ -60,7 +60,7 @@ srcclean:
 		mc2parse.c mc2pary.c *.tab.? mcpary.vcg \
 		mcmsg.h mcmnu.h core y.output libmcf.a \
 		mc 321 mcmacro mcmsg mcunits mcread mc2wks db2rdb \
-		mcparse mctoggle mcunit mcalign *.o *.a makefile*
+		mcparse mctoggle mcunit mcalign *.o *.a makefile* core.*
 
 IOBJ=	mcrun.o mcmenu.o mcommand.o mcpipe.o mcrecalc.o mcellact.o mchelp.o mcwindow.o mcact.o
 FOBJ=	mcfileio.o mcprint.o mcpform.o mcrange.o mcrwalk.o

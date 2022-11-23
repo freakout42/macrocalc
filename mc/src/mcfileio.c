@@ -24,13 +24,16 @@ char	cols[8];
 char	line[MAXINPUT+1];
 int	col, row;
 int	att;
+unsigned char abits;
 int	form;
 char	tex[MAXINPUT+1];
 double	val;
 char	unit[MAXINPUT+1];
+char newold;
 
 str_gets (file, line, sizeof(line));
-if (strcmp(line, colnames) != 0) return RET_FATAL;
+if (strncmp(line, colnames, 4) != 0) return RET_FATAL;
+newold = line[4];
 str_gets (file, line, sizeof(line));
 if (strspn(line, "-\t") != strlen(line)) return RET_FATAL;
 while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
@@ -56,6 +59,19 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		}
 	else
 		{
+		if (newold == '\t') {
+			abits = att;
+			abits &= TYPEM;
+			if (abits > STRING) return RET_FATAL;
+			abits = newtypes[abits];
+			abits |= ((unsigned char)att & ATTRIBM);
+			att = abits;
+			switch (form & FORMATM) {
+			 case L_FIXED:   form = (form & (0xffu ^ FORMATM)) | FIXED;   break;
+			 case L_SPECIAL: form = (form & (0xffu ^ FORMATM)) | SPECIAL; break;
+			 case L_DEFAULT: form = (form & (0xffu ^ FORMATM)) | DEFAULT; break;
+			}
+		}
 		celladr (cols, &col, &row);
 			unit[0] = '\0';
 			if (!initcell(col, row, att, form, tex, val, unit))
@@ -128,7 +144,7 @@ for (row = arow; row <= erow; row++)
 		cols,
 		row+1,
 		cpattrib(cp),
-		cpformat(cp),
+		cpform(cp),
 		MAXPLACES,
 		cpnumber(cp) ? cpvalue(cp) : .0,
 		cptext(cp));

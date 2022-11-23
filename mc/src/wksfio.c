@@ -273,6 +273,9 @@ for (row = 0; row <= lastrow; row++)
 			&r.data.formula.size);
 #endif
 		type = parse2 (cp, cptext(cp), &r.data.formula.size);
+#ifdef DEBUG
+	fprintf (stderr, "towks: c:%d r:%d = type=%d\n", col, row, type);
+#endif
 		if (type!=FORMULA && type!=STRING && type!=CONSTANT) goto texttype;
 		r.reclen = r.data.formula.size + LL_formula - sizeof(r.data.formula.code);
 		lib_cano(r.data.formula.size);
@@ -300,7 +303,7 @@ for (row = 0; row <= lastrow; row++)
 		r.data.number.value	= myd2d.c;
 		goto recordok;
 	 recordok:
-		r.data.label.format	= cp->format;
+		r.data.label.format	= cplformat(cp);
 		ca.col			= col;
 		ca.row			= row;
 		convertcelladr (&r.data.label.cell, &ca);

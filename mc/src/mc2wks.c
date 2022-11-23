@@ -69,6 +69,7 @@ progname = "mc2wks";
 license = lib_akey ("000000", FALSE);
 #endif
 tzset(); /* set timezone */
+defaultformat	= ((0x00u & PROTECT) | (FORMATM & L_SPECIAL) | (PLACES & L_DEFAULT));
 while ((c = getopt (argc, argv, opts)) != EOF)
 	switch (c)
 	 {

@@ -27,21 +27,21 @@
 #define UNRECRANGE	66
 
 enum	{
-	EMPTY,      /* =0 new empty */
-	TEXT,       /* =1 literal with just [0]=['"] */
-	CONSTANT,   /* =2 default before yyparse */
-	FORMULA,    /* =3 */
-	UNITT,      /* sidecar cell */
-	SYNERROR,   /* temporary returned by parse */
-	INCOMMAND,
-	OUTCOMMAND,
-	RETRIEVED,
-	VRETRIEVED,
-	EOFPIPE,
-	STRING,
-	DATETYPE,	  /* only temporary used for date format */
-	COMPLEX,
-	COLWIDTH,   /* only for fileio coldef */
+	EMPTY,      /* =0     new empty */
+	TEXT,       /* =1  yy literal with just [0]=['"] */
+	CONSTANT,   /* =2  yy default before yyparse */
+	FORMULA,    /* =3  yy */
+	UNITT,      /* =4     sidecar cell */
+	SYNERROR,   /* =5  yy temporary returned by parse */
+	INCOMMAND,  /* =6  yy */
+	OUTCOMMAND, /* =7  yy */
+	RETRIEVED,  /* =8  |< literal from pipe */
+	VRETRIEVED, /* =9  |< value from pipe */
+	EOFPIPE,    /* =10 |< eof from pipe */
+	STRING,     /* =11 yy string formula */
+	DATETYPE,	  /* =12 yy only temporary used for date format */
+	COMPLEX,    /* =13    not used should use CONSTANT|FORMULA */
+	COLWIDTH,   /* =14    only for fileio coldef was =0 */
 	ERRORT
 	};
 
@@ -91,7 +91,8 @@ enum	{
 #define TIMEI2     0x0cu
 #define BAR        0x0du
 
-#define DEFAULTFORMAT	((0&PROTECT) | (FORMATM&SPECIAL) | (PLACES&DEFAULT))
+#define DEFAULTFORMAT	  ((0x00u & PROTECT) | (FORMATM & SPECIAL)   | (PLACES & DEFAULT))
+#define L_DEFAULTFORMAT	((0x00u & PROTECT) | (FORMATM & L_SPECIAL) | (PLACES & L_DEFAULT))
 
 #ifdef ISSUECOLOR
 #define NCURSES_BITS(mask,shift) ((mask) << ((shift) + NCURSES_ATTR_SHIFT))
@@ -167,8 +168,9 @@ struct Range {
 #define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
 #define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED || cptype(cp) == COMPLEX)
 #define	cpprotect(cp) ((cp)->format & PROTECT)
-#define	cpfor(cp   )  ((cp)->format)
+#define	cpfor(cp)     ((cp)->format)
 #define	cpformat(cp)  ((cp)->format & FORMATM)
+#define	cplformat(cp) (convertlformat((cp)->format))
 #define	cpform(cp)    ((cp)->format & (FORMATM|PLACES))
 #define	cpplaces(cp)  ((cp)->format & PLACES)
 #define	cptext(cp)    ((cp)->text)
