@@ -66,11 +66,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 			abits = newtypes[abits];
 			abits |= ((unsigned char)att & ATTRIBM);
 			att = abits;
-			switch (form & FORMATM) {
-			 case L_FIXED:   form = (form & (0xffu ^ FORMATM)) | FIXED;   break;
-			 case L_SPECIAL: form = (form & (0xffu ^ FORMATM)) | SPECIAL; break;
-			 case L_DEFAULT: form = (form & (0xffu ^ FORMATM)) | DEFAULT; break;
-			}
+			form = convertformat(form);
 		}
 		celladr (cols, &col, &row);
 			unit[0] = '\0';

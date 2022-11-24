@@ -13,52 +13,6 @@
 #include "mcelldef.h"
 #include "mcparse.h"
 
-unsigned char convertlformat (unsigned char form) {
-switch (form & FORMATM) {
-  case FIXED:   form = (form & (0xffu ^ FORMATM)) | L_FIXED;   break;
-  case SPECIAL: form = (form & (0xffu ^ FORMATM)) | L_SPECIAL; break;
-}
-return form;
-}
-
-unsigned char convertformat (unsigned char format)
-{
-switch (format & FORMATM)
- {
- case L_FIXED:
-	return (format & (0xffu ^ (PROTECT|FORMATM))) | FIXED;
- case SCIENTIFIC:
- case CURRENCY:
- case PERCENT:
- case COMMA:
-	return (format);
- case L_SPECIAL:
-	switch (format & PLACES)
-	 {
-	 case HIDDEN:
-	 case DATE:
-	 case TIME:
-		return (format);
-	 case BAR:
-	 case TEXTF:
-	 case GENERAL:
-		return ((format & PROTECT) | DEFAULTFORMAT);
-	 case DAYMONTH:
-	 case MONTHYEAR:
-	 case DATEI1:
-	 case DATEI2:
-		return ((format & (PROTECT | FORMATM)) | DATE);
-	 case HOURMIN:
-	 case TIMEI1:
-	 case TIMEI2:
-		return ((format & (PROTECT | FORMATM)) | TIME);
-	 case L_DEFAULT:
-		return (DEFAULTFORMAT);
-	 }
- }
-return (DEFAULTFORMAT);
-}
-
 extern int	warn;
 extern int	erro;
 

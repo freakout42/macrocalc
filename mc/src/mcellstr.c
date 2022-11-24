@@ -17,6 +17,54 @@
 #include "mcellact.h"
 #include "mcellstr.h"
 
+unsigned char convertformat (unsigned char format)
+{
+switch (format & FORMATM)
+ {
+ case L_FIXED:
+	return (format & (0xffu ^ (PROTECT|FORMATM))) | FIXED;
+ case SCIENTIFIC:
+ case CURRENCY:
+ case PERCENT:
+ case COMMA:
+	return (format);
+ case L_SPECIAL:
+	switch (format & PLACES)
+	 {
+	 case HIDDEN:
+		return (format);
+	 case BAR:
+	 case TEXTF:
+	 case GENERAL:
+		return ((format & PROTECT) | DEFAULTFORMAT);
+	 case DATE:
+	 case DAYMONTH:
+	 case MONTHYEAR:
+	 case DATEI1:
+	 case DATEI2:
+		return ((format & (PROTECT | SPECIAL)) | DATE);
+	 case TIME:
+	 case HOURMIN:
+	 case TIMEI1:
+	 case TIMEI2:
+		return ((format & (PROTECT | SPECIAL)) | TIME);
+	 case L_DEFAULT:
+		return (DEFAULTFORMAT);
+	 }
+ }
+return (DEFAULTFORMAT);
+}
+
+unsigned char convertlformat (unsigned char form) {
+switch (form & FORMATM) {
+  case FIXED:   form = (form & (0xffu ^ FORMATM)) | L_FIXED; break;
+  case SPECIAL: form = (form & (0xffu ^ FORMATM)) | L_SPECIAL;
+                if ((form & PLACES) == DEFAULT) { form |= L_DEFAULT; }
+                break;
+}
+return form;
+}
+
 static void textstring (char *instring, char *outstring,
 			int col, unsigned int format, int formatting)
 /* Sets the string representation of text */

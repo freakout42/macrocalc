@@ -302,7 +302,7 @@ for (row = 0; row <= lastrow; row++)
 		r.data.number.value	= myd2d.c;
 		goto recordok;
 	 recordok:
-		r.data.label.format	= cplformat(cp);
+		r.data.label.format	= convertlformat(cp->format);
 		ca.col			= col;
 		ca.row			= row;
 		convertcelladr (&r.data.label.cell, &ca);

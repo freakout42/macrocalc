@@ -144,7 +144,7 @@ clearlastcol();
 void showcelltype (void)
 /* Prints the type of cell and what is in it */
 {
-char	c[MAXADR+1], f, a;
+char	c[MAXADR+1], f='Y', a;
 char	*t;
 int	p;
 int	color;

@@ -43,7 +43,7 @@ if ((allocated = cell(curcol, currow))) {
     strncpy(s1, cptext(allocated), MAXINPUT);
     s1[MAXINPUT] = '\0';
     s = s1;
-  } else { return FALSE; }
+  } /*else { return FALSE; }*/
 }
 errpos = strlen(s);
 do {

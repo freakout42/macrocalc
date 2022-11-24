@@ -170,7 +170,6 @@ struct Range {
 #define	cpprotect(cp) ((cp)->format & PROTECT)
 #define	cpfor(cp)     ((cp)->format)
 #define	cpformat(cp)  ((cp)->format & FORMATM)
-#define	cplformat(cp) (convertlformat((cp)->format))
 #define	cpform(cp)    ((cp)->format & (FORMATM|PLACES))
 #define	cpplaces(cp)  ((cp)->format & PLACES)
 #define	cptext(cp)    ((cp)->text)
