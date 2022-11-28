@@ -24,10 +24,8 @@ char	buf[MAXINPUT+2];
 char	tab	= '\t';
 char	*t, *next;
 int	acol;
-CELLPTR	cp;
-cellr	cr;
 double	val;
-char	att;
+int	type;
 int	insert	= FALSE;
 int	formula	= FALSE;
 
@@ -53,9 +51,7 @@ while (str_gets(p, buf+1, MAXINPUT)) {
 	acol = col-1;
 	next = buf+1;
 	while (next != NULL) {
-		acol++;
-	  cp = cell (acol, row);
-		if (acol>=MAXCOLS) break;
+		if (++acol >= MAXCOLS) break;
 		t = next;
 		if ((next = strchr (t, tab)) != NULL) *next++ = '\0';
 		if (*t == '\0')	{
@@ -63,28 +59,21 @@ while (str_gets(p, buf+1, MAXINPUT)) {
 			continue;
 		}
 		if (formula) {
-			cp = parsecell(t, acol, row);
+			parsecell(t, acol, row);
 		} else {
-			memset (&cr, 0, sizeof(cellr));
-			cpcol(&cr) = acol;
-			cprow(&cr) = row;
+			type = VRETRIEVED;
 			if ((val = str_chkd(t)) == HUGE_VAL) {
-				cptype(&cr) = RETRIEVED;
+				type = RETRIEVED;
 				*--t = STRLEFT;
-			} else {
-				cptype(&cr) = VRETRIEVED;
-				cpvalue(&cr) = val;
+				val = 0.;
 			}
-			cptext(&cr) = t;
-			cp = migratcell(cp, &cr);
+			init2cell(acol, row, type, t, val, 0., NULL);
 		}
 	}
-	row++;
-	if (row>=MAXROWS-1) break;
-	}
+	if (++row >= MAXROWS-1) break;
+}
 pclose(p);
-cp = initcell(col, row, EOFPIPE, defaultformat, "EOF", 0., NULL);
-return cp==NULL ? EOF : RET_SUCCESS;
+return (init2cell(col, row, EOFPIPE, "EOF", 0., 0., NULL) == NULL) ? EOF : RET_SUCCESS;
 } /* inpipe */
 
 int outpipe (int col, int row, char *cmd)

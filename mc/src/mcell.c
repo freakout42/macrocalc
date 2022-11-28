@@ -198,6 +198,22 @@ strdupi(&cpstring(ct), cpstring(cs));
 return ct;
 }
 
+CELLPTR init2cell(int col, int row, int type, char *text, double value, double cimag, char *unit) {
+CELLPTR	cp;
+cellr	cr;
+
+cp = cell (col, row);
+memset (&cr, 0, sizeof(cellr));
+cpcol(&cr) = col;
+cprow(&cr) = row;
+cptype(&cr) = type;
+cpvalue(&cr) = value;
+cpcimag(&cr) = cimag;
+cptext(&cr) = text;
+cpunit(&cr) = unit;
+return migratcell(cp, &cr);
+}
+
 CELLPTR initcell (int col, int row, unsigned char att, unsigned char form,
 		char *s, double val, char *unit)
 /* Init a cell */
