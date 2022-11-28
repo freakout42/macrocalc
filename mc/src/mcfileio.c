@@ -23,12 +23,12 @@ int	reallastcol = lastcol, reallastrow = lastrow;
 char	cols[8];
 char	line[MAXINPUT+1];
 int	col, row;
+cellr cp;
 int	att;
 unsigned char abits;
 int	form;
 char	tex[MAXINPUT+1];
 double	val;
-char	unit[MAXINPUT+1];
 char newold;
 
 str_gets (file, line, sizeof(line));
@@ -69,9 +69,15 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 			form = convertformat(form);
 		}
 		celladr (cols, &col, &row);
-			unit[0] = '\0';
-			if (!initcell(col, row, att, form, tex, val, unit))
-				return RET_ERROR;
+		memset (&cp, 0, sizeof(cellr));
+		cpcol(&cp) = col;
+		cprow(&cp) = row;
+		cpattrib(&cp) = att & (FORMATM|PROTECT);
+		cpfor(&cp) = form;
+		cptype(&cp) = att & TYPEM;
+		cptext(&cp) = tex;
+		cpvalue(&cp) = val;
+		migratcell(NULL, &cp);		
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
 		}

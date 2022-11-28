@@ -178,6 +178,8 @@ CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 if (ct == NULL) {
   ct = newcell();
   linkcell (cpcol(cs), cprow(cs), ct);
+  cpattrib(ct) = cpattrib(cs);
+  cpfor(ct) = cpfor(cs);
 }
 cptype(ct) = cptype(cs);
 strdupi(&cptext(ct), cptext(cs));
