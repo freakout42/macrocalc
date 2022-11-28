@@ -35,26 +35,22 @@ else
 	}
 }
 
-int copycell (int tcol, int trow, int scol, int srow)
 /* Copies a cell */
-{
-CELLPTR	scp, tcp;
+int copycell (int tcol, int trow, int scol, int srow) {
+CELLPTR scp, tcp;
+cellr cp;
 
 if (tcol<0 || tcol>=MAXCOLS || trow<0 || tcol>=MAXROWS) return RET_SUCCESS;
-if ((scp = cell (scol, srow)) != NULL)
-	{
-	tcp = initcell (tcol, trow, cpattrib(scp), cpformat(scp), cptext(scp), 0.,
-		cptype(scp)==STRING ? cpstring(scp) : cpunit(scp));
-	if (tcp == NULL) return RET_ERROR;
-	if (cptype(scp)==CONSTANT || cptype(scp)==VRETRIEVED)
-		cpvalue(tcp) = cpvalue(scp);
-	else
-		recalcell (tcol, trow);
-	}
-else
-	{
+if ((scp = cell (scol, srow)) != NULL) {
+  cp = *scp;
+  cpcol(&cp) = tcol;
+  cprow(&cp) = trow;
+  tcp = cell(tcol, trow);
+  migratcell(tcp, &cp);
+  recalcell (tcol, trow);
+} else {
 	deletecell (tcol, trow);
-	}
+}
 return RET_SUCCESS;
 } /* copycell */
 

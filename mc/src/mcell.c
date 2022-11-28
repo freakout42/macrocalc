@@ -202,8 +202,8 @@ CELLPTR init2cell(int col, int row, int type, char *text, double value, double c
 CELLPTR	cp;
 cellr	cr;
 
-cp = cell (col, row);
-memset (&cr, 0, sizeof(cellr));
+cp = cell(col, row);
+memset(&cr, 0, sizeof(cellr));
 cpcol(&cr) = col;
 cprow(&cr) = row;
 cptype(&cr) = type;
