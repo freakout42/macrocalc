@@ -23,7 +23,7 @@
 void newpage (void)
 /* Adds new page sign */
 {
-if (initcell (curcol, currow, TEXT, defaultformat, ".bp", .0, NULL) == NULL) errormsg (MSGLOMEM);
+if (init2cell (curcol, currow, TEXT, ".bp", .0, .0, NULL) == NULL) errormsg (MSGLOMEM);
 changed = TRUE;
 } /* newpage */
 

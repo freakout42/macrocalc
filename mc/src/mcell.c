@@ -214,65 +214,6 @@ cpunit(&cr) = unit;
 return migratcell(cp, &cr);
 }
 
-CELLPTR initcell (int col, int row, unsigned char att, unsigned char form,
-		char *s, double val, char *unit)
-/* Init a cell */
-{
-CELLPTR		cp, cput;
-int		unitc;
-
-#ifdef DEBUG
-fprintf (stderr, "init: c=%3d r=%3d a=%3d f=%3d s=%-16s v=%10le u=\"%-8s\"\n",
-	col, row, att, form, s, val, unit);
-#endif
-
-assert (col>=0 && col<MAXCOLS && row>=0 && row<MAXROWS);
-
-unitc	= (att==CONSTANT || att==FORMULA || att & UNITF)
-		&& unit!=NULL && unit[0]!='\0';
-if (deletecell (col, row)) return NULL;
-if ((cp = (CELLPTR)(malloc(sizeof(cellr)))) == NULL) return NULL;
-#ifdef DEBUG
-fprintf (stderr, "init: cp=%08x\n", cp);
-#endif
-cptype(cp) = att & TYPEM;
-cpattrib(cp) = att | (unitc ? UNITF : 0);
-cpfor(cp) = form;
-cptext(cp) = strdup (s);
-if (cptext(cp)==NULL) return NULL;
-#ifdef DEBUG
-fprintf (stderr, "init: att=%08x type=%d\n", cpattrib(cp), cptype(cp));
-#endif
-switch (cptype(cp))
- {
- case STRING:
-	cpstring(cp)	= strdup (unit);
-	cplength(cp)	= strlen (unit);
-	break;
- case CONSTANT:
- case VRETRIEVED:
- case FORMULA:
-	cpvalue(cp)	= val;
-	if (unitc)
-		{
-		if ((cput = initcell (col+1, row, UNITT,
-				(unsigned char)(defaultformat|PROTECT),
-				unit, .0, (char*)NULL))
-			== NULL) return NULL;
-		cpunit(cp) = cptext(cput);
-		}
-	else	cpunit(cp) = NULL;
-	break;
- }
-linkcell (col, row, cp);
-#ifdef DEBUGNO
-fprintf (stderr, "idon: c=%3d r=%3d a=%3d f=%3d s=%-16s v=%10le u=\"%-8s\"\n",
-	col, row, cpatt(cp), cpfor(cp), cptext(cp), cpvalue(cp),
-	cpunitf(cp) ? cpunit(cp) : "");
-#endif
-return cp;
-}
-
 int movecell (int tcol, int trow, int scol, int srow)
 /* Moves a cell */
 {

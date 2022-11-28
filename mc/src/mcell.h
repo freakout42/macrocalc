@@ -4,9 +4,6 @@ void freecell (CELLPTR cp);
 void inithash (void);
 void sheetwalk (CELLPTR (*fcn)(int col, int row));
 CELLPTR	cell (int col, int row);
-CELLPTR	initcell (	int col, int row,
-			unsigned char att, unsigned char form,
-			char *s, double val, char *unit);
 CELLPTR init2cell (int col, int row, int type, char *text, double value, double cimag, char *unit);
 int deletecell (int col, int row);
 int movecell (int tcol, int trow, int scol, int srow);

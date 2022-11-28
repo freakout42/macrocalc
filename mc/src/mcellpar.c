@@ -57,7 +57,8 @@ switch (cptype(cp)) {
 	 }
 	break;
  }
-allocated = initcell (col, row, cptype(cp), format, s, cpvalue(cp), cpunit(cp));
+allocated = cell(col, row);
+allocated = migratcell(allocated, cp);
 #ifdef DEBUG
 fprintf (stderr, "inited: type:%d\n", cptype(allocated));
 #endif
