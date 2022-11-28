@@ -1,5 +1,4 @@
-/* $Id: mcpipe.c,v 1.11 1997/04/05 15:47:34 axel Exp $
- */
+/* mcpipe.c 1.11 1997/04/05 15:47:34 axel */
 
 #include <unistd.h>
 #include <string.h>
@@ -26,6 +25,7 @@ char	tab	= '\t';
 char	*t, *next;
 int	acol;
 CELLPTR	cp;
+cellr	cr;
 double	val;
 char	att;
 int	insert	= FALSE;
@@ -45,44 +45,40 @@ switch(*cmd) {
 	break;
  }
 if (!(p = popen(cmd, "r"))) return RET_ERROR;
-while (str_gets(p, buf+1, MAXINPUT+1))
-	{
-	if (insert)
-		{
+while (str_gets(p, buf+1, MAXINPUT)) {
+	if (insert) {
 		moverange(0, row+1, 0, row, MAXCOLS, MAXROWS);
 		copyrange(0, row, 0, row+1, lastcol, row+1);
-		}
+	}
 	acol = col-1;
 	next = buf+1;
-	while (next != NULL)
-		{
+	while (next != NULL) {
 		acol++;
-		if (col>=MAXCOLS) break;
+	  cp = cell (acol, row);
+		if (acol>=MAXCOLS) break;
 		t = next;
 		if ((next = strchr (t, tab)) != NULL) *next++ = '\0';
-		if (*t == '\0')
-			{
+		if (*t == '\0')	{
 			deletecell(acol, row);
 			continue;
-			}
+		}
 		if (formula) {
 			cp = parsecell(t, acol, row);
-			}
-		else {
-			att = (val = str_chkd(t))==HUGE_VAL ? RETRIEVED : VRETRIEVED;
-			if (att == RETRIEVED)
-				{
-				val = 0.;
+		} else {
+			memset (&cr, 0, sizeof(cellr));
+			cpcol(&cr) = acol;
+			cprow(&cr) = row;
+			if ((val = str_chkd(t)) == HUGE_VAL) {
+				cptype(&cr) = RETRIEVED;
 				*--t = STRLEFT;
-				}
-			cp = initcell(acol, row, att, defaultformat, t, val, NULL);
+			} else {
+				cptype(&cr) = VRETRIEVED;
+				cpvalue(&cr) = val;
 			}
-		if (cp==NULL)
-			{
-			pclose(p);
-			return EOF;
-			}
+			cptext(&cr) = t;
+			cp = migratcell(cp, &cr);
 		}
+	}
 	row++;
 	if (row>=MAXROWS-1) break;
 	}

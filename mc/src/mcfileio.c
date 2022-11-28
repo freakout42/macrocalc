@@ -77,7 +77,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		cptype(&cp) = att & TYPEM;
 		cptext(&cp) = tex;
 		cpvalue(&cp) = val;
-		migratcell(NULL, &cp);		
+		migratcell(NULL, &cp);
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
 		}
@@ -145,7 +145,7 @@ for (row = arow; row <= erow; row++)
 	fprintf (file, "%s%d\t%d\t%d\t%+.*e\t%s\n",
 		cols,
 		row+1,
-		cpattrib(cp),
+		cpattrib(cp)|cptype(cp),
 		cpform(cp),
 		MAXPLACES,
 		cpnumber(cp) ? cpvalue(cp) : .0,

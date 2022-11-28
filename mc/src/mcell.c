@@ -225,7 +225,7 @@ cpfor(cp) = form;
 cptext(cp) = strdup (s);
 if (cptext(cp)==NULL) return NULL;
 #ifdef DEBUG
-fprintf (stderr, "init: att=%08x type==%d\n", cpattrib(cp), cptype(cp));
+fprintf (stderr, "init: att=%08x type=%d\n", cpattrib(cp), cptype(cp));
 #endif
 switch (cptype(cp))
  {
