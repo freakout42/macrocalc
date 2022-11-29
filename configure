@@ -33,7 +33,7 @@ dist/arx.tar.gz: mc/tst/.tested
 	cd dist; tar cf - arx | gzip -c >arx.tar.gz
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
 mc/tst/.tested: arx/lib/libarx.a
-	-rm \$@
+	rm -f \$@
 	-mkdir mc/man/cat1
 	cd mc; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}" PLATID="${PLATID}"
 	test -f \$@

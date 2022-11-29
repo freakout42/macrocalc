@@ -25,7 +25,7 @@ char	tab	= '\t';
 char	*t, *next;
 int	acol;
 double	val;
-int	type;
+int	type=0;
 int	insert	= FALSE;
 int	formula	= FALSE;
 
@@ -117,7 +117,7 @@ void inpipeall (void)
 int	col, row;
 int	dcol, drow;
 CELLPTR	cp;
-int	type;
+int	type=0;
 char	parsed[MAXPARSED+1];
 int	clen;
 
@@ -146,7 +146,7 @@ void outpipeall (void)
 int	col, row;
 int	dcol, drow;
 CELLPTR	cp;
-int	type;
+int	type=0;
 char	parsed[MAXPARSED+1];
 int	clen;
 

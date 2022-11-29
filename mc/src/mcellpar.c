@@ -13,11 +13,9 @@
 CELLPTR parsecell (char *strvalue, int col, int row)
 /* Parses a cell */
 {
-double	value;
 int	pstatus;
 unsigned char format		= defaultformat;
 char	vbuf[MAXINPUT+1]	= "";
-char	unit[MAXINPUT+1]	= "";
 char	parsed[MAXPARSED+1];
 char	*s;
 CELLPTR	cp, allocated;

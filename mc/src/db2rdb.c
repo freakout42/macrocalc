@@ -39,7 +39,7 @@ char		tmpfname[81]	= "";
 int main (int argc, char *argv[])
 {
 int		errornum;
-int		i;
+int		i=0;
 int		rec;
 unsigned char	fld, fldrdb;
 struct	DBF	*ddbf, *drdb;
@@ -50,7 +50,7 @@ extern char 	*optarg;
 int		c;
 int		append	= FALSE;
 int		external= FALSE;
-char		*afile;
+char		*afile	= NULL;
 char		*table	= NULL;
 char		fieldse = '\t';
 int		nullpa	= FALSE;
