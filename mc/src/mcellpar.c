@@ -30,11 +30,6 @@ pstatus = parse (cp, s, parsed);
 fprintf (stderr, "par: %s->%e type:%d unit=%s errno:%d\n", s, cpvalue(cp), cptype(cp), cpunit(cp), pstatus);
 #endif
 
-/* set format of new cell depending of cell above new cell
-if (row>0 && cell(col, row)==NULL && (cp = cell(col, row-1))!=NULL) {
-	format = cpform(cp);
-	}
- */
 switch (cptype(cp)) {
  case DATETYPE:
 	cptype(cp) = CONSTANT;

@@ -173,13 +173,21 @@ if (s == NULL) {
 }
 return;
 }
+
 CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 /* Migrate a cell */
+CELLPTR cr;
 if (ct == NULL) {
   ct = newcell();
   linkcell (cpcol(cs), cprow(cs), ct);
-  cpattrib(ct) = cpattrib(cs);
-  cpfor(ct) = cpfor(cs);
+  if (cpattrib(cs)==0 && cpfor(cs)==0 && (cr = cell(cpcol(cs), cprow(cs)-1))) {
+    /* set format of new cell depending of cell above new cell */
+    cpattrib(ct) = cpattrib(cr);
+    cpfor(ct) = cpfor(cr);
+  } else {
+    cpattrib(ct) = cpattrib(cs);
+    cpfor(ct) = cpfor(cs);
+  }
 }
 cptype(ct) = cptype(cs);
 strdupi(&cptext(ct), cptext(cs));
