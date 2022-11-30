@@ -184,7 +184,7 @@ if (ct == NULL) {
     /* set format of new cell depending of cell above new cell */
     cpattrib(ct) = cpattrib(cr);
     cpfor(ct) = cpfor(cr);
-  } else {
+  } else if (cpfor(cs) != L_DEFAULT) {
     cpattrib(ct) = cpattrib(cs);
     cpfor(ct) = cpfor(cs);
   }
