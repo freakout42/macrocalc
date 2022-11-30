@@ -58,10 +58,10 @@ return s - yysparse;
 }
 
 #ifdef LOTUS
-int parse2 (CELLPTR c, char *s, short *formula)
+int parse2 (CELLPTR c, short *formula)
 /* Parses the string s - returns the formula of the evaluated string */
 #else
-int parse (CELLPTR c, char *s, char *parsed)
+int parse (CELLPTR c, char *parsed)
 /* Parses the string s into the cell c and parsed formula */
 #endif
 
@@ -78,7 +78,7 @@ pc = c;
 cptype(pc) = CONSTANT;
 origcol = cpcol(pc);
 origrow = cprow(pc);
-yysparse = s ? s : cptext(c);
+yysparse = cptext(c);
 yybparse = yytoparse = yyinput;
 yyerrorflg = 0;
 gettoparse(NULL);

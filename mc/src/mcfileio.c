@@ -73,7 +73,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		cpcol(&cp) = col;
 		cprow(&cp) = row;
 		cpattrib(&cp) = att & (FORMATM|PROTECT);
-		cpfor(&cp) = form;
+		cpfor(&cp) = form == DEFAULT ? L_DEFAULT : form;
 		cptype(&cp) = att & TYPEM;
 		cptext(&cp) = tex;
 		cpvalue(&cp) = val;
