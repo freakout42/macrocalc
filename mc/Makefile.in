@@ -102,7 +102,7 @@ makefile:	mcuser.mk
 	cp makefile.$Sys $@
 
 libmcf.a:	$(BOBJ)
-	-$(AR) $(ARFLAGS) $@ $?
+	$(AR) $(ARFLAGS) $@ $? 2>/dev/null
 
 mcmsg:	mcmsg.o
 	$(CC) $(CFLAGS) mcmsg.o -o $@

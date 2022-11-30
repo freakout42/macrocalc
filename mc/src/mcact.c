@@ -29,31 +29,30 @@ char parsed[MAXPARSED+1];
 int col, row, clen, edi;
 int first = TRUE;
 char s1[MAXINPUT + 1];
-char *s;
 
 memset (&cp, 0, sizeof(cellr));
 cpcol(&cp) = curcol;
 cprow(&cp) = currow;
-s1[0] = '\0';
-s1[1] = c;
-s1[2] = '\0';
-s = s1+1;
 if ((allocated = cell(curcol, currow))) {
   if (c == '\0') {
     strncpy(s1, cptext(allocated), MAXINPUT);
     s1[MAXINPUT] = '\0';
-    s = s1;
-  } /*else { return FALSE; }*/
+    cptext(&cp) = s1;
+  }
+} else {
+    s1[0] = '\0'; s1[1] = c; s1[2] = '\0';
+    cptext(&cp) = s1+1;
 }
-errpos = strlen(s);
+errpos = strlen(cptext(&cp));
 do {
-	edi	= editstringp(s, "", MAXINPUT, errpos);
-	if ((first && !edi) || !*s) { return FALSE; }
-	parse(&cp, s, parsed);
+	edi	= editstringp(cptext(&cp), "", MAXINPUT, errpos);
+	if ((first && !edi) || !*cptext(&cp)) { return FALSE; }
+	parse(&cp, parsed);
 	if (cptype(&cp) == SYNERROR) {
 		if (!edi) {
 			cptype(&cp) = TEXT;
-			*--s = STRLEFT;
+			cptext(&cp) -= 1;
+			*cptext(&cp) = STRLEFT;
 		}
 		else errormsg(MSGSYNTAX);
 	}
@@ -69,7 +68,6 @@ do {
 	 }
 	first	= FALSE;
 } while (cptype(&cp) == SYNERROR);
-cptext(&cp) = s;
 allocated = migratcell(allocated, &cp);
 if (allocated)
 	{
