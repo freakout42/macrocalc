@@ -134,7 +134,7 @@ while (getwksrecord (&r) != L_EOF)
 		cpcol(&cp) = col;
 		cprow(&cp) = row;
 		cpattrib(&cp) = att & (FORMATM|PROTECT);
-		cpfor(&cp) = form;
+		cpfor(&cp) = form == DEFAULT ? L_DEFAULT : form;
 		cptype(&cp) = att & TYPEM;
 		cptext(&cp) = tex;
 		cpvalue(&cp) = val;
@@ -280,7 +280,7 @@ for (row = 0; row <= lastrow; row++)
 		fprintf (stderr, "towks: &r.data.formula.size=%d\n",
 			&r.data.formula.size);
 #endif
-		type = parse2 (cp, cptext(cp), &r.data.formula.size);
+		type = parse2 (cp, &r.data.formula.size);
 #ifdef DEBUG
 	fprintf (stderr, "towks: c:%d r:%d = type=%d\n", col, row, type);
 #endif
