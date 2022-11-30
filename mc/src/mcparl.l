@@ -51,7 +51,8 @@ if ((arxpath = getenv("ARX")) != NULL)
 cp = newcell();
 while (gets(s))
 	{
-	parse (cp, s, NULL);
+	cptext(cp) = s;
+	parse (cp, NULL);
 	printf ("s=%s val=%f unit=%s ty=%d\n", s, cpvalue(cp), cpunit(cp), cptype(cp));
 	}
 return 0;

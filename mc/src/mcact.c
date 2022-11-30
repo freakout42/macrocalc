@@ -33,15 +33,12 @@ char s1[MAXINPUT + 1];
 memset (&cp, 0, sizeof(cellr));
 cpcol(&cp) = curcol;
 cprow(&cp) = currow;
-if ((allocated = cell(curcol, currow))) {
-  if (c == '\0') {
+s1[0] = '\0'; s1[1] = c; s1[2] = '\0';
+cptext(&cp) = s1+1;
+if ((allocated = cell(curcol, currow)) && (c == '\0')) {
     strncpy(s1, cptext(allocated), MAXINPUT);
     s1[MAXINPUT] = '\0';
     cptext(&cp) = s1;
-  }
-} else {
-    s1[0] = '\0'; s1[1] = c; s1[2] = '\0';
-    cptext(&cp) = s1+1;
 }
 errpos = strlen(cptext(&cp));
 do {

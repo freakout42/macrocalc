@@ -1,5 +1,4 @@
-/* $Id: mcellval.c,v 1.3 1997/04/05 15:47:34 axel Exp $
- */
+/* mcellval.c 1.3 1997/04/05 15:47:34 axel */
 
 #include <stdio.h>
 #include <arx_def.h>
@@ -22,7 +21,7 @@ switch (cptype(cp)) {
  case FORMULA:
  case STRING:
 	strvalue = cellstring (col, row, &color, FVALUE);
-	if ((cp = parsecell(strvalue, col, row)) == NULL) 
+	if ((cp = init2cell(col, row, TEXT, strvalue, .0, .0, NULL)) == NULL)
 		errormsg (MSGLOMEM);
  }
 return RET_SUCCESS;

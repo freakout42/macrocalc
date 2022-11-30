@@ -59,7 +59,7 @@ while (str_gets(p, buf+1, MAXINPUT)) {
 			continue;
 		}
 		if (formula) {
-			parsecell(t, acol, row);
+			init2cell(acol, row, TEXT, t, .0, .0, NULL);
 		} else {
 			type = VRETRIEVED;
 			if ((val = str_chkd(t)) == HUGE_VAL) {
@@ -130,7 +130,7 @@ for (row = 0; row <= lastrow; row++)
 	{
 	origcol	= col;
 	origrow	= row;
-	parse(cp, cptext(cp), parsed);
+	parse(cp, parsed);
 	if (type == INCOMMAND)
 		{
 		clen = celladr(parsed, &dcol, &drow);
@@ -159,7 +159,7 @@ for (row = 0; row <= lastrow; row++)
 	{
 	origcol	= col;
 	origrow	= row;
-	parse(cp, cptext(cp), parsed);
+	parse(cp, parsed);
 	if (type == OUTCOMMAND)
 		{
 		clen = celladr(parsed, &dcol, &drow);
