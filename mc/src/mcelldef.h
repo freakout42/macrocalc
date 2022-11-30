@@ -60,7 +60,6 @@ enum	{
 #define UNITF	   0x20u /* has sidecar */
 
 #define PROTECT    0x80u
-
 #define FORMATM    0x70u
 #define SPECIAL    0x00u
 #define SCIENTIFIC 0x10u
@@ -68,12 +67,12 @@ enum	{
 #define PERCENT    0x30u
 #define COMMA      0x40u
 #define FIXED      0x50u
+#define PLACES     0x0fu
 
 #define L_FIXED    0x00u
 #define L_SPECIAL  0x70u
 #define L_DEFAULT  0x0fu
 
-#define PLACES     0x0fu
 #define DEFAULT    0x00u
 #define GENERAL    0x01u
 #define DATE       0x02u
