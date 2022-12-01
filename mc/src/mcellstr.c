@@ -256,7 +256,8 @@ char *cellstring (int col, int row, int *color, int formatting)
    also returns the color of the cell */
 {
 int		newcol;
-static char	s[MAXINPUT+1];
+static char	s1[MAXINPUT+2];
+char *s;
 char		temp[MAXINPUT+1];
 char		*p;
 int		pos;
@@ -264,6 +265,7 @@ CELLPTR		cp;
 unsigned char	typ = EMPTY;
 int		visible = FALSE;
 
+s = s1+1;
 cp = cell (col, row);
 if (cp == NULL)
 	{

@@ -20,11 +20,16 @@
 #include "mcfileio.h"
 #include "mcellval.h"
 
-void newpage (void)
+void newpage (void) {
 /* Adds new page sign */
-{
-if (init2cell (curcol, currow, TEXT, ".bp", .0, .0, NULL) == NULL) errormsg (MSGLOMEM);
-changed = TRUE;
+  cellr cr;
+  memset(&cr, 0, sizeof(cellr));
+  cpcol(&cr) = curcol;
+  cprow(&cr) = currow;
+  cptype(&cr) = TEXT;
+  cptext(&cr) = "'.bp";
+  if ((migratcell(NULL, &cr)) == NULL) errormsg (MSGLOMEM);
+  changed = TRUE;
 } /* newpage */
 
 void setcolwidth (int col)

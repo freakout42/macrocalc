@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "mc.h"
 #include "mcell.h"
-#include "mcellpar.h"
+#include "mcparse.h"
 #include "mcunit.h"
 #include "mcfileio.h"
 #include "mccalc.h"

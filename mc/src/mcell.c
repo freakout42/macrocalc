@@ -206,6 +206,7 @@ strdupi(&cpstring(ct), cpstring(cs));
 return ct;
 }
 
+#ifdef REPLACETHISSTUFF
 CELLPTR init2cell(int col, int row, int type, char *text, double value, double cimag, char *unit) {
 CELLPTR	cp;
 cellr	cr;
@@ -221,7 +222,7 @@ cptext(&cr) = text;
 cpunit(&cr) = unit;
 return migratcell(cp, &cr);
 }
-
+#endif
 int movecell (int tcol, int trow, int scol, int srow)
 /* Moves a cell */
 {

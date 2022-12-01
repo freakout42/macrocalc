@@ -23,11 +23,11 @@ FILE	*p;
 char	buf[MAXINPUT+2];
 char	tab	= '\t';
 char	*t, *next;
-int	acol;
-double	val;
-int	type=0;
 int	insert	= FALSE;
 int	formula	= FALSE;
+int	acol;
+CELLPTR	cp;
+cellr	cr;
 
 #ifdef DEBUG
 fprintf(stderr, "inpipe: col=%d row=%d cmd=%s\n", col, row, cmd);
@@ -52,28 +52,45 @@ while (str_gets(p, buf+1, MAXINPUT)) {
 	next = buf+1;
 	while (next != NULL) {
 		if (++acol >= MAXCOLS) break;
+		cp = cell(acol, row);
+		memset(&cr, 0, sizeof(cellr));
+		cpcol(&cr) = acol;
+		cprow(&cr) = row;
 		t = next;
+
 		if ((next = strchr (t, tab)) != NULL) *next++ = '\0';
 		if (*t == '\0')	{
 			deletecell(acol, row);
 			continue;
 		}
 		if (formula) {
-			init2cell(acol, row, TEXT, t, .0, .0, NULL);
-		} else {
-			type = VRETRIEVED;
-			if ((val = str_chkd(t)) == HUGE_VAL) {
-				type = RETRIEVED;
-				*--t = STRLEFT;
-				val = 0.;
+			cptext(&cr) = t;
+			parse(&cr, NULL);
+			if (cptype(&cr) == SYNERROR) {
+				cptype(&cr) = TEXT;
+				cptext(&cr) -= 1;
+				*cptext(&cr) = STRLEFT;
 			}
-			init2cell(acol, row, type, t, val, 0., NULL);
+		} else {
+			cptype(&cr) = VRETRIEVED;
+			if ((cpvalue(&cr) = str_chkd(t)) == HUGE_VAL) {
+				cptype(&cr) = RETRIEVED;
+				*--t = STRLEFT;
+				cpvalue(&cr) = 0.;
+			}
+			cptext(&cr) = t;
 		}
+		migratcell(cp, &cr);
 	}
 	if (++row >= MAXROWS-1) break;
 }
 pclose(p);
-return (init2cell(col, row, EOFPIPE, "EOF", 0., 0., NULL) == NULL) ? EOF : RET_SUCCESS;
+memset(&cr, 0, sizeof(cellr));
+cpcol(&cr) = col;
+cprow(&cr) = row;
+cptype(&cr) = EOFPIPE;
+cptext(&cr) = "EOF";
+return (migratcell(NULL, &cr) == NULL) ? EOF : RET_SUCCESS;
 } /* inpipe */
 
 int outpipe (int col, int row, char *cmd)
