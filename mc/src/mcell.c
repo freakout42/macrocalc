@@ -16,9 +16,9 @@
 #include "mcell.h"
 #include "mcelladr.h"
 
-#define	COLBITS		6
+#define	COLBITS		5
 #define COLHASH		(1<<COLBITS)
-#define	ROWBITS		10
+#define	ROWBITS		8
 #define ROWHASH		(1<<ROWBITS)
 #define HASHCELLS	(COLHASH*ROWHASH)
 
@@ -178,6 +178,7 @@ CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 /* Migrate a cell */
 CELLPTR cr;
 if (ct == NULL) {
+  if (deletecell(cpcol(cs), cprow(cs))) return NULL;
   ct = newcell();
   linkcell (cpcol(cs), cprow(cs), ct);
   if (cpattrib(cs)==0 && cpfor(cs)==0 && (cr = cell(cpcol(cs), cprow(cs)-1))) {
@@ -206,23 +207,6 @@ strdupi(&cpstring(ct), cpstring(cs));
 return ct;
 }
 
-#ifdef REPLACETHISSTUFF
-CELLPTR init2cell(int col, int row, int type, char *text, double value, double cimag, char *unit) {
-CELLPTR	cp;
-cellr	cr;
-
-cp = cell(col, row);
-memset(&cr, 0, sizeof(cellr));
-cpcol(&cr) = col;
-cprow(&cr) = row;
-cptype(&cr) = type;
-cpvalue(&cr) = value;
-cpcimag(&cr) = cimag;
-cptext(&cr) = text;
-cpunit(&cr) = unit;
-return migratcell(cp, &cr);
-}
-#endif
 int movecell (int tcol, int trow, int scol, int srow)
 /* Moves a cell */
 {

@@ -57,12 +57,13 @@ do	{
 return s - yysparse;
 }
 
+/* Parses the cell c */
 #ifdef LOTUS
 int parse2 (CELLPTR c, short *formula)
-/* Parses the string s - returns the formula of the evaluated string */
+/* Returns the formula of the evaluated string */
 #else
 int parse (CELLPTR c, char *parsed)
-/* Parses the string s into the cell c and parsed formula */
+/* Parses into the cell c and parsed formula */
 #endif
 
 {

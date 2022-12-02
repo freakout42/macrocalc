@@ -1,5 +1,6 @@
 /* mcellpar.c 1.5 2001/11/06 15:58:30 axel */
 
+#ifdef PARSECELLOBSOLETED
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,7 +12,6 @@
 #include "mcell.h"
 #include "mcelladr.h"
 
-#ifdef PARSECELLOBSOLETED
 CELLPTR parsecell (char *strvalue, int col, int row)
 /* Parses a cell */
 {
