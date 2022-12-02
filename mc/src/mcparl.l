@@ -87,7 +87,7 @@ return;
 
 %S UNITCTX
 %S COMMAND
-%S STRING
+%S STRINGX
 
 u	[A-Z]
 l	[a-z]
@@ -127,8 +127,8 @@ str	.+
 ^{outcmd}	{ BEGIN COMMAND; return OUTCMD; }
 <COMMAND>{str}	{ return CMD; }
 
-^{j}		{ BEGIN STRING; return (JUST); }
-<STRING>{str}	{ return CMD; }
+^{j}		{ BEGIN STRINGX; return (JUST); }
+<STRINGX>{str}	{ return CMD; }
 
 {udate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
@@ -272,7 +272,7 @@ fprintf (stderr, "range test \"%s\" <-> \"%s\"\n", r->name, yytext);
 "#"		return (STRCAT);
 {w}		;
 \n		return (EOF);
-^.		{ BEGIN STRING; return BAD; }
+^.		{ BEGIN STRINGX; return BAD; }
 .		return (BAD);
 
 %%

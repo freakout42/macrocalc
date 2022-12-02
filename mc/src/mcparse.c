@@ -102,7 +102,8 @@ yydebug = 1;
 
 yybegin();
 yyparse();
-
+if (cpunit(pc) && strspn(cpunit(pc), " ")==strlen(cpunit(pc))) cpunit(pc) = NULL;
+  
 yyclrbuf();
 
 #ifdef LOTUS

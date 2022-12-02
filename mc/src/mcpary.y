@@ -108,6 +108,7 @@ o : e
 	*yybuf++ = F_RETURN;
 #else
 	cpvalue(pc) = .0;
+	cplength(pc) = strlen($1);
 	cpstring(pc) = $1;
 	cptype(pc) = STRING;
 #endif

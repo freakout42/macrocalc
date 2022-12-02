@@ -177,6 +177,7 @@ return;
 CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 /* Migrate a cell */
 CELLPTR cr;
+cellr cn;
 if (ct == NULL) {
   if (deletecell(cpcol(cs), cprow(cs))) return NULL;
   ct = newcell();
@@ -189,6 +190,8 @@ if (ct == NULL) {
     cpattrib(ct) = cpattrib(cs);
     cpfor(ct) = cpfor(cs);
   }
+} else if (cpsidecar(ct) && !cpneedsid(cs)) {
+  deletecell(cpcol(ct)+1, cprow(ct));
 }
 cptype(ct) = cptype(cs);
 strdupi(&cptext(ct), cptext(cs));
@@ -197,13 +200,17 @@ cpcimag(ct) = cpcimag(cs);
 strdupi(&cpunit(ct), cpunit(cs));
 cplength(ct) = cplength(cs);
 strdupi(&cpstring(ct), cpstring(cs));
-/*
-		if ((cput = initcell (col+1, row, UNITT,
-				(unsigned char)(defaultformat|PROTECT),
-				unit, .0, (char*)NULL))
-			== NULL) return NULL;
-		cpunit(cp) = cptext(cput);
- */
+#ifdef DEBUG
+fprintf (stderr, "migratcell: c=%d r=%d\n", cpcol(cs), cprow(cs));
+fprintf (stderr, "migratcell: cstyp=%d unit=%s\n", cptype(cs), cpunit(cs));
+#endif
+if (cpneedsid(cs)) {
+  cn = *cs;
+  cpattrib(&cn) |= UNITF;
+  cpcol(&cn) += 1;
+  cptype(&cn) = UNITT;
+  migratcell(NULL, &cn);
+}
 return ct;
 }
 
@@ -228,6 +235,7 @@ switch (cptype(cp))
  case TEXT:
  case RETRIEVED:	return cptext(cp)+1;
  case STRING:		return cpstring(cp);
+ case UNITT:		return cpunit(cp);
  default:		return cptext(cp);
  }
 } /* celltext */

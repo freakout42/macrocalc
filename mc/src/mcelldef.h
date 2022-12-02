@@ -42,7 +42,7 @@ enum	{
 	DATETYPE,	  /* =12 yy only temporary used for date format */
 	COMPLEX,    /* =13    not used should use CONSTANT|FORMULA */
 	COLWIDTH,   /* =14    only for fileio coldef was =0 */
-	ERRORT
+	ERRORT      /* =15    not used */
 	};
 
 #define EPOCH		25569.
@@ -164,6 +164,7 @@ struct Range {
 #define	cpstring(cp)	(((cp)->s).string)
 #define	cpattrib(cp)  ((cp)->attrib)
 #define	cpsidecar(cp) ((cp)->attrib & UNITF)
+#define	cpneedsid(cp) (!((cp)->attrib & UNITF) && (cpunit(cp) || cpcimag(cp)))
 #define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
 #define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED || cptype(cp) == COMPLEX)
 #define	cpprotect(cp) ((cp)->format & PROTECT)
