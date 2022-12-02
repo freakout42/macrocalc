@@ -340,7 +340,7 @@ else
 		else strcpy(s, cptext(cp));
 		break;
 	 textform:
-		textstring(cptext(cp), s, col, cpform(cp), formatting);
+		textstring(cptype(cp)==UNITT ? cpunit(cp) : cptext(cp), s, col, cpform(cp), formatting);
 	 } /* switch */
 	}
 if (visible && formatting==FPRINT && cp!=NULL)

@@ -206,7 +206,7 @@ fprintf (stderr, "migratcell: cstyp=%d unit=%s\n", cptype(cs), cpunit(cs));
 #endif
 if (cpneedsid(cs)) {
   cn = *cs;
-  cpattrib(&cn) |= UNITF;
+  cpattrib(&cn) |= UNITF|PROTECT;
   cpcol(&cn) += 1;
   cptype(&cn) = UNITT;
   migratcell(NULL, &cn);
@@ -229,6 +229,9 @@ char *celltext (int col, int row)
 {
 CELLPTR cp = cell (col, row);
 
+#ifdef DEBUG
+fprintf (stderr, "celltext: c=%d r=%d a=%d u=%s\n", cpcol(cp), cprow(cp), cptype(cp), cpunit(cp));
+#endif
 if (cp == NULL) return NULL;
 switch (cptype(cp))
  {
