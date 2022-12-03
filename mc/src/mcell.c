@@ -176,12 +176,11 @@ return;
 
 CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 /* Migrate a cell */
-CELLPTR cr;
-cellr cn;
+CELLPTR cr, cn;
 if (ct == NULL) {
   if (deletecell(cpcol(cs), cprow(cs))) return NULL;
   ct = newcell();
-  linkcell (cpcol(cs), cprow(cs), ct);
+  linkcell(cpcol(cs), cprow(cs), ct);
   if (cpattrib(cs)==0 && cpfor(cs)==0 && (cr = cell(cpcol(cs), cprow(cs)-1))) {
     /* set format of new cell depending of cell above new cell */
     cpattrib(ct) = cpattrib(cr);
@@ -191,7 +190,7 @@ if (ct == NULL) {
     cpfor(ct) = cpfor(cs);
   }
 } else if (cpsidecar(ct) && !cpneedsid(cs)) {
-  deletecell(cpcol(ct)+1, cprow(ct));
+  free(linkcell(cpcol(ct)+1, cprow(ct), (CELLPTR)NULL));
 }
 cptype(ct) = cptype(cs);
 strdupi(&cptext(ct), cptext(cs));
@@ -200,16 +199,14 @@ cpcimag(ct) = cpcimag(cs);
 strdupi(&cpunit(ct), cpunit(cs));
 cplength(ct) = cplength(cs);
 strdupi(&cpstring(ct), cpstring(cs));
-#ifdef DEBUG
-fprintf (stderr, "migratcell: c=%d r=%d\n", cpcol(cs), cprow(cs));
-fprintf (stderr, "migratcell: cstyp=%d unit=%s\n", cptype(cs), cpunit(cs));
-#endif
 if (cpneedsid(cs)) {
-  cn = *cs;
-  cpattrib(&cn) |= UNITF|PROTECT;
-  cpcol(&cn) += 1;
-  cptype(&cn) = UNITT;
-  migratcell(NULL, &cn);
+  cn = newcell();
+  *cn = *ct;
+  cpattrib(ct) |= UNITF;
+  cpfor(cn) |= PROTECT;
+  cpcol(cn) += 1;
+  cptype(cn) = UNITT;
+  linkcell(cpcol(cn), cprow(cn), cn);
 }
 return ct;
 }

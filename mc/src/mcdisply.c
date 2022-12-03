@@ -214,7 +214,7 @@ else
 		f	= 'x';
 		break;
 	 } /* switch */
-	switch ( cpattrib(curcell) )
+	switch ( cpattrbi(curcell) )
 	 {
 	 case BOLD:
 		a	= 'B';

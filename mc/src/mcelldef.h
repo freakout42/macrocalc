@@ -53,11 +53,12 @@ enum	{
 #define STRCENTER	'^'
 #define STRREPEAT	'\\'
 
-#define ATTRIBM	 0xc0u
+#define ATTRIBM	 0xcfu
+#define BIMASK	 0xc0u
 #define TYPEM    0x1fu
+#define UNITF	   0x20u /* has sidecar */
 #define BOLD     0x40u
 #define ITALIC   0x80u
-#define UNITF	   0x20u /* has sidecar */
 
 #define PROTECT    0x80u
 #define FORMATM    0x70u
@@ -163,8 +164,10 @@ struct Range {
 #define	cplength(cp)  (((cp)->s).length)
 #define	cpstring(cp)	(((cp)->s).string)
 #define	cpattrib(cp)  ((cp)->attrib)
-#define	cpsidecar(cp) ((cp)->attrib & UNITF)
-#define	cpneedsid(cp) (!((cp)->attrib & UNITF) && (cpunit(cp) || cpcimag(cp)))
+#define	cpattrbi(cp)  ((cp)->attrib & BIMASK)
+#define	cpcolor(cp)   ((cp)->attrib & ATTRIBM)
+#define	cpsidecar(cp) ((cp)->attrib & UNITF) /* has sidecar */
+#define	cpneedsid(cp) (cptype(cp)!=UNITT && !((cp)->attrib & UNITF) && (cpunit(cp) || cpcimag(cp)))
 #define	cpformula(cp) (cptype(cp) == FORMULA || cptype(cp) == STRING)
 #define	cpnumber(cp)  (cptype(cp) == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED || cptype(cp) == COMPLEX)
 #define	cpprotect(cp) ((cp)->format & PROTECT)
