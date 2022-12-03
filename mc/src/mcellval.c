@@ -6,7 +6,6 @@
 #include "mc.h"
 #include "mcell.h"
 #include "mcellstr.h"
-#include "mcellpar.h"
 #include "mcmessag.h"
 
 int valuecell (int col, int row) {

@@ -12,7 +12,6 @@
 #include "mcell.h"
 #include "mcellact.h"
 #include "mcelladr.h"
-#include "mcellpar.h"
 #include "mcpipe.h"
 #include "mcrecalc.h"
 #include "mcget.h"

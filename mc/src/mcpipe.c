@@ -9,7 +9,6 @@
 #include "mc.h"
 #include "mcell.h"
 #include "mcellact.h"
-#include "mcellpar.h"
 #include "mcelladr.h"
 #include "mcellstr.h"
 #include "mcparse.h"
