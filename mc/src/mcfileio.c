@@ -27,7 +27,7 @@ cellr cp;
 int	att;
 unsigned char abits;
 int	form;
-char	tex[MAXINPUT+1];
+char	tex[MAXINPUT+2];
 double	val;
 char newold;
 
@@ -38,9 +38,9 @@ str_gets (file, line, sizeof(line));
 if (strspn(line, "-\t") != strlen(line)) return RET_FATAL;
 while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 	{
-	str_gets (file, tex, MAXINPUT);
+	str_gets (file, tex+1, MAXINPUT);
 	celladr (cols, &col, &row);
-	if (!strcmp (tex, "windowdef"))
+	if (!strcmp (tex+1, "windowdef"))
 		{
 		curcol		= col;
 		currow		= row;
@@ -48,14 +48,14 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		toprow		= form;
 		windowline	= borderline + (int)val;
 		}
-	else if (!strcmp (tex, "coldef"))
+	else if (!strcmp (tex+1, "coldef"))
 		{
 		celladr (cols, &col, &row);
 		colwidth[col]	= (unsigned char) form;
 		}
-	else if (!strncmp (tex, "rangedef:", 9))
+	else if (!strncmp (tex+1, "rangedef:", 9))
 		{
-		updaterange (tex+9, col, row, att, form);
+		updaterange (tex+10, col, row, att, form);
 		}
 	else
 		{
@@ -75,7 +75,13 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		cpattrib(&cp) = att & (FORMATM|PROTECT);
 		cpfor(&cp) = form == DEFAULT ? L_DEFAULT : form;
 		cptype(&cp) = att & TYPEM;
-		cptext(&cp) = tex;
+		if (cptype(&cp) == UNITT) {
+			cptext(&cp) = "unit";
+			*tex = ' ';
+			cpunit(&cp) = tex;
+		} else {
+			cptext(&cp) = tex+1;
+		}
 		cpvalue(&cp) = val;
 		migratcell(NULL, &cp);
 		if (col > reallastcol) reallastcol = col;
