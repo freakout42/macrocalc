@@ -99,7 +99,8 @@ o : e
 	yyopcode (F_UNIT, $2, strlen($2)+1);
 	*yybuf++ = F_RETURN;
 #else
-	cpvalue(pc) = unitconv ($1.value, $1.unit, $2); cpunit(pc) = $2;
+	cpvalue(pc) = unitconv ($1.value, $1.unit, $2);
+	cpunit(pc) = $2;
 #endif
 	}
   | s

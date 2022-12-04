@@ -2,6 +2,7 @@
  */
 
 #include <string.h>
+#include <stdarg.h>
 #include <arx_def.h>
 #include <cur_def.h>
 #include "mc.h"
@@ -11,6 +12,21 @@
 #include "mcmisc.h"
 #include "mcgetmsg.h"
 #include "mcmessag.h"
+
+#ifdef WANTFLEXTXTMSG
+void lib_mesg (char *msg, ...)
+{
+va_list args;
+
+va_start (args, msg);
+#ifdef PROGNAME
+fprintf (stderr, "%s: ", progname);
+#endif
+vfprintf (stderr, msg, args);
+fprintf (stderr, "\n");
+va_end (args);
+}
+#endif
 
 void smessage (char *s)
 /* Prints a string-message */

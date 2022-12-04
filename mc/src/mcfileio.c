@@ -24,6 +24,7 @@ char	cols[8];
 char	line[MAXINPUT+1];
 int	col, row;
 cellr cp;
+CELLPTR ct, cu;
 int	att;
 unsigned char abits;
 int	form;
@@ -75,6 +76,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		cpattrib(&cp) = att & (FORMATM|PROTECT);
 		cpfor(&cp) = form == DEFAULT ? L_DEFAULT : form;
 		cptype(&cp) = att & TYPEM;
+		cpvalue(&cp) = val;
 		if (cptype(&cp) == UNITT) {
 			cptext(&cp) = "unit";
 			*tex = ' ';
@@ -82,8 +84,16 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		} else {
 			cptext(&cp) = tex+1;
 		}
-		cpvalue(&cp) = val;
-		migratcell(NULL, &cp);
+		ct = migratcell(NULL, &cp);
+		if (cpsidecar(ct)) {
+			if (cu = cell(col+1, row)) {
+				free(cpunit(ct));
+				cpunit(ct) = cpunit(cu);
+				cpvalue(cu) = cpvalue(ct);
+				free(cptext(cu));
+				cptext(cu) = cptext(ct);
+			}
+		}
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
 		}

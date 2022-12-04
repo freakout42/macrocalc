@@ -176,14 +176,16 @@ return;
 
 CELLPTR migratcell(CELLPTR ct, CELLPTR cs) {
 /* Migrate a cell */
-CELLPTR cr, cn;
+CELLPTR cr;
+
 if (ct == NULL) {
   if (deletecell(cpcol(cs), cprow(cs))) return NULL;
-  ct = newcell();
+  if ((ct = newcell()) == NULL) return NULL;
   linkcell(cpcol(cs), cprow(cs), ct);
   if (cpattrib(cs)==0 && cpfor(cs)==0 && (cr = cell(cpcol(cs), cprow(cs)-1))) {
     /* set format of new cell depending of cell above new cell */
     cpattrib(ct) = cpattrib(cr);
+    cpattrib(ct) &= ~UNITF;
     cpfor(ct) = cpfor(cr);
   } else if (cpfor(cs) != L_DEFAULT) {
     cpattrib(ct) = cpattrib(cs);
@@ -199,14 +201,17 @@ cpcimag(ct) = cpcimag(cs);
 strdupi(&cpunit(ct), cpunit(cs));
 cplength(ct) = cplength(cs);
 strdupi(&cpstring(ct), cpstring(cs));
+#ifdef DEBUG
+fprintf(stderr,"tcp=%d tat=%d tun=:%s:",cptype(cs),cpattrib(cs),cpunit(cs));
+#endif
 if (cpneedsid(cs)) {
-  cn = newcell();
-  *cn = *ct;
+  cr = newcell();
+  *cr = *ct;
   cpattrib(ct) |= UNITF;
-  cpfor(cn) |= PROTECT;
-  cpcol(cn) += 1;
-  cptype(cn) = UNITT;
-  linkcell(cpcol(cn), cprow(cn), cn);
+  cpfor(cr) |= PROTECT;
+  cpcol(cr) += 1;
+  cptype(cr) = UNITT;
+  linkcell(cpcol(cr), cprow(cr), cr);
 }
 return ct;
 }
