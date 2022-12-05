@@ -1,5 +1,4 @@
-/* $Id: mcdisply.c,v 1.14 2001/07/02 10:23:58 axel Exp $
- */
+/* mcdisply.c 1.14 2001/07/02 10:23:58 axel */
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -226,6 +225,7 @@ else
 		a	= ' ';
 		break;
 	 } /* switch */
+	if (cpprotect(curcell)) a = a==' ' ? 'p' : tolower(a);
 	p	= cpplaces (curcell);
 	}
 writef	(0, curcelline, CELLCONTENTSCOLOR, SCREENWIDTH, "%s %s [%c%d%c]: %s",

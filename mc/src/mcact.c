@@ -34,10 +34,13 @@ cpcol(&cp) = curcol;
 cprow(&cp) = currow;
 s1[0] = '\0'; s1[1] = c; s1[2] = '\0';
 cptext(&cp) = s1+1;
-if ((allocated = cell(curcol, currow)) && (c == '\0')) {
+if ((allocated = cell(curcol, currow))) {
+  if (cpprotect(allocated)) return FALSE;
+  if (c == '\0') {
     strncpy(s1, cptext(allocated), MAXINPUT);
     s1[MAXINPUT] = '\0';
     cptext(&cp) = s1;
+  }
 }
 errpos = strlen(cptext(&cp));
 do {

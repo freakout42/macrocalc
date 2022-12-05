@@ -1,12 +1,14 @@
 /* mcfileio.c 1.10 2004/07/04 04:03:31 axel */
 
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <arx_def.h>
 #include <str_def.h>
 #include "mc.h"
 #include "mcell.h"
+#include "mcmessag.h"
 #include "mcellact.h"
 #include "mcellstr.h"
 #include "mcelladr.h"
@@ -74,10 +76,12 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		cpcol(&cp) = col;
 		cprow(&cp) = row;
 		cpattrib(&cp) = att & (FORMATM|PROTECT);
-		cpfor(&cp) = form == DEFAULT ? L_DEFAULT : form;
+		cpfor(&cp) = form;
+		if (cpform(&cp) == DEFAULTFORMAT) cpfor(&cp) |= L_DEFAULT;
 		cptype(&cp) = att & TYPEM;
 		cpvalue(&cp) = val;
 		if (cptype(&cp) == UNITT) {
+			cpfor(&cp) |= PROTECT;
 			cptext(&cp) = "unit";
 			*tex = ' ';
 			cpunit(&cp) = tex;
@@ -85,14 +89,12 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 			cptext(&cp) = tex+1;
 		}
 		ct = migratecell(&cp);
-		if (cpsidecar(ct)) {
-			if (cu = cell(col+1, row)) {
+		if ((cu = cell(col+1, row)) && cptype(cu)==UNITT) {
 				free(cpunit(ct));
 				cpunit(ct) = cpunit(cu);
 				cpvalue(cu) = cpvalue(ct);
 				free(cptext(cu));
 				cptext(cu) = cptext(ct);
-			}
 		}
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
@@ -162,10 +164,11 @@ for (row = arow; row <= erow; row++)
 		cols,
 		row+1,
 		cpattrib(cp)|cptype(cp),
-		cpform(cp),
+		cpfor(cp),
 		MAXPLACES,
 		cpnumber(cp) ? cpvalue(cp) : .0,
-		cptext(cp));
+		cptype(cp)==UNITT ? cpunit(cp) : cptext(cp)
+	 );
 	}
   }
  }

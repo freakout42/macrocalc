@@ -13,20 +13,15 @@
 #include "mcgetmsg.h"
 #include "mcmessag.h"
 
-#ifdef WANTFLEXTXTMSG
-void lib_mesg (char *msg, ...)
-{
+void errorprint (char *format, ...) {
 va_list args;
+char s[MAXINPUT+1];
 
-va_start (args, msg);
-#ifdef PROGNAME
-fprintf (stderr, "%s: ", progname);
-#endif
-vfprintf (stderr, msg, args);
-fprintf (stderr, "\n");
-va_end (args);
+va_start(args, format);
+vsprintf(s, format, args);
+va_end(args);
+errorstr(s);
 }
-#endif
 
 void smessage (char *s)
 /* Prints a string-message */
