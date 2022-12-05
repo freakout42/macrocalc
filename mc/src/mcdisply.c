@@ -4,6 +4,7 @@
 #include <stdio.h>
 #endif
 #include <string.h>
+#include <ctype.h>
 #include <arx_def.h>
 #include <cur_def.h>
 #include <term.h>

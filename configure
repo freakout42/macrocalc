@@ -25,10 +25,10 @@ dist/arx.tar.gz: mc/tst/.tested
 	chmod g-s dist
 	-mkdir dist/arx dist/arx/man dist/arx/man/man1
 	for D in bin lib exm; do cp -r mc/\$\$D dist/arx; done
-	rm dist/arx/bin/.copied
+	rm -f dist/arx/bin/.copied
 	-ln dist/arx/bin/mc dist/arx/bin/321
 	for M in db2rdb mc mcunits nro; do cp mc/man/\$\$M.1 dist/arx/man/man1; done
-	-strip dist/arx/bin/* 2>/dev/null
+	strip dist/arx/bin/* 2>/dev/null || true
 	chmod -R u+rwX,g-w,g+rX,o-w,o+rX dist
 	cd dist; tar cf - arx | gzip -c >arx.tar.gz
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
