@@ -84,7 +84,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		} else {
 			cptext(&cp) = tex+1;
 		}
-		ct = migratcell(NULL, &cp);
+		ct = migratecell(&cp);
 		if (cpsidecar(ct)) {
 			if (cu = cell(col+1, row)) {
 				free(cpunit(ct));

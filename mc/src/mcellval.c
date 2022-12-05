@@ -27,7 +27,7 @@ switch (cptype(cp)) {
   strvalue = cellstring (col, row, &color, FVALUE);
   *--strvalue = STRLEFT;
   cptext(&cr) = strvalue;
-  if ((cp = migratcell(cp, &cr)) == NULL) errormsg (MSGLOMEM);
+  if ((cp = migratecell(&cr)) == NULL) errormsg (MSGLOMEM);
   changed = TRUE;
 }
 return RET_SUCCESS;

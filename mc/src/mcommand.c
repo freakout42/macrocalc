@@ -28,7 +28,7 @@ void newpage (void) {
   cprow(&cr) = currow;
   cptype(&cr) = TEXT;
   cptext(&cr) = "'.bp";
-  if ((migratcell(NULL, &cr)) == NULL) errormsg (MSGLOMEM);
+  if ((migratecell(&cr)) == NULL) errormsg (MSGLOMEM);
   changed = TRUE;
 } /* newpage */
 

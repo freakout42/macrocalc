@@ -64,7 +64,7 @@ do {
 	 }
 	first	= FALSE;
 } while (cptype(&cp) == SYNERROR);
-allocated = migratcell(allocated, &cp);
+allocated = migratecell(&cp);
 if (allocated)
 	{
 	clen	= celladr(parsed, &col, &row);

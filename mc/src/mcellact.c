@@ -37,7 +37,7 @@ else
 
 /* Copies a cell */
 int copycell (int tcol, int trow, int scol, int srow) {
-CELLPTR scp, tcp;
+CELLPTR scp;
 cellr cp;
 
 if (tcol<0 || tcol>=MAXCOLS || trow<0 || tcol>=MAXROWS) return RET_SUCCESS;
@@ -45,8 +45,7 @@ if ((scp = cell (scol, srow)) != NULL) {
   cp = *scp;
   cpcol(&cp) = tcol;
   cprow(&cp) = trow;
-  tcp = cell(tcol, trow);
-  migratcell(tcp, &cp);
+  migratecell(&cp);
   recalcell (tcol, trow);
 } else {
 	deletecell (tcol, trow);

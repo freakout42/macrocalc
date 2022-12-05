@@ -10,3 +10,4 @@ int movecell (int tcol, int trow, int scol, int srow);
 char *celltext (int col, int row);
 int valuecell (int col, int row);
 CELLPTR migratcell(CELLPTR ct, CELLPTR st);
+CELLPTR migratecell(CELLPTR st);

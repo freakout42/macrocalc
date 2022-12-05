@@ -25,7 +25,6 @@ char	*t, *next;
 int	insert	= FALSE;
 int	formula	= FALSE;
 int	acol;
-CELLPTR	cp;
 cellr	cr;
 
 #ifdef DEBUG
@@ -51,7 +50,6 @@ while (str_gets(p, buf+1, MAXINPUT)) {
 	next = buf+1;
 	while (next != NULL) {
 		if (++acol >= MAXCOLS) break;
-		cp = cell(acol, row);
 		memset(&cr, 0, sizeof(cellr));
 		cpcol(&cr) = acol;
 		cprow(&cr) = row;
@@ -79,7 +77,7 @@ while (str_gets(p, buf+1, MAXINPUT)) {
 			}
 			cptext(&cr) = t;
 		}
-		migratcell(cp, &cr);
+		migratecell(&cr);
 	}
 	if (++row >= MAXROWS-1) break;
 }
@@ -89,7 +87,7 @@ cpcol(&cr) = col;
 cprow(&cr) = row;
 cptype(&cr) = EOFPIPE;
 cptext(&cr) = "EOF";
-return (migratcell(NULL, &cr) == NULL) ? EOF : RET_SUCCESS;
+return (migratecell(&cr) == NULL) ? EOF : RET_SUCCESS;
 } /* inpipe */
 
 int outpipe (int col, int row, char *cmd)

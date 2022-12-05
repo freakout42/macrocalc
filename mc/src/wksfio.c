@@ -138,7 +138,7 @@ while (getwksrecord (&r) != L_EOF)
 		cptype(&cp) = att & TYPEM;
 		cptext(&cp) = tex;
 		cpvalue(&cp) = val;
-		migratcell(NULL, &cp);
+		migratecell(&cp);
 #ifdef DEBUG
 		fprintf (stderr, "c=%d r=%d a=%d f=%d t=%s v=%f cptype=%d\n",
 			col, row, att, form, tex, val, cptype(&cp));

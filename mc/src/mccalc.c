@@ -26,7 +26,7 @@ parse(&cr, NULL);
 #ifdef DEBUG
 fprintf (stderr, "recalcell2: %s -> %f %s\n", cptext(&cr), cpvalue(&cr), cpunit(&cr));
 #endif
-migratcell(cp, &cr);
+cp = migratecell(&cr);
 return cp;
 } /* recalcell */
 
