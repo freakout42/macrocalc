@@ -373,14 +373,3 @@ fprintf(stderr, "string: s:\"%s\" color:%08x=%d\n", p, *color, *color);
 #endif
 return p;
 } /* cellstring */
-/*
-#0  0x0804ce20 in textstring (instring=0x0, outstring=0x8071ea1 "      3000 ", col=2, format=0, formatting=1) at mcellstr.c:77
-77	switch (*instring)
-#2  0x0804daa8 in cellstring (col=2, row=4, color=0xffaf0c84, formatting=1) at mcellstr.c:343
-#3  0x08057edc in displaycell (col=2, row=4, highlighting=0, updating=0) at mcdisply.c:70
-#4  0x080580fd in displayrow (row=4, updating=0) at mcdisply.c:111
-#5  0x08058288 in displayscreen (updating=0) at mcdisply.c:140
-#6  0x08056d78 in loadsheet (prompt=0) at mcfile.c:73
-#7  0x08056a2d in mcinter () at mcinter.c:70
-#8  0x0804a601 in main (argc=2, argv=0xffaf0fd4) at mc.c:166
- */
