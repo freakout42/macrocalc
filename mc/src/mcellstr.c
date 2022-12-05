@@ -40,9 +40,10 @@ switch (format & FORMATM)
 	 case DATE:
 	 case DAYMONTH:
 	 case MONTHYEAR:
-	 case DATEI1:
 	 case DATEI2:
 		return ((format & (PROTECT | SPECIAL)) | DATE);
+	 case DATEI1:
+		return ((format & (PROTECT | SPECIAL)) | EDATE);
 	 case TIME:
 	 case HOURMIN:
 	 case TIMEI1:
