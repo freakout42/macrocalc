@@ -103,7 +103,10 @@ yydebug = 1;
 yybegin();
 yyparse();
 if (cpunit(pc) && strspn(cpunit(pc), " ")==strlen(cpunit(pc))) cpunit(pc) = NULL;
-if (cptype(pc) == DATETYPE) cptype(pc) = CONSTANT;
+if (cptype(pc) == DATETYPE) {
+  cptype(pc) = CONSTANT;
+  if (cpfor(pc) == 0) cpfor(pc) = SPECIAL|DATE;
+}
 yyclrbuf();
 
 #ifdef LOTUS
