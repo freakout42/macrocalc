@@ -23,18 +23,15 @@ void		yyclrbuf();
 #ifndef LOTUS
 int origcol, origrow; /* original column */
 int errpos; /* position of parsing error */
-double yyvalue;
-int yytype;
-char *yyunit;
+CELLPTR pc;
 char *yybuf;
 char *yysparse; /* pointer to source formula */
 char *yybparse; /* pointer to parsed formula */
-char *yytoparse; /* pointer to left formular */
+char *yytoparse; /* pointer to left formula */
 int yyerrorflg; /* error flag for lex-parser */
 #endif
 
-/* static char instr; flag for "in-string" */
-
+/* build parse string with references embedded */
 static int gettoparse (char *err)
 {
 int		col, row;
@@ -60,19 +57,16 @@ do	{
 return s - yysparse;
 }
 
+/* Parses the cell c */
 #ifdef LOTUS
-int parse2 (char *s, short *formula)
-/* Parses the string s - returns the formula of the evaluated string
- */
+int parse2 (CELLPTR c, short *formula)
+/* Returns the formula of the evaluated string */
 #else
-double parse (char *s, int *t, char *unit, char *parsed)
-/* Parses the string s - returns the value of the evaluated string
- * and puts type unit and parsed formula
- */
+int parse (CELLPTR c, char *parsed)
+/* Parses into the cell c and parsed formula */
 #endif
 
 {
-
 #ifdef LOTUS
 char *polform;
 short len;
@@ -81,7 +75,11 @@ char yybuffer[MAXPARSED+1];
 #endif
 char yyinput[MAXPARSED+1];
 
-yysparse = s;
+pc = c;
+cptype(pc) = CONSTANT;
+origcol = cpcol(pc);
+origrow = cprow(pc);
+yysparse = cptext(c);
 yybparse = yytoparse = yyinput;
 yyerrorflg = 0;
 gettoparse(NULL);
@@ -97,8 +95,6 @@ yybuf = polform = (char*)(formula + 1);
 #endif
 yysetbuf(yybparse);
 
-yyunit = NULL;
-yytype = CONSTANT;
 errno = 0;
 #ifdef YYDEBUG
 yydebug = 1;
@@ -106,28 +102,19 @@ yydebug = 1;
 
 yybegin();
 yyparse();
-
+if (cpunit(pc) && strspn(cpunit(pc), " ")==strlen(cpunit(pc))) cpunit(pc) = NULL;
+if (cptype(pc) == DATETYPE) {
+  cptype(pc) = CONSTANT;
+  if (cpfor(pc) == 0) cpfor(pc) = SPECIAL|DATE;
+}
 yyclrbuf();
 
 #ifdef LOTUS
 len = yybuf - polform;
 memcpy(formula, &len, sizeof(short));
-#ifdef DEBUG
-fprintf(stderr, "parse:\"%s\"=%d len=%d\n", s, yytype, len);
-#endif
-return yytype;
+return cptype(pc);
 #else
-#ifdef DEBUG
-fprintf(stderr, "parse:\"%s\" -> %f type: %d error:%d\n",
-	yybparse, yyvalue, yytype, errno);
-perror("parse");
-#endif
-if (t != NULL) *t = yytype;
-if (unit != NULL && yyunit != NULL)
-	{
-	if (yytype!=STRING && strspn(yyunit, " ")==strlen(yyunit)) *unit = '\0'; else strcpy(unit, yyunit);
-	}
-return errno ? HUGE_VAL : yyvalue;
+return errno;
 #endif
 } /* parse */
 
@@ -141,14 +128,6 @@ fprintf(stderr, "input: %s\n", yytoparse);
 #endif
 
 c = *yytoparse++;
-/*switch (c)
- *{
- *case '\"':	instr = !instr; break;
- *case '{':	instr = TRUE; break;
- *case '}':	instr = FALSE; break;
- *}
- *if (!instr && islower(c)) c = toupper(c);
- */
 return c ? c : '\n';
 }
 

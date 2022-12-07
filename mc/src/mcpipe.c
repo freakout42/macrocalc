@@ -1,5 +1,4 @@
-/* $Id: mcpipe.c,v 1.11 1997/04/05 15:47:34 axel Exp $
- */
+/* mcpipe.c 1.11 1997/04/05 15:47:34 axel */
 
 #include <unistd.h>
 #include <string.h>
@@ -10,7 +9,6 @@
 #include "mc.h"
 #include "mcell.h"
 #include "mcellact.h"
-#include "mcellpar.h"
 #include "mcelladr.h"
 #include "mcellstr.h"
 #include "mcparse.h"
@@ -24,12 +22,10 @@ FILE	*p;
 char	buf[MAXINPUT+2];
 char	tab	= '\t';
 char	*t, *next;
-int	acol;
-CELLPTR	cp;
-double	val;
-char	att;
 int	insert	= FALSE;
 int	formula	= FALSE;
+int	acol;
+cellr	cr;
 
 #ifdef DEBUG
 fprintf(stderr, "inpipe: col=%d row=%d cmd=%s\n", col, row, cmd);
@@ -45,50 +41,53 @@ switch(*cmd) {
 	break;
  }
 if (!(p = popen(cmd, "r"))) return RET_ERROR;
-while (str_gets(p, buf+1, MAXINPUT+1))
-	{
-	if (insert)
-		{
+while (str_gets(p, buf+1, MAXINPUT)) {
+	if (insert) {
 		moverange(0, row+1, 0, row, MAXCOLS, MAXROWS);
 		copyrange(0, row, 0, row+1, lastcol, row+1);
-		}
+	}
 	acol = col-1;
 	next = buf+1;
-	while (next != NULL)
-		{
-		acol++;
-		if (col>=MAXCOLS) break;
+	while (next != NULL) {
+		if (++acol >= MAXCOLS) break;
+		memset(&cr, 0, sizeof(cellr));
+		cpcol(&cr) = acol;
+		cprow(&cr) = row;
 		t = next;
+
 		if ((next = strchr (t, tab)) != NULL) *next++ = '\0';
-		if (*t == '\0')
-			{
+		if (*t == '\0')	{
 			deletecell(acol, row);
 			continue;
-			}
-		if (formula) {
-			cp = parsecell(t, acol, row);
-			}
-		else {
-			att = (val = str_chkd(t))==HUGE_VAL ? RETRIEVED : VRETRIEVED;
-			if (att == RETRIEVED)
-				{
-				val = 0.;
-				*--t = STRLEFT;
-				}
-			cp = initcell(acol, row, att, defaultformat, t, val, NULL);
-			}
-		if (cp==NULL)
-			{
-			pclose(p);
-			return EOF;
-			}
 		}
-	row++;
-	if (row>=MAXROWS-1) break;
+		if (formula) {
+			cptext(&cr) = t;
+			parse(&cr, NULL);
+			if (cptype(&cr) == SYNERROR) {
+				cptype(&cr) = TEXT;
+				cptext(&cr) -= 1;
+				*cptext(&cr) = STRLEFT;
+			}
+		} else {
+			cptype(&cr) = VRETRIEVED;
+			if ((cpvalue(&cr) = str_chkd(t)) == HUGE_VAL) {
+				cptype(&cr) = RETRIEVED;
+				*--t = STRLEFT;
+				cpvalue(&cr) = 0.;
+			}
+			cptext(&cr) = t;
+		}
+		migratecell(&cr);
 	}
+	if (++row >= MAXROWS-1) break;
+}
 pclose(p);
-cp = initcell(col, row, EOFPIPE, defaultformat, "EOF", 0., NULL);
-return cp==NULL ? EOF : RET_SUCCESS;
+memset(&cr, 0, sizeof(cellr));
+cpcol(&cr) = col;
+cprow(&cr) = row;
+cptype(&cr) = EOFPIPE;
+cptext(&cr) = "EOF";
+return (migratecell(&cr) == NULL) ? EOF : RET_SUCCESS;
 } /* inpipe */
 
 int outpipe (int col, int row, char *cmd)
@@ -132,7 +131,7 @@ void inpipeall (void)
 int	col, row;
 int	dcol, drow;
 CELLPTR	cp;
-int	type;
+int	type=0;
 char	parsed[MAXPARSED+1];
 int	clen;
 
@@ -145,7 +144,7 @@ for (row = 0; row <= lastrow; row++)
 	{
 	origcol	= col;
 	origrow	= row;
-	parse(cptext(cp), &type, NULL, parsed);
+	parse(cp, parsed);
 	if (type == INCOMMAND)
 		{
 		clen = celladr(parsed, &dcol, &drow);
@@ -161,7 +160,7 @@ void outpipeall (void)
 int	col, row;
 int	dcol, drow;
 CELLPTR	cp;
-int	type;
+int	type=0;
 char	parsed[MAXPARSED+1];
 int	clen;
 
@@ -174,7 +173,7 @@ for (row = 0; row <= lastrow; row++)
 	{
 	origcol	= col;
 	origrow	= row;
-	parse(cptext(cp), &type, NULL, parsed);
+	parse(cp, parsed);
 	if (type == OUTCOMMAND)
 		{
 		clen = celladr(parsed, &dcol, &drow);

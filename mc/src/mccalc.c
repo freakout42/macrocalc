@@ -1,5 +1,4 @@
-/* $Id: mccalc.c,v 1.7 2005/08/04 06:21:50 axel Exp $
- */
+/* mccalc.c 1.7 2005/08/04 06:21:50 axel */
 
 #include <stdlib.h>
 #include <string.h>
@@ -15,38 +14,19 @@ CELLPTR recalcell (int col, int row)
 /* Recalculates one single cell */
 {
 CELLPTR	cp;
-double	value;
-char	unit[MAXINPUT+1]	= "";
+cellr cr;
 
 cp = cell (col, row);
 if (cp == NULL || !cpformula(cp)) return cp;
 #ifdef DEBUG
 fprintf (stderr, "recalcell1: %s -> %f\n", cptext(cp), cpvalue(cp));
 #endif
-origcol	= col;
-origrow	= row;
-value = parse (cptext(cp), NULL, unit, NULL);
+cr = *cp;
+parse(&cr, NULL);
 #ifdef DEBUG
-fprintf (stderr, "recalcell2: %s -> %f %s\n", cptext(cp), value, unit);
+fprintf (stderr, "recalcell2: %s -> %f %s\n", cptext(&cr), cpvalue(&cr), cpunit(&cr));
 #endif
-switch (cptype(cp))
- {
- case FORMULA:
-	if (cpunit(cp)!=NULL) lcpvalue(cp) = unitconv (value, unit, cpunit(cp));
-	else lcpvalue(cp) = value;
-	break;
- case STRING:
-	if (strlen(unit)>(size_t)cplength(cp))
-		{
-		lcpstring(cp) = realloc(cpstring(cp),strlen(unit)+1);
-		lcplength(cp) = strlen(unit);
-		}
-	strcpy (lcpstring(cp), unit);
-	break;
- }
-#ifdef DEBUG
-fprintf (stderr, "recalcell3: %s -> %f\n", cptext(cp), cpvalue(cp));
-#endif
+cp = migratecell(&cr);
 return cp;
 } /* recalcell */
 

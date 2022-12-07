@@ -13,7 +13,7 @@ return log (futurevalue/presentvalue) / log (1+interest);
 double ddb (double cost, double salvage, double life, double period)
 {
 int	i, n = (int) (period+.5);
-double	d, val = cost;
+double d = .0, val = cost;
 
 if (n < 1 || n > (int)(life+.5))
 	{

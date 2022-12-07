@@ -1,5 +1,4 @@
-/* $Id: mcell.c,v 1.12 2001/07/02 10:23:58 axel Exp $
- */
+/* mcell.c 1.12 2001/07/02 10:23:58 axel */
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -15,15 +14,16 @@
 #include "mcunit.h"
 #include "mcfileio.h"
 #include "mcell.h"
+#include "mcelladr.h"
 
-#define	COLBITS		6
-#define COLHASH		1<<COLBITS
-#define	ROWBITS		10
-#define ROWHASH		1<<ROWBITS
-#define HASHCELLS	((COLHASH)*(ROWHASH))
+#define	COLBITS		5
+#define COLHASH		(1<<COLBITS)
+#define	ROWBITS		8
+#define ROWHASH		(1<<ROWBITS)
+#define HASHCELLS	(COLHASH*ROWHASH)
 
 static CELLPTR hashcell [HASHCELLS];
-#define hashindex(col,row) ((row & (ROWHASH-1)) << COLBITS | (col & (COLHASH-1)))
+#define hashindex(col,row) (((row & (ROWHASH-1)) << COLBITS) | (col & (COLHASH-1)))
 
 void inithash (void)
 {
@@ -93,9 +93,8 @@ for (row = lastrow; row >= 0; row--)
 lastrow = 0;
 } /* setlastrow */
 
-static CELLPTR linkcell (int col, int row, CELLPTR cellptr)
+static CELLPTR linkcell (int col, int row, CELLPTR cellptr) {
 /* Links a cell */
-{
 CELLPTR	*cpp;
 CELLPTR	cp;
 
@@ -103,8 +102,7 @@ for (	cpp = &hashcell [hashindex (col, row)];
 	(cp = *cpp) != NULL;
 	cpp = &cp->next	)
 
-	if (col == cp->adr.col && row == cp->adr.row)
-		{
+	if (col == cpcol(cp) && row == cprow(cp)) {
 		if (cellptr == NULL)
 			{
 			*cpp		= cp->next;
@@ -119,33 +117,22 @@ for (	cpp = &hashcell [hashindex (col, row)];
 if (cellptr != NULL)
 	{
 	*cpp		= cellptr;
-	cellptr->adr.col= col;
-	cellptr->adr.row= row;
-	cellptr->next	= cp ? cp->next : NULL;
+	cpcol(cellptr) = col;
+	cprow(cellptr) = row;
+	cpnext(cellptr) = cp ? cpnext(cp) : NULL;
 	if (col > lastcol) lastcol = col;
 	if (row > lastrow) lastrow = row;
 	}
 return cp;
 } /* linkcell */
 
-static void freecell (CELLPTR cp)
+void freecell (CELLPTR cp)
 /* Free a cell */
 {
 if (cp==NULL) return;
-switch (cptype(cp))
- {
- case STRING:
-	free (cpstring(cp));
-	/*FALLTHRU*/
- case CONSTANT:
- case VRETRIEVED:
- case FORMULA:
-	free (cpv(cp));
- }
-if (cptext(cp)) free (cptext(cp));
-#ifdef LINKS
-free (cp->cell);
-#endif
+if (cptext(cp)) free(cptext(cp));
+if (cpunit(cp)) free(cpunit(cp));
+if (cpstring(cp)) free(cpstring(cp));
 free (cp);
 }
 
@@ -158,105 +145,75 @@ fprintf (stderr, "kill: c=%d r=%d\n", col, row);
 freecell (linkcell (col, row, (CELLPTR)NULL));
 } /* killcell */
 
-static unsigned char	attrib;
-static unsigned char	format;
-
 int deletecell (int col, int row)
 /* Deletes a cell */
 {
 CELLPTR		cp = cell (col, row);
 
-attrib	= 0x00;
-format	= 0xff;
 if (cp==NULL) return RET_SUCCESS;
-attrib	= cpatt(cp);
-format	= cpfor(cp);
 if (cpprotect(cp)) return RET_ERROR;
-if (cpunitf(cp)) {killcell (col+1, row); lcpu(cp) = NULL;}
+if (cpsidecar(cp)) {killcell (col+1, row);}
 killcell (col, row);
 return RET_SUCCESS;
 } /* deletecell */
 
-CELLPTR initcell (int col, int row, unsigned char att, unsigned char form,
-		char *s, double val, char *unit)
-/* Init a cell */
-{
-CELLPTR		cp, cput;
-int		unitc;
-
-#ifdef DEBUG
-fprintf (stderr, "init: c=%3d r=%3d a=%3d f=%3d s=%-16s v=%10le u=\"%-8s\"\n",
-	col, row, att, form, s, val, unit);
-#endif
-
-assert (col>=0 && col<MAXCOLS && row>=0 && row<MAXROWS);
-
-unitc	= (att==CONSTANT || att==FORMULA || att & UNITF)
-		&& unit!=NULL && unit[0]!='\0';
-if (deletecell (col, row)) return NULL;
-#ifdef LINKS
-if ((cp = (CELLPTR)(malloc(sizeof(struct CPREC)))) == NULL) return NULL;
-if ((cp->cell = (CELLRECPTR)(malloc(sizeof(struct CELLREC)))) == NULL)
-	return NULL;
-#else
-if ((cp = (CELLPTR)(malloc(sizeof(struct CELLREC)))) == NULL) return NULL;
-#endif
-#ifdef DEBUG
-fprintf (stderr, "init: cp=%08x\n", cp);
-#endif
-cpatt(cp) = (att & TYPEM) | (unitc ? UNITF : 0) | ((att | attrib) & ATTRIBM);
-cpfor(cp) = format == 0xff ? form : format;
-cptext(cp) = strdup (s);
-if (cptext(cp)==NULL) return NULL;
-#ifdef DEBUG
-fprintf (stderr, "init: att=%08x att & TYPEM=%08x\n", att, att & TYPEM);
-#endif
-switch (att & TYPEM)
- {
- case STRING:
-	if (unit==NULL) return NULL;
-	/*FALLTHRU*/
- case CONSTANT:
- case VRETRIEVED:
- case FORMULA:
-	if ((cpv(cp) = (union CELLVAL*)(malloc(sizeof(union CELLVAL))))==NULL)
-		return NULL;
-	break;
- default:
-	cpv(cp)	= NULL;
-	break;
+static void strdupi(char **t, char *s) {
+if (s == NULL) {
+ free(*t);
+ *t = NULL;
+} else if (*t == NULL) {
+ *t = strdup(s);
+} else {
+ if (strcmp(*t, s)) {
+  if (strlen(*t) < strlen(s)) {
+   realloc(*t, strlen(s)+1);
+  }
+ strcpy(*t, s);
  }
+}
+return;
+}
+
+CELLPTR migratecell(CELLPTR cs) {
+/* Migrate a cell */
+CELLPTR ct, cr;
+
+ct = cell(cpcol(cs), cprow(cs));
+if (ct == NULL) {
+  if ((ct = newcell()) == NULL) return NULL;
+  linkcell(cpcol(cs), cprow(cs), ct);
+  if (cpattrib(cs)==0 && cpfor(cs)==0 && (cr = cell(cpcol(cs), cprow(cs)-1))) {
+    /* set format of new cell depending of cell above new cell */
+    cpattrib(ct) = cpattrib(cr);
+    cpattrib(ct) &= ~UNITF;
+    cpfor(ct) = cpfor(cr);
+  } else if (cpfor(cs) != L_DEFAULT) {
+    cpattrib(ct) = cpattrib(cs);
+    cpfor(ct) = cpfor(cs);
+  }
+} else if (cpsidecar(ct) && !cpneedsid(cs)) {
+  free(linkcell(cpcol(ct)+1, cprow(ct), (CELLPTR)NULL));
+}
+cptype(ct) = cptype(cs);
+strdupi(&cptext(ct), cptext(cs));
+cpvalue(ct) = cpvalue(cs);
+cpcimag(ct) = cpcimag(cs);
+strdupi(&cpunit(ct), cpunit(cs));
+cplength(ct) = cplength(cs);
+strdupi(&cpstring(ct), cpstring(cs));
 #ifdef DEBUG
-fprintf (stderr, "init: cpv=%08x\n", cpv(cp));
+fprintf(stderr,"tcp=%d tat=%d tun=:%s:",cptype(cs),cpattrib(cs),cpunit(cs));
 #endif
-switch (att & TYPEM)
- {
- case STRING:
-	lcpstring(cp)	= strdup (unit);
-	lcplength(cp)	= strlen (unit);
-	break;
- case CONSTANT:
- case VRETRIEVED:
- case FORMULA:
-	lcpvalue(cp)	= val;
-	if (unitc)
-		{
-		if ((cput = initcell (col+1, row, UNITT,
-				(unsigned char)(defaultformat|PROTECT),
-				unit, .0, (char*)NULL))
-			== NULL) return NULL;
-		lcpu(cp) = cptext(cput);
-		}
-	else	lcpu(cp) = NULL;
-	break;
- }
-linkcell (col, row, cp);
-#ifdef DEBUG
-fprintf (stderr, "idon: c=%3d r=%3d a=%3d f=%3d s=%-16s v=%10le u=\"%-8s\"\n",
-	col, row, cpatt(cp), cpfor(cp), cptext(cp), cpvalue(cp),
-	cpunitf(cp) ? cpunit(cp) : "");
-#endif
-return cp;
+if (cpneedsid(cs)) {
+  cr = newcell();
+  *cr = *ct;
+  cpattrib(ct) |= UNITF;
+  cpfor(cr) |= PROTECT;
+  cpcol(cr) += 1;
+  cptype(cr) = UNITT;
+  linkcell(cpcol(cr), cprow(cr), cr);
+}
+return ct;
 }
 
 int movecell (int tcol, int trow, int scol, int srow)
@@ -274,12 +231,16 @@ char *celltext (int col, int row)
 {
 CELLPTR cp = cell (col, row);
 
+#ifdef DEBUG
+fprintf (stderr, "celltext: c=%d r=%d a=%d u=%s\n", cpcol(cp), cprow(cp), cptype(cp), cpunit(cp));
+#endif
 if (cp == NULL) return NULL;
 switch (cptype(cp))
  {
  case TEXT:
  case RETRIEVED:	return cptext(cp)+1;
  case STRING:		return cpstring(cp);
+ case UNITT:		return cpunit(cp);
  default:		return cptext(cp);
  }
 } /* celltext */

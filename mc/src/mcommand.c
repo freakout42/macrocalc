@@ -1,5 +1,4 @@
-/* $Id: mcommand.c,v 1.11 2001/06/06 14:30:37 axel Exp $
- */
+/* mcommand.c 1.11 2001/06/06 14:30:37 axel */
 
 #include <stdlib.h>
 #include <string.h>
@@ -21,22 +20,17 @@
 #include "mcfileio.h"
 #include "mcellval.h"
 
-void newpage (void)
+void newpage (void) {
 /* Adds new page sign */
-{
-alloctext (curcol, currow, ".bp");
-changed = TRUE;
+  cellr cr;
+  memset(&cr, 0, sizeof(cellr));
+  cpcol(&cr) = curcol;
+  cprow(&cr) = currow;
+  cptype(&cr) = TEXT;
+  cptext(&cr) = "'.bp";
+  if ((migratecell(&cr)) == NULL) errormsg (MSGLOMEM);
+  changed = TRUE;
 } /* newpage */
-
-void editcell (CELLPTR ecell)
-/* Edits a selected cell */
-{
-char s[MAXINPUT + 2];
-
-if (ecell == NULL) return;
-strcpy (s+1, ecell->text);
-changed |= act (s);
-} /* editcell */
 
 void setcolwidth (int col)
 /* Sets the new column width for a selected column */

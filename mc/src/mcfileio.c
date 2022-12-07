@@ -1,13 +1,14 @@
-/* $Id: mcfileio.c,v 1.10 2004/07/04 04:03:31 axel Exp $
- */
+/* mcfileio.c 1.10 2004/07/04 04:03:31 axel */
 
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <arx_def.h>
 #include <str_def.h>
 #include "mc.h"
 #include "mcell.h"
+#include "mcmessag.h"
 #include "mcellact.h"
 #include "mcellstr.h"
 #include "mcelladr.h"
@@ -24,22 +25,25 @@ int	reallastcol = lastcol, reallastrow = lastrow;
 char	cols[8];
 char	line[MAXINPUT+1];
 int	col, row;
+cellr cp;
+CELLPTR ct, cu;
 int	att;
+unsigned char abits;
 int	form;
-char	tex[MAXINPUT+1];
+char	tex[MAXINPUT+2];
 double	val;
-char	unit[MAXINPUT+1];
-int	loaded = 0;
+char newold;
 
 str_gets (file, line, sizeof(line));
-if (strcmp(line, colnames) != 0) return RET_FATAL;
+if (strncmp(line, colnames, 4) != 0) return RET_FATAL;
+newold = line[4];
 str_gets (file, line, sizeof(line));
 if (strspn(line, "-\t") != strlen(line)) return RET_FATAL;
 while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 	{
-	str_gets (file, tex, MAXINPUT);
+	str_gets (file, tex+1, MAXINPUT);
 	celladr (cols, &col, &row);
-	if (!strcmp (tex, "windowdef"))
+	if (!strcmp (tex+1, "windowdef"))
 		{
 		curcol		= col;
 		currow		= row;
@@ -47,33 +51,54 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		toprow		= form;
 		windowline	= borderline + (int)val;
 		}
-	else if (!strcmp (tex, "coldef"))
+	else if (!strcmp (tex+1, "coldef"))
 		{
 		celladr (cols, &col, &row);
 		colwidth[col]	= (unsigned char) form;
 		}
-	else if (!strncmp (tex, "rangedef:", 9))
+	else if (!strncmp (tex+1, "rangedef:", 9))
 		{
-		updaterange (tex+9, col, row, att, form);
+		updaterange (tex+10, col, row, att, form);
 		}
 	else
 		{
+		if (newold == '\t') {
+			abits = att;
+			abits &= TYPEM;
+			if (abits > STRING) return RET_FATAL;
+			abits = newtypes[abits];
+			abits |= ((unsigned char)att & ATTRIBM);
+			att = abits;
+			form = convertformat(form);
+		}
 		celladr (cols, &col, &row);
-		if (!(att & UNITF)) unit[0] = '\0';
-		if ((att & TYPEM) == UNITT)
-			{
-			unit[0]	= ' ';
-			strcpy (unit+1, tex);
-			}
-		else	
-			{
-			if (!initcell(col, row, att, form, tex, val, unit))
-				return RET_ERROR;
-			}
+		memset (&cp, 0, sizeof(cellr));
+		cpcol(&cp) = col;
+		cprow(&cp) = row;
+		cpattrib(&cp) = att & (FORMATM|PROTECT);
+		cpfor(&cp) = form;
+		if (cpform(&cp) == DEFAULTFORMAT) cpfor(&cp) |= L_DEFAULT;
+		cptype(&cp) = att & TYPEM;
+		cpvalue(&cp) = val;
+		if (cptype(&cp) == UNITT) {
+			cpfor(&cp) |= PROTECT;
+			cptext(&cp) = "unit";
+			*tex = ' ';
+			cpunit(&cp) = tex;
+		} else {
+			cptext(&cp) = tex+1;
+		}
+		ct = migratecell(&cp);
+		if ((cu = cell(col+1, row)) && cptype(cu)==UNITT) {
+				free(cpunit(ct));
+				cpunit(ct) = cpunit(cu);
+				cpvalue(cu) = cpvalue(ct);
+				free(cptext(cu));
+				cptext(cu) = cptext(ct);
+		}
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
 		}
-	if (loaded++>40 && license!=0) break;
 	}
 omarkcol = omarkrow = 0;
 markcol = lastcol = reallastcol;
@@ -86,7 +111,7 @@ int savefile (FILE *file, int scope)
 {
 char		cols[3];
 int		col, row;
-int		acol, arow, ecol, erow;
+int		acol=0, arow=0, ecol=0, erow=0;
 CELLPTR		cp;
 struct Range	*r;
 
@@ -138,11 +163,12 @@ for (row = arow; row <= erow; row++)
 	fprintf (file, "%s%d\t%d\t%d\t%+.*e\t%s\n",
 		cols,
 		row+1,
-		cpatt(cp),
+		cpattrib(cp)|cptype(cp),
 		cpfor(cp),
 		MAXPLACES,
 		cpnumber(cp) ? cpvalue(cp) : .0,
-		cptext(cp));
+		cptype(cp)==UNITT ? cpunit(cp) : cptext(cp)
+	 );
 	}
   }
  }

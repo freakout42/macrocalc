@@ -52,7 +52,7 @@ insclean:
 	@echo "$@ done"
 
 #-------------------------------------------------------------------------------
-srcall:	mc mcmsg mcmacro mcunits mcread mc2wks db2rdb
+srcall:	mc mcmsg mcmacro mcunits mcread mc2wks db2rdb mcparse
 	@echo "$@ done"
 
 srcclean:
@@ -60,7 +60,7 @@ srcclean:
 		mc2parse.c mc2pary.c *.tab.? mcpary.vcg \
 		mcmsg.h mcmnu.h core y.output libmcf.a \
 		mc 321 mcmacro mcmsg mcunits mcread mc2wks db2rdb \
-		mcparse mctoggle mcunit mcalign *.o *.a makefile*
+		mcparse mctoggle mcunit mcalign *.o *.a makefile* core.*
 
 IOBJ=	mcrun.o mcmenu.o mcommand.o mcpipe.o mcrecalc.o mcellact.o mchelp.o mcwindow.o mcact.o
 FOBJ=	mcfileio.o mcprint.o mcpform.o mcrange.o mcrwalk.o
@@ -69,7 +69,7 @@ COBJ=	mcellstr.o mcell.o
 MOBJ=	mcgetmsg.o
 POBJ=	mcparse.o mc2parse.o mcparl.o
 XOBJ=	mcelladr.o mcunit.o mctime.o mcmisc.o
-YOBJ=	mcellpar.o mcellval.o
+YOBJ=	mcellval.o
 BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
 PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
 # curses linked
@@ -102,7 +102,7 @@ makefile:	mcuser.mk
 	cp makefile.$Sys $@
 
 libmcf.a:	$(BOBJ)
-	-$(AR) $(ARFLAGS) $@ $?
+	$(AR) $(ARFLAGS) $@ $? 2>/dev/null
 
 mcmsg:	mcmsg.o
 	$(CC) $(CFLAGS) mcmsg.o -o $@
@@ -181,7 +181,7 @@ mcwindow.o:	mcwindow.c mc.h mcdisply.h mcmessag.h
 
 mcact.o:	mcact.c mc.h mcinput.h mcmessag.h mcparse.h \
 		mcell.h mcellact.h mcelladr.h mcpipe.h mcrecalc.h \
-		mcget.h mcfile.h mcdisply.h mcellpar.h
+		mcget.h mcfile.h mcdisply.h
 
 mcfile.o:	mcfile.c mc.h mcinput.h mcmessag.h mccalc.h mcrecalc.h \
 		mcpipe.h mcput.h mcfileio.h mcget.h mcdisply.h mcprint.h
@@ -194,7 +194,7 @@ mccalc.o:	mccalc.c mc.h mccalc.h mcdisply.h mcfileio.h
 
 mcrecalc.o:	mcrecalc.c mc.h mccalc.h mcdisply.h mcgetmsg.h mcmessag.h
 
-mcpipe.o:	mcpipe.c mc.h mcell.h mcparse.h mcfileio.h mcellpar.h
+mcpipe.o:	mcpipe.c mc.h mcell.h mcparse.h mcfileio.h
 
 mcutil.o:	mcutil.c mc.h mcell.h mcelladr.h mcfileio.h
 
@@ -203,9 +203,7 @@ mcmisc.o:	mcmisc.c mc.h mcell.h mcelladr.h mcfileio.h
 mcellact.o:	mcellact.c mc.h mcparse.h mcutil.h mcell.h mccalc.h mcrecalc.h \
 		mcmessag.h mcdisply.h mcfileio.h
 
-mcellval.o:	mcellval.c mc.h mcell.h mcellstr.h mcellpar.h mcmessag.h
-
-mcellpar.o:	mcellpar.c mc.h mcell.h mcellstr.h mcparse.h
+mcellval.o:	mcellval.c mc.h mcell.h mcellstr.h mcmessag.h
 
 mcellstr.o:	mcellstr.c mc.h mctime.h mcell.h mcellact.h
 

@@ -20,7 +20,6 @@
 
 #include "l.tab.h"
 
-extern int  yytype;
 extern int  yyerrorflg;
 
 #ifndef FLEX_SCANNER
@@ -31,7 +30,7 @@ extern int  yyerrorflg;
 #endif
 
 #ifdef LEXDEBUG
-extern double parse();
+extern int parse();
 struct Range rg1 = {NULL, {{0,0},{0,0}}, "hello"};
 struct Range *rnames	= &rg1;
 char libpath[MAXFILE+1] = ARXPATH;
@@ -42,33 +41,27 @@ int currow = 1;
 int main()
 {
 extern int 	yydebug;
-extern char 	*yyunit;
-int		at;
-double		val;
+CELLPTR cp;
 char		s[80];
 char		*arxpath;
 
 yydebug = 1;
 if ((arxpath = getenv("ARX")) != NULL)
 	strcpy(libpath, arxpath); /* set my path */
+cp = newcell();
 while (gets(s))
 	{
-	val = parse (s, &at, NULL, NULL);
-	printf ("s=%s val=%f unit=%s ty=%d at=%d\n", s, val, yyunit, yytype, at);
+	cptext(cp) = s;
+	parse (cp, NULL);
+	printf ("s=%s val=%f unit=%s ty=%d\n", s, cpvalue(cp), cpunit(cp), cptype(cp));
 	}
-return at;
+return 0;
 }
 
 CELLPTR	cell (col, row)
 	int col, row;
 {
-#ifdef LINKS
-static struct CPREC	cellrec	=
-	{1, NULL, {0, 0}, NULL, {2.71828, "e"}};
-#else
-static struct CELLREC	cellrec	/*=
-	{NULL, {0, 0}, {2.71828, "e"}, 0, 0, "2.71828"}*/;
-#endif
+static struct CELLREC	cellrec;
 return &cellrec;
 }
 
@@ -94,7 +87,7 @@ return;
 
 %S UNITCTX
 %S COMMAND
-%S STRING
+%S STRINGX
 
 u	[A-Z]
 l	[a-z]
@@ -134,35 +127,31 @@ str	.+
 ^{outcmd}	{ BEGIN COMMAND; return OUTCMD; }
 <COMMAND>{str}	{ return CMD; }
 
-^{j}		{ BEGIN STRING; return (JUST); }
-<STRING>{str}	{ return CMD; }
+^{j}		{ BEGIN STRINGX; return (JUST); }
+<STRINGX>{str}	{ return CMD; }
 
 {udate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 {uldate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 {edate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext+3), (double)atoi((char*)yytext));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 {eldate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext+3), (double)atoi((char*)yytext));
 	yylval.value.unit	= NULL;
-	if (!yyerrorflg) yytype	= DATETYPE;
-	return CON;
+	return DAT;
 	}
 
 ({n})+({p}{n}*)?({e})?	|
@@ -283,7 +272,7 @@ fprintf (stderr, "range test \"%s\" <-> \"%s\"\n", r->name, yytext);
 "#"		return (STRCAT);
 {w}		;
 \n		return (EOF);
-^.		{ BEGIN STRING; return BAD; }
+^.		{ BEGIN STRINGX; return BAD; }
 .		return (BAD);
 
 %%

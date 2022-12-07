@@ -32,10 +32,10 @@ RAMENU	us	Bold Italic Reset
 RAMENU	ge	Fett Kursiv Zuruecksetzen
 RAMENU	fr	Gras Italique Normal
 RAMENU	pl	Pogrubienie Kursywa Resetuj
-FMENU	us	Save Part Retrieve Merge
-FMENU	ge	Speichern Teil Laden Kombinieren
-FMENU	fr	Sauver Part Recuperer Fusionner
-FMENU	pl	Zapisz Part Pobierz Do³±cz
+FMENU	us	Save Part Retrieve Merge About
+FMENU	ge	Speichern Teil Laden Kombinieren Ueber
+FMENU	fr	Sauver Part Recuperer Fusionner About
+FMENU	pl	Zapisz Part Pobierz Do³±cz About
 YNMENU	us	No Yes
 YNMENU	ge	Nein Ja
 YNMENU	fr	Non Oui

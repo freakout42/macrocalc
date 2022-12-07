@@ -17,6 +17,55 @@
 #include "mcellact.h"
 #include "mcellstr.h"
 
+unsigned char convertformat (unsigned char format)
+{
+switch (format & FORMATM)
+ {
+ case L_FIXED:
+	return (format & (0xffu ^ (PROTECT|FORMATM))) | FIXED;
+ case SCIENTIFIC:
+ case CURRENCY:
+ case PERCENT:
+ case COMMA:
+	return (format);
+ case L_SPECIAL:
+	switch (format & PLACES)
+	 {
+	 case HIDDEN:
+		return (format);
+	 case BAR:
+	 case TEXTF:
+	 case GENERAL:
+		return ((format & PROTECT) | DEFAULTFORMAT);
+	 case DATE:
+	 case DAYMONTH:
+	 case MONTHYEAR:
+	 case DATEI2:
+		return ((format & (PROTECT | SPECIAL)) | DATE);
+	 case DATEI1:
+		return ((format & (PROTECT | SPECIAL)) | EDATE);
+	 case TIME:
+	 case HOURMIN:
+	 case TIMEI1:
+	 case TIMEI2:
+		return ((format & (PROTECT | SPECIAL)) | TIME);
+	 case L_DEFAULT:
+		return (DEFAULTFORMAT);
+	 }
+ }
+return (DEFAULTFORMAT);
+}
+
+unsigned char convertlformat (unsigned char form) {
+switch (form & FORMATM) {
+  case FIXED:   form = (form & (0xffu ^ FORMATM)) | L_FIXED; break;
+  case SPECIAL: form = (form & (0xffu ^ FORMATM)) | L_SPECIAL;
+                if ((form & PLACES) == DEFAULT) { form |= L_DEFAULT; }
+                break;
+}
+return form;
+}
+
 static void textstring (char *instring, char *outstring,
 			int col, unsigned int format, int formatting)
 /* Sets the string representation of text */
@@ -208,7 +257,8 @@ char *cellstring (int col, int row, int *color, int formatting)
    also returns the color of the cell */
 {
 int		newcol;
-static char	s[MAXINPUT+1];
+static char	s1[MAXINPUT+2];
+char *s;
 char		temp[MAXINPUT+1];
 char		*p;
 int		pos;
@@ -216,6 +266,7 @@ CELLPTR		cp;
 unsigned char	typ = EMPTY;
 int		visible = FALSE;
 
+s = s1+1;
 cp = cell (col, row);
 if (cp == NULL)
 	{
@@ -290,14 +341,14 @@ else
 		else strcpy(s, cptext(cp));
 		break;
 	 textform:
-		textstring(cptext(cp), s, col, cpform(cp), formatting);
+		textstring(cptype(cp)==UNITT ? cpunit(cp) : cptext(cp), s, col, cpform(cp), formatting);
 	 } /* switch */
 	}
 if (visible && formatting==FPRINT && cp!=NULL)
 	{
 	char	*fp;
 
-	switch (cpattrib(cp))
+	switch (cpattrbi(cp))
 	 {
 	 case BOLD:	fp = "\\fB%s\\fP";	break;
 	 case ITALIC:	fp = "\\fI%s\\fP";	break;
@@ -307,7 +358,7 @@ if (visible && formatting==FPRINT && cp!=NULL)
 	strcpy(s, temp);
 	}
 if (visible && cp!=NULL)
-	switch (cpattrib(cp))
+	switch (cpattrbi(cp))
 	 {
 	 case BOLD:	*color |= BOLDCOLOR;	break;
 	 case ITALIC:	*color |= ITALICOLOR;	break;

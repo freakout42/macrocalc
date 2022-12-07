@@ -1,5 +1,4 @@
-/* $Id: mcstat.c,v 1.4 1999/10/24 05:58:08 axel Exp $
- */
+/* mcstat.c 1.4 1999/10/24 05:58:08 axel */
 
 #include <stddef.h>
 #include <arx_def.h>
@@ -10,7 +9,7 @@
 
 static int	n;
 static double	value, qvalue, maxvalue, minvalue;
-extern char	*yyunit;
+static char	*yyunit;
 
 void statinit (void)
 {

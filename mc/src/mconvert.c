@@ -1,4 +1,4 @@
-/* $Id: mconvert.c,v 1.10 2008/06/11 09:15:43 axel Exp $
+/* mconvert.c 1.10 2008/06/11 09:15:43 axel
  * convert format
  * convert label with tab[]
  */
@@ -12,43 +12,6 @@
 #include "mc2wks.h"
 #include "mcelldef.h"
 #include "mcparse.h"
-
-unsigned char convertformat (unsigned char format)
-{
-switch (format & FORMATM)
- {
- case FIXED:
- case SCIENTIFIC:
- case CURRENCY:
- case PERCENT:
- case COMMA:
-	return (format);
- case SPECIAL:
-	switch (format & PLACES)
-	 {
-	 case HIDDEN:
-	 case DATE:
-	 case TIME:
-		return (format);
-	 case BAR:
-	 case TEXTF:
-	 case GENERAL:
-		return ((format & PROTECT) | DEFAULTFORMAT);
-	 case DAYMONTH:
-	 case MONTHYEAR:
-	 case DATEI1:
-	 case DATEI2:
-		return ((format & (PROTECT | FORMATM)) | DATE);
-	 case HOURMIN:
-	 case TIMEI1:
-	 case TIMEI2:
-		return ((format & (PROTECT | FORMATM)) | TIME);
-	 case DEFAULT:
-		return (DEFAULTFORMAT);
-	 }
- }
-return (DEFAULTFORMAT);
-}
 
 extern int	warn;
 extern int	erro;

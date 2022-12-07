@@ -2,3 +2,5 @@
  */
 
 char *cellstring (int col, int row, int *color, int formatting);
+unsigned char convertformat (unsigned char format);
+unsigned char convertlformat (unsigned char form);

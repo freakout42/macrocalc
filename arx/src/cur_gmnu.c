@@ -1,4 +1,4 @@
-/* $Id: cur_gmnu.c,v 1.7 1997/02/07 19:28:08 axel Exp $
+/* cur_gmnu.c 1.7 1997/02/07 19:28:08 axel
  * curses get menu item
  */
 
@@ -29,7 +29,7 @@ int	skey = 0;		/* returned key */
 char	*s;			/* loop pointer in menu */
 char	*npos;			/* next menu item space pos */
 char	*lpos;			/* last char in menu */
-int	cy, cx;			/* screen positions */
+int	cy=0, cx=0;			/* screen positions */
 char	*cmenu;			/* start pos for displayed menu */
 char	item[MAXMENUITEM];	/* menu char array */
 char	*pos[MAXMENUITEM];	/* menu pos array */

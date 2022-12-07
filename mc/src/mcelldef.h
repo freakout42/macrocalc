@@ -1,4 +1,4 @@
-/* mcelldef.h 1.21 2016/10/31 06:35:14 axel */
+/* mcelldef.h */
 
 #define MAXCOLS		27*26 /* A-Z AA-ZZ */
 #define MAXROWS		99999
@@ -27,20 +27,22 @@
 #define UNRECRANGE	66
 
 enum	{
-	COLWIDTH,
-	TEXT,
-	CONSTANT,
-	FORMULA,
-	UNITT,
-	SYNERROR,
-	INCOMMAND,
-	OUTCOMMAND,
-	RETRIEVED,
-	VRETRIEVED,
-	EOFPIPE,
-	STRING,
-	DATETYPE,	/* only temporary used for date format */
-	EMPTY
+	EMPTY,      /* =0     new empty */
+	TEXT,       /* =1  yy literal with just [0]=['"] */
+	CONSTANT,   /* =2  yy default before yyparse */
+	FORMULA,    /* =3  yy */
+	UNITT,      /* =4     sidecar cell */
+	SYNERROR,   /* =5  yy temporary returned by parse */
+	INCOMMAND,  /* =6  yy */
+	OUTCOMMAND, /* =7  yy */
+	RETRIEVED,  /* =8  |< literal from pipe */
+	VRETRIEVED, /* =9  |< value from pipe */
+	EOFPIPE,    /* =10 |< eof from pipe */
+	STRING,     /* =11 yy string formula */
+	DATETYPE,	  /* =12 yy only temporary used for date format */
+	COMPLEX,    /* =13    not used should use CONSTANT|FORMULA */
+	COLWIDTH,   /* =14    only for fileio coldef was =0 */
+	ERRORT      /* =15    not used */
 	};
 
 #define EPOCH		25569.
@@ -51,142 +53,128 @@ enum	{
 #define STRCENTER	'^'
 #define STRREPEAT	'\\'
 
-#define	ATTRIBM		0xc0u
-#define	TYPEM		0x1fu
-#define	BOLD		0x40u
-#define	ITALIC		0x80u
-#define UNITF		0x20u
+#define ATTRIBM	 0xcfu
+#define BIMASK	 0xc0u
+#define TYPEM    0x1fu
+#define UNITF	   0x20u /* has sidecar */
+#define BOLD     0x40u
+#define ITALIC   0x80u
 
-#define PROTECT		0x80u
-#define FORMATM		0x70u
-#define FIXED		0x00u
-#define SCIENTIFIC	0x10u
-#define CURRENCY	0x20u
-#define PERCENT		0x30u
-#define COMMA		0x40u
-#define SPECIAL		0x70u
-#define PLACES		0x0fu
-#define BAR		0x00u
-#define GENERAL		0x01u
-#define DATE		0x02u
-#define DAYMONTH	0x03u
-#define MONTHYEAR	0x04u
-#define TEXTF		0x05u
-#define HIDDEN		0x06u
-#define TIME		0x07u
-#define HOURMIN		0x08u
-#define DATEI1		0x09u
-#define EDATE		0x09u
-#define DATEI2		0x0au
-#define RDBDATE		0x0au
-#define TIMEI1		0x0bu
-#define TIMEI2		0x0cu
-#define DEFAULT		0x0fu
-#define DEFAULTFORMAT	((0&PROTECT) | (FORMATM&SPECIAL) | (PLACES&DEFAULT))
+#define PROTECT    0x80u
+#define FORMATM    0x70u
+#define SPECIAL    0x00u
+#define SCIENTIFIC 0x10u
+#define CURRENCY   0x20u
+#define PERCENT    0x30u
+#define COMMA      0x40u
+#define FIXED      0x50u
+#define PLACES     0x0fu
 
-struct CELLADR
-	{
-	int	col;
-	int	row;
-	};
+#define L_FIXED    0x00u
+#define L_SPECIAL  0x70u
+#define L_DEFAULT  0x0fu
 
-union CELLVAL
-	{
-	struct CELLVALUE	{
-		double	value;
-		char	*unit;
-		} v;
-	struct CELLSTRING	{
-		short	length;
-		char	*string;
-		} s;
-	};
+#define DEFAULT    0x00u
+#define GENERAL    0x01u
+#define DATE       0x02u
+#define DAYMONTH   0x03u
+#define MONTHYEAR  0x04u
+#define TEXTF      0x05u
+#define HIDDEN     0x06u
+#define TIME       0x07u
+#define HOURMIN    0x08u
+#define DATEI1     0x09u
+#define EDATE      0x09u
+#define DATEI2     0x0au
+#define RDBDATE    0x0au
+#define TIMEI1     0x0bu
+#define TIMEI2     0x0cu
+#define BAR        0x0du
 
-#define	cpv(cp)		(cp->val)
-#define	cpval(cp)	((cp->val)->v)
-#define	cpvalue(cp)	(cp->val?(cp->val)->v.value:0.)
-#define	lcpvalue(cp)	((cp->val)->v.value)
-#define	cpu(cp)		(cp->val?(cp->val)->v.unit:NULL)
-#define	lcpu(cp)	((cp->val)->v.unit)
-#define	cplength(cp)	(cp->val?(cp->val)->s.length:0)
-#define	lcplength(cp)	((cp->val)->s.length)
-#define	cpstring(cp)	(cp->val?(cp->val)->s.string:NULL)
-#define	lcpstring(cp)	((cp->val)->s.string)
+#define DEFAULTFORMAT	  ((0x00u & PROTECT) | (FORMATM & SPECIAL)   | (PLACES & DEFAULT))
+#define L_DEFAULTFORMAT	((0x00u & PROTECT) | (FORMATM & L_SPECIAL) | (PLACES & L_DEFAULT))
 
-#ifdef LINKS
-#define	cpunit(cp)	((cp->cell)->attrib & UNITF ? (cp->val)->v.unit : NULL)
-#define	cplink(cp)	((cp->cell)->link)
-#define	cpatt(cp)	((cp->cell)->attrib)
-#define	cpattrib(cp)	((cp->cell)->attrib & ATTRIBM)
-#define	cpunitf(cp)	((cp->cell)->attrib & UNITF)
-#define	cptype(cp)	((cp->cell)->attrib & TYPEM)
-#define	cpformula(cp)	(cptype(cp) == FORMULA || cptype(cp) == STRING)
-#define	cpnumber(cp)	(cptype(cp) == FORMULA || \
-			 cptype(cp) == CONSTANT || \
-			 cptype(cp) == VRETRIEVED)
-#define	cpprotect(cp)	((cp->cell)->format & PROTECT)
-#define	cpfor(cp)	((cp->cell)->format)
-#define	cpformat(cp)	((cp->cell)->format & FORMATM)
-#define	cpform(cp)	((cp->cell)->format & (FORMATM|PLACES))
-#define	cpplaces(cp)	((cp->cell)->format & PLACES)
-#define	cptext(cp)	((cp->cell)->text)
-#define	cptextstr(cp)	(cpnumber(cp)?(cp->cell)->text:((cp->cell)->text)+1)
-
-struct CELLREC
-	{
-	short		link;
-	unsigned char	attrib;
-	unsigned char	format;
-	char		*text;
-	};
-
-struct CPREC
-	{
-	struct CPREC	*next;
-	struct CELLADR	adr;
-	struct CELLREC	*cell;
-	union CELLVAL	*val;
-	};
-
-typedef struct CELLREC *CELLRECPTR;
-typedef struct CPREC *CELLPTR;
-
-#else
-#define	cpunit(cp)	(cp->attrib & UNITF ? (cp->val)->v.unit : NULL)
-#define	cpatt(cp)	(cp->attrib)
-#define	cpattrib(cp)	(cp->attrib & ATTRIBM)
-#define	cpunitf(cp)	(cp->attrib & UNITF)
-#define	cptype(cp)	(cp->attrib & TYPEM)
-#define	cpformula(cp)	(cptype(cp) == FORMULA || cptype(cp) == STRING)
-#define	cpnumber(cp)	(cptype(cp) == FORMULA || \
-			 cptype(cp) == CONSTANT || \
-			 cptype(cp) == VRETRIEVED)
-#define	cpprotect(cp)	(cp->format & PROTECT)
-#define	cpfor(cp)	(cp->format)
-#define	cpformat(cp)	(cp->format & FORMATM)
-#define	cpform(cp)	(cp->format & (FORMATM|PLACES))
-#define	cpplaces(cp)	(cp->format & PLACES)
-#define	cptext(cp)	(cp->text)
-#define	cptextstr(cp)	(cpnumber(cp)?cp->text:cp->text+1)
-
-struct CELLREC
-	{
-	struct CELLREC	*next;
-	struct CELLADR	adr;
-	unsigned char	attrib;
-	unsigned char	format;
-	char		*text;
-	union CELLVAL	*val;
-	};
-
-typedef struct CELLREC *CELLPTR;
+#ifdef ISSUECOLOR
+#define NCURSES_BITS(mask,shift) ((mask) << ((shift) + NCURSES_ATTR_SHIFT))
+#define A_NORMAL  0L
+#define A_ATTRIBUTES  NCURSES_BITS(~(1UL - 1UL),0)
+#define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
+#define A_COLOR   NCURSES_BITS(((1UL) << 8) - 1UL,0)
+#define A_STANDOUT  NCURSES_BITS(1UL,8)
+#define A_UNDERLINE NCURSES_BITS(1UL,9)
+#define A_REVERSE NCURSES_BITS(1UL,10)
+#define A_BLINK   NCURSES_BITS(1UL,11)
+#define A_DIM   NCURSES_BITS(1UL,12)
+#define A_BOLD    NCURSES_BITS(1UL,13)
+#define A_PROTECT NCURSES_BITS(1UL,16)
+#define COLOR_BLACK	0
+#define COLOR_RED	1
+#define COLOR_GREEN	2
+#define COLOR_YELLOW	3
+#define COLOR_BLUE	4
+#define COLOR_MAGENTA	5
+#define COLOR_CYAN	6
+#define COLOR_WHITE	7
 #endif
+
+struct CELLADR {
+  int	col;
+  int	row;
+  };
+struct CELLVALUE {
+  double value;
+  double cimag;
+  char  *unit;
+  };
+struct CELLSTRING {
+  short length;
+  char *string;
+  };
+
+struct CELLREC {
+  struct CELLADR adr;
+  struct CELLREC *next;
+  unsigned char type;
+  unsigned char attrib;
+  unsigned char format;
+  char *text;
+  struct CELLVALUE v;
+  struct CELLSTRING s;
+  };
+typedef struct CELLREC cellr;
+typedef struct CELLREC *CELLPTR;
 
 #define adrval(col) (col>=0?col:-col-1)
 
-struct Range
-	{
-	struct Range	*next;
-	struct CELLADR	adr[2];
-	char		*name;
-	};
+struct Range {
+  struct Range *next;
+  struct CELLADR adr[2];
+  char *name;
+  };
+
+#define	cpnext(cp)    ((cp)->next)
+#define	cpadr(cp)     ((cp)->adr)
+#define	cpcol(cp)     (((cp)->adr).col)
+#define	cprow(cp)     (((cp)->adr).row)
+#define	cptype(cp)    ((cp)->type)
+#define	cpval(cp)     ((cp)->v)
+#define	cpvalue(cp)   (((cp)->v).value)
+#define	cpcimag(cp)   (((cp)->v).cimag)
+#define	cpunit(cp)    (((cp)->v).unit)
+#define	cplength(cp)  (((cp)->s).length)
+#define	cpstring(cp)	(((cp)->s).string)
+#define	cpattrib(cp)  ((cp)->attrib)
+#define	cpattrbi(cp)  ((cp)->attrib & BIMASK)
+#define	cpcolor(cp)   ((cp)->attrib & ATTRIBM)
+#define	cpsidecar(cp) ((cp)->attrib & UNITF) /* has sidecar */
+#define	cpneedsid(cp) ((cp)->type != UNITT   && (cpunit(cp) || cpcimag(cp)))
+#define	cpformula(cp) ((cp)->type == FORMULA || cptype(cp) == STRING)
+#define	cpnumber(cp)  ((cp)->type == FORMULA || cptype(cp) == CONSTANT || cptype(cp) == VRETRIEVED || cptype(cp) == COMPLEX)
+#define	cpfor(cp)     ((cp)->format)
+#define	cpprotect(cp) ((cp)->format & PROTECT)
+#define	cpformat(cp)  ((cp)->format & FORMATM)
+#define	cpform(cp)    ((cp)->format & (FORMATM|PLACES))
+#define	cpplaces(cp)  ((cp)->format & PLACES)
+#define	cptext(cp)    ((cp)->text)
+#define	cpliteral(cp) (cptype(cp) == TEXT)
+#define	cptextstr(cp) (cpliteral(cp)?(cp)->text+1:(cp)->text)

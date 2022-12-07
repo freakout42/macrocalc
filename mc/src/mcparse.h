@@ -2,9 +2,7 @@
 
 extern int origcol, origrow; /* original column */
 extern int errpos; /* position of parsing error */
-extern double yyvalue;
-extern int yytype;
-extern char *yyunit;
+extern CELLPTR pc;
 extern char *yybuf;
 extern char *yysparse; /* pointer to source formula */
 extern char *yybparse; /* pointer to parsed formula */
@@ -12,8 +10,8 @@ extern char *yytoparse; /* pointer to left formular */
 extern int yyerrorflg; /* error flag for lex-parser */
 
 #ifdef LOTUS
-int parse2 (char *s, short *formula);
+int parse2 (CELLPTR pc, short *formula);
 #else
 int mcinput (void);
-double parse (char *s, int *t, char *unit, char *parsed);
+int parse (CELLPTR pc, char *parsed);
 #endif

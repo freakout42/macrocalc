@@ -12,7 +12,6 @@
 #include "mcell.h"
 #include "mcellact.h"
 #include "mcelladr.h"
-#include "mcellpar.h"
 #include "mcpipe.h"
 #include "mcrecalc.h"
 #include "mcget.h"
@@ -20,39 +19,42 @@
 #include "mcdisply.h"
 #include "mcact.h"
 
-int act (char *s)
+int act (char c) {
 /* Acts on a particular input */
-{
-extern int	errpos;
-int		type;
-CELLPTR		allocated;
-#ifdef DEBUG
-double		value;
-#endif
-char		parsed[MAXPARSED+1];
-char		unit[MAXINPUT+1]	= "";
-int		col, row, clen, edi;
-int		first	= TRUE;
+extern int errpos;
+CELLPTR allocated;
+cellr cp;
+char parsed[MAXPARSED+1];
+int col, row, clen, edi;
+int first = TRUE;
+char s1[MAXINPUT + 1];
 
-origcol	= curcol;
-origrow	= currow;
-s++;
-errpos = strlen(s);
-do	{
-	edi	= editstringp(s, "", MAXINPUT, errpos);
-	if ((first && !edi) || !*s) return FALSE;
-#ifdef DEBUG
-	value	=
-#endif
-          parse(s, &type, unit, parsed);
-#ifdef DEBUG
-fprintf(stderr, "act: %s->%le %s type:%d errno:%d\n", s, value, unit, type, errno);
-#endif
-	if (type == SYNERROR)
-		{
-		if (!edi)	type = TEXT;
-		else		errormsg(MSGSYNTAX);
+memset (&cp, 0, sizeof(cellr));
+cpcol(&cp) = curcol;
+cprow(&cp) = currow;
+s1[0] = '\0'; s1[1] = c; s1[2] = '\0';
+cptext(&cp) = s1+1;
+if ((allocated = cell(curcol, currow))) {
+  if (cpprotect(allocated)) return FALSE;
+  if (c == '\0') {
+    strncpy(s1, cptext(allocated), MAXINPUT);
+    s1[MAXINPUT] = '\0';
+    cptext(&cp) = s1;
+  }
+}
+errpos = strlen(cptext(&cp));
+do {
+	edi	= editstringp(cptext(&cp), "", MAXINPUT, errpos);
+	if ((first && !edi) || !*cptext(&cp)) { return FALSE; }
+	parse(&cp, parsed);
+	if (cptype(&cp) == SYNERROR) {
+		if (!edi) {
+			cptype(&cp) = TEXT;
+			cptext(&cp) -= 1;
+			*cptext(&cp) = STRLEFT;
 		}
+		else errormsg(MSGSYNTAX);
+	}
 	switch(errno)
 	 {
 	 case 0:						break;
@@ -64,12 +66,12 @@ fprintf(stderr, "act: %s->%le %s type:%d errno:%d\n", s, value, unit, type, errn
 	 default:		errorstr(strerror(errno));	break;
 	 }
 	first	= FALSE;
-	} while (type == SYNERROR);
-allocated = parsecell(s, curcol, currow);
+} while (cptype(&cp) == SYNERROR);
+allocated = migratecell(&cp);
 if (allocated)
 	{
 	clen	= celladr(parsed, &col, &row);
-	switch(type)
+	switch(cptype(&cp))
 	 {
 	 case INCOMMAND:
 		if (inpipe(col, row, parsed+clen+1) == EOF) allocated = NULL;
@@ -98,17 +100,6 @@ switch(edi)
  }
 return TRUE;
 } /* act */
-
-void getinput (int c)
-/* Reads and acts on an input string from the keyboard that started with c. */
-{
-char s[MAXINPUT + 2];
-
-s[0] = '\0';
-s[1] = (char)c;
-s[2] = '\0';
-changed |= act (s);
-} /* getinput */
 
 int checkforsave (void)
 /* If the spreadsheet has been changed, will ask the user if they want to

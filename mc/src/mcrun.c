@@ -1,5 +1,4 @@
-/* $Id: mcrun.c,v 1.10 2001/06/06 05:57:52 axel Exp $
- */
+/* mcrun.c 1.10 2001/06/06 05:57:52 axel */
 
 #include <arx_def.h>
 #include <cur_def.h>
@@ -24,12 +23,8 @@ int input;
 int lmarkcol= 0;
 int lmarkrow= 0;
 
-do
-  {
+do {
   curcell = cell (curcol, currow);
-#ifdef DEBUG
-  fprintf (stderr, "run: c=%d r=%d\n", curcol, currow);
-#endif
   input = generalprompt();
   switch (input)
    {
@@ -39,7 +34,7 @@ do
     break;
    case F2 :
    case '!' :
-    editcell(curcell);
+    changed |= act('\0');
     break;
    case F3 :
    case '.' :
@@ -112,7 +107,7 @@ do
     break;
    default :
     if ((input >= ' ') && (input <= '~'))
-     getinput(input);
+      changed |= act(input);
     break;
    } /* switch */
   } while (!stop);

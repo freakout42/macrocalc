@@ -202,6 +202,9 @@ switch (getmenu (FMENU))
  case 3:
 	loadsheet(PROMPT);
 	break;
+ case 4:
+	errorstr(rcsinfo);
+	break;
  }
 } /* fmenu */
 

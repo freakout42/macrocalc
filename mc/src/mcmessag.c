@@ -2,6 +2,7 @@
  */
 
 #include <string.h>
+#include <stdarg.h>
 #include <arx_def.h>
 #include <cur_def.h>
 #include "mc.h"
@@ -11,6 +12,16 @@
 #include "mcmisc.h"
 #include "mcgetmsg.h"
 #include "mcmessag.h"
+
+void errorprint (char *format, ...) {
+va_list args;
+char s[MAXINPUT+1];
+
+va_start(args, format);
+vsprintf(s, format, args);
+va_end(args);
+errorstr(s);
+}
 
 void smessage (char *s)
 /* Prints a string-message */

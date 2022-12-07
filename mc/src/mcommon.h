@@ -3,6 +3,7 @@
 
 extern char license;
 extern char *progname;
+extern char rcsinfo[];
 extern char libpath[];
 extern char logo[];
 extern char filename[MAXFILE+1];

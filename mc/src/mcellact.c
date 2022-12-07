@@ -1,5 +1,4 @@
-/* $Id: mcellact.c,v 1.13 2004/12/11 16:21:11 axel Exp $
- */
+/* mcellact.c 1.13 2004/12/11 16:21:11 axel */
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -36,32 +35,28 @@ else
 	}
 }
 
-int copycell (int tcol, int trow, int scol, int srow)
 /* Copies a cell */
-{
-CELLPTR	scp, tcp;
+int copycell (int tcol, int trow, int scol, int srow) {
+CELLPTR scp;
+cellr cp;
 
 if (tcol<0 || tcol>=MAXCOLS || trow<0 || tcol>=MAXROWS) return RET_SUCCESS;
-if ((scp = cell (scol, srow)) != NULL)
-	{
-	tcp = initcell (tcol, trow, cpatt(scp), cpfor(scp), cptext(scp), 0.,
-		cptype(scp)==STRING ? cpstring(scp) : cpunit(scp));
-	if (tcp == NULL) return RET_ERROR;
-	if (cptype(scp)==CONSTANT || cptype(scp)==VRETRIEVED)
-		lcpvalue(tcp) = cpvalue(scp);
-	else
-		recalcell (tcol, trow);
-	}
-else
-	{
+if ((scp = cell (scol, srow)) != NULL) {
+  cp = *scp;
+  cpcol(&cp) = tcol;
+  cprow(&cp) = trow;
+  migratecell(&cp);
+  recalcell (tcol, trow);
+} else {
 	deletecell (tcol, trow);
-	}
+}
 return RET_SUCCESS;
 } /* copycell */
 
 int inrange (int col, int row, int scol, int srow, int ecol, int erow)
 {
-return 	adrval(col) >= min (scol, ecol) &&
+return
+ 	adrval(col) >= min (scol, ecol) &&
 	adrval(col) <= max (scol, ecol) &&
 	adrval(row) >= min (srow, erow) &&
 	adrval(row) <= max (srow, erow);

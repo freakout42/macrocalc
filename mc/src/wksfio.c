@@ -27,6 +27,7 @@ int fromwks (FILE *file)
 {
 int		reallastcol = 0, reallastrow = 0;
 int		col, row;
+cellr cp;
 unsigned char	att;
 unsigned char	form;
 char		tex[MAXINPUT+1];
@@ -118,22 +119,29 @@ while (getwksrecord (&r) != L_EOF)
 #ifdef DEBUG
 		col	=  r.data.label.cell.col;
 		row	=  r.data.label.cell.row;
-/*		fprintf (stderr, "formula: c=%d r=%d v=%f\n", col, row, val);*/
-		fprintf (stderr, "formula: c=%d r=%d\n", col, row);
+		fprintf (stderr, "formula: c=%d r=%d v=%f\n", col, row, val);
 #endif
 		if (pol2tex (tex, r.data.formula.code)) break;
 		goto allocate;
+
 	 allocate:
 		lib_cano(r.data.label.cell.col);
 		lib_cano(r.data.label.cell.row);
 		col	=  r.data.label.cell.col;
 		row	=  r.data.label.cell.row;
 		form	=  convertformat (r.data.label.format) & protect;
-		if (!initcell (col, row, att, form, tex, val, NULL))
-			return RET_ERROR;
+		memset (&cp, 0, sizeof(cellr));
+		cpcol(&cp) = col;
+		cprow(&cp) = row;
+		cpattrib(&cp) = att & (FORMATM|PROTECT);
+		cpfor(&cp) = form == DEFAULT ? L_DEFAULT : form;
+		cptype(&cp) = att & TYPEM;
+		cptext(&cp) = tex;
+		cpvalue(&cp) = val;
+		migratecell(&cp);
 #ifdef DEBUG
-		fprintf (stderr, "c=%d r=%d a=%d f=%d t=%s v=%f\n",
-			col, row, att, form, tex, val);
+		fprintf (stderr, "c=%d r=%d a=%d f=%d t=%s v=%f cptype=%d\n",
+			col, row, att, form, tex, val, cptype(&cp));
 #endif
 		if (col > reallastcol) reallastcol = col;
 		if (row > reallastrow) reallastrow = row;
@@ -255,7 +263,7 @@ for (row = 0; row <= lastrow; row++)
   if (cp != NULL)
 	{
 	type	= cptype(cp);
-	if (!cpunitf(cp)) unit[0] = '\0';
+	if (!cpsidecar(cp)) unit[0] = '\0';
 	origcol = col;
 	origrow = row;
 #ifdef DEBUG
@@ -272,7 +280,10 @@ for (row = 0; row <= lastrow; row++)
 		fprintf (stderr, "towks: &r.data.formula.size=%d\n",
 			&r.data.formula.size);
 #endif
-		type = parse2 (cptext(cp), &r.data.formula.size);
+		type = parse2 (cp, &r.data.formula.size);
+#ifdef DEBUG
+	fprintf (stderr, "towks: c:%d r:%d = type=%d\n", col, row, type);
+#endif
 		if (type!=FORMULA && type!=STRING && type!=CONSTANT) goto texttype;
 		r.reclen = r.data.formula.size + LL_formula - sizeof(r.data.formula.code);
 		lib_cano(r.data.formula.size);
@@ -300,7 +311,7 @@ for (row = 0; row <= lastrow; row++)
 		r.data.number.value	= myd2d.c;
 		goto recordok;
 	 recordok:
-		r.data.label.format	= cp->format;
+		r.data.label.format	= convertlformat(cp->format);
 		ca.col			= col;
 		ca.row			= row;
 		convertcelladr (&r.data.label.cell, &ca);

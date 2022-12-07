@@ -6,5 +6,6 @@ void dmessage (char *s);
 void message (int n);
 void errorstr (char *s);
 void errormsg (int n);
+void errorprint (char *format, ...);
 void writeprompt (int prompt);
 void clearprompt (void);

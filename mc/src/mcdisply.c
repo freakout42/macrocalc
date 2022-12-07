@@ -1,10 +1,10 @@
-/* $Id: mcdisply.c,v 1.14 2001/07/02 10:23:58 axel Exp $
- */
+/* mcdisply.c 1.14 2001/07/02 10:23:58 axel */
 
 #ifdef DEBUG
 #include <stdio.h>
 #endif
 #include <string.h>
+#include <ctype.h>
 #include <arx_def.h>
 #include <cur_def.h>
 #include <term.h>
@@ -144,7 +144,7 @@ clearlastcol();
 void showcelltype (void)
 /* Prints the type of cell and what is in it */
 {
-char	c[MAXADR+1], f, a;
+char	c[MAXADR+1], f='Y', a;
 char	*t;
 int	p;
 int	color;
@@ -214,7 +214,7 @@ else
 		f	= 'x';
 		break;
 	 } /* switch */
-	switch ( cpattrib(curcell) )
+	switch ( cpattrbi(curcell) )
 	 {
 	 case BOLD:
 		a	= 'B';
@@ -226,6 +226,7 @@ else
 		a	= ' ';
 		break;
 	 } /* switch */
+	if (cpprotect(curcell)) a = a==' ' ? 'p' : tolower(a);
 	p	= cpplaces (curcell);
 	}
 writef	(0, curcelline, CELLCONTENTSCOLOR, SCREENWIDTH, "%s %s [%c%d%c]: %s",
