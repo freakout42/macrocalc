@@ -46,14 +46,14 @@ clean:
 
 #-------------------------------------------------------------------------------
 insall:
-	@echo "$@ done"
+	@: echo "$@ done"
 
 insclean:
-	@echo "$@ done"
+	@: echo "$@ done"
 
 #-------------------------------------------------------------------------------
 srcall:	mc mcmsg mcmacro mcunits mcread mc2wks db2rdb mcparse
-	@echo "$@ done"
+	@: echo "$@ done"
 
 srcclean:
 	rm -f	mcver.h f.tab.h l.tab.h y.tab.h lex.yy.c mcparl.c mcpary.c \
@@ -102,7 +102,7 @@ makefile:	mcuser.mk
 	cp makefile.$Sys $@
 
 libmcf.a:	$(BOBJ)
-	$(AR) $(ARFLAGS) $@ $? 2>/dev/null
+	$(AR) $(ARFLAGS) $@ $? >/dev/null 2>&1
 
 mcmsg:	mcmsg.o
 	$(CC) $(CFLAGS) mcmsg.o -o $@
@@ -163,7 +163,7 @@ mcrun.o:	mcrun.c mc.h mcell.h mcinput.h mchelp.h mcommand.h mcrmacro.h \
 
 mcmove.o:	mcmove.c mc.h mcdisply.h mcwindow.h mcfileio.h
 
-mcmenu.o:	mcmenu.c mc.h mcgetmnu.h mcellact.h mcwindow.h mcommand.h \
+mcmenu.o:	mcmenu.c mc.h mcgetmnu.h mcellact.h mcwindow.h mcommand.h mcmessag.h \
 		mcfile.h mcdisply.h mchelp.h mcact.h mcput.h
 
 mcrmacro.o:	mcrmacro.c mc.h mcget.h mcmessag.h
@@ -331,7 +331,7 @@ binall:	.copied
 	  cp /usr/local/bin/gzip-coff gzip; \
 	  chmod u+w gzip; \
 	fi
-	@echo "$@ done"
+	@: echo "$@ done"
 
 .copied:	../src/makefile
 	cp -p ../src/mc ../src/mcmsg ../src/mcmacro ../src/mcunits ../src/mc2wks ../src/mcread ../src/db2rdb .
@@ -344,7 +344,7 @@ binclean:
 
 #-------------------------------------------------------------------------------
 mcall:
-	@echo "$@ done"
+	@: echo "$@ done"
 
 mcclean:
 	rm -f $(SRC)
@@ -352,16 +352,16 @@ mcclean:
 #-------------------------------------------------------------------------------
 
 exmall:
-	@echo "$@ done"
+	@: echo "$@ done"
 
 exmclean:
-	@echo "$@ done"
+	@: echo "$@ done"
 
 #-------------------------------------------------------------------------------
 liball:	mcmsg.rdb mcmnu.rdb binunits
 	rm -f nro.*
 	cp ../nro/nro.s ../nro/nro.an .
-	@echo "$@ done"
+	@: echo "$@ done"
 
 libclean:
 	rm -f mcmsg*.rdb mcmnu*.rdb binunits nro.*
@@ -374,11 +374,11 @@ mcmnu.rdb: ../src/mcmnu.h
 	awk -F"	" '$$2=="us" {print $$3}' <../src/mcmenus.rdb  | tr ';' , >$@
 
 binunits:	mcunits.rdb
-	ARX=.. ../bin/mcunits -u
+	ARX=.. ../bin/mcunits -u >/dev/null
 
 #-------------------------------------------------------------------------------
 manall:	cat1/mc.1 cat1/mcunits.1 cat1/nro.1 cat1/db2rdb.1
-	@echo "$@ done"
+	@: echo "$@ done"
 
 manclean:
 	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 nro.1 cat1/*.1 tmac.an*
@@ -434,7 +434,7 @@ cat1/nro.1:	../nro/nro.man nro.1
 
 #-------------------------------------------------------------------------------
 nroall:	nro nro.man
-	@echo "$@ done"
+	@: echo "$@ done"
 
 nroclean:
 	rm -f nro *.o nro.man
@@ -456,7 +456,7 @@ nro.man:	nro nro.an nro.nro
 
 #-------------------------------------------------------------------------------
 mexall:	me
-	@echo "$@ done"
+	@: echo "$@ done"
 
 mexclean:
 	make clean
@@ -468,7 +468,7 @@ me:	Makefile
 #-------------------------------------------------------------------------------
 tstall: .tested
 	-ident ../bin/mc
-	@echo "$@ done"
+	@: echo "$@ done"
 
 .tested:
 	./testmc

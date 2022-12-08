@@ -7,6 +7,7 @@
 #include "mcellact.h"
 #include "mcwindow.h"
 #include "mcommand.h"
+#include "mcmessag.h"
 #include "mcfile.h"
 #include "mcdisply.h"	/* not nice! */
 #include "mchelp.h"
