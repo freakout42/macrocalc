@@ -155,6 +155,7 @@ o : e
 	cpvalue(pc) = .0;
 #endif
 	cptype(pc) = SYNERROR;
+	YYACCEPT;
 	}
   ;
 e : e OR e
