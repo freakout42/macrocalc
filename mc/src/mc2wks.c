@@ -16,7 +16,7 @@
 #include "mcutil.h"
 #include "mcfileio.h"
 
-static char rcsinfo[] = "$""Id: mc2wks " MCREL "." MCVER " " PLATFORM CCOMPILER " $";
+char rcsinfo[] = "$""Id: mc2wks " MCREL "." MCVER " " PLATFORM CCOMPILER " $";
 
 #define	DEFAULTBITS 8
 

@@ -16,7 +16,7 @@
 #include "mcfileio.h"
 #include "mcpform.h"
 
-static char rcsinfo[] = "$""Id: mcread " MCREL "." MCVER " " PLATFORM CCOMPILER " $";
+char rcsinfo[] = "$""Id: mcread " MCREL "." MCVER " " PLATFORM CCOMPILER " $";
 
 #define	DEFAULTBITS 8
 
