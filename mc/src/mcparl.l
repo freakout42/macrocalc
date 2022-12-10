@@ -296,6 +296,17 @@ mybuf = yy_scan_string(buffer);
 #endif
 }
 
+int yybufpos(char *origpos)
+{
+return
+#ifdef FLEX_SCANNER
+  strlen(mybuf->yy_buf_pos)
+#else
+  0
+#endif
+;
+}
+
 void yyclrbuf()
 {
 #ifdef FLEX_SCANNER

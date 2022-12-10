@@ -12,6 +12,7 @@
 #include "mc.h"
 #include "mcell.h"
 #include "mcelladr.h"
+#include "mcmessag.h"
 #include "mcparse.h"
 
 extern int 	yydebug;
@@ -19,6 +20,7 @@ int		yybegin();
 int		yyparse();
 void		yysetbuf();
 void		yyclrbuf();
+int		yybufpos();
 
 #ifndef LOTUS
 int origcol, origrow; /* original column */
@@ -139,6 +141,7 @@ yytoparse--;
 
 void yyerror (void)
 {
+yytoparse += yybufpos(yytoparse);
 errpos = gettoparse(yytoparse);
 yyerrorflg = 1;
 }
