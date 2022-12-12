@@ -4,8 +4,8 @@
 .nr yr \n(y4-2000
 .nr C 0 1
 .de Id
-.ds Rv \\$3
-.ds Dt \\$4
+.\"ds Rv \\$3
+.\"ds Dt \\$4
 ..
 .de DS		\" Indented display (sleazy version)
 .br

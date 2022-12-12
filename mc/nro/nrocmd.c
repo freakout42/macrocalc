@@ -386,7 +386,7 @@ FILE *infp;
 	i = 0;
 	while (getlin(p,infp) != EOF)
 	{
-		if (p[0] == dc.cmdchr && tolower(p[1]) == 'e' && tolower(p[2]) == 'n')
+		if (p[0] == dc.cmdchr && (tolower(p[1]) == 'e' && tolower(p[2]) == 'n' || p[1] == '.' && p[2] == '.'))
 		{
 			break;
 		}

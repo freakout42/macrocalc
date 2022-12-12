@@ -9,7 +9,7 @@ case `uname -s` in
 esac
 HARDID=${HARDID:-x86}
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done
-rm -rf Makefile mc/man/cat1 dist
+rm -rf Makefile dist
 test "$1" = "clean" && exit
 DISTID=mc-$VERSID-$PLATID-$HARDID
 echo "configuring for $DISTID" >&2
@@ -34,7 +34,6 @@ dist/arx.tar.gz: mc/tst/.tested
 	if [ -d archive ]; then cp dist/arx.tar.gz archive/$DISTID.tar.gz; fi
 mc/tst/.tested: arx/lib/libarx.a
 	rm -f \$@
-	-mkdir mc/man/cat1
 	cd mc; make -f Makefile.in init PLATID="${PLATID}"; cp Makefile.${PLATID} Makefile; make all PLATFORM="${HARDID}" PLATID="${PLATID}"
 	test -f \$@
 arx/lib/libarx.a:
