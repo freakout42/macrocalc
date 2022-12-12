@@ -139,6 +139,7 @@ struct docctl {
 	int juval;	/* justify if YES, init = YES		*/
 	int boval;	/* number of lines to bold face, init = 0 */
 	int bsflg;	/* can output contain '\b', init = FALSE */
+	int soflg;	/* soelim mode -o, init = FALSE */
 	char pgchr;	/* page number character, init = '#'	*/
 	char cmdchr;	/* command character, init = '.'	*/
 	int prflg;	/* print on or off, init = TRUE		*/

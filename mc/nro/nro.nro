@@ -608,10 +608,10 @@ Unfortunately
 nroff
 is not available on some UNIX systems,
 due to the rip-off policy of some UNIX-vendors,
-to ask for extra money for the UNIX text-formatting-utilities.
+to ask for extra money for the UNIX text formatting utilities.
 For those sites, which want to use
 \fBmc\fP, but have no text formatting subsystem,
-this mini-nroff-implementation will be fine to do the job
+this mini nroff implementation will be fine to do the job
 of printing
 with
 .bo

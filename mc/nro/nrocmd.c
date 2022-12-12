@@ -490,7 +490,7 @@ char *m;
 	return(UNKNOWN);
 }
 
-void
+int
 comand(p)
 char *p;
 {
@@ -502,10 +502,11 @@ char *p;
 	char macexp[MXMLEN];
 
 	ct = comtyp(p,macexp);
+	if (ct != SO && ct != CC && dc.soflg) { return TRUE; }
 	if (ct == UNKNOWN)
 	{
 		fprintf (stderr, "nro: unrecognized command %s\n",p);
-		return;
+		return FALSE;
 	}
 	expesc(p,name);
 	val = getval(p,&argtyp);
@@ -536,6 +537,7 @@ char *p;
 			dc.cmdchr = '.';
 		else
 			dc.cmdchr = argtyp;
+		if (dc.soflg) { return TRUE; }
 		break;
 
 	case CE: /* center */
@@ -710,9 +712,8 @@ char *p;
 		dc.cuval = dc.boval = 0;
 		break;
 	}
+	return FALSE;
 }
-
-
 
 /*
  *	convert ascii character to decimal.

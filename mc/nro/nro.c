@@ -23,7 +23,7 @@
 int ctod();
 void set();
 void space();
-void comand();
+int comand();
 void text();
 
 /*
@@ -45,6 +45,7 @@ init()
 	dc.juval = YES;
 	dc.boval = 0;
 	dc.bsflg = TRUE;
+	dc.soflg = FALSE;
 	dc.pgchr = '#';
 	dc.cmdchr = '.';
 	dc.prflg = TRUE;
@@ -146,10 +147,17 @@ profile()
 	{
 		while (getlin(ibuf,sofile[dc.flevel]) != EOF)
 		{
-			if (ibuf[0] == dc.cmdchr)
-				comand(ibuf);
-			else 
+			if (ibuf[0] == dc.cmdchr) {
+			 if (comand(ibuf)) {
+				putlin(ibuf, pout);
+			 }
+			} else {
+			 if (dc.soflg) {
+				putlin(ibuf, pout);
+			 } else {
 				text(ibuf);
+			 }
+			}
 		}
 		if(dc.flevel > 0)
 			fclose(sofile[dc.flevel]);
@@ -184,6 +192,10 @@ int *q;
 			dc.bsflg = FALSE;
 			break;
 
+		case 'o':
+			dc.soflg = TRUE;
+			break;
+
 		case 'm':
 #ifdef UNIX
 			f = macroname;
@@ -206,7 +218,7 @@ int *q;
 			break;
 
 		case 'v':
-			fprintf (stderr,"nro version 1.1\n");
+			fprintf (stderr,"nro version 1.2\n");
 			*q = TRUE;
 			break;
 
@@ -258,6 +270,7 @@ char *argv[];
 	ifp = stdin;
 	ofp = stdout;
 	init();
+	dc.soflg = strstr(argv[0], "soelim") != NULL;
 	for (i=1; i<argc; ++i)
 	{
 		if (*argv[i] == '-' || *argv[i] == '+')

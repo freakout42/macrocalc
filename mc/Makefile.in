@@ -31,6 +31,13 @@ CFLAGS=$Cflag $(CFLAG)
 AR=$Ar
 ARFLAGS=rsv
 
+%.1: %.r
+	../nro/soelim <$< | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+
+%.2: %.1
+	$(NROFF) $(NFLAGS) -man $< | col -b >$@
+#	../nro/nro $< | col -b >$@
+
 all:
 	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all PLATID=$(PLATID) || break; cd ..; done
 
@@ -381,7 +388,7 @@ manall:	cat1/mc.1 cat1/mcunits.1 cat1/nro.1 cat1/db2rdb.1
 	@: echo "$@ done"
 
 manclean:
-	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 nro.1 cat1/*.1 tmac.an*
+	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 nro.1 nro.r cat1/*.1 tmac.an* *.2
 
 tmac.an:	$(ARXSRC)/man/tmac.an
 	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.an >$@
@@ -389,15 +396,23 @@ tmac.an:	$(ARXSRC)/man/tmac.an
 tmac.anp:	$(ARXSRC)/man/tmac.anp
 	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.anp >$@
 
-cat1/mc.1:	mc.1
-	$(NROFF) $(NFLAGS) -man mc.1 | col -b >$@
+mc.2: mc.1
+mcunits.2: mcunits.1
+db2rdb.2: db2rdb.1
+nro.2: nro.1
 
-mc1.html:	mc.1
-	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' | sed '/^This document was created by/,/^Time: /d' >$@
+cat1/mc.1:	mc.2
+	cp mc.2 $@
+
+tmac.ant: tmac.an
+	echo '.ta 0 10' | cat - tmac.an >$@
+
+mc1.html:	mc.1 tmac.ant
+	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' | sed '/^This document was created by/,/^Time: /d' >$@
 	diff $@ ../../docs/$@
 
-mc2.html:	mc.1
-	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.an - | groff -mandoc -Thtml >$@
+mc2.html:	mc.1 tmac.ant
+	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | groff -mandoc -Thtml >$@
 
 mc.1:	tmac.an mc.r \
 	mcdesc.r mccont.r mcopt.r mcover.r mcfile.r mccalc.r mckey.r mcmove.r \
@@ -405,7 +420,7 @@ mc.1:	tmac.an mc.r \
 	mcunit.r mcpipe.r mcrdb.r mclink.r mcmath.r mclogic.r mcfinc.r \
 	mcstat.r mctime.r mcstring.r mcuser.r mclang.r mcprint.r mcattr.r \
 	mc2wks.r mcdbase.r mcsample.r mclimit.r mcfiles.r mcver.r
-	soelim <mc.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+	../nro/soelim <mc.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
 mc.r:	mcver.r
 	-chmod +w $@
@@ -415,29 +430,32 @@ mcver.r:	../Name
 	awk '	{printf ".ds Vs %s\n.nr V %s\n", $$2, substr($$2,2,1)}' <../Name >$@
 
 db2rdb.1:	db2rdb.r dbdesc.r dbopt.r dbfile.r dbfiles.r dblimit.r dbsample.r
-	soelim <db2rdb.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
-cat1/db2rdb.1:	db2rdb.1
-	$(NROFF) $(NFLAGS) -man db2rdb.1 | col -b >$@
+cat1/db2rdb.1:	db2rdb.2
+	cp db2rdb.2 $@
 
 mcunits.1:	mcunits.r
-	soelim <mcunits.r | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
-cat1/mcunits.1:	mcunits.1
-	$(NROFF) $(NFLAGS) -man mcunits.1 | col -b >$@
+cat1/mcunits.1:	mcunits.2
+	cp mcunits.2 $@
 
-nro.1: ../nro/nro.nro
-	soelim <../nro/nro.nro | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+nro.r: ../nro/nro.nro
+	cp ../nro/nro.nro $@
 
-cat1/nro.1:	../nro/nro.man nro.1
+nro.1: nro.r
+
+cat1/nro.1:	../nro/nro.man nro.2
 	cp ../nro/nro.man $@
 
 #-------------------------------------------------------------------------------
-nroall:	nro nro.man
+nroall:	soelim nro.man
 	@: echo "$@ done"
 
 nroclean:
-	rm -f nro *.o nro.man
+	rm -f nro soelim *.o nro.man
+
+soelim: nro
+	cp nro $@
 
 nro:	nro.o nrotxt.o nrocmd.o
 	$(CC) nro.o nrotxt.o nrocmd.o -o $@
