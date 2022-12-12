@@ -34,9 +34,11 @@ ARFLAGS=rsv
 %.1: %.r
 	../nro/soelim $< | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
-%.2: %.r tmac.an
-	../nro/nro -man tmac.an $< | col -b >$@
-#	$(NROFF) $(NFLAGS) -man $< | col -b >$@
+%.2: %.1
+	$(NROFF) $(NFLAGS) -man $< | col -b >$@
+
+#%.2: %.r tmac.an
+#	../nro/nro -man tmac.an $< | col -b >$@
 
 all:
 	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all PLATID=$(PLATID) || break; cd ..; done
@@ -390,15 +392,15 @@ manall:	mc.1 mcunits.1 nro.1 db2rdb.1
 manclean:
 	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 nro.1 nro.r tmac.an* *.2
 
-tmac.an:	$(ARXSRC)/man/tmac.anp
-	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.anp >$@
+tmac.an:	$(ARXSRC)/man/tmac.an
+	sed '/^\.\\"/d' <$(ARXSRC)/man/tmac.an >$@
 
 tmac.ant: tmac.an
 	echo '.ta 0 10' | cat - tmac.an >$@
 
 mc1.html:	mc.1 tmac.ant
-	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' | sed '/^This document was created by/,/^Time: /d' >$@
-	diff $@ ../../docs/$@
+	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' | sed '/^This document was created by/,/^Time: /d' | sed 's/<BR>Updated: //' >$@
+	diff ../../docs/$@ $@
 
 mc2.html:	mc.1 tmac.ant
 	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | groff -mandoc -Thtml >$@

@@ -13,9 +13,7 @@ Supports Dbase II, III, IV and dBMAN V database formats.
 .SH Synopsis
 \fBdb2rdb\fP [\fI-option...\fP] [\fIfile\fP]
 .so dbdesc.r
-.bp
 .so dbopt.r
-.bp
 .so dbfile.r
 .so dblimit.r
 .so dbfiles.r
