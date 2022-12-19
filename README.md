@@ -1,3 +1,4 @@
+[![MacroCALC](https://mc.freakout.de/assets/logo.jpg "")](https://mc.freakout.de/ "MacroCALC")
 <p align="center">
   <a href="https://mc.freakout.de/">
     <img alt="MacroCALC" src="https://mc.freakout.de/assets/logo.jpg" width="400" />
