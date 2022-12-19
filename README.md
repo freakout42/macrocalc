@@ -16,19 +16,19 @@ miles; 1 km / 1 hour * 30 sec = 8.33 m.  This can be seen as a physics engine.
 On the way is also the support of complex numbers with complex arithmetic and
 functions.  So sqrt(-1) = i (coming soon).
 
-### BUILD (and run)
+### Build (and run)
 Building mc needs an ANSI-C compiler with curses-lib, lex and yacc.  Run
 "./configure" followed by "make".  All programs are build into ./dist/arx and
 can run without sudo-installation directly from the build-driectory.  To start
 the spreadsheet simply: "dist/arx/bin/321"
 
-### INSTALL (system-wide)
+### Install (system-wide)
 "sudo make install" installs mc systemwide in /opt/arx/.  Nothing outside
 /opt/arx/ will be touched in any way by the installation.  Removing mc is simply
 done by a recursive "rm -r /opt/arx".  For convenience /opt/arx/bin should be
 added to the PATH in a system appropriate manner.
 
-### GETTING STARTED
+### Getting started
 Navigate through the sheet with the arrow-keys. The dot (.) marks the
 beginning and end of a range, which can be copied or manipulated with the
 menu by the slash (/). The apostrophe (') starts a text-cell, any other
@@ -49,6 +49,7 @@ you have copied the range A1..A4 to B1..B4 and B2=3 B3=4 and B4=5.
 Why is B3=5 and not 3 or 7? Because you typed $ after a3 this makes it
 a relative cell reference and refers to B3 in the copied formula.
 
+### License
     Simplified BSD License
     Copyright (c) 2022, Axel K. Reinhold
     All rights reserved.
