@@ -71,7 +71,7 @@ key a number or formula. Open "mc" and type (|v| is the down-arrow-key):
     . ' h e l l o |v|  
 
 you have marked A1 as range starting point and set A1 to text "hello".
-Lets enter some numbers and a formula by typing:
+Lets enter some numbers and a formula:
 
     1 |v| 2 |v| . a 2 + a 3 $ |v|  
 
