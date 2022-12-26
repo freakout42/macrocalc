@@ -199,6 +199,6 @@ return (0);
 
 badformat:
 	fclose (d->file_ptr);
-	fprintf (stderr, "header wrong i=%d\n", i);
+	fprintf (stderr, "header wrong i=%d\n", (int)i);
 	return (BAD_FORMAT);
 }
