@@ -1,4 +1,4 @@
-/* $Id: dbf_open.c,v 1.6 2016/11/01 16:20:52 axel Exp $
+/* dbf_open.c 1.6 2016/11/01 16:20:52 axel
  * purpose:		routine to open a dbaseiii file for access by the
  *			other routines in dbf.lib.
  * usage:		d = (struct DBF *)malloc(sizeof(struct DBF));
@@ -30,6 +30,7 @@ struct FIELD_RECORD2	f2[MAX_FIELDS2];
 struct FIELD_DBMAN	fm[MAX_FIELDS];
 unsigned char fld;
 unsigned short n;
+size_t i = 0;
 
 d->status = not_open;
 if (d->file_ptr == NULL)
@@ -37,7 +38,8 @@ if (d->file_ptr == NULL)
 	    (d->file_ptr = fopen (d->filename,"rb")) == NULL)
 		return (NO_FILE);
 
-fread (&d->p.dbf_version, 1, 1, d->file_ptr);
+i = fread (&d->p.dbf_version, 1, 1, d->file_ptr);
+if (i != 1) goto badformat;
 #ifdef DEBUG
 fprintf (stderr, "version: %2x %d\n",
 		d->p.dbf_version, d->p.dbf_version & DBVERSION);
@@ -46,8 +48,8 @@ switch (d->p.dbf_version & DBVERSION)	/* check for dbase file marker */
  {
  case DBMANFILE:
 	dm.v.dbman_ver[0] = d->p.dbf_version;
-	fread (&dm.v.dbman_ver[1], 1, sizeof(struct DBMANPROLOG)-1,
-		d->file_ptr);
+	i = fread (&dm.v.dbman_ver[1], sizeof(struct DBMANPROLOG)-1, 1, d->file_ptr);
+  if (i != 1) goto badformat;
 	lib_cano(dm.v.dbman_version);
 	lib_cano(dm.records);
 	lib_cano(dm.record_length);
@@ -75,11 +77,13 @@ switch (d->p.dbf_version & DBVERSION)	/* check for dbase file marker */
 		goto badformat;
 		}
 	/* read into field description array DBMAN */
-	fread (fm, sizeof (struct FIELD_DBMAN), d->fields, d->file_ptr);
+	i = fread (fm, sizeof (struct FIELD_DBMAN), d->fields, d->file_ptr);
+  if (i != d->fields) goto badformat;
 	for (fld=0; fld<d->fields; fld++) lib_cano(fm[fld].len);
 	break;
  case DB2FILE:
-	fread (&d2.dbf_version+1, 1, sizeof(struct DBFPROLOG2)-1, d->file_ptr);
+	i = fread (&d2.dbf_version+1, sizeof(struct DBFPROLOG2)-1, 1, d->file_ptr);
+  if (i != 1) goto badformat;
 	lib_cano(d2.records);
 	lib_cano(d2.record_length);
 	d->p.update_yr		= d2.update_yr;
@@ -88,7 +92,8 @@ switch (d->p.dbf_version & DBVERSION)	/* check for dbase file marker */
 	d->p.records		= d2.records;
 	d->p.record_length	= d2.record_length;
 	/* read into field description array II */
-	fread (f2, sizeof (struct FIELD_RECORD2), MAX_FIELDS2, d->file_ptr);
+	i = fread (f2, sizeof (struct FIELD_RECORD2), MAX_FIELDS2, d->file_ptr);
+  if (i != MAX_FIELDS2) goto badformat;
 	for (fld=0; fld<MAX_FIELDS2; fld++)
 		{
 		lib_cano(f2[fld].field_data_address);
@@ -98,8 +103,8 @@ switch (d->p.dbf_version & DBVERSION)	/* check for dbase file marker */
 	break;
  case DB3FILE:
  case DB4FILE:
-	fread (&d->p.dbf_version+1, 1, sizeof(struct DBFPROLOG)-1,
-		d->file_ptr);
+	i = fread (&d->p.dbf_version+1, sizeof(struct DBFPROLOG)-1, 1, d->file_ptr);
+  if (i != 1) goto badformat;
 	lib_cano(d->p.records);
 	lib_cano(d->p.header_length);
 	lib_cano(d->p.record_length);
@@ -117,10 +122,7 @@ switch (d->p.dbf_version & DBVERSION)	/* check for dbase file marker */
  default:
 	fprintf (stderr,
 		 "unknown version indicator %d\n", d->p.dbf_version&DBVERSION);
- badformat:
-	fclose (d->file_ptr);
-	fprintf (stderr, "header wrong\n");
-	return (BAD_FORMAT);
+		goto badformat;
  }
 
 if ((d->fields_ptr = (struct FIELD_RECORD *)
@@ -150,7 +152,8 @@ switch (d->p.dbf_version & DBVERSION)	/* read into field description array III *
 	break;
  case DB3FILE:
  case DB4FILE:
-	fread (d->fields_ptr, FIELD_REC_LEN, d->fields, d->file_ptr);
+	i = fread (d->fields_ptr, FIELD_REC_LEN, d->fields, d->file_ptr);
+  if (i != d->fields) goto badformat;
 	break;
  }
 
@@ -166,7 +169,10 @@ if ((d->p.dbf_version & DBVERSION) != DBMANFILE)
 	if ((d->p.dbf_version & DBVERSION)==DB3FILE &&
 	    !(d->p.dbf_version&DB3PLUS) && n != 1)
 		lib_mesg ("warning: plus tailer wrong\n");
-	if (n>0) fread (&d2, 1, n, d->file_ptr); /* read rest of header */
+	if (n>0) {
+    i = fread (&d2, 1, n, d->file_ptr); /* read rest of header */
+    if (i != n) goto badformat;
+    }
 	}
 
 d->current_record = 0L;
@@ -190,4 +196,9 @@ if (n != d->p.record_length)
 
 d->status = not_updated;		 /* open successfull */
 return (0);
+
+badformat:
+	fclose (d->file_ptr);
+	fprintf (stderr, "header wrong i=%d\n", i);
+	return (BAD_FORMAT);
 }

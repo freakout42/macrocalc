@@ -186,3 +186,4 @@ struct page {
 };
 
 char *getmac();
+void putlin();
