@@ -1526,7 +1526,7 @@ int spawncli(f, n)
 	i = system(cp);
 	ttopen();
 	sgarbf = TRUE;
-	return(TRUE);
+	return(i==-1 ? FALSE : TRUE);
 #endif
 }
 
@@ -1701,7 +1701,7 @@ done:
 	j = fgets(line, sizeof(line), stdin);	/* Pause.		*/
 	ttopen();
 	sgarbf = TRUE;
-	return (TRUE);
+	return(i==-1 || j==NULL ? TRUE : TRUE); /* nowarn unused */
 #endif
 }
 
