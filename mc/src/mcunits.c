@@ -563,7 +563,8 @@ void update (void)
 				}
 			units[i].u_name -= (long)sstart;/* Rel. address */
 			}
-		write(bfd, units, nunits*sizeof(UNIT));
+		i = write(bfd, units, nunits*sizeof(UNIT));
+    if (i == -1) goto bad;
 		for (i=0; i!=nunits; i++)
 			units[i].u_name += (long)sstart;
 	bad:
