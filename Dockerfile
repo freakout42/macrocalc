@@ -5,3 +5,5 @@
 FROM scratch
 COPY dockeroot /
 CMD ["/opt/arx/bin/mc","-u"]
+# docker build -t macrocalc:10.25 .
+# docker run -e COLUMNS="`tput cols`" -e LINES="`tput lines`" --tty --interactive --env TERM macrocalc:10.25
