@@ -12,6 +12,11 @@ miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
 On the way is also the support of complex numbers with complex arithmetic and
 functions. So sqrt(-1) = i (coming soon).
 
+Docker (pull package and run)
+-----------------------------
+    docker pull ghcr.io/freakout42/macrocalc:10.25
+    docker run -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -e TERM -ti ghcr.io/freakout42/macrocalc:10.25
+
 Build (and run)
 ---------------
 Building mc needs an ANSI-C compiler with curses-lib, lex and yacc. Run
