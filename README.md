@@ -20,15 +20,15 @@ Docker (pull package and run)
 Build (and run)
 ---------------
 Building mc needs an ANSI-C compiler with curses-lib, lex and yacc. Run
-"./configure" followed by "make". All programs are build into ./dist/arx and
+`./configure` followed by `make`. All programs are build into ./dist/arx and
 can run without sudo-installation directly from the build-driectory. To start
-the spreadsheet simply: "dist/arx/bin/321"
+the spreadsheet simply: `dist/arx/bin/321`
 
 Install (system-wide)
 ---------------------
-"sudo make install" installs mc systemwide in /opt/arx/. Nothing outside
+`sudo make install` installs mc systemwide in /opt/arx/. Nothing outside
 /opt/arx/ will be touched in any way by the installation. Removing mc is simply
-done by a recursive "rm -r /opt/arx". For convenience /opt/arx/bin should be
+done by a recursive `rm -r /opt/arx`. For convenience /opt/arx/bin should be
 added to the PATH in a system appropriate manner.
 
 Getting started
