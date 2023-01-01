@@ -15,7 +15,9 @@ functions. So sqrt(-1) = i (coming soon).
 Docker (pull package and run)
 -----------------------------
     docker pull ghcr.io/freakout42/macrocalc:10.25
-    docker run -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -e TERM -ti ghcr.io/freakout42/macrocalc:10.25
+    export COLUMNS="`tput cols`"
+    export LINES="`tput lines`"
+    docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:10.25
 
 Build (and run)
 ---------------
