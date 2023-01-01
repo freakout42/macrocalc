@@ -6,4 +6,3 @@ FROM scratch
 LABEL org.opencontainers.image.source=https://github.com/freakout42/macrocalc
 COPY dockeroot /
 CMD ["/opt/arx/bin/mc","-u"]
-# docker run -e COLUMNS="`tput cols`" -e LINES="`tput lines`" --tty --interactive --env TERM macrocalc:10.25
