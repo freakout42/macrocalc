@@ -1513,6 +1513,8 @@ int spawncli(f, n)
 #if	V7
 	register char *cp;
 	char	*getenv();
+  int i;
+
 	if (playback == TRUE)
 		return (FALSE);
 	if (!((cp = getenv("SHELL")) != NULL && *cp != '\0'))
@@ -1521,10 +1523,10 @@ int spawncli(f, n)
 	movecursor(term.t_nrow, 0);		/* Seek to last line.	*/
 	(*term.t_flush)();
 	ttclose();				/* stty to old settings	*/
-	system(cp);
+	i = system(cp);
 	ttopen();
 	sgarbf = TRUE;
-	return(TRUE);
+	return(i==-1 ? FALSE : TRUE);
 #endif
 }
 
@@ -1684,19 +1686,22 @@ done:
 #if	V7
 	register int	s;
 	char		line[NLINE];
+  int i;
+  char *j;
+
 	if (playback == TRUE)
 		return (FALSE);
 	s = mlreply("Shell command", (char*)0, line, NLINE, FALSE);
 	if (s != TRUE && s != FALSE)
 		return (ctrlg());
 	ttclose();				/* stty to old modes	*/
-	system(line);
+	i = system(line);
 	printf("[End]");
 	fflush(stdout);
-	fgets(line, sizeof(line), stdin);	/* Pause.		*/
+	j = fgets(line, sizeof(line), stdin);	/* Pause.		*/
 	ttopen();
 	sgarbf = TRUE;
-	return (TRUE);
+	return(i==-1 || j==NULL ? TRUE : TRUE); /* nowarn unused */
 #endif
 }
 

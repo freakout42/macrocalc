@@ -169,6 +169,7 @@ if (s == NULL) {
  if (strcmp(*t, s)) {
   if (strlen(*t) < strlen(s)) {
     n = realloc(*t, strlen(s)+1);
+    if (n == NULL) return; /* ToDo SHOULD BE HANDLED */
   }
  strcpy(*t, s);
  }
