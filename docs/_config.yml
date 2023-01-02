@@ -5,6 +5,7 @@ title: MacroCALC
 url: https://mc.freakout.de
 show_downloads: true
 show_edgerelease: true
+show_footer: false
 logo: /assets/logo.jpg
 latestrel: "10.15"
 edgerelease: "10.20"
