@@ -158,8 +158,6 @@ return RET_SUCCESS;
 } /* deletecell */
 
 static void strdupi(char **t, char *s) {
-void *n;
-
 if (s == NULL) {
  free(*t);
  *t = NULL;
@@ -168,8 +166,8 @@ if (s == NULL) {
 } else {
  if (strcmp(*t, s)) {
   if (strlen(*t) < strlen(s)) {
-    n = realloc(*t, strlen(s)+1);
-    if (n == NULL) return; /* ToDo SHOULD BE HANDLED */
+    *t = realloc(*t, strlen(s)+1);
+    if (*t == NULL) return; /* ToDo SHOULD BE HANDLED */
   }
  strcpy(*t, s);
  }
