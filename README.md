@@ -28,7 +28,7 @@ done by a recursive `rm -r /opt/arx`. For convenience /opt/arx/bin should be
 added to the PATH in a system appropriate manner. `321` or `mc` will then work.
 
 3. __Binary with precompiled tarball__  
-Download the released assets `mc-<releasetag>-<platform>-<Hardware>.tar.gz`
+Download the released asset `mc-<releasetag>-<platform>-<Hardware>.tar.gz`
 for your platform (lu-Linux fb-FreeBSD md-MacOS) and untar to `/opt/arx`, add
 /opt/arx/bin to $PATH and you are done to use the system by `321` or `mc`.
 
@@ -39,10 +39,10 @@ Download macrocalc-<releasetag>.i386.rpm and
 After a relogin macrocalc will start by `321` or `mc`.
 
 5. __Docker image__  
-    docker pull ghcr.io/freakout42/macrocalc:latest
-    export COLUMNS="`tput cols`"
-    export LINES="`tput lines`"
-    docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest
+`docker pull ghcr.io/freakout42/macrocalc:latest`  
+`export COLUMNS="`tput cols`"`  
+`export LINES="`tput lines`"`  
+`docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
 Getting started
 ---------------
