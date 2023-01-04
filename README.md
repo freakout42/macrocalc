@@ -17,20 +17,20 @@ functions. So sqrt(-1) = i (coming soon).
 
 1. __Build from source und install for one user only without sudo__  
 Building mc needs an ANSI-C compiler with curses-lib, lex and yacc. Clone and
-`./configure` followed by `make`. All programs are build into ./dist/arx and
+`./configure` followed by `make`. All programs are build into `./dist/arx` and
 can run without sudo-installation directly from the build-driectory. To start
 the spreadsheet simply: `dist/arx/bin/321` - for a user-install you are done.
 
 2. __Install systemwide__  
-After build (1.) `sudo make install` installs in /opt/arx/. Nothing outside
+After build (1.) `sudo make install` installs in `/opt/arx/.` Nothing outside
 /opt/arx/ will be touched in any way by the installation. Removing mc is simply
-done by a recursive `rm -r /opt/arx`. For convenience /opt/arx/bin should be
+done by a recursive `rm -r /opt/arx`. For convenience `/opt/arx/bin` should be
 added to the PATH in a system appropriate manner. `321` or `mc` will then work.
 
 3. __Binary with precompiled tarball__  
 Download the released asset `mc-<releasetag>-<platform>-<hardware>.tar.gz`
 for your platform (lu-Linux fb-FreeBSD md-MacOS) and untar to `/opt/arx`, add
-/opt/arx/bin to $PATH and you are done to use the system by `321` or `mc`.
+`/opt/arx/bin` to $PATH and you are done to use the system by `321` or `mc`.
 
 4. __RPM package install__  
 Download `macrocalc-<releasetag>.i386.rpm` and  
