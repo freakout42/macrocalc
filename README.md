@@ -40,8 +40,8 @@ After a relogin macrocalc will start by `321` or `mc`.
 
 5. __Docker image__  
 `docker pull ghcr.io/freakout42/macrocalc:latest`  
-`export COLUMNS="`tput cols`"`  
-`export LINES="`tput lines`"`  
+`export COLUMNS="$(tput cols)"`  
+`export LINES="$(tput lines)"`  
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
 Getting started
