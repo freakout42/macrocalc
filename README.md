@@ -12,26 +12,28 @@ miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
 On the way is also the support of complex numbers with complex arithmetic and
 functions. So sqrt(-1) = i (coming soon).
 
+4 Install options
+-----------------
+1. Build from source und install 
+Building mc needs an ANSI-C compiler with curses-lib, lex and yacc. Run
+`./configure` followed by `make`. All programs are build into ./dist/arx and
+can run without sudo-installation directly from the build-driectory. To start
+the spreadsheet simply: `dist/arx/bin/321` - for a user-install you are done.
+`sudo make install` installs mc systemwide in /opt/arx/. Nothing outside
+/opt/arx/ will be touched in any way by the installation. Removing mc is simply
+done by a recursive `rm -r /opt/arx`. For convenience /opt/arx/bin should be
+added to the PATH in a system appropriate manner.
+2. general availability
+binaries: lu-Linux fb-FreeBSD md-MacOS
+untar to /opt/arx and add /opt/arx/bin to $PATH
+3. 
+
 Docker (pull package and run)
 -----------------------------
     docker pull ghcr.io/freakout42/macrocalc:latest
     export COLUMNS="`tput cols`"
     export LINES="`tput lines`"
     docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest
-
-Build (and run)
----------------
-Building mc needs an ANSI-C compiler with curses-lib, lex and yacc. Run
-`./configure` followed by `make`. All programs are build into ./dist/arx and
-can run without sudo-installation directly from the build-driectory. To start
-the spreadsheet simply: `dist/arx/bin/321`
-
-Install (system-wide)
----------------------
-`sudo make install` installs mc systemwide in /opt/arx/. Nothing outside
-/opt/arx/ will be touched in any way by the installation. Removing mc is simply
-done by a recursive `rm -r /opt/arx`. For convenience /opt/arx/bin should be
-added to the PATH in a system appropriate manner.
 
 Getting started
 ---------------
