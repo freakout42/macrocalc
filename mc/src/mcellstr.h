@@ -1,5 +1,4 @@
-/* $Id: mcellstr.h,v 1.3 1995/02/22 16:23:48 axel Rel $
- */
+/* mcellstr.h,v 1.3 1995/02/22 16:23:48 axel */
 
 char *cellstring (int col, int row, int *color, int formatting);
 unsigned char convertformat (unsigned char format);

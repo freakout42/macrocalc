@@ -1,4 +1,4 @@
-.Id $Id: db2rdb.r,v 1.2 1995/06/10 16:30:05 axel Rel $
+.Id db2rdb.r,v 1.2 1995/06/10 16:30:05 axel
 .TH db2rdb 1 \*(Dt "/ARX cleanware" "db2rdb"
 .UC 3
 .SH Name

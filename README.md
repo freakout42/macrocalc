@@ -22,8 +22,8 @@ can run without sudo-installation directly from the build-driectory. To start
 the spreadsheet simply: `dist/arx/bin/321` - for a user-install you are done.
 
 2. __Install systemwide__  
-After build (1.) `sudo make install` installs in `/opt/arx/.` Nothing outside
-/opt/arx/ will be touched in any way by the installation. Removing mc is simply
+After build (1.) `sudo make install` installs in `/opt/arx/`. Nothing outside
+`/opt/arx/` will be touched in any way by the installation. Removing mc is simply
 done by a recursive `rm -r /opt/arx`. For convenience `/opt/arx/bin` should be
 added to the PATH in a system appropriate manner. `321` or `mc` will then work.
 

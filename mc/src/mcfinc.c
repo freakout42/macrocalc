@@ -1,5 +1,4 @@
-/* $Id: mcfinc.c,v 1.2 1995/02/24 10:22:52 axel Rel $
- */
+/* mcfinc.c,v 1.2 1995/02/24 10:22:52 axel */
 
 #include <math.h>
 #include <errno.h>

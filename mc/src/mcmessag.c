@@ -1,5 +1,4 @@
-/* $Id: mcmessag.c,v 1.6 1999/10/18 11:48:23 axel Exp $
- */
+/* mcmessag.c,v 1.6 1999/10/18 11:48:23 axel */
 
 #include <string.h>
 #include <stdarg.h>

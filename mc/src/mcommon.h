@@ -1,5 +1,4 @@
-/* $Id: mcommon.h,v 1.15 2002/10/17 12:25:50 axel Exp $
- */
+/* mcommon.h,v 1.15 2002/10/17 12:25:50 axel */
 
 extern char license;
 extern char *progname;

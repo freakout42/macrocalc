@@ -1,5 +1,4 @@
-/* $Id: mc2wks.c,v 1.14 2006/09/27 06:22:46 axel Exp $
- */
+/* mc2wks.c,v 1.14 2006/09/27 06:22:46 axel */
 
 #include <unistd.h>
 #include <time.h>
