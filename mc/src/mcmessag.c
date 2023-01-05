@@ -26,7 +26,7 @@ void smessage (char *s)
 /* Prints a string-message */
 {
 rmendnl (s);
-writef (0, errorline, PROMPTCOLOR, SCREENWIDTH-1, s);
+writef (0, errorline, PROMPTCOLOR, SCREENWIDTH, s);
 move (errorline, 0);
 } /* message */
 
@@ -49,9 +49,12 @@ dmessage (m);
 void errorstr (char *s)
 /* Prints an error line */
 {
+int maxl;
+
 rmendnl (s);
 beep();      /* Beeps the speaker */
-writef (0, errorline, MESSAGECOLOR, SCREENWIDTH-1, "%s %s", s, TXTKEYPRESS);
+maxl = SCREENWIDTH - strlen(TXTKEYPRESS) - 1;
+writef (0, errorline, MESSAGECOLOR, SCREENWIDTH, "%-.*s %s", maxl, s, TXTKEYPRESS);
 move (errorline, 0);
 cur_getp (stdscr);
 clrtoeol();
@@ -72,7 +75,7 @@ char m[MAXSCREENWIDTH+1];
 
 getmessage (m, prompt);
 rmendnl (m);
-writef (0, errorline, PROMPTCOLOR, SCREENWIDTH-1, m);
+writef (0, errorline, PROMPTCOLOR, SCREENWIDTH, m);
 move (errorline, strlen(m));
 } /* writeprompt */
 
