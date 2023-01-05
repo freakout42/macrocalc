@@ -18,7 +18,7 @@ ARX=\$(DESTDIR)/opt
 all: dist/arx.tar.gz
 	@echo 'you can now run "sudo make install"'
 install: all
-	-mkdir \$(ARX)
+	test -d \$(ARX) || mkdir \$(ARX)
 	gzip -cd <dist/arx.tar.gz | tar x -p -C \$(ARX) -f -
 dist/arx.tar.gz: mc/tst/.tested
 	-mkdir dist
