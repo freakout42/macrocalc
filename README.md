@@ -18,7 +18,7 @@ functions. So sqrt(-1) = i (coming soon).
 1. __Build from source und install for one user only without sudo__  
 Building mc needs an ANSI-C compiler with curses-lib, lex and yacc. Clone and
 `./configure` followed by `make`. All programs are build into `./dist/arx` and
-can run without sudo-installation directly from the build-driectory. To start
+can run without sudo-installation directly from the build-directory. To start
 the spreadsheet simply: `dist/arx/bin/321` - for a user-install you are done.
 
 2. __Install systemwide__  
