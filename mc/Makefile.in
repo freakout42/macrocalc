@@ -31,15 +31,6 @@ CFLAGS=$Cflag $(CFLAG)
 AR=$Ar
 ARFLAGS=rsv
 
-%.1: %.r
-	../nro/soelim $< | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
-
-%.2: %.1
-	$(NROFF) $(NFLAGS) -man $< | col -b >$@
-
-#%.2: %.r tmac.an
-#	../nro/nro -man tmac.an $< | col -b >$@
-
 all:
 	for D in $(DIRS); do cd $$D; make -f ../Makefile $${D}all PLATID=$(PLATID) || break; cd ..; done
 
@@ -389,6 +380,11 @@ binunits:	mcunits.rdb
 manall:	mc.1 mcunits.1 nro.1 db2rdb.1
 	@: echo "$@ done"
 
+#%.2: %.1
+#	$(NROFF) $(NFLAGS) -man $< | col -b >$@
+#%.2: %.r tmac.an
+#	../nro/nro -man tmac.an $< | col -b >$@
+
 manclean:
 	-rm -f mcver.r mc.1 mc.pcl mc*.*htm* mc.ps mc.pdf db2rdb.1 mcunits.1 nro.1 nro.r tmac.an* *.2
 
@@ -405,19 +401,28 @@ mc1.html:	mc.1 tmac.ant
 mc2.html:	mc.1 tmac.ant
 	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | groff -mandoc -Thtml >$@
 
+mcver.r:	../Name
+	awk '	{printf ".ds Vs %s\n.nr V %s\n", $$2, substr($$2,2,1)}' <../Name >$@
+
 mc.1:	mc.r tmac.an \
 	mcdesc.r mccont.r mcopt.r mcover.r mcfile.r mccalc.r mckey.r mcmove.r \
 	mcrange.r mcmenu.r mcmac.r mcform.r mctext.r mcformu.r mcoper.r \
 	mcunit.r mcpipe.r mcrdb.r mclink.r mcmath.r mclogic.r mcfinc.r \
 	mcstat.r mctime.r mcstring.r mcuser.r mclang.r mcprint.r mcattr.r \
 	mc2wks.r mcdbase.r mcsample.r mclimit.r mcfiles.r mcver.r
+	../nro/soelim mc.r | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
-mcver.r:	../Name
-	awk '	{printf ".ds Vs %s\n.nr V %s\n", $$2, substr($$2,2,1)}' <../Name >$@
+mcunits.1:	mcunits.r
+	../nro/soelim mcunits.r | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
+
+nro.r:	../nro/nro.nro
+	cp ../nro/nro.nro $@
+
+nro.1:	nro.r
+	../nro/soelim nro.r | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
 db2rdb.1:	db2rdb.r dbdesc.r dbopt.r dbfile.r dbfiles.r dblimit.r dbsample.r
-nro.r: ../nro/nro.nro
-	cp ../nro/nro.nro $@
+	../nro/soelim db2rdb.r | sed '/^\.lf/d' | sed 's/^\.SH/.AH/' | cat tmac.an - >$@
 
 #-------------------------------------------------------------------------------
 nroall:	soelim nro.man
