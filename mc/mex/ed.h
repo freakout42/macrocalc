@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "5.3"
+#define VERSION "5.5"
 
 #if (VT100)
 #define V7      1			/* V7 UN*X or Coherent          */

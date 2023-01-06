@@ -17,7 +17,7 @@
 #include "mcunit.h"
 #include "mcutil.h"
 
-char rcsinfo[] = "$""Id: mc " MCREL "." MCVER " " PLATFORM CCOMPILER " " __DATE__ " " __TIME__ " $";
+char rcsinfo[] = "$""Id: " MCTAG MCREL "." MCVER " " PLATFORM CCOMPILER " $";
 static char opts[] = "abc:d:f:hlmn:o:pqrsuvxy:";
 
 static void usage (void)

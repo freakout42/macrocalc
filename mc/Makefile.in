@@ -298,7 +298,7 @@ mclink.o:	mclink.c mc.h
 mcuser.o:	mcuser.c mc.h
 
 mcver.h:	../Name
-	awk '	{printf "#define MCREL \"%s\"\n#define MCVER \"%s\"\n", \
+	awk '	{printf "#define MCTAG \"mc \"\n #define MCREL \"%s\"\n#define MCVER \"%s\"\n", \
 			substr($$2,2,2), substr($$2,5,2)}' \
 		<../Name >$@
 
@@ -462,7 +462,7 @@ me:	Makefile
 
 #-------------------------------------------------------------------------------
 tstall: .tested
-	-ident ../bin/mc
+	ident ../bin/mc ../bin/me 2>/dev/null || true
 	@: echo "$@ done"
 
 .tested:
