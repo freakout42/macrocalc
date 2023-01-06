@@ -43,8 +43,8 @@
         <ul class="downloads">
           <!--li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.latestrel }}.zip">Download <strong>ZIP File</strong></a></li-->
           <li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.latestrel }}.tar.gz">Source <strong>TAR Ball</strong></a></li>
-          <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.latestrel }}/mc-{{ site.latestrel }}-fb-amd64.tar.gz">FreeBSD binary <strong>TAR Ball</strong></a></li>
           <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.latestrel }}/mc-{{ site.latestrel }}-lu-x86_64.tar.gz">Linux binary <strong>TAR Ball</strong></a></li>
+          <li><a href="{{ site.github.repository_url }}/releases/download/macrocalc-{{ site.latestrel }}-1.i386.rpm">RPM package <strong>RPM File</strong></a></li>
         </ul>
         {% endif %}
         {% if site.show_edgerelease %}
@@ -53,7 +53,16 @@
           <!--li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.edgerelease }}.zip">Download <strong>ZIP File</strong></a></li-->
           <li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.edgerelease }}.tar.gz">Source <strong>TAR Ball</strong></a></li>
           <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.edgerelease }}/mc-{{ site.edgerelease }}-fb-amd64.tar.gz">FreeBSD binary <strong>TAR Ball</strong></a></li>
-          <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.edgerelease }}/mc-{{ site.edgerelease }}-lu-x86_64.tar.gz">Linux binary <strong>TAR Ball</strong></a></li>
+          <li><a href="{{ site.github.repository_url }}/releases/download/macrocalc-{{ site.edgerelease }}-1.i386.rpm">RPM package <strong>RPM File</strong></a></li>
+        </ul>
+        {% endif %}
+        {% if site.show_archrelease %}
+        <p class="view"><a href="{{ site.github.repository_url }}/releases/tag/v{{ site.archrelease }}">arch release <small>macrocalc-v{{ site.archrelease }}</small></a></p>
+        <ul class="downloads">
+          <!--li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.archrelease }}.zip">Download <strong>ZIP File</strong></a></li-->
+          <li><a href="{{ site.github.repository_url }}/archive/refs/tags/v{{ site.archrelease }}.tar.gz">Source <strong>TAR Ball</strong></a></li>
+          <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.archrelease }}/mc-{{ site.archrelease }}-fb-amd64.tar.gz">FreeBSD binary <strong>TAR Ball</strong></a></li>
+          <li><a href="{{ site.github.repository_url }}/releases/download/v{{ site.archrelease }}/mc-{{ site.archrelease }}-lu-x86_64.tar.gz">Linux binary <strong>TAR Ball</strong></a></li>
         </ul>
         {% endif %}
 
