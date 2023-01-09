@@ -246,6 +246,12 @@ if (borderline==0) { /* -l layout */
 	cmdline		= SCREENROWS+3;
 	windowline	= 1;
 	}
+if (cellcont==0) { /* -s layout */
+	if (errorline == 2) errorline = 1; else errorline--;
+	if (inputline == 1) inputline = 0; else inputline--;
+	if (cmdline == 1) cmdline = 0; else cmdline--;
+	if (windowline == 4) { borderline = 2; windowline = 3; }
+	}
 setrightcol();
 setbottomrow();
 displayscreen(NOUPDATE);

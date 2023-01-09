@@ -16,7 +16,7 @@
 #define	INPUTWIDTH	SCREENWIDTH
 #define MAXCOLWIDTH	(SCREENWIDTH - LEFTMARGIN)
 #define SCREENCOLS	(SCREENWIDTH - LEFTMARGIN) / MINCOLWIDTH + 1
-#define SCREENROWS	(screenlin-4)
+#define SCREENROWS	(screenlin-(cellcont ? 4 : 3))
 #define DEFAULTWIDTH	11
 #define MARKPOS		55
 #define FORMPOS		67
