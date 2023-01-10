@@ -2,7 +2,11 @@
 test -f mc/Name || exit 1
 VERSID=`awk '{print substr($2,2)}' mc/Name`
 case `uname -s` in
-  Linux)   PLATID=lu; HARDID=`uname -i 2>/dev/null`; test "${HARDID:-unknown}" = "unknown" && HARDID=`uname -m`;;
+  Linux)   PLATID=lu
+           HARDID=`uname -i 2>/dev/null`
+           test "${HARDID:-unknown}" = "unknown" && HARDID=`uname -m`
+           test "${HARDID}" = "GenuineIntel" && HARDID=`uname -m`
+           ;;
   FreeBSD) PLATID=fb; HARDID=`uname -p`;;
   Darwin)  PLATID=md; HARDID=`uname -m`;;
   *) echo 'unknown platform - please help porting' >&2;;

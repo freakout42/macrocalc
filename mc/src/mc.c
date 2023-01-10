@@ -76,11 +76,12 @@ tzset(); /* set timezone */
 /* while ((c = getopt (argc, argv, opts)) != EOF) added $MACROCALC */
 rcargc = 0;
 argv2[rcargc++] = argv[0];
-mcrc = getenv("MACROCALC");
+if ((mcrc = getenv("MACROCALC"))) {
 argv2[rcargc] = strtok(mcrc, " ");
 while (argv2[rcargc] && ++rcargc < MAXRCARGS)
   argv2[rcargc] = strtok(NULL, " ");
 argv2[rcargc] = NULL;
+} else rcargc = 1;
 while (1) {
   if (rcargc > 1) {
     c = getopt (rcargc, argv2, opts);
