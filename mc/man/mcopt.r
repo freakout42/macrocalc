@@ -120,3 +120,5 @@ This \fBmust\fP be the last option when present!
 .Ha Option_v ""
 .IP -v
 Prints version information.
+.P
+Options are also taken from the environment variable "MACROCALC".

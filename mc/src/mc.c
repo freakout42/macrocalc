@@ -6,12 +6,14 @@
 #include <string.h>
 #include <time.h>
 #include <arx_def.h>
+#include <cur_def.h>
 #include "mc.h"
 #include "mcfileio.h"
 #include "mcprint.h"
 #include "mcinter.h"
 #include "mcrmacro.h"
 #include "mcmessag.h"
+#include "mcgetmsg.h"
 #include "mcfileio.h"
 #include "mccalc.h"
 #include "mcunit.h"
@@ -30,11 +32,16 @@ int main (int argc, char *argv[])
 {
 extern int optind;
 extern char *optarg;
-int c;
+int c = 0;
 char *arxpath;
+#define MAXRCARGS 8
+char *mcrc;
+int rcargc;
+char *argv2[MAXRCARGS];
 char runpath[MAXFILE+1];
 char *p;
 int l;
+char m[MAXSCREENWIDTH+1];
 
 license = lib_akey (logo, FALSE);
 progname = strrchr(argv[0],'/');
@@ -66,7 +73,24 @@ if ((arxpath = getenv("ARX")) == NULL) {
   strcpy (libpath, arxpath);
 }
 tzset(); /* set timezone */
-while ((c = getopt (argc, argv, opts)) != EOF)
+/* while ((c = getopt (argc, argv, opts)) != EOF) added $MACROCALC */
+rcargc = 0;
+argv2[rcargc++] = argv[0];
+mcrc = getenv("MACROCALC");
+argv2[rcargc] = strtok(mcrc, " ");
+while (argv2[rcargc] && ++rcargc < MAXRCARGS)
+  argv2[rcargc] = strtok(NULL, " ");
+argv2[rcargc] = NULL;
+while (1) {
+  if (rcargc > 1) {
+    c = getopt (rcargc, argv2, opts);
+    if (c == EOF) {
+      rcargc = 1;
+      optind = 0;
+    }
+  }
+  if (rcargc == 1) c = getopt (argc, argv, opts);
+  if (c == EOF) break;
 	switch (c)
 	 {
 	 case 'a':
@@ -141,11 +165,13 @@ while ((c = getopt (argc, argv, opts)) != EOF)
 			if (*macroname)	runmacro (NOPROMPT);
 			break;
 		 case RET_ERROR:
-			errormsg (MSGFILELOMEM);
+			getmessage (m, MSGFILELOMEM);
+			fprintf (stderr, "mc: %s.\n", m);
 			exit (EXIT_FAILURE);
 			/*FALLTHRU*/
 		 case RET_FATAL:
-			errormsg (MSGNOMICROCALC);
+			getmessage (m, MSGNOMICROCALC);
+			fprintf (stderr, "mc: %s.\n", m);
 			exit (EXIT_FATAL);
 		 }
     recalcworksheet();
@@ -157,6 +183,7 @@ while ((c = getopt (argc, argv, opts)) != EOF)
 	 default:
 		usage();
 	 }
+}
 switch (argc-optind)
  {
  case 0:	break;
