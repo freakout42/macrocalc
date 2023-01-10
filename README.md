@@ -69,5 +69,5 @@ a relative cell reference and refers to B3 in the copied formula.
 License
 -------
     Simplified BSD License
-    Copyright (c) 2022, Axel K. Reinhold
+    Copyright (c) 2023, Axel K. Reinhold
     All rights reserved.
