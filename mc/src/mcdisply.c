@@ -253,6 +253,7 @@ if (menudisp==0 || cellcont==0) { /* -sm layout */
 	if (windowline == 4) { borderline = 2; windowline = 3; }
 	curcelline = errorline;
 	}
+if (!borders) windowline -= 1;
 setrightcol();
 setbottomrow();
 displayscreen(NOUPDATE);

@@ -1,5 +1,4 @@
-/* $Id: mcwindow.c,v 1.8 2001/06/06 06:09:29 axel Exp $
- */
+/* mcwindow.c,v 1.8 2001/06/06 06:09:29 axel */
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -10,7 +9,7 @@
 #include "mcmessag.h"
 #include "mcwindow.h"
 
-#define ACTUALROWS	(SCREENROWS-windowline+borderline+1)
+#define ACTUALROWS	(SCREENROWS-windowline+borderline+(borders?2:1))
 
 void setrightcol (void)
 /* Sets the value of rightcol based on the value of leftcol */
@@ -56,6 +55,7 @@ int oldleft = leftmargin;
 if (bottomrow>=10000) leftmargin=5;
 else if (bottomrow>=1000) leftmargin=4;
 else leftmargin=3;
+if (!borders) leftmargin=0;
 if (leftmargin != oldleft) setrightcol();
 } /* setleftmargin */
 
