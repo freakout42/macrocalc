@@ -20,7 +20,7 @@
 #include "mcutil.h"
 
 char rcsinfo[] = "$""Id: " MCTAG MCREL "." MCVER " " PLATFORM CCOMPILER " $";
-static char opts[] = "abc:d:f:hlmn:o:pqrsuvxy:";
+static char opts[] = "abc:d:ef:hlmn:o:pqrsuvxy:";
 
 static void usage (void)
 {
@@ -74,7 +74,7 @@ if ((arxpath = getenv("ARX")) == NULL) {
 }
 tzset(); /* set timezone */
 /* while ((c = getopt (argc, argv, opts)) != EOF) added $MACROCALC */
-rcargc = 1;
+rcargc = 1; /* ==1 : no env options */
 if ((mcrc = getenv("MACROCALC"))) {
 argv2[0] = argv[0];
 argv2[rcargc] = strtok(mcrc, " ");
@@ -106,6 +106,11 @@ while (1) {
 	 case 'o':
 		strcpy (macroname, optarg);
 		break;
+	 case 'e':
+		borderline = 0; /* -blms */
+		menudisp = FALSE;
+		cellcont = FALSE;
+		/*FALLTHRU*/
 	 case 'b':
 		borders		= FALSE;
 		break;

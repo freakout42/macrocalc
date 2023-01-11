@@ -18,6 +18,9 @@ for slow terminal lines.
 .Ha Option_h ""
 .IP -h
 Suppress highlighting of the marked range for slow terminal lines.
+.Ha Option_e ""
+.IP -e
+Combination of -bmsl options for a complete clean screen with only data displayed.
 .Ha Option_c ""
 .IP -cw
 Sets preset column width to \fBw\fP. Default is 11.
