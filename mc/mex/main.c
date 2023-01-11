@@ -45,6 +45,10 @@ void edmore(char fname[]);
 #define GOOD	(SS$_NORMAL)
 #endif
 
+#if	VT100
+int help() {return 0;}
+#endif
+
 #ifndef GOOD
 #define GOOD	0
 #endif
@@ -56,7 +60,7 @@ void edmore(char fname[]);
 #define DASTART	990		/* starting the DA	*/
 #define DACLOSE	991		/* closing the DA	*/
 
-char	*rcsid = "$Id: me " VERSION " main.c 1.35 2022/10/06 05:45:54 axel $";
+char	*rcsid = "$Id: main.c,v 1.40 2023/01/08 12:53:37 axel Exp $";
 int	logit = LOGIT;			/* mb: log keystrokes		*/
 int	playback = FALSE;		/* mb: playback from log file	*/
 #if ST_DA

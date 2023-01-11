@@ -23,6 +23,11 @@ static DWORD outModeInit;
 extern int vidrev;
 #endif
 
+#if	VT100
+#include	<string.h>
+#include	<unistd.h>
+#endif
+
 #if	VMS
 #include	<stdio.h>
 #include	<stsdef.h>
@@ -718,7 +723,7 @@ TERM	term	= {
 	ttpending
 };
 
-ansiparm(n)
+void ansiparm(n)
 register int	n;
 {
 	register int	q;
@@ -729,7 +734,7 @@ register int	n;
 	ttputc((n%10) + '0');
 }
 
-ansimove(row, col)
+int ansimove(row, col)
 {
 	ttputc(ESC);
 	ttputc('[');
@@ -737,35 +742,41 @@ ansimove(row, col)
 	ttputc(';');
 	ansiparm(col+1);
 	ttputc('H');
+	return 0;
 }
 
-ansieeol()
+int ansieeol()
 {
 	ttputs("\033[K");
+	return 0;
 }
 
-ansieeop()
+int ansieeop()
 {
 	ttputs("\033[J");
+	return 0;
 }
 
-ansibeep()
+int ansibeep()
 {
 	ttputc(BEL);
 	ttflush();
+	return 0;
 }
 
-ansihglt()
+int ansihglt()
 {
 	ttputs("\033[7m");
+	return 0;
 }
 
-ansinrml()
+int ansinrml()
 {
 	ttputs("\033[m");
+	return 0;
 }
 
-ansiopen()
+int ansiopen()
 {
 #if	V7
 	register char *cp;
@@ -787,6 +798,7 @@ ansiopen()
 	}
 #endif
 	ttopen();
+	return 0;
 }
 
 #endif
