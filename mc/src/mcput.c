@@ -35,11 +35,13 @@ refresh();
 #endif
 
 cur_satt (stdscr, color);
+setcolor(colcode);
 s[SCREENWIDTH+1] = '\0';
 mvprintw (y, x, "%-*s", width, s);
 #ifdef DEBUG
 fprintf (stderr, "put: y:%2d x:%2d s:\"%-*s\">%08x\n", y, x, width, s, color);
 #endif
+uncolor(colcode);
 cur_satt (stdscr, A_NORMAL);
 move (oldy, oldx);
 } /* writef */

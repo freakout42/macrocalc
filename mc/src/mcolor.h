@@ -39,6 +39,15 @@ void setcolor(int pairi);
 void uncolor(int pairi);
 
 #ifdef USECOLOR
+COLOR_BLACK
+COLOR_RED
+COLOR_GREEN
+COLOR_YELLOW
+COLOR_BLUE
+COLOR_MAGENTA
+COLOR_CYAN
+COLOR_WHITE
+
 #define A_NORMAL  0L
 #define A_ATTRIBUTES  NCURSES_BITS(~(1UL - 1UL),0)
 #define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
