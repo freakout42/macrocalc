@@ -237,6 +237,7 @@ e : e OR e
 	fprintf (stderr, "mcpary: plus\n");
 #endif
 	$$.value = $1.value + unitconv($3.value,$3.unit,$1.unit);
+	$$.cimag = $1.cimag + unitconv($3.cimag,$3.unit,$1.unit);
 	$$.unit = $1.unit;
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: plus value=\"%f %s\"\n", $$.value, $$.unit);
@@ -249,6 +250,7 @@ e : e OR e
 	*yybuf++ = F_SUBSTRACTION;
 #else
 	$$.value = $1.value - unitconv($3.value,$3.unit,$1.unit);
+	$$.cimag = $1.cimag - unitconv($3.cimag,$3.unit,$1.unit);
 	$$.unit = $1.unit;
 #endif
 	}
