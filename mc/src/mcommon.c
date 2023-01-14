@@ -30,6 +30,7 @@ unsigned char menudisp = TRUE;
 unsigned char rdonly = FALSE;
 unsigned char defaultformat = DEFAULTFORMAT;
 unsigned char defaultwidth = DEFAULTWIDTH;
+unsigned char colors = TRUE;
 char currency = '$';
 int screencol = 80;
 int screenlin = 24;

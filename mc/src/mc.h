@@ -1,5 +1,4 @@
-/* $Id: mc.h,v 1.7 1997/05/21 15:26:58 axel Exp $
- */
+/* mc.h,v 1.7 1997/05/21 15:26:58 axel */
 
 #include "mcver.h"
 
@@ -13,7 +12,6 @@ enum	{
 
 #include "mctext.h"
 #include "mcmnud.h"
-#include "mcolor.h"
 #include "mcbool.h"
 #include "mcelldef.h"
 #include "mckey.h"

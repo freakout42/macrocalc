@@ -1,5 +1,4 @@
-/* $Id: mcput.c,v 1.5 1995/05/20 16:21:37 axel Rel $
- */
+/* mcput.c,v 1.5 1995/05/20 16:21:37 axel */
 
 #include <stdio.h>
 #include <stdarg.h>

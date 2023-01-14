@@ -5,6 +5,7 @@
 #include <cur_def.h>
 #include "mc.h"
 #include "mcget.h"
+#include "mcolor.h"
 
 int getkey (void)
 {

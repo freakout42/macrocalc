@@ -73,7 +73,7 @@ YOBJ=	mcellval.o
 BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
 PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
 # curses linked
-DOBJ=	mcinter.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mcput.o
+DOBJ=	mcinter.o mcolor.o mcstderr.o mcrmacro.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o mcget.o mcput.o
 MC2OBJ=	wksfio.o mconvert.o wksrecd.o mcell123.o pol2tex.o
 MCOBJ=	mcommon.o $(FOBJ) $(OOBJ) $(COBJ) $(MOBJ) $(POBJ) $(YOBJ) $(XOBJ) $(MC2OBJ)
 BIN=	mc mcmsg mcmacro mcunits mc2wks mcread db2rdb nro me
@@ -156,7 +156,9 @@ mcmsg.o:	mcmsg.c mc.h
 mcommon.o:	mcommon.c mc.h mcver.h
 
 mcinter.o:	mcinter.c mc.h mcgetmsg.h mcmessag.h mcfile.h mcrun.h \
-		mcgetmnu.h mcrmacro.h mcdisply.h
+		mcgetmnu.h mcrmacro.h mcdisply.h mcolor.h
+
+mcolor.o: mcolor.h mc.h mcelldef.h
 
 mcrun.o:	mcrun.c mc.h mcell.h mcinput.h mchelp.h mcommand.h mcrmacro.h \
 		mcrecalc.h mcmenu.h mcact.h mcdisply.h mcmove.h mcfileio.h
@@ -205,13 +207,13 @@ mcellact.o:	mcellact.c mc.h mcparse.h mcutil.h mcell.h mccalc.h mcrecalc.h \
 
 mcellval.o:	mcellval.c mc.h mcell.h mcellstr.h mcmessag.h
 
-mcellstr.o:	mcellstr.c mc.h mctime.h mcell.h mcellact.h
+mcellstr.o:	mcellstr.c mc.h mcolor.h mctime.h mcell.h mcellact.h
 
 mcell.o:	mcell.c mc.h mcunit.h mcfileio.h
 
 mcstderr.o:	mcstderr.c mc.h
 
-mcmessag.o:	mcmessag.c mc.h mcput.h mcget.h mcutil.h mcgetmsg.h mcmessag.h
+mcmessag.o:	mcmessag.c mc.h mcolor.h mcput.h mcget.h mcutil.h mcgetmsg.h mcmessag.h
 
 mcgetmsg.o:	mcgetmsg.c mc.h
 
@@ -223,7 +225,7 @@ mcinput.o:	mcinput.c mc.h mcstderr.h mcgetmsg.h mcget.h mcmessag.h \
 mcdisply.o:	mcdisply.c mc.h mcput.h mcutil.h mcell.h mcwindow.h mcrecalc.h \
 		mcfileio.h
 
-mcget.o:	mcget.c mc.h
+mcget.o:	mcget.c mc.h mcolor.h
 
 mcput.o:	mcput.c mc.h
 

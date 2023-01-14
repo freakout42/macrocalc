@@ -17,6 +17,7 @@
 #include "mcgetmnu.h"
 #include "mcrmacro.h"
 #include "mcdisply.h"
+#include "mcolor.h"
 #include "mcinter.h"
 
 void mcinter (void)
@@ -55,12 +56,16 @@ if (cur_init(CURINIT) == NULL)
 	fprintf (stderr, "mc: no curses.\n");
 	exit (EXIT_FAILURE);
 	}
-
+if (colors && has_colors()) {
+  start_color();
+  mcolor0();
+} else {
+  colors = FALSE;
+}
 #ifdef DEBUG
 /* fd = fileno(std_erread);
  * flags = fcntl (fd, F_GETFL, 0);
  * fcntl (fd, F_SETFL, flags & ~O_NDELAY);
- *
  * only cornell curses:
  * traceon();
  */

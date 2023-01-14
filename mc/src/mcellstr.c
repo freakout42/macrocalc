@@ -14,6 +14,7 @@
 #include "mc.h"
 #include "mctime.h"
 #include "mcell.h"
+#include "mcolor.h"
 #include "mcellact.h"
 #include "mcellstr.h"
 

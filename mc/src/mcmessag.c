@@ -11,6 +11,7 @@
 #include "mcmisc.h"
 #include "mcgetmsg.h"
 #include "mcmessag.h"
+#include "mcolor.h"
 
 void errorprint (char *format, ...) {
 va_list args;

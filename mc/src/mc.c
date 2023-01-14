@@ -20,7 +20,7 @@
 #include "mcutil.h"
 
 char rcsinfo[] = "$""Id: " MCTAG MCREL "." MCVER " " PLATFORM CCOMPILER " $";
-static char opts[] = "abc:d:ef:hlmn:o:pqrsuvxy:";
+static char opts[] = "abc:d:ef:hklmn:o:pqrsuvxy:";
 
 static void usage (void)
 {
@@ -113,6 +113,9 @@ while (1) {
 		/*FALLTHRU*/
 	 case 'b':
 		borders		= FALSE;
+		break;
+	 case 'k':
+		colors = FALSE;
 		break;
 	 case 's':
 		cellcont	= FALSE;

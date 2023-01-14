@@ -16,6 +16,7 @@ extern unsigned char formdisplay;
 extern char changed;
 extern unsigned char autocalc, borders, cellcont, highlight, menudisp,
 		rdonly, autoexec;
+extern unsigned char colors;
 extern unsigned char defaultformat;
 extern unsigned char defaultwidth;
 extern char currency;

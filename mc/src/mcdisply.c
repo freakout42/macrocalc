@@ -18,6 +18,7 @@
 #include "mcrecalc.h"
 #include "mcfileio.h"
 #include "mcdisply.h"
+#include "mcolor.h"
 
 void printcol (void)
 /* Prints the column headings */

@@ -94,29 +94,6 @@ enum	{
 #define DEFAULTFORMAT	  ((0x00u & PROTECT) | (FORMATM & SPECIAL)   | (PLACES & DEFAULT))
 #define L_DEFAULTFORMAT	((0x00u & PROTECT) | (FORMATM & L_SPECIAL) | (PLACES & L_DEFAULT))
 
-#ifdef ISSUECOLOR
-#define NCURSES_BITS(mask,shift) ((mask) << ((shift) + NCURSES_ATTR_SHIFT))
-#define A_NORMAL  0L
-#define A_ATTRIBUTES  NCURSES_BITS(~(1UL - 1UL),0)
-#define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
-#define A_COLOR   NCURSES_BITS(((1UL) << 8) - 1UL,0)
-#define A_STANDOUT  NCURSES_BITS(1UL,8)
-#define A_UNDERLINE NCURSES_BITS(1UL,9)
-#define A_REVERSE NCURSES_BITS(1UL,10)
-#define A_BLINK   NCURSES_BITS(1UL,11)
-#define A_DIM   NCURSES_BITS(1UL,12)
-#define A_BOLD    NCURSES_BITS(1UL,13)
-#define A_PROTECT NCURSES_BITS(1UL,16)
-#define COLOR_BLACK	0
-#define COLOR_RED	1
-#define COLOR_GREEN	2
-#define COLOR_YELLOW	3
-#define COLOR_BLUE	4
-#define COLOR_MAGENTA	5
-#define COLOR_CYAN	6
-#define COLOR_WHITE	7
-#endif
-
 struct CELLADR {
   int	col;
   int	row;
