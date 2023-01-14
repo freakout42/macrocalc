@@ -30,7 +30,7 @@ int editstringp (char *s, char *legal, int maxlength, int pos)
 {
 int	c;
 
-c	= cur_gets (stdscr, inputline, 0, INPUTWIDTH, INPUTCOLOR,
+c	= cur_gets (stdscr, inputline, 0, INPUTWIDTH, mcode2att(INPUTCOLOR),
 		s, pos, legal, maxlength, NULL, creftoggle);
 clearinput ();
 return c == ESC ? 0 : c;

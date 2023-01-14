@@ -6,6 +6,7 @@
 #include <cur_def.h>
 #include "mc.h"
 #include "mcput.h"
+#include "mcolor.h"
 
 void mcrefresh (void)
 /* Refresh the entire screen */
@@ -14,13 +15,15 @@ clearok (stdscr, TRUE);
 return;
 } /* mcrefresh */
 
-void writef (int x, int y, int color, int width, char *format, ...)
+void writef (int x, int y, int colcode, int width, char *format, ...)
 /* Prints a string in video memory at a selected location in a color */
 {
 va_list	args;
 int	oldx, oldy;
 char	s[MAXINPUT+1];
+int color;
 
+color = mcode2att(colcode);
 getyx (stdscr, oldy, oldx);
 va_start (args, format);
 vsprintf (s, format, args);

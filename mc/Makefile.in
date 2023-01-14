@@ -223,7 +223,7 @@ mcinput.o:	mcinput.c mc.h mcstderr.h mcgetmsg.h mcget.h mcmessag.h \
 		mcelladr.h mcgetmnu.h mcdisply.h
 
 mcdisply.o:	mcdisply.c mc.h mcput.h mcutil.h mcell.h mcwindow.h mcrecalc.h \
-		mcfileio.h
+		mcfileio.h mcolor.h
 
 mcget.o:	mcget.c mc.h mcolor.h
 
