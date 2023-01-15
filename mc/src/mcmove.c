@@ -32,7 +32,7 @@ void moverowdown (void)
 /* Moves down one row */
 {
 displaycur (NOHIGHLIGHT);
-if (currow < bottomrow) currow++;
+if (currow < bottomrow-1) currow++;
 else if (bottomrow < (MAXROWS - 1))
 	{
 	move (windowline, 0);
