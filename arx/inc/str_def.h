@@ -13,6 +13,7 @@ char *str_trim (char *s);
 int str_tlen (char *s);
 char *str_upr (char *s);
 char *str_low (char *s);
+char *str_tr (char *v, char s, char t);
 #ifdef FIND_THEM_ALL
 char *str_repl (char *v, char *s, char *t, char *i);
 #else

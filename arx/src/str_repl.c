@@ -7,6 +7,15 @@
 #include <string.h>
 #include <str_def.h>
 
+char *str_tr (char *v, char s, char t) {
+char *i;
+
+while((i = strchr(v, s))) {
+  *i = t;
+}
+return(v);
+}
+
 char *str_repl (char *v, char *s, char *t
 #ifdef FIND_THEM_ALL
 , char *i

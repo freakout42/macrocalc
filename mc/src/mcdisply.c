@@ -27,7 +27,7 @@ int col;
 char colstr[MAXSCREENWIDTH+1];
 
 if (!borders) return;
-writef(0, borderline, HEADERCOLOR, LEFTMARGIN, "");
+writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "");
 for (col = leftcol; col <= rightcol; col++)
 	{
 	centercolstring(col, colstr);
@@ -79,7 +79,7 @@ if ((highlighting) ^ (
 			 omarkcol!=markcol || omarkrow!=markrow)
 								))
 	{
-	color = color&ERRORCOLOR ? HIGHLIGHTERRORCOLOR : HIGHLIGHTCOLOR;
+	color = color==ERRORCOLOR ? HIGHLIGHTERRORCOLOR : HIGHLIGHTCOLOR;
 	}
 #ifdef DEBUG
 fprintf (stderr, "displaycell: [%d,%d]=%s color=%d\n", col, row, s, color);

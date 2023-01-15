@@ -23,7 +23,12 @@ int	oldx, oldy;
 char	s[MAXINPUT+1];
 int color;
 
-color = mcode2att(colcode);
+color = mcode2att(colcode & TYPEM);
+switch (colcode & BIMASK) {
+  case BOLD:   color |= A_BOLD;      break;
+  case ITALIC: color |= A_UNDERLINE; break;
+}
+colcode &= TYPEM;
 getyx (stdscr, oldy, oldx);
 va_start (args, format);
 vsprintf (s, format, args);

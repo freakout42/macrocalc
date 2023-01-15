@@ -28,11 +28,12 @@ static attrel attrels[] = {
  /* cellstr */
   { TEXTCOLOR, A_NORMAL, 0, 0 },
   { EOFCOLOR, A_BOLD, 0, 0 },
-  { ERRORCOLOR, A_BLINK, COLOR_WHITE, COLOR_RED },
+  { ERRORCOLOR, A_BLINK, COLOR_RED, COLOR_WHITE },
   { VALUECOLOR, A_NORMAL, 0, 0 },
   { FORMULACOLOR, A_NORMAL, 0, 0 },
   { STRINGCOLOR, A_NORMAL, 0, 0 },
   { BLANKCOLOR, A_NORMAL, 0, 0 },
+  { COMMANDCOLOR, A_UNDERLINE, 0, 0 },
  /* decoration */
   { HEADERCOLOR, A_REVERSE, COLOR_CYAN, COLOR_BLACK },
   { CURHEADERCOLOR, A_BOLD, COLOR_WHITE, COLOR_BLUE },
@@ -44,11 +45,8 @@ static attrel attrels[] = {
   { MESSAGECOLOR, A_BOLD|A_BLINK, 0, 0 },
   { PROMPTCOLOR, A_BOLD, 0, 0 },
   { INPUTCOLOR, A_REVERSE, 0, 0 },
-  { COMMANDCOLOR, A_UNDERLINE, 0, 0 },
- /* misc */
   { CELLCONTENTSCOLOR, A_NORMAL, 0, 0 },
-  {	BOLDCOLOR, A_BOLD, 0, 0 },
-  {	ITALICOLOR, A_UNDERLINE, 0, 0 },
+ /* end */
   { COL_UNDEF, 0, 0, 0 }
 };
 

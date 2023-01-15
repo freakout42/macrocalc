@@ -94,7 +94,7 @@ l	[a-z]
 a	[A-Za-z]
 n	[0-9]
 aln	[0-9A-Za-z_\$\\]
-p	"."
+p	[\.]
 s	[+-]
 e	([Ee]{s}?{n}+)
 w	[ \t]+
@@ -156,6 +156,7 @@ str	.+
 
 ({n})+({p}{n}*)?({e})?	|
 {p}({n})+({e})?	{
+	str_tr((char*)yytext, ',', '.');
 	yylval.value.value	= atof ((char*)yytext);
 	yylval.value.unit	= NULL;
 	return CON;

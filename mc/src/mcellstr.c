@@ -358,12 +358,9 @@ if (visible && formatting==FPRINT && cp!=NULL)
  	sprintf(temp, fp, s);
 	strcpy(s, temp);
 	}
-if (visible && cp!=NULL)
-	switch (cpattrbi(cp))
-	 {
-	 case BOLD:	*color |= BOLDCOLOR;	break;
-	 case ITALIC:	*color |= ITALICOLOR;	break;
-	 }
+if (visible && cp!=NULL) {
+  *color |= cpattrbi(cp);
+}
 if (formatting==NOCOLUMN) p = str_trim(s); else p = s;
 if (formatting==FVALUE && cp!=NULL) {
 	str_trim(p);
