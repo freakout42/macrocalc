@@ -1,5 +1,6 @@
 /* mcolor.c */
 
+#include <assert.h>
 #include <string.h>
 #include <stdlib.h>
 #include <arx_def.h>
@@ -15,6 +16,7 @@ typedef struct attrel {
 } attrel;
 
 static attrel attrels[] = {
+ /* coloured */
   { COL_BLACK, A_NORMAL, COLOR_BLACK, COLOR_WHITE },
   { COL_RED, A_NORMAL, COLOR_RED, COLOR_WHITE },
   { COL_GREEN, A_NORMAL, COLOR_GREEN, COLOR_WHITE },
@@ -23,17 +25,19 @@ static attrel attrels[] = {
   { COL_MAGENTA, A_NORMAL, COLOR_MAGENTA, COLOR_WHITE },
   { COL_CYAN, A_NORMAL, COLOR_CYAN, COLOR_WHITE },
   { COL_WHITE, A_NORMAL, COLOR_WHITE, COLOR_WHITE },
+ /* cellstr */
   { TEXTCOLOR, A_NORMAL, 0, 0 },
   { EOFCOLOR, A_BOLD, 0, 0 },
-  { ERRORCOLOR, A_BLINK, 0, 0 },
+  { ERRORCOLOR, A_BLINK, COLOR_WHITE, COLOR_RED },
   { VALUECOLOR, A_NORMAL, 0, 0 },
   { FORMULACOLOR, A_NORMAL, 0, 0 },
   { STRINGCOLOR, A_NORMAL, 0, 0 },
   { BLANKCOLOR, A_NORMAL, 0, 0 },
-  { HEADERCOLOR, A_REVERSE, COLOR_BLACK, COLOR_CYAN },
-  { CURHEADERCOLOR, A_BOLD, 0, 0 },
-  { HIGHLIGHTCOLOR, A_REVERSE, 0, 0 },
-  { HIGHLIGHTERRORCOLOR, A_REVERSE|A_BLINK, 0, 0 },
+ /* decoration */
+  { HEADERCOLOR, A_REVERSE, COLOR_CYAN, COLOR_BLACK },
+  { CURHEADERCOLOR, A_BOLD, COLOR_WHITE, COLOR_BLUE },
+  { HIGHLIGHTCOLOR, A_REVERSE, COLOR_CYAN, COLOR_BLACK },
+  { HIGHLIGHTERRORCOLOR, A_REVERSE|A_BLINK, COLOR_RED, COLOR_WHITE },
   { MARKCOLOR, A_REVERSE, 0, 0 },
   { AUTOCALCCOLOR, A_REVERSE, 0, 0 },
   { FORMDISPLAYCOLOR, A_REVERSE, 0, 0 },
@@ -41,6 +45,7 @@ static attrel attrels[] = {
   { PROMPTCOLOR, A_BOLD, 0, 0 },
   { INPUTCOLOR, A_REVERSE, 0, 0 },
   { COMMANDCOLOR, A_UNDERLINE, 0, 0 },
+ /* misc */
   { CELLCONTENTSCOLOR, A_NORMAL, 0, 0 },
   {	BOLDCOLOR, A_BOLD, 0, 0 },
   {	ITALICOLOR, A_UNDERLINE, 0, 0 },
@@ -55,7 +60,8 @@ void mcolor0(void) {
 int i;
 
 for (i=0; i<COL_UNDEF; i++) {
-  init_pair(i, attrels[i].backg, attrels[i].foreg);
+  assert(attrels[i].ccode == i);
+  init_pair(i, attrels[i].foreg, attrels[i].backg);
 }
 }
 
