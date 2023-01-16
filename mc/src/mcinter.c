@@ -57,7 +57,6 @@ if (cur_init(CURINIT) == NULL)
 	exit (EXIT_FAILURE);
 	}
 if (colors && has_colors()) {
-  start_color();
   mcolor0();
 } else {
   colors = FALSE;

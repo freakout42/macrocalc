@@ -16,14 +16,15 @@ typedef struct attrel {
 } attrel;
 
 static attrel attrels[] = {
-  { COL_BLACK,           A_NORMAL,          COLOR_BLACK,   COLOR_WHITE }, /* coloured */
-  { COL_RED,             A_NORMAL,          COLOR_RED,     COLOR_WHITE },
-  { COL_GREEN,           A_NORMAL,          COLOR_GREEN,   COLOR_WHITE },
-  { COL_YELLOW,          A_NORMAL,          COLOR_YELLOW,  COLOR_WHITE },
-  { COL_BLUE,            A_NORMAL,          COLOR_BLUE,    COLOR_WHITE },
-  { COL_MAGENTA,         A_NORMAL,          COLOR_MAGENTA, COLOR_WHITE },
-  { COL_CYAN,            A_NORMAL,          COLOR_CYAN,    COLOR_WHITE },
-  { COL_WHITE,           A_NORMAL,          COLOR_WHITE,   COLOR_WHITE },
+  { COL_DEFAULT,         A_NORMAL,          -1,            -1 },
+  { COL_BLACK,           A_NORMAL,          COLOR_BLACK,   -1 },          /* coloured */
+  { COL_RED,             A_NORMAL,          COLOR_RED,     -1 },
+  { COL_GREEN,           A_NORMAL,          COLOR_GREEN,   -1 },
+  { COL_YELLOW,          A_NORMAL,          COLOR_YELLOW,  -1 },
+  { COL_BLUE,            A_NORMAL,          COLOR_BLUE,    -1 },
+  { COL_MAGENTA,         A_NORMAL,          COLOR_MAGENTA, -1 },
+  { COL_CYAN,            A_NORMAL,          COLOR_CYAN,    -1 },
+  { COL_WHITE,           A_NORMAL,          COLOR_WHITE,   -1 },
   { TEXTCOLOR,           A_NORMAL,          0,             0 },           /* cellstr */
   { EOFCOLOR,            A_BOLD,            0,             0 },
   { ERRORCOLOR,          A_BLINK,           COLOR_RED,     COLOR_WHITE },
@@ -54,6 +55,8 @@ return attrels[colcode].cattr;
 void mcolor0(void) {
 int i;
 
+start_color();
+use_default_colors();
 for (i=0; i<COL_UNDEF; i++) {
   assert(attrels[i].ccode == i);
   init_pair(i, attrels[i].foreg, attrels[i].backg);

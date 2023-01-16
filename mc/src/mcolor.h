@@ -1,14 +1,18 @@
 /* mcolor.h,v 1.2 1995/02/26 17:04:33 axel */
 
+/* enum { COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE };
+          =0           =1         =2           =3            =4          =5             =6          =7             */
+
 enum { /* pair index   */
-  COL_BLACK,     /* =0 */
-  COL_RED,       /* =1 */
-  COL_GREEN,     /* =2 */
-  COL_YELLOW,    /* =3 */
-  COL_BLUE,      /* =4 */
-  COL_MAGENTA,   /* =5 */
-  COL_CYAN,      /* =6 */
-  COL_WHITE,     /* =7 */
+  COL_DEFAULT,   /* =0 (-1,-1) */
+  COL_BLACK,     /* =1 */
+  COL_RED,       /* =2 */
+  COL_GREEN,     /* =3 */
+  COL_YELLOW,    /* =4 */
+  COL_BLUE,      /* =5 */
+  COL_MAGENTA,   /* =6 */
+  COL_CYAN,      /* =7 */
+  COL_WHITE,     /* =8 */
   TEXTCOLOR,
   EOFCOLOR,
   ERRORCOLOR,
@@ -37,26 +41,17 @@ void setcolor(int pairi);
 void uncolor(int pairi);
 
 #ifdef USECOLOR
-COLOR_BLACK
-COLOR_RED
-COLOR_GREEN
-COLOR_YELLOW
-COLOR_BLUE
-COLOR_MAGENTA
-COLOR_CYAN
-COLOR_WHITE
-
-#define A_NORMAL  0L
-#define A_ATTRIBUTES  NCURSES_BITS(~(1UL - 1UL),0)
+#define A_NORMAL     0L
+#define A_ATTRIBUTES NCURSES_BITS(~(1UL - 1UL),0)
 #define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
-#define A_COLOR   NCURSES_BITS(((1UL) << 8) - 1UL,0)
-#define A_STANDOUT  NCURSES_BITS(1UL,8)
-#define A_UNDERLINE NCURSES_BITS(1UL,9)
-#define A_REVERSE NCURSES_BITS(1UL,10)
-#define A_BLINK   NCURSES_BITS(1UL,11)
-#define A_DIM   NCURSES_BITS(1UL,12)
-#define A_BOLD    NCURSES_BITS(1UL,13)
-#define A_PROTECT NCURSES_BITS(1UL,16)
+#define A_COLOR      NCURSES_BITS(((1UL) << 8) - 1UL,0)
+#define A_STANDOUT   NCURSES_BITS(1UL,8)
+#define A_UNDERLINE  NCURSES_BITS(1UL,9)
+#define A_REVERSE    NCURSES_BITS(1UL,10)
+#define A_BLINK      NCURSES_BITS(1UL,11)
+#define A_DIM        NCURSES_BITS(1UL,12)
+#define A_BOLD       NCURSES_BITS(1UL,13)
+#define A_PROTECT    NCURSES_BITS(1UL,16)
 #endif
 
 /* 16 colors - not used
