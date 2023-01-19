@@ -25,6 +25,7 @@ unsigned char autocalc = TRUE;
 unsigned char autoexec = FALSE;
 unsigned char borders = TRUE;
 unsigned char cellcont = TRUE;
+unsigned char markfull = FALSE;
 unsigned char highlight = TRUE;
 unsigned char menudisp = TRUE;
 unsigned char rdonly = FALSE;

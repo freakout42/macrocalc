@@ -66,30 +66,23 @@ void displaycell (int col, int row, int highlighting, int updating)
 int	color;
 char	*s;
 CELLPTR	cp = cell (col, row);
+int inmarkedrange;
 
 if ((updating && cp != NULL && cptype(cp) != FORMULA) || col < leftcol || col > rightcol) return;
 s = cellstring (col, row, &color, FORMAT);
-if ((highlighting) ^ (
-			highlight &&
-			col >= omarkcol &&
-			row >= omarkrow &&
-			col <= markcol  &&
-			row <= markrow  &&
-			(!highlighting ||
-			 omarkcol!=markcol || omarkrow!=markrow)
-								))
-	{
-	color = color==ERRORCOLOR ? HIGHLIGHTERRORCOLOR : HIGHLIGHTCOLOR;
-	}
+inmarkedrange = col >= omarkcol && row >= omarkrow && col <= markcol && row <= markrow && col <= lastcol && row <= lastrow;
+if (!highlighting && highlight && inmarkedrange) {
+  color = color==ERRORCOLOR ? HIGHLIGHTERRORCOLOR : MARKCOLOR;
+} else if (highlighting && (!inmarkedrange || colors)) {
+  color = color==ERRORCOLOR ? HIGHLIGHTERRORCOLOR : HIGHLIGHTCOLOR;
+}
 #ifdef DEBUG
 fprintf (stderr, "displaycell: [%d,%d]=%s color=%d\n", col, row, s, color);
 #endif
 if (row >= toprow && row <= topbotrow)
-	writef (colstart[col - leftcol], row-toprow+borderline+1,
-		color, colwidth[col], "%s", s);
+	writef (colstart[col - leftcol], row-toprow+borderline+1,  color, colwidth[col], "%s", s);
 if (row >= windowrow && row <= bottomrow)
-	writef (colstart[col - leftcol], row-windowrow+windowline,
-		color, colwidth[col], "%s", s);
+	writef (colstart[col - leftcol], row-windowrow+windowline, color, colwidth[col], "%s", s);
 } /* displaycell */
 
 void displaycol (int col, int updating)
@@ -124,10 +117,8 @@ centercolstring (curcol, colstr);
 displaycell (curcol, currow, highlighting, NOUPDATE);
 
 if (!borders) return;
-writef (colstart[curcol - leftcol], borderline,
-	color, colwidth[curcol], colstr);
-writef(0, currow-windowrow+windowline,
-	color, LEFTMARGIN, "%-d", currow + 1);
+writef (colstart[curcol - leftcol], borderline, color, colwidth[curcol], colstr);
+writef (0, currow-windowrow+windowline, color, LEFTMARGIN, "%-d", currow + 1);
 } /* displaycur */
 
 void displayscreen (int updating)

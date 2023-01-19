@@ -24,6 +24,9 @@ Combination of -bmsl options for a complete clean screen with only data displaye
 .Ha Option_k ""
 .IP -k
 Suppress using colors even when the terminal is capable of.
+.Ha Option_g ""
+.IP -cg
+Marked range is full spreadsheet after load.
 .Ha Option_c ""
 .IP -cw
 Sets preset column width to \fBw\fP. Default is 11.

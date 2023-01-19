@@ -20,7 +20,7 @@
 #include "mcutil.h"
 
 char rcsinfo[] = "$""Id: " MCTAG MCREL "." MCVER " " PLATFORM CCOMPILER " $";
-static char opts[] = "abc:d:ef:hklmn:o:pqrsuvxy:";
+static char opts[] = "abc:d:ef:ghklmn:o:pqrsuvxy:";
 
 static void usage (void)
 {
@@ -119,6 +119,9 @@ while (1) {
 		break;
 	 case 's':
 		cellcont	= FALSE;
+		break;
+	 case 'g':
+		markfull = TRUE;
 		break;
 	 case 'c':
 		defaultwidth	= max (atoi(optarg), MINCOLWIDTH);

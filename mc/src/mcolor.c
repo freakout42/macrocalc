@@ -16,35 +16,34 @@ typedef struct attrel {
 } attrel;
 
 static attrel attrels[] = {
-  { COL_DEFAULT,         A_NORMAL,          -1,            -1 },
-  { COL_BLACK,           A_NORMAL,          COLOR_BLACK,   -1 },          /* coloured */
-  { COL_RED,             A_NORMAL,          COLOR_RED,     -1 },
-  { COL_GREEN,           A_NORMAL,          COLOR_GREEN,   -1 },
-  { COL_YELLOW,          A_NORMAL,          COLOR_YELLOW,  -1 },
-  { COL_BLUE,            A_NORMAL,          COLOR_BLUE,    -1 },
-  { COL_MAGENTA,         A_NORMAL,          COLOR_MAGENTA, -1 },
-  { COL_CYAN,            A_NORMAL,          COLOR_CYAN,    -1 },
-  { COL_WHITE,           A_NORMAL,          COLOR_WHITE,   -1 },
-  { TEXTCOLOR,           A_NORMAL,          0,             0 },           /* cellstr */
-  { EOFCOLOR,            A_BOLD,            0,             0 },
-  { ERRORCOLOR,          A_BLINK,           COLOR_RED,     COLOR_WHITE },
-  { VALUECOLOR,          A_NORMAL,          0,             0 },
-  { FORMULACOLOR,        A_NORMAL,          0,             0 },
-  { STRINGCOLOR,         A_NORMAL,          0,             0 },
-  { BLANKCOLOR,          A_NORMAL,          0,             0 },
-  { COMMANDCOLOR,        A_UNDERLINE,       0,             0 },
-  { HIGHLIGHTCOLOR,      A_REVERSE,         COLOR_CYAN,    COLOR_BLACK },
-  { HIGHLIGHTERRORCOLOR, A_REVERSE|A_BLINK, COLOR_RED,     COLOR_WHITE },
-  { HEADERCOLOR,         A_REVERSE,         COLOR_CYAN,    COLOR_BLACK }, /* decoration */
-  { CURHEADERCOLOR,      A_BOLD,            COLOR_WHITE,   COLOR_BLUE },
-  { MARKCOLOR,           A_REVERSE,         0,             0 },
-  { AUTOCALCCOLOR,       A_REVERSE,         0,             0 },
-  { FORMDISPLAYCOLOR,    A_REVERSE,         0,             0 },
-  { MESSAGECOLOR,        A_BOLD|A_BLINK,    0,             0 },
-  { PROMPTCOLOR,         A_BOLD,            0,             0 },
-  { INPUTCOLOR,          A_REVERSE,         0,             0 },
-  { CELLCONTENTSCOLOR,   A_NORMAL,          0,             0 },
- /* end */
+  { COL_DEFAULT,         A_NORMAL,          -1,            -1 },            /* default */
+  { COL_BLACK,           A_NORMAL,          COLOR_BLACK,   -1 },            /* black */
+  { COL_RED,             A_NORMAL,          COLOR_RED,     -1 },            /* red */
+  { COL_GREEN,           A_NORMAL,          COLOR_GREEN,   -1 },            /* green */
+  { COL_YELLOW,          A_NORMAL,          COLOR_YELLOW,  -1 },            /* yellow */
+  { COL_BLUE,            A_NORMAL,          COLOR_BLUE,    -1 },            /* blue */
+  { COL_MAGENTA,         A_NORMAL,          COLOR_MAGENTA, -1 },            /* magenta */
+  { COL_CYAN,            A_NORMAL,          COLOR_CYAN,    -1 },            /* cyan */
+  { COL_WHITE,           A_NORMAL,          COLOR_WHITE,   -1 },            /* white */
+  { TEXTCOLOR,           A_NORMAL,          0,             0 },             /* cellstr */
+  { EOFCOLOR,            A_NORMAL,          COLOR_GREEN,   -1 },            /* eof cell */
+  { ERRORCOLOR,          A_BLINK,           COLOR_RED,     -1 },            /* error cell */
+  { VALUECOLOR,          A_NORMAL,          0,             0 },             /* value cell */
+  { FORMULACOLOR,        A_NORMAL,          0,             0 },             /* formula display */
+  { STRINGCOLOR,         A_NORMAL,          0,             0 },             /* string cell */
+  { BLANKCOLOR,          A_NORMAL,          0,             0 },             /* blank cell */
+  { COMMANDCOLOR,        A_UNDERLINE,       COLOR_BLUE,    -1 },            /* command cell */
+  { HIGHLIGHTCOLOR,      A_REVERSE,         COLOR_BLUE,    COLOR_WHITE },   /* highlighted current cell */
+  { HIGHLIGHTERRORCOLOR, A_REVERSE|A_BLINK, COLOR_RED,     COLOR_WHITE },   /* highlighted current cell with error */
+  { HEADERCOLOR,         A_REVERSE,         COLOR_CYAN,    COLOR_BLACK },   /* column and row headers */
+  { CURHEADERCOLOR,      A_BOLD,            COLOR_WHITE,   COLOR_BLUE },    /* current col/row header */
+  { MARKCOLOR,           A_REVERSE,         COLOR_MAGENTA, COLOR_YELLOW },  /* marked range info */
+  { AUTOCALCCOLOR,       A_REVERSE,         0,             0 },             /* autocalc info */
+  { FORMDISPLAYCOLOR,    A_REVERSE,         0,             0 },             /* formula display info */
+  { MESSAGECOLOR,        A_BOLD|A_BLINK,    0,             0 },             /* messages */
+  { PROMPTCOLOR,         A_BOLD,            0,             0 },             /* prompt */
+  { INPUTCOLOR,          A_REVERSE,         0,             0 },             /* editor */
+  { CELLCONTENTSCOLOR,   A_NORMAL,          0,             0 },             /* cell content info */
   { COL_UNDEF, 0, 0, 0 }
 };
 

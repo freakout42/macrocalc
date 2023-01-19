@@ -100,9 +100,16 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		if (row > reallastrow) reallastrow = row;
 		}
 	}
-omarkcol = omarkrow = 0;
-markcol = lastcol = reallastcol;
-markrow = lastrow = reallastrow;
+lastcol = reallastcol;
+lastrow = reallastrow;
+if (markfull) {
+  omarkcol = omarkrow = 0;
+  markcol = lastcol;
+  markrow = lastrow;
+} else {
+  omarkcol = markcol = lastcol + 1;
+  omarkrow = markrow = lastrow + 1;
+}
 return RET_SUCCESS;
 } /* loadfile */
 
