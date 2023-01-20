@@ -1,4 +1,4 @@
-[![MacroCALC](https://mc.freakout.de/assets/logo2.jpg "MacroCALC")](https://mc.freakout.de/ "MacroCALC")
+[![MacroCALC](https://mc.freakout.de/assets/logo.jpg "MacroCALC")](https://mc.freakout.de/ "MacroCALC")
 
 mc - MacroCALC is a Lotus 1-2-3 compatible character based spreadsheet that
 supports 100000 rows, 700 columns, 40 functions, display formats, file linking,
