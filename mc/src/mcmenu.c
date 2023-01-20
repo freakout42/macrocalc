@@ -8,6 +8,7 @@
 #include "mcwindow.h"
 #include "mcommand.h"
 #include "mcmessag.h"
+#include "mcolor.h"
 #include "mcfile.h"
 #include "mcdisply.h"	/* not nice! */
 #include "mchelp.h"
@@ -142,6 +143,41 @@ switch (getmenu(RAMENU))
  }
 } /* ramenu */
 
+static void comenu (void)
+/* Executes the commands in the attribute menu */
+{
+switch (getmenu(COMENU))
+ {
+ case 0:
+  attribcells(COL_BLACK);
+  break;
+ case 1:
+  attribcells(COL_RED);
+  break;
+ case 2:
+  attribcells(COL_GREEN);
+  break;
+ case 3:
+  attribcells(COL_YELLOW);
+  break;
+ case 4:
+  attribcells(COL_BLUE);
+  break;
+ case 5:
+  attribcells(COL_MAGENTA);
+  break;
+ case 6:
+  attribcells(COL_CYAN);
+  break;
+ case 7:
+  attribcells(COL_WHITE);
+  break;
+ case 8:
+	attribcells(0);
+	break;
+ }
+} /* comenu */
+
 static void rnmenu (void)
 /* Executes the commands in the name menu */
 {
@@ -168,18 +204,21 @@ switch (getmenu(RMENU))
 	ramenu();
 	break;
  case 2:
-	deletecells ();
+	comenu();
 	break;
  case 3:
-	rnmenu();
+	deletecells ();
 	break;
  case 4:
-	formatcells(FORMATM|PLACES, PROTECT);
+	rnmenu();
 	break;
  case 5:
-	formatcells(FORMATM|PLACES, 0);
+	formatcells(FORMATM|PLACES, PROTECT);
 	break;
  case 6:
+	formatcells(FORMATM|PLACES, 0);
+	break;
+ case 7:
 	valuecells();
 	break;
  }

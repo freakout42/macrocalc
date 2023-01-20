@@ -1,5 +1,4 @@
-/* $Id: str_def.h,v 1.9 2015/02/05 09:23:57 axel Exp $
- */
+/* str_def.h,v 1.9 2015/02/05 09:23:57 axel */
 
 #define str_bpad(s)	{memset (s,' ',sizeof(s)); s[sizeof(s)-1] = ' ';}
 #define str_npad(s)	{memset (s,' ',sizeof(s)); s[sizeof(s)-1] = '\0';}

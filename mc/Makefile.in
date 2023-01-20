@@ -166,7 +166,7 @@ mcrun.o:	mcrun.c mc.h mcell.h mcinput.h mchelp.h mcommand.h mcrmacro.h \
 mcmove.o:	mcmove.c mc.h mcdisply.h mcwindow.h mcfileio.h
 
 mcmenu.o:	mcmenu.c mc.h mcgetmnu.h mcellact.h mcwindow.h mcommand.h mcmessag.h \
-		mcfile.h mcdisply.h mchelp.h mcact.h mcput.h
+		mcfile.h mcdisply.h mchelp.h mcact.h mcput.h mcolor.h
 
 mcrmacro.o:	mcrmacro.c mc.h mcget.h mcmessag.h
 

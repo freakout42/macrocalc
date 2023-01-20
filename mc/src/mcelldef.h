@@ -56,6 +56,7 @@ enum	{
 #define ATTRIBM	 0xcfu
 #define BIMASK	 0xc0u
 #define TYPEM    0x1fu
+#define COLORM   0x0fu
 #define UNITF	   0x20u /* has sidecar */
 #define BOLD     0x40u
 #define ITALIC   0x80u

@@ -1,4 +1,4 @@
-/* $Id: str_repl.c,v 1.3 2015/02/05 09:23:57 axel Exp $
+/* str_repl.c,v 1.3 2015/02/05 09:23:57 axel
  * Replace chars like tr
  */
 

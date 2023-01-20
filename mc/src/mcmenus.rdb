@@ -16,10 +16,10 @@ WTMENU	us	Horizontal Clear
 WTMENU	ge	Horizontal Annullieren
 WTMENU	fr	Horizontal Effacer
 WTMENU	pl	Horyzontalnie Czy¶æ
-RMENU	us	Format Attrib Erase Name Prot Unprot Value
-RMENU	ge	Format Attribut Radieren Name Schutz Ungesch Wert
-RMENU	fr	Format Attrib Effacer Nom Prot Deprot Valeur
-RMENU	pl	Format Attrybuty Czy¶æ Nazwa Prot Unprot Warto¶æ
+RMENU	us	Format Attrib Color Erase Name Prot Unprot Value
+RMENU	ge	Format Attribut Farbe Radieren Name Schutz Ungesch Wert
+RMENU	fr	Format Attrib Couleur Effacer Nom Prot Deprot Valeur
+RMENU	pl	Format Attrybuty Color Czy¶æ Nazwa Prot Unprot Warto¶æ
 RFMENU	us	Fixed Sci Currency ; Percent Date Edate /rdbdate Time Hidden Reset
 RFMENU	ge	Fest Exp Waehrung ; Prozent Datum Edatum /rdbdate Zeit Verbergen Zuruecksetzen
 RFMENU	fr	Monaie fixe ; Pourcent Date Edate /rdbdate Heure Cacher Effacer
@@ -32,6 +32,10 @@ RAMENU	us	Bold Italic Reset
 RAMENU	ge	Fett Kursiv Zuruecksetzen
 RAMENU	fr	Gras Italique Normal
 RAMENU	pl	Pogrubienie Kursywa Resetuj
+COMENU	us	Black Red Green Yellow Blue Magenta Cyan White
+COMENU	ge	Schwarz Rot Grün gElb Blau Magenta Cyan Weiß
+COMENU	fr	Black Red Green Yellow Blue Magenta Cyan White
+COMENU	pl	Black Red Green Yellow Blue Magenta Cyan White
 FMENU	us	Save Part Retrieve Merge About
 FMENU	ge	Speichern Teil Laden Kombinieren Ueber
 FMENU	fr	Sauver Part Recuperer Fusionner About

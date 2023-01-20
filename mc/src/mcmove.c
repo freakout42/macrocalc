@@ -1,5 +1,4 @@
-/* $Id: mcmove.c,v 1.7 2001/06/06 14:30:37 axel Exp $
- */
+/* mcmove.c,v 1.7 2001/06/06 14:30:37 axel */
 
 #include <arx_def.h>
 #include <cur_def.h>

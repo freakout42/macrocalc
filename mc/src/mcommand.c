@@ -81,9 +81,14 @@ static int attribcell (int col, int row)
 {
 CELLPTR	cp = cell (col, row);
 
-cp->attrib &= TYPEM;
-if (orformat)	cp->attrib |= orformat;
-else		cp->attrib &= ~(BOLD | ITALIC);
+if (orformat & BIMASK) { /* attrib change */
+  cp->attrib &= ~(BIMASK);
+} else if (orformat & COLORM) { /* color change */
+  cp->attrib &= ~(COLORM);
+} else { /* reset */
+  cp->attrib &= ~(ATTRIBM);
+}
+  cp->attrib |= orformat;
 displaycell (col, row, NOHIGHLIGHT, NOUPDATE);
 return RET_SUCCESS;
 } /* attribcell */

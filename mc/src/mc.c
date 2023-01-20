@@ -170,6 +170,7 @@ while (1) {
 		break;
 	 case 'p':
 	 case 'q':
+		markfull = TRUE;
 		initvars();
 		switch (loadfile (stdin))
 		 {
