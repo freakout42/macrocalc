@@ -143,7 +143,7 @@ struct Range {
 #define	cpstring(cp)	(((cp)->s).string)
 #define	cpattrib(cp)  ((cp)->attrib)
 #define	cpattrbi(cp)  ((cp)->attrib & BIMASK)
-#define	cpcolor(cp)   ((cp)->attrib & ATTRIBM)
+#define	cpcolor(cp)   ((cp)->attrib & COLORM)
 #define	cpsidecar(cp) ((cp)->attrib & UNITF) /* has sidecar */
 #define	cpneedsid(cp) ((cp)->type != UNITT   && (cpunit(cp) || cpcimag(cp)))
 #define	cpformula(cp) ((cp)->type == FORMULA || cptype(cp) == STRING)

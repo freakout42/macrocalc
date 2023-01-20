@@ -136,7 +136,7 @@ clearlastcol();
 void showcelltype (void)
 /* Prints the type of cell and what is in it */
 {
-char	c[MAXADR+1], f='Y', a;
+char	c[MAXADR+1], f='Y', a, l;
 char	*t;
 int	p;
 int	color;
@@ -147,8 +147,7 @@ celladrstring (curcol, currow, c);
 if (curcell == NULL)
 	{
 	t = TXTEMPTY;
-	f = ' ';
-	a = ' ';
+	f = a = l = ' ';
 	p = 0;
 	}
 else
@@ -218,11 +217,41 @@ else
 		a	= ' ';
 		break;
 	 } /* switch */
+	switch ( cpcolor(curcell) )
+	 {
+    case COL_BLACK:
+     l = 'k';
+     break;
+    case COL_RED:
+     l = 'r';
+     break;
+    case COL_GREEN:
+     l = 'g';
+     break;
+    case COL_YELLOW:
+     l = 'y';
+     break;
+    case COL_BLUE:
+     l = 'b';
+     break;
+    case COL_MAGENTA:
+     l = 'm';
+     break;
+    case COL_CYAN:
+     l = 'c';
+     break;
+    case COL_WHITE:
+     l = 'w';
+     break;
+    default:
+     l = ' ';
+     break;
+	 } /* switch */
 	if (cpprotect(curcell)) a = a==' ' ? 'p' : tolower(a);
 	p	= cpplaces (curcell);
 	}
-writef	(0, curcelline, CELLCONTENTSCOLOR, SCREENWIDTH, "%s %s [%c%d%c]: %s",
-	c, t, f, p, a, cellstring (curcol, currow, &color, NOFORMAT));
+writef	(0, curcelline, CELLCONTENTSCOLOR, SCREENWIDTH, "%s %s [%c%d%c%c]: %s",
+	c, t, f, p, a, l, cellstring (curcol, currow, &color, NOFORMAT));
 formdisplay = !formdisplay;
 } /* showcelltype */
 

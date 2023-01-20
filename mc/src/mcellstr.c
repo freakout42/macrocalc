@@ -359,6 +359,10 @@ if (visible && formatting==FPRINT && cp!=NULL)
 	strcpy(s, temp);
 	}
 if (visible && cp!=NULL) {
+  if (cpcolor(cp)) {
+   *color &= ~(COLORM);
+   *color |= cpcolor(cp);
+  }
   *color |= cpattrbi(cp);
 }
 if (formatting==NOCOLUMN) p = str_trim(s); else p = s;

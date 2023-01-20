@@ -32,10 +32,10 @@ RAMENU	us	Bold Italic Reset
 RAMENU	ge	Fett Kursiv Zuruecksetzen
 RAMENU	fr	Gras Italique Normal
 RAMENU	pl	Pogrubienie Kursywa Resetuj
-COMENU	us	Black Red Green Yellow Blue Magenta Cyan White
+COMENU	us	blacK Red Green Yellow Blue Magenta Cyan White
 COMENU	ge	Schwarz Rot Grün gElb Blau Magenta Cyan Weiß
-COMENU	fr	Black Red Green Yellow Blue Magenta Cyan White
-COMENU	pl	Black Red Green Yellow Blue Magenta Cyan White
+COMENU	fr	blacK Red Green Yellow Blue Magenta Cyan White
+COMENU	pl	blacK Red Green Yellow Blue Magenta Cyan White
 FMENU	us	Save Part Retrieve Merge About
 FMENU	ge	Speichern Teil Laden Kombinieren Ueber
 FMENU	fr	Sauver Part Recuperer Fusionner About
