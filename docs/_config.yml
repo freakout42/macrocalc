@@ -4,10 +4,10 @@ plugins:
 title: MacroCALC
 url: https://mc.freakout.de
 show_downloads: true
-show_edgerelease: false
+show_edgerelease: true
 show_archrelease: true
 show_footer: false
 logo: /assets/logo.jpg
+edgerelease: "10.31"
 latestrel: "10.28"
-edgerelease: "10.20"
 archrelease: "10.15"
