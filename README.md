@@ -1,11 +1,11 @@
-[![MacroCALC](https://mc.freakout.de/assets/logo.jpg "MacroCALC")](https://mc.freakout.de/ "MacroCALC")
-
 mc - MacroCALC is a Lotus 1-2-3 compatible character based spreadsheet that
 supports 100000 rows, 700 columns, 40 functions, display formats, file linking,
 macro programming, pipes and user definable functions. It runs on every
 terminal or emulation that has a correct terminfo-entry. The user-interface is
 very convenient and well-known by 1-2-3 users. Function- and arrow-keys and
 extended video attributes are supported.
+
+[![MacroCALC](https://mc.freakout.de/assets/logo.jpg "MacroCALC")](https://mc.freakout.de/ "MacroCALC")
 
 MacroCALC is the only spreadsheet that manages units: 1 mile + 1 km = 1.62
 miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
