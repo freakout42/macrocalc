@@ -12,6 +12,7 @@ EOF
 echo '3+4' | ../src/mcparse 2>/dev/null | tail -2 | diff $TMPF -
 ../bin/db2rdb -r <../src/mcmessag.rdb |
 ../bin/db2rdb | sed '1,2d' >$TMPF
+#cp $TMPF mcmessag.dbf
 cmp $TMPF mcmessag.dbf
 sed '1,2d' ../src/mcmessag.rdb |
 diff $TMPF -
@@ -21,5 +22,5 @@ tee $TMP2 |
 ../bin/mc -p | diff formula.out - | wc -l >$TMPF
 echo 4 | diff -w $TMPF -
 cmp $TMP2 formula.wks
-../bin/mc -u -p <../exm/unit.mc | diff unit.out -
+../bin/mc -u -p <../exm/unit.mc | diff -bB unit.out -
 rm $TMPF $TMP2

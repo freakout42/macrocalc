@@ -1,6 +1,6 @@
 Msgname	Msglang	Msgtext
 -------	-------	---------------------------------------------------------------
-MSGCOMMAND	us	/-Menu ?-Help !-Edit .-Mark >-Goto $-Macro =-Calc
+MSGCOMMAND	us	/Menu ?Help !Edit .Mark %%All >Goto $Macro =Calc #Exit
 MSGCOMMAND	ge	/-Menue ?-Hilfe !-Edit .-Mark >-Gehezu $-Makro =-Kalk
 MSGCOMMAND	fr	/-Menu ?-Aide !-Edit .-Marquer >-Aller $-Macro =-Calc
 MSGCOMMAND	pl	/-Menu ?-Pomoc !-Edycja .-Zaznacz >-Id¼ do $-Makro =-Calc
