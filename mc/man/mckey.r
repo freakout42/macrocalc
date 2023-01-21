@@ -40,6 +40,12 @@ Prompts for a
 .Hr -symbolic "Macros" macro
 .Hr macro
 file to execute.
+.IP "F8 #"
+.I [Exit]
+.br
+.Hr -symbolic Saveandexit Savesandexit
+.Hr "Save and exit."
+Updates current file without prompting and exits.
 .IP "F9 ="
 .I [Recalc]
 .br

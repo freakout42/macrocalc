@@ -63,6 +63,7 @@ do {
     runmacro(PROMPT);
     break;
    case F8 :
+   case '#' :
     if (changed) savesheet(FALSE);
     stop = TRUE;
     break;
