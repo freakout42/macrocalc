@@ -14,6 +14,7 @@
 #include "mcelladr.h"
 #include "mcfilef.h"
 #include "mcrange.h"
+#include "mcolor.h"
 #include "mcfileio.h"
 
 int lastcol, lastrow, markcol=0, markrow=0, omarkcol=0, omarkrow=0;
@@ -75,9 +76,9 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		memset (&cp, 0, sizeof(cellr));
 		cpcol(&cp) = col;
 		cprow(&cp) = row;
-		cpattrib(&cp) = att & (FORMATM|PROTECT);
+		cpattrib(&cp) = (att & (PROTECT|BIMASK)) | (att >> 8);
 		cpfor(&cp) = form;
-		if (cpform(&cp) == DEFAULTFORMAT) cpfor(&cp) |= L_DEFAULT;
+		if (cpform(&cp) == DEFAULTFORMAT && cpcolor(&cp) == COL_DEFAULT) cpfor(&cp) |= L_DEFAULT;
 		cptype(&cp) = att & TYPEM;
 		cpvalue(&cp) = val;
 		if (cptype(&cp) == UNITT) {
@@ -119,6 +120,7 @@ int savefile (FILE *file, int scope)
 char		cols[3];
 int		col, row;
 int		acol=0, arow=0, ecol=0, erow=0;
+unsigned short colatyp;
 CELLPTR		cp;
 struct Range	*r;
 
@@ -167,10 +169,12 @@ for (row = arow; row <= erow; row++)
   if (cp != NULL)
 	{
 	colstring (col, cols);
+	colatyp = cpprotect(cp) | cpattrbi(cp) | cptype(cp);
+	colatyp |= cpcolor(cp) << 8;
 	fprintf (file, "%s%d\t%d\t%d\t%+.*e\t%s\n",
 		cols,
 		row+1,
-		cpattrib(cp)|cptype(cp),
+		colatyp,
 		cpfor(cp),
 		MAXPLACES,
 		cpnumber(cp) ? cpvalue(cp) : .0,

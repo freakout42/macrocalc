@@ -188,7 +188,7 @@ mcact.o:	mcact.c mc.h mcinput.h mcmessag.h mcparse.h \
 mcfile.o:	mcfile.c mc.h mcinput.h mcmessag.h mccalc.h mcrecalc.h \
 		mcpipe.h mcput.h mcfileio.h mcget.h mcdisply.h mcprint.h
 
-mcfileio.o:	mcfileio.c mc.h mcell.h mcfilef.h mcrange.h
+mcfileio.o:	mcfileio.c mc.h mcell.h mcfilef.h mcrange.h mcolor.h
 
 mcprint.o:	mcprint.c mc.h mcell.h mcfilef.h mcutil.h mcmisc.h mcfileio.h
 

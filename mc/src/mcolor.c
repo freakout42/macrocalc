@@ -16,6 +16,7 @@ typedef struct attrel {
 } attrel;
 
 static attrel attrels[] = {
+
   { COL_DEFAULT,         A_NORMAL,          -1,            -1 },            /* default */
   { COL_BLACK,           A_NORMAL,          COLOR_BLACK,   -1 },            /* black */
   { COL_RED,             A_NORMAL,          COLOR_RED,     -1 },            /* red */
@@ -25,14 +26,16 @@ static attrel attrels[] = {
   { COL_MAGENTA,         A_NORMAL,          COLOR_MAGENTA, -1 },            /* magenta */
   { COL_CYAN,            A_NORMAL,          COLOR_CYAN,    -1 },            /* cyan */
   { COL_WHITE,           A_NORMAL,          COLOR_WHITE,   -1 },            /* white */
-  { TEXTCOLOR,           A_NORMAL,          0,             0 },             /* cellstr */
+
+  { TEXTCOLOR,           A_NORMAL,          0,             0 },             /* text cell */
   { EOFCOLOR,            A_NORMAL,          COLOR_GREEN,   -1 },            /* eof cell */
   { ERRORCOLOR,          A_BLINK,           COLOR_RED,     -1 },            /* error cell */
   { VALUECOLOR,          A_NORMAL,          0,             0 },             /* value cell */
-  { FORMULACOLOR,        A_NORMAL,          0,             0 },             /* formula display */
+  { FORMULACOLOR,        A_NORMAL,          0,             0 },             /* formula cell */
   { STRINGCOLOR,         A_NORMAL,          0,             0 },             /* string cell */
   { BLANKCOLOR,          A_NORMAL,          0,             0 },             /* blank cell */
   { COMMANDCOLOR,        A_UNDERLINE,       COLOR_BLUE,    -1 },            /* command cell */
+
   { HIGHLIGHTCOLOR,      A_REVERSE,         COLOR_BLUE,    COLOR_WHITE },   /* highlighted current cell */
   { HIGHLIGHTERRORCOLOR, A_REVERSE|A_BLINK, COLOR_RED,     COLOR_WHITE },   /* highlighted current cell with error */
   { HEADERCOLOR,         A_REVERSE,         COLOR_CYAN,    COLOR_BLACK },   /* column and row headers */
@@ -44,6 +47,7 @@ static attrel attrels[] = {
   { PROMPTCOLOR,         A_BOLD,            0,             0 },             /* prompt */
   { INPUTCOLOR,          A_REVERSE,         0,             0 },             /* editor */
   { CELLCONTENTSCOLOR,   A_NORMAL,          0,             0 },             /* cell content info */
+
   { COL_UNDEF, 0, 0, 0 }
 };
 
@@ -64,7 +68,7 @@ for (i=0; i<COL_UNDEF; i++) {
 
 void setcolor(int pairi) {
 if (colors) {
- if (attrels[pairi].foreg + attrels[pairi].backg) {
+ if (attrels[pairi].foreg || attrels[pairi].backg) {
   attron(COLOR_PAIR(pairi));
  }
 }
@@ -72,7 +76,7 @@ if (colors) {
 
 void uncolor(int pairi) {
 if (colors) {
- if (attrels[pairi].foreg + attrels[pairi].backg) {
+ if (attrels[pairi].foreg || attrels[pairi].backg) {
   attroff(COLOR_PAIR(pairi));
  }
 }
