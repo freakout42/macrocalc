@@ -4,34 +4,34 @@
           =0           =1         =2           =3            =4          =5             =6          =7             */
 
 enum { /* pair index   */
-  COL_DEFAULT,   /* =0 (-1,-1) */
-  COL_BLACK,     /* =1 */
-  COL_RED,       /* =2 */
-  COL_GREEN,     /* =3 */
-  COL_YELLOW,    /* =4 */
-  COL_BLUE,      /* =5 */
-  COL_MAGENTA,   /* =6 */
-  COL_CYAN,      /* =7 */
-  COL_WHITE,     /* =8 */
-  TEXTCOLOR,
-  EOFCOLOR,
-  ERRORCOLOR,
-  VALUECOLOR,
-  FORMULACOLOR,
-  STRINGCOLOR,
-  BLANKCOLOR,
-  COMMANDCOLOR,
-  HIGHLIGHTCOLOR,
-  HIGHLIGHTERRORCOLOR,
-  HEADERCOLOR,
-  CURHEADERCOLOR,
-  MARKCOLOR,
-  AUTOCALCCOLOR,
-  FORMDISPLAYCOLOR,
-  MESSAGECOLOR,
-  PROMPTCOLOR,
-  INPUTCOLOR,
-  CELLCONTENTSCOLOR,
+  COL_DEFAULT,         /* = 0 (-1,-1) */
+  COL_BLACK,           /* = 1 */
+  COL_RED,             /* = 2 */
+  COL_GREEN,           /* = 3 */
+  COL_YELLOW,          /* = 4 */
+  COL_BLUE,            /* = 5 */
+  COL_MAGENTA,         /* = 6 */
+  COL_CYAN,            /* = 7 */
+  COL_WHITE,           /* = 8 */
+  TEXTCOLOR,           /* = 9 */
+  EOFCOLOR,            /* =10 */
+  ERRORCOLOR,          /* =11 */
+  VALUECOLOR,          /* =12 */
+  FORMULACOLOR,        /* =13 */
+  STRINGCOLOR,         /* =14 */
+  BLANKCOLOR,          /* =15 */
+  COMMANDCOLOR,        /* =16 */
+  HIGHLIGHTCOLOR,      /* =17 */
+  HIGHLIGHTERRORCOLOR, /* =18 */
+  HEADERCOLOR,         /* =19 */
+  CURHEADERCOLOR,      /* =20 */
+  MARKCOLOR,           /* =21 */
+  AUTOCALCCOLOR,       /* =22 */
+  FORMDISPLAYCOLOR,    /* =23 */
+  MESSAGECOLOR,        /* =24 */
+  PROMPTCOLOR,         /* =25 */
+  INPUTCOLOR,          /* =26 */
+  CELLCONTENTSCOLOR,   /* =27 */
   COL_UNDEF
 };
 

@@ -230,7 +230,7 @@ static void fmenu (void)
 switch (getmenu (FMENU))
  {
  case 0:
-	savesheet();
+	savesheet(TRUE);
 	break;
  case 1:
 	saverange();

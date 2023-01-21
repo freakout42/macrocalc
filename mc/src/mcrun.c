@@ -13,6 +13,7 @@
 #include "mcact.h"
 #include "mcdisply.h"
 #include "mcmove.h"
+#include "mcfile.h"
 #include "mcfileio.h"
 #include "mcrun.h"
 
@@ -60,6 +61,10 @@ do {
    case F6 :
    case '$' :
     runmacro(PROMPT);
+    break;
+   case F8 :
+    if (changed) savesheet(FALSE);
+    stop = TRUE;
     break;
    case F9 :
    case '=' :

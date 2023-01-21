@@ -188,9 +188,9 @@ if (ct == NULL) {
     cpattrib(ct) = cpattrib(cr);
     cpattrib(ct) &= ~UNITF;
     cpfor(ct) = cpfor(cr);
-  } else if (cpfor(cs) != L_DEFAULT) {
+  } else {
+    if (cpfor(cs) != L_DEFAULT) cpfor(ct) = cpfor(cs);
     cpattrib(ct) = cpattrib(cs);
-    cpfor(ct) = cpfor(cs);
   }
 } else if (cpsidecar(ct) && !cpneedsid(cs)) {
   free(linkcell(cpcol(ct)+1, cprow(ct), (CELLPTR)NULL));

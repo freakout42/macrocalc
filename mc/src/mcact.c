@@ -110,7 +110,7 @@ int	erase = 'N';
 
 while (changed && (erase != 'Y')) {
   if (!getyesno(&erase, MSGSAVESHEET)) return TRUE;
-  if (erase == 'N') savesheet();
+  if (erase == 'N') savesheet(TRUE);
 }
 return FALSE;
 } /* checkforsave */

@@ -161,7 +161,7 @@ mcinter.o:	mcinter.c mc.h mcgetmsg.h mcmessag.h mcfile.h mcrun.h \
 mcolor.o: mcolor.h mc.h mcelldef.h
 
 mcrun.o:	mcrun.c mc.h mcell.h mcinput.h mchelp.h mcommand.h mcrmacro.h \
-		mcrecalc.h mcmenu.h mcact.h mcdisply.h mcmove.h mcfileio.h
+		mcrecalc.h mcmenu.h mcact.h mcdisply.h mcmove.h mcfileio.h mcfile.h
 
 mcmove.o:	mcmove.c mc.h mcdisply.h mcwindow.h mcfileio.h
 

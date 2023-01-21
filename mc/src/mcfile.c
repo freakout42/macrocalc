@@ -74,7 +74,7 @@ displayscreen(NOUPDATE);
 message(MSGNULL);
 } /* loadsheet */
 
-void savesheet (void)
+void savesheet (int prompt)
 /* Saves the current spreadsheet */
 {
 FILE	*file;
@@ -83,6 +83,7 @@ int	overwrite;
 recalc();
 if (autoexec) outpipeall();
 if (rdonly) {changed = FALSE; return;}
+if (prompt && *filename) {
 writeprompt(MSGFILENAME);
 if (!editstring(filename, "", MAXFILE) || *filename=='\0') return;
 if (!access(filename, W_OK))
@@ -90,6 +91,7 @@ if (!access(filename, W_OK))
 	if (!getyesno(&overwrite, MSGOVERWRITE) || (overwrite == 'N'))
 		return;
 	}
+}
 if ((file = fopen(filename, "w")) == NULL)
 	{
 	errormsg(MSGNOOPEN);

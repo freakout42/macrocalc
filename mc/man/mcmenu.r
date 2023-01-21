@@ -63,6 +63,14 @@ Inserts a page break.
 .Hr -symbolic Formatting Formats
 .Hr Formats
 a range.
+.IP \fIAttrib\fP 9
+.Hr -symbolic Display Attributes
+.Hr Attributes
+Set display attributes for a range.
+.IP \fIColor\fP 9
+.Hr -symbolic Colors
+.Hr Colors
+Set display color for a range.
 .IP \fIErase\fP 9
 Erases a range.
 .IP \fIName\fP 9
