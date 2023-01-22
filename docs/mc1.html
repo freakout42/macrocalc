@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="/assets/man.css">
 </HEAD><BODY>
 <H1>mc</H1>
-Section: MacroCALC (1)<BR>Updated: 2017/07/11<BR><A HREF="#index">Index</A>
+Section: MacroCALC (1)<BR><A HREF="#index">Index</A>
 <A NAME="lbAB">&nbsp;</A>
 <H2>Name_</H2>
 <B>mc</B>
 - Command
 <BR>
-MacroCALC v10.11. Interactive spreadsheet calculator.
+MacroCALC v10.32. Interactive spreadsheet calculator.
 <BR>
 On Systems where <B>mc</B> is used by other programs,
 <B>321</B> can be used as an alias for <B>mc</B>.
@@ -45,6 +45,12 @@ Suppress displaying the menu, marked range and the recalculation message
 for slow terminal lines.
 <DT>-h<DD>
 Suppress highlighting of the marked range for slow terminal lines.
+<DT>-e<DD>
+Combination of -bmsl options for a complete clean screen with only data displayed.
+<DT>-k<DD>
+Suppress using colors even when the terminal is capable of.
+<DT>-cg<DD>
+Marked range is full spreadsheet after load.
 <DT>-cw<DD>
 Sets preset column width to <B>w</B>. Default is 11.
 <DT>-dp<DD>
@@ -134,6 +140,7 @@ without interactive action.
 This <B>must</B> be the last option when present!
 <DT>-v<DD>
 Prints version information.
+Options are also taken from the environment variable &quot;MACROCALC&quot;.
 </DL>
 <A NAME="lbAF">&nbsp;</A>
 <H2>General Overview_</H2>
@@ -266,6 +273,11 @@ Prompts for a destination cell.
 Prompts for a
 macro
 file to execute.
+<DT>F8 #<DD>
+<I>[Exit]</I>
+<BR>
+Save and exit.
+Updates current file without prompting and exits.
 <DT>F9 =<DD>
 <I>[Recalc]</I>
 <BR>
@@ -401,7 +413,14 @@ Inserts a page break.
 <DL COMPACT>
 <DT><I>Format</I><DD>
 Formats
+Set display formats.
 a range.
+<DT><I>Attrib</I><DD>
+Attributes
+Set display attributes.
+<DT><I>Color</I><DD>
+Colors
+Set display colors.
 <DT><I>Erase</I><DD>
 Erases a range.
 <DT><I>Name</I><DD>
