@@ -142,7 +142,34 @@ switch (formatting) {
  default:
     switch (format & FORMATM)
      {
+     case SCIENTIFIC:
+	sprintf(s, "%*.*e", 1, (int)(format & PLACES), value);
+	break;
+     case CURRENCY:
+	fstring = fdollar;
+	width--;
+	goto formfix;
+     case PERCENT:
+	fstring = fpercent;
+	value	*= 100.;
+	goto formfix;
+     formfix:
+     case FIXED:
+	sprintf(s, "%*.*f", 1, (int)(format & PLACES), value);
+	break;
+     case COMMA:
+	sprintf(s, "%*.*f", 1, (int)(format & PLACES), value);
+	pos = strcspn(s, ".");
+	while (pos > 3)
+		{
+		pos -= 3;
+		memmove(&s[pos+1], &s[pos], strlen(s)-pos+1);
+		s[pos] = ',';
+		}
+	break;
      case SPECIAL:
+     default:
+	if ((format & FORMATM) != SPECIAL) format = DEFAULTFORMAT;
 	fstring	= fleft;
 	mclocal(value, &vtime);
 	tstring = asctime(vtime);
@@ -214,30 +241,6 @@ fprintf(stderr, "valuestring: %f=\"%s\"\n", value, s);
 		break;
 	 }
 	 break;
-     case SCIENTIFIC:
-	sprintf(s, "%*.*e", 1, (int)(format & PLACES), value);
-	break;
-     case CURRENCY:
-	fstring = fdollar;
-	width--;
-	goto formfix;
-     case PERCENT:
-	fstring = fpercent;
-	value	*= 100.;
-	goto formfix;
-     formfix:
-     case FIXED:
-	sprintf(s, "%*.*f", 1, (int)(format & PLACES), value);
-	break;
-     case COMMA:
-	sprintf(s, "%*.*f", 1, (int)(format & PLACES), value);
-	pos = strcspn(s, ".");
-	while (pos > 3)
-		{
-		pos -= 3;
-		memmove(&s[pos+1], &s[pos], strlen(s)-pos+1);
-		s[pos] = ',';
-		}
      }
     if (formatting==FVALUE) {
 	strcpy(vstring, s);

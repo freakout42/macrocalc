@@ -79,6 +79,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		cpattrib(&cp) = (att & BIMASK) | (att >> 8);
 		cpfor(&cp) = form;
 		if (cpform(&cp) == DEFAULTFORMAT) cpfor(&cp) |= L_DEFAULT;
+		if (cpformat(&cp) == FORMATM) cpfor(&cp) = DEFAULTFORMAT;
 		cptype(&cp) = att & TYPEM;
 		cpvalue(&cp) = val;
 		if (cptype(&cp) == UNITT) {
