@@ -53,6 +53,7 @@ do {
     omarkrow	= 0;
     markcol	= lastcol;
     markrow	= lastrow;
+    if (highlight) displayscreen (NOUPDATE);
     break;
    case F5 :
    case '>' :
