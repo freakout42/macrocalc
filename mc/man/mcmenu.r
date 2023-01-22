@@ -63,7 +63,6 @@ Inserts a page break.
 .Hr -symbolic Formatting Formats
 .Hr Formats
 Set display formats.
-a range.
 .IP \fIAttrib\fP 9
 .Hr -symbolic Display Attributes
 .Hr Attributes
