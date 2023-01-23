@@ -98,11 +98,13 @@ p	[\.]
 c	[,]
 s	[+-]
 e	([Ee]{s}?{n}+)
+i	[iI]
 w	[ \t]+
 f	"@"?
 j	['"\^]
 col	({a}{1,2})
 row	({n}{1,5})
+val	({n})+({p}{n}*)?({e})?|{p}({n})+({e})?
 cell	({cs}{col}{cp}({s})?{row}{ce}|{cs}{s}{row}{cp}({s})?{row}{ce}|{col}{row})
 range	({a}|\\){aln}+
 unit	("/"{w}*)?({a})+({s}{n})?
@@ -155,10 +157,18 @@ str	.+
 	return DAT;
 	}
 
-({n})+({p}{n}*)?({e})?	|
-{p}({n})+({e})?	{
-	str_tr((char*)yytext, ',', '.');
+{val}	{
 	yylval.value.value	= atof ((char*)yytext);
+	yylval.value.unit	= NULL;
+	yylval.value.cimag = 0.0;
+	return CON;
+	}
+
+{val}{i}{val}	{
+	int i;
+	yylval.value.value	= atof ((char*)yytext);
+  i = strcspn((char*)yytext, "iI");
+	yylval.value.cimag = atof (((char*)yytext)+i+1);
 	yylval.value.unit	= NULL;
 	return CON;
 	}

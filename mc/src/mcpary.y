@@ -31,6 +31,7 @@ static char	*yystr();
 
 extern CELLPTR pc;
 extern char	*yybuf;
+static char fbuf[12];
 
 %}
 
@@ -87,7 +88,13 @@ o : e
 	*yybuf++ = F_RETURN;
 #else
 	cpvalue(pc) = $1.value;
-	cpunit(pc) = $1.unit;
+	cpcimag(pc) = $1.cimag;
+	if (cpcimag(pc)==0.0) {
+    cpunit(pc) = $1.unit;
+  } else {
+    cpunit(pc) = fbuf;
+    sprintf(cpunit(pc), " i%-10.3f", cpcimag(pc));
+  }
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: o value=\"%f %s\"\n", $1.value, $1.unit);
 #endif
@@ -100,6 +107,7 @@ o : e
 	*yybuf++ = F_RETURN;
 #else
 	cpvalue(pc) = unitconv ($1.value, $1.unit, $2);
+	cpcimag(pc) = unitconv ($1.cimag, $1.unit, $2);
 	cpunit(pc) = $2;
 #endif
 	}
@@ -179,7 +187,7 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = F_EQUALS;
 #else
-	$$.value = $1.value == unitconv($3.value,$3.unit,$1.unit);
+	$$.value = $1.value == unitconv($3.value,$3.unit,$1.unit); /* && $1.cimag == $3.cimag; */
 	$$.unit = NULL;
 #endif
 	}
@@ -392,6 +400,7 @@ e : e OR e
 	yyopcode (F_CONSTANT, &$$.value, sizeof(double));
 #else
 	$$.value = $1.value;
+	$$.cimag = $1.cimag;
 	$$.unit = NULL;
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: CON value=\"%f\"\n", $$.value);
@@ -431,11 +440,13 @@ e : e OR e
 		fprintf (stderr, "mcpary: c cp=%08x\n", cp);
 #endif
 	 	$$.value = cpvalue (cp);
+	 	$$.cimag = cpcimag (cp);
 		$$.unit  = cpunit (cp);
 		}
 	else
 		{
 		$$.value = 0.;
+		$$.cimag = 0.;
 		$$.unit  = NULL;
 		}
 #endif

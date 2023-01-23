@@ -197,6 +197,7 @@ while (1) {
 		usage();
 	 }
 }
+*filename = '\0';
 switch (argc-optind)
  {
  case 0:	break;

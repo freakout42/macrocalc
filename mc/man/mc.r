@@ -28,6 +28,7 @@ On Systems where \fBmc\fP is used by other programs,
 .so mcmenu.r
 .so mcmac.r
 .so mcform.r
+.so mcnumber.r
 .so mctext.r
 .so mcformu.r
 .so mcdate.r

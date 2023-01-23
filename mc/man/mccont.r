@@ -30,6 +30,8 @@ Menu description.
 Macro programming.
 .SL Formatting 23
 Cell formatting and print formats.
+.SL Numbers 23
+Entering value cells.
 .SL Text 23
 Entering text cells.
 .SL Formulas 23
