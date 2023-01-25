@@ -336,6 +336,7 @@ e : e OR e
 	} else {
 	  $$.value = pow ($1.value, $3.value);
 	}
+	if ($$.value == HUGE_VAL) errno = ERANGE;
 	$$.unit = NULL;
 #endif
 	}

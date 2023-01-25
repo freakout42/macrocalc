@@ -49,7 +49,13 @@ struct CELLVALUE r1;
 
 z1 = f1.value + f1.cimag * I;
 z2 = f2.value + f2.cimag * I;
+
+#if defined(__FreeBSD__)
+p1 = HUGE_VAL + 0.0 * I;
+#else
 p1 = cpow(z1, z2);
+#endif
+
 r1.value = creal(p1);
 r1.cimag = cimag(p1);
 r1.unit = (void*)0;
@@ -78,8 +84,10 @@ switch(fcode) {
   p1 = ccosh(z1); break;
  case L3_EXP:
   p1 = cexp(z1); break;
+#if !defined(__FreeBSD__)
  case L3_LN:
   p1 = clog(z1); break;
+#endif
  case L3_SIN:
   p1 = csin(z1); break;
  case L3_SINH:
