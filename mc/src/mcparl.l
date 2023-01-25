@@ -135,32 +135,36 @@ str	.+
 
 {udate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return DAT;
 	}
 
 {uldate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext), (double)atoi((char*)yytext+3));
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return DAT;
 	}
 
 {edate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext+3), (double)atoi((char*)yytext));
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return DAT;
 	}
 
 {eldate}	{
 	yylval.value.value	= date((double)atoi((char*)yytext+6), (double)atoi((char*)yytext+3), (double)atoi((char*)yytext));
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return DAT;
 	}
 
 {val}	{
 	yylval.value.value	= atof ((char*)yytext);
-	yylval.value.unit	= NULL;
 	yylval.value.cimag = 0.0;
+	yylval.value.unit	= NULL;
 	return CON;
 	}
 
@@ -176,6 +180,7 @@ str	.+
 ({n})+({c}{n}{n})	{
 	str_tr((char*)yytext, ',', '.');
 	yylval.value.value	= atof ((char*)yytext);
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
 	}
@@ -183,6 +188,15 @@ str	.+
 "PI"	|
 "pi"	{
 	yylval.value.value	= M_PI;
+	yylval.value.cimag = 0.0;
+	yylval.value.unit	= NULL;
+	return CON;
+	}
+
+"E"	|
+"e"	{
+	yylval.value.value	= M_E;
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
 	}
@@ -190,6 +204,7 @@ str	.+
 "COL"	|
 "col"	{
 	yylval.value.value	= (double)(origcol+1);
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
 	}
@@ -197,6 +212,7 @@ str	.+
 "ROW"	|
 "row"	{
 	yylval.value.value	= (double)(origrow+1);
+	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
 	}

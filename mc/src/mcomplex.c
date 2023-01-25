@@ -42,9 +42,7 @@ return r1;
 }
 
 struct CELLVALUE cpxpow(struct CELLVALUE f1, struct CELLVALUE f2) {
-double complex z1;
-double complex z2;
-double complex p1;
+double complex z1, z2, p1;
 struct CELLVALUE r1;
 
 z1 = f1.value + f1.cimag * I;
@@ -64,8 +62,7 @@ return r1;
 }
 
 struct CELLVALUE cpxfunc1(int fcode, struct CELLVALUE f1) {
-double complex z1;
-double complex p1;
+double complex z1, z2, z3, z4, p1;
 struct CELLVALUE r1;
 
 z1 = f1.value + f1.cimag * I;
@@ -87,6 +84,12 @@ switch(fcode) {
 #if !defined(__FreeBSD__)
  case L3_LN:
   p1 = clog(z1); break;
+ case L3_LOG:
+  z4 = 10.0 + 0.0 * I;
+  z3 = clog(z4);
+  z2 = clog(z1);
+  p1 = z2 / z3;
+  break;
 #endif
  case L3_SIN:
   p1 = csin(z1); break;
