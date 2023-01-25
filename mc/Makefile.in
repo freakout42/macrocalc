@@ -249,7 +249,7 @@ mc2pary.o:	mcpary.c lotus.h mc.h
 mcpary.o:	mcpary.c mc.h mcomplex.h
 	$(CC) $(CFLAGS) -c mcpary.c
 
-mcomplex.o: mcelldef.h
+mcomplex.o: mcelldef.h mcfunc.h
 
 y.tab.h mcpary.c:	mcpary.y
 	$(YACC) $(YFLAGS) mcpary.y

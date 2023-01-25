@@ -330,7 +330,12 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = F_EXPONENT;
 #else
-	$$.value = pow ($1.value, $3.value);
+	if ($1.cimag || $3.cimag) {
+	  $$ = cpxpow($1, $3);
+	  $$.unit = NULL;
+	} else {
+	  $$.value = pow ($1.value, $3.value);
+	}
 	$$.unit = NULL;
 #endif
 	}
@@ -357,10 +362,14 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
 #else
-	if ($2.cimag || ($1.oc == L3_SQRT && $2.value < 0.0)) {
-	  $$ = cpxsqrt($2);
+	if ($1.oc == L3_SQRT && $2.value < 0.0) {
+	  $$ = cpxfunc1(L3_SQRT, $2);
+	} else if ($2.cimag) {
+	  $$ = cpxfunc1($1.oc, $2); break;
+	  if ($$.value == HUGE_VAL) errno = ERANGE;
 	} else {
 	  $$.value = (*$1.f) ($2.value);
+	  $$.cimag = 0.0;
 	}
 	$$.unit = NULL;
 #endif
@@ -371,6 +380,7 @@ e : e OR e
 	*yybuf++ = $1.oc;
 #else
 	$$.value = (*$1.f) ($2.value, $4.value);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -380,6 +390,7 @@ e : e OR e
 	*yybuf++ = $1.oc;
 #else
 	$$.value = (*$1.f) ($2.value, $4.value, $6.value);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -389,6 +400,7 @@ e : e OR e
 	*yybuf++ = $1.oc;
 #else
 	$$.value = (*$1.f) ($2.value, $4.value, $6.value, $8.value);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -402,6 +414,7 @@ e : e OR e
 	*yybuf++ = 1;
 #else
 	$$.value = (*$1.f) ($2[0], $2[1]);
+	$$.cimag = 0.0;
 	$$.unit = cpunit(pc);
 #endif
 	}
@@ -411,6 +424,7 @@ e : e OR e
 	*yybuf++ = $1.oc;
 #else
 	$$.value = (*$1.f) ($2);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -443,6 +457,7 @@ e : e OR e
 	yyopcode (F_CONSTANT, &$$.value, sizeof(double));
 #else
 	$$.value = $1.value;
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: CON value=\"%f\"\n", $$.value);
@@ -486,6 +501,7 @@ e : e OR e
 	*yybuf++ = $1.oc;
 #else
 	$$.value = (*$1.f) ($2, adrval($4.col), adrval($4.row));
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
