@@ -352,7 +352,7 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
 #else
-	if ($2.cimag || ($1.oc == 35 && $2.value < 0.0)) {
+	if ($2.cimag || ($1.oc == L3_SQRT && $2.value < 0.0)) {
 	  $$ = cpxsqrt($2);
 	} else {
 	  $$.value = (*$1.f) ($2.value);
