@@ -306,14 +306,19 @@ e : e OR e
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: DIVIDE errno=%d\n", errno);
 #endif
-	if ($3.value==0.)
+	if ($3.value==0.0 && $3.cimag==0.0)
 		{
 		errno = ERANGE;
 		$$.value = HUGE_VAL;
-		}
-	else	$$.value = $1.value / $3.value;
-	$$.unit = yybuf;
-	yybuf = unitdiv (yybuf, $1.unit, $3.unit);
+		} else {
+	if ($1.cimag || $3.cimag) {
+	  $$ = cpxdivd($1, $3);
+	  $$.unit = NULL;
+	} else {
+	  $$.value = $1.value / $3.value;
+	  $$.unit = yybuf;
+	  yybuf = unitdiv (yybuf, $1.unit, $3.unit);
+	} }
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: DIVIDE value=\"%f/%f=%f %s\" errno=%d\n",
 			$1.value, $3.value, $$.value, $$.unit, errno);
