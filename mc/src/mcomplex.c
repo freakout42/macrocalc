@@ -5,6 +5,10 @@
 #include "mcelldef.h"
 #include "mcfunc.h"
 
+#ifndef complex
+#define complex _Complex
+#endif
+
 struct CELLVALUE cpxmult(struct CELLVALUE f1, struct CELLVALUE f2) {
 double complex z1;
 double complex z2;
