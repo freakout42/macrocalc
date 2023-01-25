@@ -68,7 +68,7 @@ OOBJ=	mccalc.o mcutil.o
 COBJ=	mcellstr.o mcell.o
 MOBJ=	mcgetmsg.o
 POBJ=	mcparse.o mc2parse.o mcparl.o
-XOBJ=	mcelladr.o mcunit.o mctime.o mcmisc.o
+XOBJ=	mcelladr.o mcunit.o mctime.o mcmisc.o mcomplex.o
 YOBJ=	mcellval.o
 BOBJ=	mcfinc.o mcstat.o mcstring.o mclogic.o mclink.o
 PDOBJ=	mcparse.o mcparyd.o mcparld.o $(XOBJ)
@@ -246,8 +246,10 @@ mc2pary.o:	mcpary.c lotus.h mc.h
 	$(CC) $(CFLAGS) -DLOTUS -c mc2pary.c
 	rm -f mc2pary.c
 
-mcpary.o:	mcpary.c mc.h
+mcpary.o:	mcpary.c mc.h mcomplex.h
 	$(CC) $(CFLAGS) -c mcpary.c
+
+mcomplex.o: mcelldef.h
 
 y.tab.h mcpary.c:	mcpary.y
 	$(YACC) $(YFLAGS) mcpary.y

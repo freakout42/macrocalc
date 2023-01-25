@@ -138,6 +138,7 @@ struct Range {
 #define	cpval(cp)     ((cp)->v)
 #define	cpvalue(cp)   (((cp)->v).value)
 #define	cpcimag(cp)   (((cp)->v).cimag)
+#define	cpiscmplx(cp) (fabs(((cp)->v).cimag)>0.0001)
 #define	cpunit(cp)    (((cp)->v).unit)
 #define	cplength(cp)  (((cp)->s).length)
 #define	cpstring(cp)	(((cp)->s).string)

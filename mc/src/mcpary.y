@@ -14,6 +14,7 @@ void yyerror(const char *s);
 #include "mc.h"
 #include "mcell.h"
 #include "mcellact.h"
+#include "mcomplex.h"
 #include "mcunit.h"
 #include "mcfunc.h"
 #ifdef	LOTUS
@@ -31,7 +32,9 @@ static char	*yystr();
 
 extern CELLPTR pc;
 extern char	*yybuf;
+#ifndef LOTUS
 static char fbuf[12];
+#endif
 
 %}
 
@@ -89,14 +92,15 @@ o : e
 #else
 	cpvalue(pc) = $1.value;
 	cpcimag(pc) = $1.cimag;
-	if (cpcimag(pc)==0.0) {
-    cpunit(pc) = $1.unit;
-  } else {
+	if (cpiscmplx(pc)) {
     cpunit(pc) = fbuf;
     sprintf(cpunit(pc), " i%-10.3f", cpcimag(pc));
+  } else {
+    cpcimag(pc) = 0.0;
+    cpunit(pc) = $1.unit;
   }
 #ifdef DEBUG
-	fprintf (stderr, "mcpary: o value=\"%f %s\"\n", $1.value, $1.unit);
+	fprintf (stderr, "mcpary: o value=\"%fi%f %s\"\n", $1.value, $1.cimag, $1.unit);
 #endif
 #endif
 	}
@@ -107,7 +111,7 @@ o : e
 	*yybuf++ = F_RETURN;
 #else
 	cpvalue(pc) = unitconv ($1.value, $1.unit, $2);
-	cpcimag(pc) = unitconv ($1.cimag, $1.unit, $2);
+	cpcimag(pc) = 0.0;
 	cpunit(pc) = $2;
 #endif
 	}
@@ -187,7 +191,11 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = F_EQUALS;
 #else
-	$$.value = $1.value == unitconv($3.value,$3.unit,$1.unit); /* && $1.cimag == $3.cimag; */
+	if ($1.cimag || $3.cimag) {
+	  $$.value = $1.value == $3.value && $1.cimag == $3.cimag;
+	} else {
+	  $$.value = $1.value == unitconv($3.value,$3.unit,$1.unit);
+	}
 	$$.unit = NULL;
 #endif
 	}
@@ -196,7 +204,11 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = F_NOTEQUALS;
 #else
-	$$.value = $1.value != unitconv($3.value,$3.unit,$1.unit);
+	if ($1.cimag || $3.cimag) {
+	  $$.value = $1.value != $3.value || $1.cimag != $3.cimag;
+	} else {
+	  $$.value = $1.value != unitconv($3.value,$3.unit,$1.unit);
+	}
 	$$.unit = NULL;
 #endif
 	}
@@ -206,6 +218,7 @@ e : e OR e
 	*yybuf++ = F_GREATER;
 #else
 	$$.value = $1.value > unitconv($3.value,$3.unit,$1.unit);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -215,6 +228,7 @@ e : e OR e
 	*yybuf++ = F_GREATEREQUAL;
 #else
 	$$.value = $1.value >= unitconv($3.value,$3.unit,$1.unit);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -224,6 +238,7 @@ e : e OR e
 	*yybuf++ = F_LESS;
 #else
 	$$.value = $1.value < unitconv($3.value,$3.unit,$1.unit);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -233,6 +248,7 @@ e : e OR e
 	*yybuf++ = F_LESSEQUAL;
 #else
 	$$.value = $1.value <= unitconv($3.value,$3.unit,$1.unit);
+	$$.cimag = 0.0;
 	$$.unit = NULL;
 #endif
 	}
@@ -267,13 +283,17 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = F_MULTIPLY;
 #else
-	$$.value = $1.value * $3.value;
+	if ($1.cimag || $3.cimag) {
+	  $$ = cpxmult($1, $3);
+	  $$.unit = NULL;
+	} else {
+	  $$.value = $1.value * $3.value;
+	  $$.unit = yybuf;
+	  yybuf = unitmult (yybuf, $1.unit, $3.unit);
+	}
 #ifdef DEBUG
+	fprintf (stderr, "mcpary: %f = %f * %f\n", $$.cimag, $1.cimag, $3.cimag);
 	fprintf (stderr, "mcpary: TIMES value=\"%f\"\n", $$.value);
-#endif
-	$$.unit = yybuf;
-	yybuf = unitmult (yybuf, $1.unit, $3.unit);
-#ifdef DEBUG
 	fprintf (stderr, "mcpary: TIMES unit=\"%s\"\n", $$.unit);
 #endif
 #endif
@@ -332,8 +352,12 @@ e : e OR e
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
 #else
-	$$.value = (*$1.f) ($2.value);
-	$$.unit = $2.unit;
+	if ($2.cimag || ($1.oc == 35 && $2.value < 0.0)) {
+	  $$ = cpxsqrt($2);
+	} else {
+	  $$.value = (*$1.f) ($2.value);
+	}
+	$$.unit = NULL;
 #endif
 	}
   | FUNC2 e KOMMA e CPAREN

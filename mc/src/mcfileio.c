@@ -94,6 +94,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		if ((cu = cell(col+1, row)) && cptype(cu)==UNITT) {
 				free(cpunit(ct));
 				cpunit(ct) = cpunit(cu);
+				cpcimag(ct) = cpvalue(cu);
 				cpvalue(cu) = cpvalue(ct);
 				free(cptext(cu));
 				cptext(cu) = cptext(ct);
@@ -175,7 +176,7 @@ for (row = arow; row <= erow; row++)
 		cpattrbi(cp) | cptype(cp) | cpcolor(cp) << 8,
 		cpfor(cp),
 		MAXPLACES,
-		cpnumber(cp) ? cpvalue(cp) : .0,
+		cptype(cp)==UNITT ? cpcimag(cp) : (cpnumber(cp) ? cpvalue(cp) : .0),
 		cptype(cp)==UNITT ? cpunit(cp) : cptext(cp)
 	 );
 	}
