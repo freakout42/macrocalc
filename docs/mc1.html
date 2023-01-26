@@ -8,7 +8,7 @@ Section: MacroCALC (1)<BR><A HREF="#index">Index</A>
 <B>mc</B>
 - Command
 <BR>
-MacroCALC v10.32. Interactive spreadsheet calculator.
+MacroCALC v10.33. Interactive spreadsheet calculator.
 <BR>
 On Systems where <B>mc</B> is used by other programs,
 <B>321</B> can be used as an alias for <B>mc</B>.
@@ -593,6 +593,20 @@ The cell value does not change when formatted.
 Bold and Italic are not formats, but are
 attributes (see below).
 <A NAME="lbAO">&nbsp;</A>
+<H2>Numbers_</H2>
+Values can be entered in a cell simply by moving to the cell and typing in
+the number.
+With the
+<I>[Enter]</I>
+key,
+<B>mc</B>
+will put the text into the current cell and display its contents.
+<BR>
+<B>COMPLEX</B>
+<BR>
+Complex values are entered with &quot;i&quot; between the real and the imaginary part.
+For example &quot;0i1&quot; is the representation for &quot;i&quot; = SQRT(-1).
+<A NAME="lbAP">&nbsp;</A>
 <H2>Text_</H2>
 Text can be entered in a cell simply by moving to the cell and typing in
 the text.
@@ -617,7 +631,7 @@ will add a left justification sign as default.
 <BR>
 The special justification sign backslash (<B>\</B>) will
 cause the following character be repeated in the whole cell.
-<A NAME="lbAP">&nbsp;</A>
+<A NAME="lbAQ">&nbsp;</A>
 <H2>Formulas_</H2>
 Formulas are entered like
 text.
@@ -676,6 +690,12 @@ ex. A1: value:   1.00
 <DL COMPACT>
 <DT>PI<DD>
 Value of PI = 3.141592.
+<DT>E<DD>
+Value of E = 2.718281.
+<DT>I<DD>
+Value of I = 0i1 the imaginary unit.
+<DT>SQRT2<DD>
+Value of <A HREF="http://localhost/cgi-bin/man/man2html?2+sqrt">sqrt</A>(2) = 1.414213.
 <DT>COL<DD>
 Current column number.
 <DT>ROW<DD>
@@ -690,7 +710,7 @@ quotation marks (<B>&quot;</B>).
 If a cell is preceded by hash (<B>#</B>) it refers to the cell string
 instead of the value.
 Strings can be concatenated without any operator.
-<A NAME="lbAQ">&nbsp;</A>
+<A NAME="lbAR">&nbsp;</A>
 <H2>Dates_</H2>
 Dates can be entered as formulas like
 <BR>
@@ -727,7 +747,7 @@ and automatically
 format the cell
 with the date format,
 unless the cell was formatted before with a different format.
-<A NAME="lbAR">&nbsp;</A>
+<A NAME="lbAS">&nbsp;</A>
 <H2>Operators_</H2>
 An operator is a function that  is built into
 <B>mc</B>
@@ -762,7 +782,7 @@ Op  Description
 In addition to these C-like operators,
 also operators known from other commonly used spreadsheet programs (e.g.:
 #AND#, #OR#, ...) can be used.
-<A NAME="lbAS">&nbsp;</A>
+<A NAME="lbAT">&nbsp;</A>
 <H2>Precedence_</H2>
 Precedence refers to  the order in  which
 <B>mc</B>
@@ -810,7 +830,7 @@ within the innermost parentheses is always executed first.
 All of the rules of basic algebra apply to expressions in <B>mc</B>.
 Remember to use parentheses to indicate exactly the order in which you want
 the operators executed.
-<A NAME="lbAT">&nbsp;</A>
+<A NAME="lbAU">&nbsp;</A>
 <H2>Units_</H2>
 <B>mc</B>
 has a unique feature called automatic unit conversion.
@@ -855,7 +875,7 @@ To add units to the database see the documentation of <B>mcunits</B>.
 <BR>
 Units are not implemented for the ^ (power) operator and for all
 nonstatistical functions like SQRT!
-<A NAME="lbAU">&nbsp;</A>
+<A NAME="lbAV">&nbsp;</A>
 <H2>Piping_</H2>
 <B>mc</B>
 has a very advanced interface to the operating system via piping.
@@ -1018,7 +1038,7 @@ To reexecute any cell-command simply reedit it with
 All output to standard error of cell-commands is redirected to the
 <B>mc</B>
 error message line.
-<A NAME="lbAV">&nbsp;</A>
+<A NAME="lbAW">&nbsp;</A>
 <H2>mcrdb_</H2>
 The shell-script <B>mcrdb</B> uses
 <B>mc</B>
@@ -1048,7 +1068,7 @@ Of course
 can only work when
 <B>/rdb</B>
 is installed.
-<A NAME="lbAW">&nbsp;</A>
+<A NAME="lbAX">&nbsp;</A>
 <H2>Linking_</H2>
 The worksheet currently in memory can be linked to worksheets on disk using the 
 <I>LINK</I>
@@ -1079,34 +1099,35 @@ in column or row deletes or inserts or moves of the cell in the link.
 To avoid this misbehavior,
 it is also possible to use named cells and build the link with the name
 instead of the absolute reference.
-<A NAME="lbAX">&nbsp;</A>
+<A NAME="lbAY">&nbsp;</A>
 <H2>Mathematical functions_</H2>
 The  following functions act upon the argument 'x' within
 the parentheses. 'x' can be a value or a formula
 which references other cells within the worksheet.
+The (C) indicates availability for complex values.
 <DL COMPACT>
 <DT>ABS(x)<DD>
-Returns the absolute value of argument.
+Returns the absolute value of argument. (C)
 <BR>
 ex. ABS(-10) = 10
 <DT>ACOS(x)<DD>
-Arc Cosine, returns radians.
+Arc Cosine, returns radians. (C)
 <BR>
 ex. ACOS(0.5) = 1.0471
 <DT>ASIN(x)<DD>
-Arc Sine, returns radians.
+Arc Sine, returns radians. (C)
 <BR>
 ex. ASIN(0.866) = 1.0471
 <DT>ATAN(x)<DD>
-Arc Tangent, returns radians.
+Arc Tangent, returns radians. (C)
 <BR>
 ex. ATAN(1.732) = 1.047
 <DT>COS(x)<DD>
-Cosine of angle, x in radians.
+Cosine of angle, x in radians. (C)
 <BR>
 ex. COS(1.047) = 0.5
 <DT>EXP(x)<DD>
-Raises 'e' to the 'x'-th power.
+Raises 'e' to the 'x'-th power. (C)
 <BR>
 ex. <A HREF="http://localhost/cgi-bin/man/man2html?5+EXP">EXP</A>(5) = 148.4131591
 <DT>INT(x)<DD>
@@ -1116,27 +1137,27 @@ integer remainder is returned.
 <BR>
 ex. INT(10.6) = 10
 <DT>LN(x)<DD>
-Natural Logarithm to base 'e'.
+Natural Logarithm to base 'e'. (C)
 <BR>
 ex. <A HREF="http://localhost/cgi-bin/man/man2html?6+LN">LN</A>(6) = 1.791...
 <DT>LOG(x)<DD>
-Logarithm to base '10'.
+Logarithm to base '10'. (C)
 <BR>
 ex. LOG(10) = 1
 <DT>SIN(x)<DD>
-Sine of angle, x in radians.
+Sine of angle, x in radians. (C)
 <BR>
 ex. SIN(1.047) = 0.866
 <DT>SQRT(x)<DD>
-Square root of argument.
+Square root of argument. (C)
 <BR>
 ex. <A HREF="http://localhost/cgi-bin/man/man2html?2+SQRT">SQRT</A>(2) = 1.4142135624
 <DT>TAN(x)<DD>
-Tangent of angle, x in radians.
+Tangent of angle, x in radians. (C)
 <BR>
 ex. TAN(1.047) = 1.732
 </DL>
-<A NAME="lbAY">&nbsp;</A>
+<A NAME="lbAZ">&nbsp;</A>
 <H2>Logical functions_</H2>
 <DL COMPACT>
 <DT>IF(Condition,arg1,arg2)<DD>
@@ -1145,7 +1166,7 @@ Value of arg2 if Condition is false.
 <BR>
 ex. IF(10&gt;2,3*2,4+5) = 6
 </DL>
-<A NAME="lbAZ">&nbsp;</A>
+<A NAME="lbBA">&nbsp;</A>
 <H2>Financial functions_</H2>
 <DL COMPACT>
 <DT>CTERM(INTerest,FutureValue,PresentValue)<DD>
@@ -1189,7 +1210,7 @@ Number of periods required to accumulate an investment
 of FVAL making regular payments of PMT and accruing
 interest at the rate of INT per period.
 </DL>
-<A NAME="lbBA">&nbsp;</A>
+<A NAME="lbBB">&nbsp;</A>
 <H2>Statistical functions_</H2>
 Statistical  functions  operate  on  a  range  of  values.
 A range specifies a rectangular block of data in the worksheet.
@@ -1256,7 +1277,7 @@ Returns the population variance of the range.
 <BR>
 ex. VAR(A1..C3) = 8.438024
 </DL>
-<A NAME="lbBB">&nbsp;</A>
+<A NAME="lbBC">&nbsp;</A>
 <H2>Date/Time functions_</H2>
 <DL COMPACT>
 <DT>DATE(YY,MM,DD)<DD>
@@ -1289,13 +1310,13 @@ The Year in X.
 <BR>
 ex. YEAR(31917) = 87
 </DL>
-<A NAME="lbBC">&nbsp;</A>
+<A NAME="lbBD">&nbsp;</A>
 <H2>String functions_</H2>
 <DL COMPACT>
 <DT>LENGTH(string) or LENGTH(Cell)<DD>
 Number of characters in string.
 </DL>
-<A NAME="lbBD">&nbsp;</A>
+<A NAME="lbBE">&nbsp;</A>
 <H2>User functions_</H2>
 User functions are functions developed in the C programming language.
 They must be compiled with the C compiler and linked with the kernel of
@@ -1359,7 +1380,7 @@ into the bin directory with
 <BR>
 <I>cp $ARX/mc/src/mc $ARX/bin</I>
 </DL>
-<A NAME="lbBE">&nbsp;</A>
+<A NAME="lbBF">&nbsp;</A>
 <H2>Language support_</H2>
 <B>mc</B>
 is language configurable.
@@ -1389,7 +1410,7 @@ non-alphabetic character in every keyword.
 If you translate the files to any language,
 please send the translated files to me via Email or on a disk.
 They will then be distributed with <B>mc</B>.
-<A NAME="lbBF">&nbsp;</A>
+<A NAME="lbBG">&nbsp;</A>
 <H2>Printing_</H2>
 <B>mc</B>
 uses
@@ -1421,7 +1442,7 @@ For example, the menu command
 simply adds a &quot;.bp&quot;
 <I>break page</I>
 command into the worksheet.
-<A NAME="lbBG">&nbsp;</A>
+<A NAME="lbBH">&nbsp;</A>
 <H2>Attributes_</H2>
 The  appearance  of  a cell on printed output can be set with the
 <I>/Range Attrib</I>
@@ -1435,7 +1456,7 @@ attribute.
 puts
 <B>nroff</B>
 font controlling commands in the output, which is piped through <B>[nt]roff</B>.
-<A NAME="lbBH">&nbsp;</A>
+<A NAME="lbBI">&nbsp;</A>
 <H2>Lotus WKS-files_</H2>
 A conversion program for the most popular DOS spreadsheet file format WKS
 (Lotus 1-2-3) is included in <B>mc</B>.
@@ -1521,7 +1542,7 @@ mc-file-format.
 <P>
 <B>Lotus 1-2-3</B>
 is a trademark of Lotus Development Corp.
-<A NAME="lbBI">&nbsp;</A>
+<A NAME="lbBJ">&nbsp;</A>
 <H2>Dbase files_</H2>
 <B>db2rdb</B>
 is a program, that comes with the registered version of <B>mc</B>.
@@ -1534,7 +1555,7 @@ for further information.
 <P>
 <B>Dbase</B>
 is a trademark of dBase LLC.
-<A NAME="lbBJ">&nbsp;</A>
+<A NAME="lbBK">&nbsp;</A>
 <H2>Examples_</H2>
 There are example worksheets in the directory
 <I>$ARX/exm</I>.
@@ -1583,7 +1604,7 @@ Worksheet for purchase.
 Macro for purchase.
 </DL>
 </DL>
-<A NAME="lbBK">&nbsp;</A>
+<A NAME="lbBL">&nbsp;</A>
 <H2>Limitations_</H2>
 The date and time functions do not work with dates prior to Dec 14, 1902.
 The date display format does not work with dates prior to Jan 1, 1970
@@ -1594,7 +1615,7 @@ the lower-right position of the screen is never displayed.
 <P>
 The function shortcut for SUM(Range) to write only Range (mc V&lt;=3.01)
 was removed from mc V4 due to parser problems with range names.
-<A NAME="lbBL">&nbsp;</A>
+<A NAME="lbBM">&nbsp;</A>
 <H2>Terminal_</H2>
 Since this product is based on the
 <B>curses</B>
@@ -1663,7 +1684,7 @@ Standard ue      rmul     Underline mode off
 <BR>
 Since most terminal keys start with the &lt;ESC&gt;-character (octal 033),
 the ESCAPE-Keys itself needs one second to be decoded!
-<A NAME="lbBM">&nbsp;</A>
+<A NAME="lbBN">&nbsp;</A>
 <H2>Files_</H2>
 The installation of
 <B>mc</B>
@@ -1715,10 +1736,10 @@ User functions.
 program to add the serial number and the license key to the binary.
 </DL>
 </DL>
-<A NAME="lbBN">&nbsp;</A>
+<A NAME="lbBO">&nbsp;</A>
 <H2>See Also_</H2>
 awk, db2rdb, dos, make, me, mcunits, nro, nroff, sed, termcap, terminfo, /rdb
-<A NAME="lbBO">&nbsp;</A>
+<A NAME="lbBP">&nbsp;</A>
 <H2>Author_</H2>
 <PRE>
 Axel Reinhold
@@ -1746,33 +1767,34 @@ Internet: <A HREF="http://www.freakout.de">http://www.freakout.de</A></PRE>
 <DT><A HREF="#lbAL">Menu_</A><DD>
 <DT><A HREF="#lbAM">Macros_</A><DD>
 <DT><A HREF="#lbAN">Formatting_</A><DD>
-<DT><A HREF="#lbAO">Text_</A><DD>
-<DT><A HREF="#lbAP">Formulas_</A><DD>
-<DT><A HREF="#lbAQ">Dates_</A><DD>
-<DT><A HREF="#lbAR">Operators_</A><DD>
-<DT><A HREF="#lbAS">Precedence_</A><DD>
-<DT><A HREF="#lbAT">Units_</A><DD>
-<DT><A HREF="#lbAU">Piping_</A><DD>
-<DT><A HREF="#lbAV">mcrdb_</A><DD>
-<DT><A HREF="#lbAW">Linking_</A><DD>
-<DT><A HREF="#lbAX">Mathematical functions_</A><DD>
-<DT><A HREF="#lbAY">Logical functions_</A><DD>
-<DT><A HREF="#lbAZ">Financial functions_</A><DD>
-<DT><A HREF="#lbBA">Statistical functions_</A><DD>
-<DT><A HREF="#lbBB">Date/Time functions_</A><DD>
-<DT><A HREF="#lbBC">String functions_</A><DD>
-<DT><A HREF="#lbBD">User functions_</A><DD>
-<DT><A HREF="#lbBE">Language support_</A><DD>
-<DT><A HREF="#lbBF">Printing_</A><DD>
-<DT><A HREF="#lbBG">Attributes_</A><DD>
-<DT><A HREF="#lbBH">Lotus WKS-files_</A><DD>
-<DT><A HREF="#lbBI">Dbase files_</A><DD>
-<DT><A HREF="#lbBJ">Examples_</A><DD>
-<DT><A HREF="#lbBK">Limitations_</A><DD>
-<DT><A HREF="#lbBL">Terminal_</A><DD>
-<DT><A HREF="#lbBM">Files_</A><DD>
-<DT><A HREF="#lbBN">See Also_</A><DD>
-<DT><A HREF="#lbBO">Author_</A><DD>
+<DT><A HREF="#lbAO">Numbers_</A><DD>
+<DT><A HREF="#lbAP">Text_</A><DD>
+<DT><A HREF="#lbAQ">Formulas_</A><DD>
+<DT><A HREF="#lbAR">Dates_</A><DD>
+<DT><A HREF="#lbAS">Operators_</A><DD>
+<DT><A HREF="#lbAT">Precedence_</A><DD>
+<DT><A HREF="#lbAU">Units_</A><DD>
+<DT><A HREF="#lbAV">Piping_</A><DD>
+<DT><A HREF="#lbAW">mcrdb_</A><DD>
+<DT><A HREF="#lbAX">Linking_</A><DD>
+<DT><A HREF="#lbAY">Mathematical functions_</A><DD>
+<DT><A HREF="#lbAZ">Logical functions_</A><DD>
+<DT><A HREF="#lbBA">Financial functions_</A><DD>
+<DT><A HREF="#lbBB">Statistical functions_</A><DD>
+<DT><A HREF="#lbBC">Date/Time functions_</A><DD>
+<DT><A HREF="#lbBD">String functions_</A><DD>
+<DT><A HREF="#lbBE">User functions_</A><DD>
+<DT><A HREF="#lbBF">Language support_</A><DD>
+<DT><A HREF="#lbBG">Printing_</A><DD>
+<DT><A HREF="#lbBH">Attributes_</A><DD>
+<DT><A HREF="#lbBI">Lotus WKS-files_</A><DD>
+<DT><A HREF="#lbBJ">Dbase files_</A><DD>
+<DT><A HREF="#lbBK">Examples_</A><DD>
+<DT><A HREF="#lbBL">Limitations_</A><DD>
+<DT><A HREF="#lbBM">Terminal_</A><DD>
+<DT><A HREF="#lbBN">Files_</A><DD>
+<DT><A HREF="#lbBO">See Also_</A><DD>
+<DT><A HREF="#lbBP">Author_</A><DD>
 </DL>
 <HR>
 </BODY>
