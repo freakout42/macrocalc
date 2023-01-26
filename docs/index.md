@@ -52,8 +52,9 @@ Removing mc is simply a recursive "rm -r /opt/arx".
 For convenience /opt/arx/bin should be added to the PATH in a system appropriate manner.
 mc can also be run by its alias "321" if "mc" is used for another program.
 If /opt/arx is not appropriate the /opt/arx-directory can be moved or renamed anywhere.
-In this case an environment-variable ARX must be exported with the full path of the moved directory.
-MANPATH should also get the /opt/arx/man-directory.
+In this case an environment-variable ARX must be exported with the full path of the
+moved directory. MANPATH should also get the /opt/arx/man-directory.
+
 Here is an example for Linux/bash:
 
     # /etc/profile.d/arx.sh
@@ -61,6 +62,8 @@ Here is an example for Linux/bash:
     export ARX
     PATH=$PATH:$ARX/bin
     MANPATH=$MANPATH:$ARX/man
+
+**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
 
 ### getting started
 
