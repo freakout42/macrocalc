@@ -44,6 +44,8 @@ After a relogin macrocalc will start by `321` or `mc`.
 `export LINES="$(tput lines)"`  
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
+**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
+
 Getting started
 ---------------
 Navigate through the sheet with the arrow-keys. The dot (.) marks the
