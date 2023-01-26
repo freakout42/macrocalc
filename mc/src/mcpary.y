@@ -56,7 +56,7 @@ static char fbuf[12];
 %token	<func>		FUNC0 FUNC1 FUNC2 FUNC3 FUNC4 FUNCR FUNCS FUNCSC FUNCB
 %token			AND OR XOR
 %token			EQUAL NEQUAL GREATER LETHER GREATERE LETHERE EMARK
-%token			PLUS MINUS TIMES DIVIDE EXP
+%token			UNIMIN PLUS MINUS TIMES DIVIDE EXP
 %token			OPAREN CPAREN KOMMA PERIOD SEMI COLON
 %token			UNITS UNITE
 %token			STRCAT
@@ -170,7 +170,9 @@ o : f
 	YYACCEPT;
 	}
   ;
-f : f e
+f : e
+/*
+	| f e
 	{
 #ifdef	LOTUS
 	*yybuf++ = F_MULTIPLY;
@@ -185,7 +187,18 @@ f : f e
 	}
 #endif
 	}
-  | e
+ */
+/*
+  | MINUS e %prec UMINUS
+	{
+#ifdef	LOTUS
+	*yybuf++ = F_UNARYMINUS;
+#else
+	$$.value = - ($2.value);
+	$$.unit = $2.unit;
+#endif
+	}
+ */
 	;
 e : e OR e
 	{
@@ -378,6 +391,8 @@ mcpary.y: warning: shift/reduce conflict on token MINUS [-Wcounterexamples]
     f
     `-> 10: f             e
             `-> 10: f e . `-> 25: MINUS e
+  | UNIMIN e %prec UMINUS
+ */
   | MINUS e %prec UMINUS
 	{
 #ifdef	LOTUS
@@ -387,7 +402,6 @@ mcpary.y: warning: shift/reduce conflict on token MINUS [-Wcounterexamples]
 	$$.unit = $2.unit;
 #endif
 	}
- */
   | FUNC0 CPAREN
 	{
 #ifdef	LOTUS

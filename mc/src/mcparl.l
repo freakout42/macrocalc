@@ -97,6 +97,7 @@ aln	[0-9A-Za-z_\$\\]
 p	[\.]
 c	[,]
 s	[+-]
+m	" -"
 e	([Ee]{s}?{n}+)
 i	[iI]
 w	[ \t]+
@@ -105,6 +106,7 @@ j	['"\^]
 col	({a}{1,2})
 row	({n}{1,5})
 val	({n})+({p}{n}*)?({e})?|{p}({n})+({e})?
+vax	({s})?({n})+({p}{n}*)?({e})?|{p}({n})+({e})?
 cell	({cs}{col}{cp}({s})?{row}{ce}|{cs}{s}{row}{cp}({s})?{row}{ce}|{col}{row})
 range	({a}|\\){aln}+
 unit	("/"{w}*)?({a})+({s}{n})?
@@ -183,6 +185,10 @@ str	.+
 	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
+	}
+
+{m} {
+	return UNIMIN;
 	}
 
 "PI" {
