@@ -56,7 +56,7 @@ static char fbuf[12];
 %token	<func>		FUNC0 FUNC1 FUNC2 FUNC3 FUNC4 FUNCR FUNCS FUNCSC FUNCB
 %token			AND OR XOR
 %token			EQUAL NEQUAL GREATER LETHER GREATERE LETHERE EMARK
-%token			UNIMIN PLUS MINUS TIMES DIVIDE EXP
+%token			PLUS MINUS TIMES DIVIDE EXP
 %token			OPAREN CPAREN KOMMA PERIOD SEMI COLON
 %token			UNITS UNITE
 %token			STRCAT
@@ -66,7 +66,7 @@ static char fbuf[12];
 %token			CMD
 %token			BAD
 
-%type	<value>		o f e
+%type	<value>		o e
 %type	<cell>		c
 %type	<range>		r
 %type	<string>	s t u y
@@ -85,7 +85,7 @@ static char fbuf[12];
 %left			STRCAT
 
 %%
-o : f
+o : e
 	{
 #ifdef	LOTUS
 	*yybuf++ = F_RETURN;
@@ -104,7 +104,7 @@ o : f
 #endif
 #endif
 	}
-  | f u %prec UEXPR
+  | e u %prec UEXPR
 	{
 #ifdef	LOTUS
 	yyopcode (F_UNIT, $2, strlen($2)+1);
@@ -170,36 +170,6 @@ o : f
 	YYACCEPT;
 	}
   ;
-f : e
-/*
-	| f e
-	{
-#ifdef	LOTUS
-	*yybuf++ = F_MULTIPLY;
-#else
-	if ($1.cimag || $2.cimag) {
-	  $$ = cpxmult($1, $2);
-	  $$.unit = NULL;
-	} else {
-	  $$.value = $1.value * $2.value;
-	  $$.unit = yybuf;
-	  yybuf = unitmult (yybuf, $1.unit, $2.unit);
-	}
-#endif
-	}
- */
-/*
-  | MINUS e %prec UMINUS
-	{
-#ifdef	LOTUS
-	*yybuf++ = F_UNARYMINUS;
-#else
-	$$.value = - ($2.value);
-	$$.unit = $2.unit;
-#endif
-	}
- */
-	;
 e : e OR e
 	{
 #ifdef	LOTUS
@@ -370,29 +340,6 @@ e : e OR e
 	$$.unit = NULL;
 #endif
 	}
-/*
-mcpary.y: warning: shift/reduce conflict on token MINUS [-Wcounterexamples]
-  Example: e . MINUS e
-  Shift derivation
-    f
-    `-> 11: e
-            `-> 21: e . MINUS e
-  Reduce derivation
-    f
-    `-> 10: f           e
-            `-> 11: e . `-> 25: MINUS e
-mcpary.y: warning: shift/reduce conflict on token MINUS [-Wcounterexamples]
-  Example: f e . MINUS e
-  Shift derivation
-    f
-    `-> 10: f e
-              `-> 21: e . MINUS e
-  Reduce derivation
-    f
-    `-> 10: f             e
-            `-> 10: f e . `-> 25: MINUS e
-  | UNIMIN e %prec UMINUS
- */
   | MINUS e %prec UMINUS
 	{
 #ifdef	LOTUS
