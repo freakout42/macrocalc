@@ -47,6 +47,12 @@ ex. A1: value:   1.00
 .ST
 .IP PI 8
 Value of PI = 3.141592.
+.IP E 8
+Value of E = 2.718281.
+.IP I 8
+Value of I = 0i1 the imaginary unit.
+.IP SQRT2 8
+Value of sqrt(2) = 1.414213.
 .IP COL 8
 Current column number.
 .IP ROW 8

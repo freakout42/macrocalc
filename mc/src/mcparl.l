@@ -185,17 +185,29 @@ str	.+
 	return CON;
 	}
 
-"PI"	|
-"pi"	{
+"PI" {
 	yylval.value.value	= M_PI;
 	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
 	}
 
-"E"	|
-"e"	{
+"I" {
+	yylval.value.value	= 0.0;
+	yylval.value.cimag = 1.0;
+	yylval.value.unit	= NULL;
+	return CON;
+	}
+
+"E" {
 	yylval.value.value	= M_E;
+	yylval.value.cimag = 0.0;
+	yylval.value.unit	= NULL;
+	return CON;
+	}
+
+"SQRT2" {
+	yylval.value.value	= M_SQRT2;
 	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;

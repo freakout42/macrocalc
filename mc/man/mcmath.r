@@ -5,7 +5,7 @@ the parentheses. 'x' can be a value or a formula
 which references other cells within the worksheet.
 The (C) indicates availability for complex values.
 .IP ABS(x) 3
-Returns the absolute value of argument.
+Returns the absolute value of argument. (C)
 .br
 ex. ABS(-10) = 10
 .IP ACOS(x) 3
