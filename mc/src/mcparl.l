@@ -168,7 +168,7 @@ str	.+
 	return CON;
 	}
 
-{val}{i}{val}	{
+{val}{i}{s}?{val}	{
 	int i;
 	yylval.value.value	= atof ((char*)yytext);
   i = strcspn((char*)yytext, "iI");

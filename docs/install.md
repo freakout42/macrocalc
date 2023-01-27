@@ -2,8 +2,10 @@ debian install
 --------------
 
 from source:
-    sudo apt install flex rcs                                # Debian and variants
-    sudo yum install flex flex-devel byacc rcs ncurses-devel # CentOS and variants
+    sudo apt update                                          # Debian and variants
+    sudo apt install flex rcs
+    sudo yum update                                          # CentOS and variants
+    sudo yum install flex flex-devel byacc rcs ncurses-devel
     wget https://github.com/freakout42/macrocalc/archive/refs/heads/main.tar.gz
     tar xzf main.tar.gz
     cd macrocalc-main

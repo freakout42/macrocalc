@@ -33,7 +33,7 @@ static char	*yystr();
 extern CELLPTR pc;
 extern char	*yybuf;
 #ifndef LOTUS
-static char fbuf[12];
+static char fbuf[13];
 #endif
 
 %}
@@ -94,7 +94,7 @@ o : e
 	cpcimag(pc) = $1.cimag;
 	if (cpiscmplx(pc)) {
     cpunit(pc) = fbuf;
-    sprintf(cpunit(pc), " i%-10.3f", cpcimag(pc));
+    sprintf(cpunit(pc), (cpcimag(pc) > 99999.998 || cpcimag(pc) < -9999.998) ? " i%9.2e" : " i%9.3f", cpcimag(pc));
   } else {
     cpcimag(pc) = 0.0;
     cpunit(pc) = $1.unit;
@@ -346,6 +346,7 @@ e : e OR e
 	*yybuf++ = F_UNARYMINUS;
 #else
 	$$.value = - ($2.value);
+	$$.cimag = - ($2.cimag);
 	$$.unit = $2.unit;
 #endif
 	}
