@@ -35,7 +35,7 @@ if (*s=='[')
     if (*(s+1)=='+' || *(s+1)=='-')
 	{
 	offset = strtol (s+1, &endp, 10);
-	if (*endp!=',') return 0;
+	if (*endp!=SEPCH) return 0;
 	*col = origcol + (int)offset + 1;
 	s = endp;
 	}
@@ -62,7 +62,7 @@ long offset;
 char *endp = NULL;
 
 *row = 0;
-if (*s==',')
+if (*s==SEPCH)
     {
     if (*(s+1)=='+' || *(s+1)=='-')
 	{
@@ -80,7 +80,7 @@ while (isdigit(*s))
 	}
 *row -= 1;
 if (*row>=MAXROWS || *row<0) return 0;
-if (*start==',' && *s++!=']') return 0;
+if (*start==SEPCH && *s++!=']') return 0;
 if (endp!=NULL) *row = -*row-1;
 return s-start;
 }
@@ -198,7 +198,7 @@ if (col<0 || row<0) {
 	sprintf (s, ",%+d]", -row-1-origrow);
 	s += strlen (s); }
     else {
-	sprintf (s, ",%d]", row+1);
+	sprintf (s, "%c%d]", SEPCH, row+1);
 	s += strlen (s); }
     }
 else	{
@@ -283,14 +283,14 @@ while (ps >= 0 && st != ERRO && st != FINI) {
           st = ACOL;
           icol = 26;
         }
-      } else if (y == ',') {
+      } else if (y == SEPCH) {
         st = RCOL;
         irow = 0;
         col = 0;
         icol = 1;
       } else st = ERRO; break;
     case SEPA:
-      if (y == ',') {
+      if (y == SEPCH) {
         st = RCOL;
         col = 0;
         icol = 1;
@@ -356,10 +356,10 @@ if (st == FINI) {
   printf(":%d:%s:%d:%d:%s:\n", icol*2 + irow, fml+ps, col, row, c);
 #endif
   switch(icol*2 + irow) {
-    case 0: sprintf(fml+ps, "[%+d,%+d]", col-curcol, row-currow); break;
-    case 1: sprintf(fml+ps, "[%+d,%d]",  col-curcol, row+1);      break;
-    case 2: sprintf(fml+ps, "[%s,%d]",   c,          row+1);      break;
-    case 3: sprintf(fml+ps, "[%s,%+d]",  c,          row-currow); break;
+    case 0: sprintf(fml+ps, "[%+d%c%+d]", col-curcol, SEPCH, row-currow); break;
+    case 1: sprintf(fml+ps, "[%+d%c%d]",  col-curcol, SEPCH, row+1);      break;
+    case 2: sprintf(fml+ps, "[%s%c%d]",   c,          SEPCH, row+1);      break;
+    case 3: sprintf(fml+ps, "[%s%c%+d]",  c,          SEPCH, row-currow); break;
   }
   ln = strlen(fml);
   strcat(fml, f+(pos - fml));
@@ -414,29 +414,29 @@ if (np!=formula || strcmp("1+b2+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+3);
 printf("1:%d:%s:\n-\n", (int)(np-formula), formula);
-if (np!=formula+9 || strcmp("1+[-1,-1]+2", formula)) exit(1);
+if (np!=formula+9 || strcmp("1+[-1;-1]+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+9);
 printf("2:%d:%s:\n-\n", (int)(np-formula), formula);
-if (np!=formula+8 || strcmp("1+[B,-1]+2", formula)) exit(1);
+if (np!=formula+8 || strcmp("1+[B;-1]+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+8);
 printf("3:%d:%s:\n-\n", (int)(np-formula), formula);
-if (np!=formula+8 || strcmp("1+[-1,2]+2", formula)) exit(1);
+if (np!=formula+8 || strcmp("1+[-1;2]+2", formula)) exit(1);
 
 np = creftoggle(formula, formula+8);
 printf("4:%d:%s:\n-\n", (int)(np-formula), formula);
-if (np!=formula+7 || strcmp("1+[B,2]+2", formula)) exit(1);
+if (np!=formula+7 || strcmp("1+[B;2]+2", formula)) exit(1);
 
 strcpy(formula, "1+AA102+2");
 np = creftoggle(formula, formula+7);
 printf("5:%d:%s:\n-\n", (int)(np-formula), formula);
-if (np!=formula+11 || strcmp("1+[+24,+99]+2", formula)) exit(1);
+if (np!=formula+11 || strcmp("1+[+24;+99]+2", formula)) exit(1);
 
 strcpy(formula, "A2+2");
 np = creftoggle(formula, formula+2);
 printf("6:%d:%s:\n-\n", (int)(np-formula), formula);
-if (np!=formula+7 || strcmp("[-2,-1]+2", formula)) exit(1);
+if (np!=formula+7 || strcmp("[-2;-1]+2", formula)) exit(1);
 #endif
 
 exit(0);

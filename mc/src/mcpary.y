@@ -376,7 +376,7 @@ e : e OR e
 	$$.unit = NULL;
 #endif
 	}
-  | FUNC2 e KOMMA e CPAREN
+  | FUNC2 e SEMI e CPAREN
 	{
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
@@ -386,7 +386,7 @@ e : e OR e
 	$$.unit = NULL;
 #endif
 	}
-  | FUNC3 e KOMMA e KOMMA e CPAREN
+  | FUNC3 e SEMI e SEMI e CPAREN
 	{
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
@@ -396,7 +396,7 @@ e : e OR e
 	$$.unit = NULL;
 #endif
 	}
-  | FUNC4 e KOMMA e KOMMA e KOMMA e CPAREN
+  | FUNC4 e SEMI e SEMI e SEMI e CPAREN
 	{
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;
@@ -497,7 +497,7 @@ e : e OR e
 		}
 #endif
 	}
-  | FUNCSC s KOMMA c CPAREN
+  | FUNCSC s SEMI c CPAREN
 	{
 #ifdef	LOTUS
 	*yybuf++ = $1.oc;

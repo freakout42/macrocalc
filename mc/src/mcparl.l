@@ -94,7 +94,7 @@ l	[a-z]
 a	[A-Za-z]
 n	[0-9]
 aln	[0-9A-Za-z_\$\\]
-p	[\.]
+p	[\.,]
 c	[,]
 s	[+-]
 e	([Ee]{s}?{n}+)
@@ -110,7 +110,7 @@ range	({a}|\\){aln}+
 unit	("/"{w}*)?({a})+({s}{n})?
 sd	\"
 cs	"["
-cp	","
+cp	";"
 ce	"]"
 lt	"<"
 day	[0-3][0-9]
@@ -162,6 +162,7 @@ str	.+
 	}
 
 {val}	{
+  str_tr((char*)yytext, ',', '.');
 	yylval.value.value	= atof ((char*)yytext);
 	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
@@ -170,17 +171,10 @@ str	.+
 
 {val}{i}{s}?{val}	{
 	int i;
+  str_tr((char*)yytext, ',', '.');
 	yylval.value.value	= atof ((char*)yytext);
   i = strcspn((char*)yytext, "iI");
 	yylval.value.cimag = atof (((char*)yytext)+i+1);
-	yylval.value.unit	= NULL;
-	return CON;
-	}
-
-({n})+({c}{n}{n})	{
-	str_tr((char*)yytext, ',', '.');
-	yylval.value.value	= atof ((char*)yytext);
-	yylval.value.cimag = 0.0;
 	yylval.value.unit	= NULL;
 	return CON;
 	}

@@ -162,17 +162,13 @@ while ((opcode = *p.c++) != F_RETURN)
 				sprintf (tex, "@%s(%s)", f->name, stack[sp-1]);
 				goto change;
 			 case FUNC2:
-				sprintf (tex, "@%s(%s,%s)", f->name,
-					stack[sp-2], stack[sp-1]);
+				sprintf (tex, "@%s(%s%c%s)", f->name, stack[sp-2], SEPCH, stack[sp-1]);
 				goto reduce;
 			 case FUNC3:
-				sprintf (tex, "@%s(%s,%s,%s)", f->name,
-					stack[sp-3], stack[sp-2], stack[sp-1]);
+				sprintf (tex, "@%s(%s%c%s%c%s)", f->name, stack[sp-3], SEPCH, stack[sp-2], SEPCH, stack[sp-1]);
 				goto reduce2;
 			 case FUNC4:
-				sprintf (tex, "@%s(%s,%s,%s,%s)", f->name,
-					stack[sp-4], stack[sp-3],
-					stack[sp-2], stack[sp-1]);
+				sprintf (tex, "@%s(%s%c%s%c%s%c%s)", f->name, stack[sp-4], SEPCH, stack[sp-3], SEPCH, stack[sp-2], SEPCH, stack[sp-1]);
 				goto reduce3;
 			 }
 			}

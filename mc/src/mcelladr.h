@@ -1,5 +1,7 @@
 /* mcelladr.h 1.2 1997/04/04 06:29:40 */
 
+#define SEPCH ';'
+
 CELLPTR	newcell (void);
 int coladr (char *s, int *col);
 int rowadr (char *s, int *row);

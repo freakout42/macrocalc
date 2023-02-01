@@ -26,7 +26,8 @@ else
 	sprintf (s, "%+d", a->col);
 	s += strlen (s);
 	}
-strcat (s++, ",");
+*s++ = SEPCH;
+*s = '\0';;
 if (a->row>=0)
 	{
 	sprintf (s, "%d]", a->row+1);

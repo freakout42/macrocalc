@@ -17,13 +17,13 @@ or begin the text with one of the
 .Hr "justification signs."
 .LP
 Cell names in formulas are typed in with the column followed by the row enclosed
-in square brackets separated by comma.
+in square brackets separated by semicolon.
 Relative cell references start with a sign.
 An absolute cell reference can be written without brackets or comma.
 Toggle absolute cell references in formulas with relative references by pressing F4 (or $).
 Named Ranges can be used directly with the rangename.
 .DS
-ex. A1+[A,2]*[B,-1]^5/([+0,+2]+SUM(Myrange))
+ex. A1+[A;2]*[B;-1]^5/([+0;+2]+SUM(Myrange))
 .DE
 .P
 .BP SPECIAL
@@ -37,7 +37,7 @@ formula text string!
 Think of this as a way of defining user functions in a worksheet.
 .DS
 ex. A1: value:   1.00
-    B1: formula: 2*[-1,+0] = 2.00
+    B1: formula: 2*[-1;+0] = 2.00
     A2: value:   2.00
     B2: formula: &B1       = 4.00
 .DE
