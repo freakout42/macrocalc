@@ -65,8 +65,8 @@ do {
     break;
    case F8 :
    case '#' :
-    if (changed) savesheet(FALSE);
-    stop = TRUE;
+    savesheet(FALSE);
+    if (changed) *filename = '\0'; else stop = TRUE;
     break;
    case F9 :
    case '=' :

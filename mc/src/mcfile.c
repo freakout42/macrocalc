@@ -82,7 +82,8 @@ int	overwrite;
 
 recalc();
 if (autoexec) outpipeall();
-if (rdonly) {changed = FALSE; return;}
+if (rdonly) {changed = FALSE;}
+if (!changed) {return;}
 if (prompt || *filename=='\0') {
 writeprompt(MSGFILENAME);
 if (!editstring(filename, "", MAXFILE) || *filename=='\0') return;
