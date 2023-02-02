@@ -82,6 +82,7 @@ while (fscanf (file, "%s\t%d\t%d\t%lf\t", cols, &att, &form, &val)==4)
 		if (cpformat(&cp) == FORMATM) cpfor(&cp) = DEFAULTFORMAT;
 		cptype(&cp) = att & TYPEM;
 		cpvalue(&cp) = val;
+		if ((newold == '1' || newold == '\t') && cptype(&cp) == FORMULA) str_tr(tex+1, ',', ';');
 		if (cptype(&cp) == UNITT) {
 			cpfor(&cp) |= PROTECT;
 			cptext(&cp) = "unit";
