@@ -1,4 +1,4 @@
-.Id $Id: mccont.r,v 1.4 1997/06/28 15:07:53 axel Exp $
+.Id mccont.r 1.4 1997/06/28 15:07:53 axel
 .SH "Contents"
 .if n \{\
 For quick navigating in the man-page search for the following

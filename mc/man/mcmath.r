@@ -1,4 +1,4 @@
-.Id $Id: mcmath.r,v 1.2 1997/06/23 04:17:27 axel Exp $
+.Id mcmath.r 1.2 1997/06/23 04:17:27 axel
 .SH "Mathematical functions"
 The  following functions act upon the argument 'x' within
 the parentheses. 'x' can be a value or a formula

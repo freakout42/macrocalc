@@ -1,4 +1,4 @@
-.Id $Id: mcfinc.r,v 1.3 1997/06/26 18:46:28 axel Exp $
+.Id mcfinc.r 1.3 1997/06/26 18:46:28 axel
 .SH "Financial functions"
 .IP CTERM(INTerest;FutureValue;PresentValue) 3
 The number of compounding periods required for an

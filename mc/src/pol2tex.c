@@ -1,4 +1,4 @@
-/* $Id: pol2tex.c,v 1.10 2001/11/07 12:23:51 axel Exp $
+/* pol2tex.c 1.10 2001/11/07 12:23:51 axel
  * reverse polish formula code to text
  */
 

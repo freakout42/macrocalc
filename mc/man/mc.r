@@ -1,4 +1,4 @@
-.Id $Id: mc.r,v 1.14 2017/07/11 13:17:25 axel Exp $
+.Id mc.r 1.14 2017/07/11 13:17:25 axel
 .if !\n(.U \{\
 .so ../../arx/man/tmac.hyper
 . \}

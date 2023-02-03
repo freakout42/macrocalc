@@ -1,5 +1,4 @@
-/* $Id: mcell123.c,v 1.6 2001/11/07 12:23:50 axel Exp $
- */
+/* mcell123.c 1.6 2001/11/07 12:23:50 axel */
 
 #include <stddef.h>
 #include <string.h>

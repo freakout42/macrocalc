@@ -1,4 +1,4 @@
-.Id $Id: mcmenu.r,v 1.7 2004/07/04 19:04:45 axel Exp $
+.Id mcmenu.r 1.7 2004/07/04 19:04:45 axel
 .SH "Menu"
 With the
 .I [Menu]

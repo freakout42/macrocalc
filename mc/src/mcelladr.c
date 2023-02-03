@@ -195,7 +195,7 @@ if (col<0 || row<0) {
 	*s++ = '[';
 	s += colstring (col, s); }
     if (row<0) {
-	sprintf (s, ",%+d]", -row-1-origrow);
+	sprintf (s, "%c%+d]", SEPCH, -row-1-origrow);
 	s += strlen (s); }
     else {
 	sprintf (s, "%c%d]", SEPCH, row+1);
