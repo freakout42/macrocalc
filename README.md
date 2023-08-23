@@ -8,7 +8,7 @@ extended video attributes are supported.
 [![MacroCALC](https://mc.freakout.de/assets/logo.jpg "MacroCALC")](https://mc.freakout.de/ "MacroCALC")
 
 MacroCALC is the only spreadsheet that manages units: 1 mile + 1 km = 1.62
-miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physics engine.
+miles; 1 km / 1 hour * 30 sec = 8.33 m. This can be seen as a physical engine.
 It also has support of complex numbers with complex arithmetic and functions.
 So sqrt(-1) = i and E ^ (I * PI) + 1 = 0.
 
