@@ -305,7 +305,10 @@ reformat(f,n)
 		}
 		if (ch == ' ') {
 			if (skip && oldch==' '
-			 && (older!='.' && older!='?' && older!='!'))
+/* no double. space? after! [.?!]
+			         && (older!='.' && older!='?' && older!='!')
+ */
+         )
 				continue;
 			if (tcp > tlp->l_text && tcp[-1]!=' ')
 				wcp = tcp;
