@@ -14,18 +14,21 @@ CELLPTR cp;
 cellr cr;
 char *strvalue;
 int color;
+int ctype = TEXT;
 
 if ((cp = cell(col, row)) == NULL) return RET_SUCCESS;
 switch (cptype(cp)) {
  case CONSTANT:
  case FORMULA:
+  ctype = CONSTANT;
  case STRING:
   memset(&cr, 0, sizeof(cellr));
   cpcol(&cr) = col;
   cprow(&cr) = row;
-  cptype(&cr) = TEXT;
   strvalue = cellstring (col, row, &color, FVALUE);
-  *--strvalue = STRLEFT;
+  cptype(&cr) = ctype;
+  cpvalue(&cr) = cpvalue(cp);
+  if (ctype==TEXT) *--strvalue = STRLEFT;
   cptext(&cr) = strvalue;
   if ((cp = migratecell(&cr)) == NULL) errormsg (MSGLOMEM);
   changed = TRUE;
