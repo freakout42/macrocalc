@@ -17,7 +17,7 @@ mc's git-maintained, lint-clean ANSI-C source is based on yacc, lex and curses.
 It runs on every terminal or emulation that has a correct terminfo-entry.
 The user-interface is very convenient and well-known by Lotus 1-2-3 users.
 Function- and arrow-keys and extended video attributes are supported.
-Color-support is already implemented in the edge release.
+Color-support is also implemented.
 
 The menus and messages are in separate editable files and
 can be easily translated into any language.
