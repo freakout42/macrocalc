@@ -1,5 +1,4 @@
-/* $Id: lib_akey.c,v 1.12 2006/09/26 13:43:42 axel Exp $
- */
+/* lib_akey.c */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -8,9 +7,14 @@
 
 #define KEYLENGTH	4
 
-char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " " __DATE__ " $";
+static char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " " __DATE__ " $";
 
 int lib_akey (char *logo, int show)
 {
 return RET_SUCCESS;
+}
+
+char *lib_veid (void)
+{
+return rcsinfolib;
 }

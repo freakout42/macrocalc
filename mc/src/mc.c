@@ -191,7 +191,7 @@ while (1) {
 		if (c=='p') printfile (stdout, FALSE); else csvfile (stdout);
 		exit (EXIT_SUCCESS);
 	 case 'v':
-		fprintf(stderr, "%s\n", rcsinfo);
+		fprintf(stderr, "%s\n%s\n", lib_veid(), rcsinfo);
 		/*FALLTHRU*/
 	 default:
 		usage();

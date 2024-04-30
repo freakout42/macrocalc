@@ -114,12 +114,13 @@ double lib_iee2 (double d);
 #define PLATFORM	"ELF-i386"
 #endif
 
-#define	COPYRIGHT	PLATFORM " (c)" "2022" " " CORPORATION
+#define	COPYRIGHT	PLATFORM " (c)" "2024" " " CORPORATION
 #if defined(unix) || defined(__unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #define UNIX
 #endif
 
 int lib_akey (char *logo, int show);
+char *lib_veid (void);
 void lib_fatl (int s, char *msg, ...);
 void lib_mesg (char *msg, ...);
 
