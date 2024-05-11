@@ -274,18 +274,19 @@ s = s1+1;
 cp = cell (col, row);
 if (cp == NULL)
 	{
-	for (	newcol = col-1;
-		newcol>=0 && (cp = cell(newcol, row))==NULL;
-		newcol--	)
-		;
-	typ = (cp!=NULL) ? cptype(cp) : EMPTY;
 	if (formatting==NOCOLUMN)
 		{
 		s[0] = '\0';
 		*color = BLANKCOLOR;
 		}
 	else
-	if (formatting==NOFORMAT || newcol<0 ||
+	newcol = col-1;
+	for (	newcol = col-1;
+		newcol>=0 && (cp = cell(newcol, row))==NULL;
+		newcol--	)
+		;
+	typ = (cp!=NULL) ? cptype(cp) : EMPTY;
+	if (formatting==NOFORMAT || newcol<0 || typ==EMPTY ||
 	    (typ!=TEXT && typ!=RETRIEVED && typ!=STRING) ||
 	    (cpform(cp)==(SPECIAL|HIDDEN)))
 		{

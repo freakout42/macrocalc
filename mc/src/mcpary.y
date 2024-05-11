@@ -316,8 +316,12 @@ e : e OR e
 	  $$.unit = NULL;
 	} else {
 	  $$.value = $1.value / $3.value;
+	 if ($1.unit || $3.unit) {
 	  $$.unit = yybuf;
 	  yybuf = unitdiv (yybuf, $1.unit, $3.unit);
+   } else {
+	  $$.unit = NULL;
+   }
 	} }
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: DIVIDE value=\"%f/%f=%f %s\" errno=%d\n",
@@ -483,7 +487,7 @@ e : e OR e
 	if ((cp = cell (adrval($1.col), adrval($1.row))))
 		{
 #ifdef DEBUG
-		fprintf (stderr, "mcpary: c cp=%08x\n", cp);
+		fprintf (stderr, "mcpary: c %d.%d cp=%08x:%08x\n", cp, adrval($1.col), adrval($1.row), cpunit (cp));
 #endif
 	 	$$.value = cpvalue (cp);
 	 	$$.cimag = cpcimag (cp);
