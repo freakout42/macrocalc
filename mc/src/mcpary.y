@@ -288,8 +288,12 @@ e : e OR e
 	  $$.unit = NULL;
 	} else {
 	  $$.value = $1.value * $3.value;
+	 if ($1.unit || $3.unit) {
 	  $$.unit = yybuf;
 	  yybuf = unitmult (yybuf, $1.unit, $3.unit);
+   } else {
+	  $$.unit = NULL;
+   }
 	}
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: %f = %f * %f\n", $$.cimag, $1.cimag, $3.cimag);
