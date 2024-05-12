@@ -8,6 +8,6 @@ show_edgerelease: false
 show_archrelease: true
 show_footer: false
 logo: /assets/logo.jpg
-edgerelease: "10.31"
-latestrel: "10.35"
-archrelease: "10.15"
+edgerelease: "10.35"
+latestrel: "10.40"
+archrelease: "10.31"
