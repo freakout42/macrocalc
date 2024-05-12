@@ -90,5 +90,5 @@ a relative cell reference `[+0,-1]` and refers to B3 in the copied formula.
 ### license
 
 Simplified BSD License  
-Copyright (c) 2022, Axel K. Reinhold  
+Copyright (c) 2024, Axel K. Reinhold  
 All rights reserved.  
