@@ -1,5 +1,5 @@
 Sys:Os:Cc:Cflag:Lx:Ldflag:Ldr:Lex:Lflag:Llib:Yywrap:Yacc:Yflag:Ylib:Curses:Curalib:Curslib:Curinc:Omiss:Nroff:Ar:Nflag
-lu:Linux:gcc:-Os -Wall:ld::-r:flex:-8:-lfl::yacc:-d::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c
+lu:Linux:gcc:-Os -Wall:ld::-r:flex:-8:-lfl::bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c
 fb:FreeBSD:cc:-Wno-return-type -w:ld::-r:lex:-8:-ll::yacc:-d:-ly:-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses.h::nroff:ar:
 md:MacOS Darwin:gcc:-Wno-address-of-packed-member:ld::-r:flex:-8:-ll::bison:-d --yacc::::-lcurses:/usr/include/curses.h::nroff:ar:
 lb:Linux glibc/bison:gcc:-Wall:ld::-r:flex:-8:/opt/flex/lib/libfl.a:libyywrap.o:bison:-d --yacc -Wno-conflicts-sr -Wno-conflicts-rr::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:
@@ -18,4 +18,4 @@ le:Linux ELF:gcc:-Wall:ld::-r:flex:-8:/usr/lib/libfl.a::yacc:-d::-I/usr/include/
 lg:Linux glibc:gcc:-Wall:ld::-r:flex:-8:/opt/flex/lib/libfl.a:libyywrap.o:yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h:/opt/libold/ctypeb.o:nroff:ar:
 so:SCO OpenServer 5.0:scocc::/opt/ccs/bin/ld::-r:/opt/ccs/bin/flex:-8:/opt/ccs/lib/libfl.a::/opt/ccs/bin/yacc:-d:::/opt/ccs/lib/libcurses.a::/usr/include/../../opt/ccs/include/curses.h::nroff:/opt/ccs/bin/ar:
 li:Linux icc:icc:-O3 -tpp5:ld::-r:flex:-8:/usr/lib/libfl.a::yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h::nroff:ar:
-l6:Linux glibc/bison x64:gcc:-Wall:ld::-r:flex:-8:/usr/lib64/libfl.a:libyywrap.o:bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:
+l6:Linux x64:gcc:-Os -Wall:ld::-r:flex:-8:-lfl::yacc:-d::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:
