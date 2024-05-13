@@ -66,9 +66,11 @@ double lib_iee2 (double d);
 #endif
 
 #ifdef __GNUC__
-#define CCOMPILER	" gcc " __VERSION__
+#define gnucs1(m, i, l) " gcc " #m "." #i "." #l " " __DATE__
+#define gnucs(m, i, l) gnucs1(m, i, l)
+#define CCOMPILER gnucs(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
 #else
-#define CCOMPILER	""
+#define CCOMPILER ""
 #endif
 
 #ifdef COHERENT

@@ -7,7 +7,7 @@
 
 #define KEYLENGTH	4
 
-static char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " " __DATE__ " $";
+static char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " $";
 
 int lib_akey (char *logo, int show)
 {
