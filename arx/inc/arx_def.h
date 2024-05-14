@@ -1,6 +1,4 @@
-/* arx_def.h
- * Revision 1.27  1995/06/09  05:12:19  axel
- */
+/* arx_def.h */
 
 #ifdef PRODUCTION
 #define NDEBUG
@@ -65,13 +63,16 @@ double lib_iee2 (double d);
 #define __PLATFORM__ ""
 #endif
 
-#ifdef __GNUC__
-#define gnucs1(m, i, l) " gcc " #m "." #i "." #l " " __DATE__
+#if defined(__VERSION__)
+#define gnucver " gcc " __VERSION__
+#elif defined(__GNUC__)
+#define gnucs1(m, i, l) #m "." #i "." #l
 #define gnucs(m, i, l) gnucs1(m, i, l)
-#define CCOMPILER gnucs(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
+#define gnucver " gcc " gnucs(__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__)
 #else
-#define CCOMPILER ""
+#define gnucver ""
 #endif
+#define CCOMPILER gnucver " " __DATE__
 
 #ifdef COHERENT
 #define PLATFORM	"COFF-i386"
