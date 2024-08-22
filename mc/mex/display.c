@@ -15,7 +15,6 @@
 
 #define WFDEBUG 0			/* Window flag debug.		*/
 
-extern int getkey();
 #if VT100 && !W32
 extern int escseq();
 #endif

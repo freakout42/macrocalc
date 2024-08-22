@@ -19,8 +19,8 @@ static char	opts[]	= "options ...";
 
 void usage(void)
 {
-fprintf (stderr, "db2rdb - Dbase to /rdb converter - v4.7\n");
-fprintf (stderr, "-- /ARX (c)2022 Axel Reinhold --\n\n");
+fprintf (stderr, "db2rdb - Dbase to /rdb converter - v4.8\n");
+fprintf (stderr, "-- (c)2024 Axel K. Reinhold https://mc.freakout.de/ --\n\n");
 #ifdef MSDOS
 fprintf (stderr, "usage: db2rdb [" OPTCHAR "%s] dbfile [<|> rdbfile]\n\n", opts);
 #else
@@ -40,6 +40,7 @@ fprintf (stderr, OPTCHAR "L   \n");
 fprintf (stderr, "standard options:\n");
 fprintf (stderr, OPTCHAR "fc  c is /rdb field-separator\n");
 fprintf (stderr, OPTCHAR "i   no data mode\n");
+fprintf (stderr, OPTCHAR "K   array mode\n");
 fprintf (stderr, OPTCHAR "k   structure mode\n");
 fprintf (stderr, OPTCHAR "v   verbose mode\n");
 fprintf (stderr, OPTCHAR "o   no drop/create mode\n");

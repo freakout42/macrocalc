@@ -1,4 +1,4 @@
-/* $Id: ed.h,v 1.48 2023/01/08 12:53:37 axel Exp $
+/* $Id: ed.h,v 1.50 2024/05/22 17:56:04 axel Exp $
  * This file is the general header file for
  * all parts of the MicroEMACS display editor. It contains
  * definitions used by everyone, and it contains the stuff
@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "5.6"
+#define VERSION "5.9"
 
 #if (VT100)
 #define V7      1			/* V7 UN*X or Coherent          */
@@ -425,6 +425,7 @@ extern  TERM	term;    		/* Terminal information.	*/
 extern  BUFFER	*bfind();		/* Lookup a buffer by name	*/
 extern  WINDOW	*wpopup();		/* Pop up window creation	*/
 extern  LINE	*lalloc();		/* Allocate a line		*/
+extern  int	fbwdel();  /* forward word delete */
 
 #if ST_DA				/* mb: use our own malloc scheme */
 #define malloc	mylloc

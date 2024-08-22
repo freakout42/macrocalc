@@ -4,12 +4,17 @@
 #include "arx_def.h"
 #include "dbf_def.h"
 
-int rdb_writ (struct DBF *d)
+int rdb_writ (struct DBF *d, int m)
 {
 unsigned char fld;
 struct FIELD_RECORD *f;
 char *t;
 
+if (m == 1) {
+  if (*d->record_ptr == '*') putc ('-', d->ofile_ptr);
+  fprintf (d->ofile_ptr, "%d", d->current_record);
+  putc (d->fieldsep, d->ofile_ptr);
+}
 for (fld=0; fld<d->fields; fld++)
 	{
 	f = &d->fields_ptr[fld];

@@ -10,7 +10,7 @@
 #include <str_def.h>
 #include "dbf_def.h"
 
-int rdb_crea (struct DBF *d)
+int rdb_crea (struct DBF *d, int m)
 {
 unsigned char fld;
 int i;
@@ -24,6 +24,10 @@ if ((d->fields_ptr = (struct FIELD_RECORD *)
 	return (OUT_OF_MEM);
 if ((d->record_ptr = malloc (MAX_RECORD+1))==NULL) return (OUT_OF_MEM);
 
+if (m == 1) {
+	fprintf (d->ofile_ptr, "RECNO");
+	putc (d->fieldsep, d->ofile_ptr);
+}
 for (fld=1; fld<=d->fields; fld++)
 	{
 	f = &d->fields_ptr[fld-1];
@@ -50,16 +54,18 @@ for (fld=1; fld<=d->fields; fld++)
 	if (fld<d->fields) putc (d->fieldsep, d->ofile_ptr);
 	}
 putc ('\n', d->ofile_ptr);
-if (d->dashline)
-    {
-    for (fld=1, f = d->fields_ptr; fld<=d->fields; fld++, f++)
-	{
-	i = d->dashlength ? f->len : min (strlen (f->name), MAX_FIELDNAME);
-	if (d->dashlength && f->typ=='D' && d->convdate) i = 8;
-	for (; i>0; i--) putc ('-', d->ofile_ptr);
-	if (fld<d->fields) putc (d->fieldsep, d->ofile_ptr);
-	}
-    putc ('\n', d->ofile_ptr);
-    }
+if (d->dashline) {
+  if (m == 1) {
+    fprintf (d->ofile_ptr, "-----");
+    putc (d->fieldsep, d->ofile_ptr);
+  }
+  for (fld=1, f = d->fields_ptr; fld<=d->fields; fld++, f++) {
+    i = d->dashlength ? f->len : min (strlen (f->name), MAX_FIELDNAME);
+    if (d->dashlength && f->typ=='D' && d->convdate) i = 8;
+    for (; i>0; i--) putc ('-', d->ofile_ptr);
+    if (fld<d->fields) putc (d->fieldsep, d->ofile_ptr);
+  }
+  putc ('\n', d->ofile_ptr);
+}
 return 0;
 }

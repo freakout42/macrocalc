@@ -33,7 +33,7 @@ char	*p;
 if ((p = strchr (s, '.')) != NULL) *d = atoi (p+1);
 }
 
-char		opts[] = "+ABN:F:0a:bcdef:ghijklm:n:opqrs:tuvx:yz?";
+char		opts[] = "+ABF:KN:0a:bcdef:ghijklm:n:opqrs:tuvx:yz?";
 char		tmpfname[81]	= "";
 
 int main (int argc, char *argv[])
@@ -66,6 +66,7 @@ int		dashlen	= FALSE;
 int		dashlin	= TRUE;
 int		dataproc= TRUE;
 int		structure= FALSE;
+int		array= FALSE;
 int		setdate	= FALSE;
 int		reverse	= FALSE;
 int		mysql	= FALSE;
@@ -137,9 +138,11 @@ while ((c = getopt (argc, argv, opts)) != EOF)
 			break;
 	 case 'i':	dataproc= FALSE;
 			break;
-	 case 'j':	recid	= FALSE;
+	 case 'j':	recid	= TRUE;
 			break;
 	 case 'k':	structure= TRUE;
+			break;
+	 case 'K':	array= TRUE;
 			break;
 	 case 'o':	todrop	= NODROP;
 			break;
@@ -202,7 +205,7 @@ if (reverse)
 #ifdef MSDOS
 /*		setmode (fileno(stdout), O_BINARY);
  */
-		if (!structure && !(append && !external))
+		if (!structure && !array !(append && !external))
 		   {
 		   if (freopen (filename, "wb", stdout) == NULL)
 			lib_fatl (NO_FILE, "Cannot open %s", filename);
@@ -263,7 +266,13 @@ if (reverse)
 
 	if (structure)
 		{
-		dbf_from (drdb);
+		dbf_from (drdb, 0);
+		exit(0);
+		}
+
+	if (array)
+		{
+		dbf_from (drdb, 1);
 		exit(0);
 		}
 
@@ -375,7 +384,12 @@ else
 	 }
 	if (structure)
 		{
-		dbf_from (ddbf);
+		dbf_from (ddbf, 0);
+		exit(0);
+		}
+	if (array)
+		{
+		dbf_from (ddbf, 1);
 		exit(0);
 		}
 	*drdb	= *ddbf;
@@ -467,14 +481,14 @@ if (dataproc)
     else
 	{
 	drdb->ofile_ptr	= stdout;
-	rdb_crea (drdb);
+	rdb_crea (drdb, recid);
 	for (rec=1; rec<=ddbf->p.records; rec++)
 		{
 		if (dbf_read (ddbf)) lib_fatl (RECNO_TOO_BIG, "Cannot read record");
 		if (*ddbf->record_ptr == '*' && !erased) continue;
 		c = dbf_2rdb (drdb, ddbf);
 		if (!adsill || c) {
-			rdb_writ (drdb);
+			rdb_writ (drdb, recid);
 			i++;
 			}
 		}

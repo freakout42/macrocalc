@@ -46,8 +46,10 @@ switch (ch)
  case KEY_CTRL('F'):	return KEY_RIGHT;
  case KEY_CTRL('G'):	return KEY_BTAB;
  case KEY_CTRL('N'):	return KEY_DOWN;
+ case KEY_CTRL('O'):	return KEY_IC;
  case KEY_CTRL('P'):	return KEY_UP;
- case KEY_CTRL('U'):	return KEY_PPAGE;
+ case KEY_CTRL('R'):	return KEY_PPAGE;
+ case KEY_CTRL('U'):	return KEY_F(2);
  case KEY_CTRL('V'):	return KEY_NPAGE;
  }
 return ch;

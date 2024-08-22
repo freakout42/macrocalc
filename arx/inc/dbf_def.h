@@ -165,10 +165,10 @@ PACKED struct DBMANPROLOG
 #include <align.h>
 
 int rdb_open (struct DBF *d);
-int rdb_crea (struct DBF *d);
+int rdb_crea (struct DBF *d, int m);
 int rdb_clos (struct DBF *d);
 int rdb_read (struct DBF *d);
-int rdb_writ (struct DBF *d);
+int rdb_writ (struct DBF *d, int mode);
 int rdb_2dbf (struct DBF *td, struct DBF *sd);
 int sql_crea (struct DBF *d);
 int sql_crep (struct DBF *d);
@@ -184,7 +184,7 @@ int dbf_read (struct DBF *d);
 int dbf_writ (struct DBF *d);
 int dbf_2rdb (struct DBF *td, struct DBF *sd);
 int dbf_afix (struct DBF *td);
-void dbf_from (struct DBF *d);
+void dbf_from (struct DBF *d, int mode);
 void dbf_info (struct DBF *d);
 void oem858_to_iso885915(char *output);
 void iso885915_to_oem858(char *output);

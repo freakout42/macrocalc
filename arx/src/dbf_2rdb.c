@@ -25,6 +25,8 @@ char adsillegals[] = "\x9e\xa9\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\x
 
 status = 0;
 tt = td->record_ptr;
+*tt++ = *sd->record_ptr;
+*tt++ = '\0';
 for (fld=0; fld<sd->fields; fld++)
 	{
 	tf = &td->fields_ptr[fld];

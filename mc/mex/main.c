@@ -45,10 +45,6 @@ void edmore(char fname[]);
 #define GOOD	(SS$_NORMAL)
 #endif
 
-#if	VT100
-int help() {return 0;}
-#endif
-
 #ifndef GOOD
 #define GOOD	0
 #endif
@@ -60,7 +56,7 @@ int help() {return 0;}
 #define DASTART	990		/* starting the DA	*/
 #define DACLOSE	991		/* closing the DA	*/
 
-char	*rcsid = "$Id: main.c,v 1.40 2023/01/08 12:53:37 axel Exp $";
+char	*rcsid = "$Id: main.c,v 1.41 2024/05/22 17:56:04 axel Exp $";
 int	logit = LOGIT;			/* mb: log keystrokes		*/
 int	playback = FALSE;		/* mb: playback from log file	*/
 #if ST_DA
@@ -204,14 +200,12 @@ extern  int	renambuf();
 extern  int	page_nextw();
 extern  int	back_nextw();
 extern  int	flush_kbuf();
-extern  int	getkey();		/* fwd ref */
 extern  int	doplay();		/* fwd ref */
 extern  int	emacs_quit();		/* fwd ref */
 extern  int	ctrlg();		/* fwd ref */
 extern  int	undo();			/* fwd ref */
 extern  int	bkill();		/* fwd ref */
 extern  int	fbdel();		/* fwd ref */
-extern  int	fbwdel();		/* fwd ref */
 extern  int	togdeldir();		/* fwd ref */
 extern  int	defmacro();		/* fwd ref */
 
@@ -248,10 +242,10 @@ KEYTAB  keytab[] = {
 	CNTL|'L',		refresh,
      ED|CNTL|'M',		tnewline,
 	CNTL|'N',		forwline,
-     ED|CNTL|'O',		openline,
+     ED|CNTL|'O',		instog,		/* openline, */
 	CNTL|'P',		backline,
 	CNTL|'S',		forwsearch,
-	CNTL|'R',		backsearch,
+	CNTL|'R',		backpage,
      ED|CNTL|'T',		twiddle,
 	CNTL|'V',		forwpage,
      ED|CNTL|'W',		killregion,
@@ -1667,3 +1661,45 @@ ctrlg()
 	}
 	return (ABORT);
 }
+
+#ifdef nonono
+  CNTL|'@',   setmark,         //  0
+  CNTL|'A',   gotobol,         //  1 KEY_HOME:        /* HOME key */       c = (CNTL | 'A')
+  CNTL|'B',   backchar,        //  2 KEY_LEFT:        /* left arrow */     c = (CNTL | 'B')
+  CNTL|'C',   quit,            //  3
+  CNTL|'D',   forwdel,         //  4 KEY_DC:          /* delete key */     c = (CNTL | 'D')
+  CNTL|'E',   gotoeol,         //  5 KEY_END:         /* END key */        c = (CNTL | 'E')
+  CNTL|'F',   forwchar,        //  6 KEY_RIGHT:       /* right arrow */    c = (CNTL | 'F')
+  CNTL|'G',   undo,            //  7
+  CNTL|'H',   backdel,         //  8 KEY_BACKSPACE:   /* backspace */      c = (CNTL | 'H')
+  CNTL|'I',   tab,             //  9 KEY_NEXT:        /* tabulator */      c = (CNTL | 'I')
+  CNTL|'J',   tnewline,        // 10
+  CNTL|'K',   killtxt,         // 11
+  CNTL|'L',   refresh,         // 12
+  CNTL|'M',   tnewline,        // 13
+  CNTL|'N',   forwline,        // 14 KEY_DOWN:        /* down arrow */     c = (CNTL | 'N')
+  CNTL|'O',   openline/IC!,    // 15 KEY_IC:          /* Ins toggle */     c = (CNTL | 'O')
+  CNTL|'P',   backline,        // 16 KEY_UP:          /* up arrow */       c = (CNTL | 'P')
+  CNTL|'Q',   TERMINAL START   // 17
+  CNTL|'R',   backpage,        // 19 KEY_PPAGE:       /* PGUP key */       c = (CNTL | 'V')
+  CNTL|'S',   TERMINAL STOP    // 18
+  CNTL|'T',   twiddle,         // 20
+  CNTL|'U',   MULTIPLE,        // 21
+  CNTL|'V',   forwpage,        // 22 KEY_NPAGE:       /* PGDN key */       c = (CNTL | 'V')
+  CNTL|'W',   killregion,      // 23
+  CNTL|'X',   META2,           // 24
+  CNTL|'Y',   yank,            // 25
+  CNTL|'Z',   quickexit,       // 26 KEY_F(8):        /* F8 save/exit */   c = (CNTL | 'Z')
+  ESC         META,            // 27
+
+KEY_IC:          /* Ins toggle */     c = (META | 'I')
+KEY_F(1):        /* F1 help */        c = (META | '?')
+KEY_F(2):        /* F2 new window */  c = (CTLX | '2')
+KEY_F(3):        /* F3 new file */    c = (CTLX | CNTL | 'V')
+KEY_F(4):        /* F4 one window */  c = (CTLX | '1')
+KEY_F(5):        /* F5 search forw */ c = (META | 'S')
+KEY_F(6):        /* F6 search back */ c = (META | 'R')
+KEY_F(7):        /* F7 sea bracket */ c = (META | '{')
+KEY_F(9):        /* F9 save/exit */   c = (CNTL | 'Z')
+KEY_F(10):       /* F10 save/exit */  c = (CNTL | 'Z')
+#endif

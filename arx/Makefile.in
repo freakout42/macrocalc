@@ -2,7 +2,7 @@
 # for: $Os
 
 ARXREL=8
-ARXVER=3
+ARXVER=4
 
 ARX=../../arx
 DIRS=inc src lib
@@ -61,11 +61,11 @@ incclean:
 	rm -f key_def.h
 
 #-------------------------------------------------------------------------------
-srcall:	libarx_.a libarxc_.a
+srcall:	libarx_.a libarxc_.a dbrecall
 	@: echo "$@ done"
 
 srcclean:
-	rm -f libarx*_.a which cur_goll lib_dir *.o
+	rm -f libarx*_.a which cur_goll lib_dir dbrecall *.o
 
 libarx_.a:	lib_akey.o lib_2iee.o lib_mesg.o \
 	lib_freo.o lib_twpo.o lib_path.o lib_stat.o lib_fsiz.o lib_mktm.o \
@@ -78,6 +78,9 @@ libarx_.a:	lib_akey.o lib_2iee.o lib_mesg.o \
 	$(OSMISS)
 	$(AR) $(ARFLAGS) $@ $? >/dev/null 2>&1
 	ranlib $@
+
+dbrecall: dbrecall.c
+	cc -I../inc -O0 -g dbrecall.c -o dbrecall
 
 utf82iso885915.o: utf82iso885915.c oem2iso.h
 
