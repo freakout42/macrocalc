@@ -8,7 +8,12 @@ case `uname -s` in
            test "${HARDID}" = "GenuineIntel" && HARDID=`uname -m`
            test "${HARDID}" = "i686" && HARDID=i386
            ;;
-  FreeBSD) PLATID=fb; HARDID=`uname -p`;;
+  FreeBSD) VERSID=`uname -K`
+           case $VERSID in
+            14*) PLATID=f4;;
+            *)   PLATID=fb;;
+           esac
+           HARDID=`uname -p`;;
   Darwin)  PLATID=md; HARDID=`uname -m`;;
   *) echo 'unknown platform - please help porting' >&2;;
 esac
