@@ -6,4 +6,4 @@ config file - the best alternative for all vi-haters.
 Runs on terminal and in ssh and telnet sessions.
 
 you find precompiled binaries in:
-  https://github.com/freakout42/microemacs/releases/tag/v55
+  https://github.com/freakout42/microemacs/releases/tag/v59

@@ -1,18 +1,27 @@
 # Makefile for MEX on Unix
 
-CFLAGS=-Os -Wall -Wno-error
+CFLAGS=-Os -Wall -Werror
+# -g -O0
 LIBS=-lcurses
-SRC=buffer.c cursor.c display.c files.c line.c main.c random.c search.c term.c window.c word.c
-OBJ=buffer.o cursor.o display.o files.o line.o main.o random.o search.o term.o window.o word.o help.o
+SRC=buffer.c cursor.c display.c files.c line.c random.c search.c term.c window.c word.c main.c
+OBJ=buffer.o cursor.o display.o files.o line.o random.o search.o term.o window.o word.o help.o
 
-mex: $(OBJ)
-	$(CC) -o $@ $(LDFLAGS) $(OBJ) $(LIBS)
+all: mex libmex.a
+
+mex: main.o $(OBJ)
+	$(CC) -o $@ $(LDFLAGS) main.o $(OBJ) $(LIBS)
 	strip $@
+
+libmex.a: mainloop.o $(OBJ)
+	$(AR) rcs $@ mainloop.o $(OBJ)
 
 $(SRC):	ed.h
 
 main.o: main.c curkeys.h
 	$(CC) $(CFLAGS) -Wno-missing-braces -c main.c
+
+mainloop.o: main.c curkeys.h
+	$(CC) $(CFLAGS) -DEMBEDDED -Wno-missing-braces -c main.c -o $@
 
 term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/ncurses -c term.c
@@ -26,4 +35,4 @@ help.c: help_c.eng
 	cp help_c.eng $@
 
 clean:
-	rm -f *.o core mex me curkeys.h help.c curkey2
+	rm -f *.o core* mex me curkeys.h help.c curkey2 libmex.a

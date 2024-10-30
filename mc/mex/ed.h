@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "5.9"
+#define VERSION "6.2"
 
 #if (VT100)
 #define V7      1			/* V7 UN*X or Coherent          */
@@ -107,7 +107,7 @@
 #define WSHIFT	2	/* mb: how much to shift screen	sideways at once.
 				2 means by one half, 3 by 1/3, etc.	*/
 
-#if ST_DA
+#if defined(ST_DA) || defined(EMBEDDED)
 #define CANLOG	0
 #else
 #define CANLOG	1			/* mb: compile in logfile stuff	*/
@@ -131,8 +131,13 @@
 #define HELP    0
 #define EXTRA   0
 #else
+#ifdef EMBEDDED
+#define HELP    0
+#define EXTRA   0
+#else
 #define HELP    1			/* mb: compile built-in help	*/
 #define EXTRA   1			/* mb: compile less-used stuff	*/
+#endif
 #endif					/*	(together they add ~8K)	*/
 #define CVMVAS  1			/* C-V, M-V arg. in screens.	*/
 #define CMODE	1			/* mb: Fancy C-lang features	*/
@@ -383,7 +388,7 @@ typedef struct  {
 	int     (*t_beep)();		/* Beep.			*/
 	int     (*t_hglt)();		/* "Highlight" video mode.	*/
 	int     (*t_nrml)();		/* normal video mode.		*/
-	int	(*t_pend)();		/* input chars pending		*/
+	int     (*t_pend)();		/* input chars pending		*/
 }       TERM;
 
 extern	int	logit;			/* mb: log keystrokes		*/
@@ -409,6 +414,7 @@ extern  int	lastflag;		/* Flags, last command		*/
 extern  int	curgoal; 		/* Goal for C-P, C-N		*/
 extern  int	mpresf;  		/* Stuff in message line	*/
 extern  int	sgarbf;  		/* State of screen unknown      */
+extern  WINDOW	*windw1; 		/* Main window      */
 extern  WINDOW	*curwp;  		/* Current window		*/
 extern  BUFFER	*curbp;  		/* Current buffer		*/
 extern  BUFFER	*oldbp;  		/* mb: previous buffer          */
@@ -478,7 +484,7 @@ int getkey();
 int make_popup(BUFFER *buffer, int (*prepare)(), char *data[]);
 int addline(char *text, BUFFER *bp);
 void dtmpbufs();
-void vttidy();
+int vttidy();
 int anycb();
 void flushlog(int flag);
 int putlog(int c);

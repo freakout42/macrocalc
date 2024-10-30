@@ -650,6 +650,8 @@ int help(f, n)
 	register int  c = 'Y';
 	register char **helpscrn;
 
+ 	helpscrn = NULL;
+
 	while (c != 'N') {
 
 		switch (c) {

@@ -40,8 +40,8 @@ int	vtcol	= 0;			/* Column location of SW cursor */
 int	ttrow	= HUGE;			/* Row location of HW cursor	*/
 int	ttcol	= HUGE;			/* Column location of HW cursor */
 
-VIDEO	**vscreen;			/* Virtual screen.		*/
-VIDEO	**pscreen;			/* Physical screen.		*/
+VIDEO	**vscreen = NULL;			/* Virtual screen.		*/
+VIDEO	**pscreen = NULL;			/* Physical screen.		*/
 
 /*
  * Initialize the data structures used
@@ -56,10 +56,13 @@ VIDEO	**pscreen;			/* Physical screen.		*/
  */
 void vtinit()
 {
+  int firstinit = 0;
 	register int	i;
 	register VIDEO  *vp;
 
 	(*term.t_open)();
+ if (vscreen == NULL) {
+  firstinit = 1;
 	vscreen = (VIDEO **) malloc(term.t_nrow*sizeof(VIDEO *));
 	if (vscreen == NULL)
 #if BFILES
@@ -74,7 +77,9 @@ void vtinit()
 #else
 		exit(1);
 #endif
+ }
 	for (i=0; i<term.t_nrow; ++i) {
+   if (firstinit) {
 		vp = (VIDEO *) malloc(VIDEOSIZE+NLINE);
 		if (vp == NULL)
 #if BFILES
@@ -83,8 +88,10 @@ void vtinit()
 			exit(1);
 #endif
 		vscreen[i] = vp;
+   } else { vp = vscreen[i]; }
 		vp->v_flag = 0;
 		vp->v_col = 0;		/* mb: line length */
+   if (firstinit) {
 		vp = (VIDEO *) malloc(VIDEOSIZE+term.t_ncol);
 		if (vp == NULL)
 #if BFILES
@@ -93,6 +100,7 @@ void vtinit()
 			exit(1);
 #endif
 		pscreen[i] = vp;
+   } else { vp = pscreen[i]; }
 		vp->v_flag = 0;
 		vp->v_col = 0;		/* mb: screen offset */
 	}
@@ -123,13 +131,13 @@ void movecursor(row, col)
  * written in the line). Shut down the channel
  * to the terminal.
  */
-void vttidy()
+int vttidy()
 {
 	movecursor(term.t_nrow, 0);
 #ifndef MSDOS
 /*	(*term.t_putchar)('\n');	/ * mb: scroll! */
 #endif
-	(*term.t_close)();
+	return (*term.t_close)();
 }
 
 /*

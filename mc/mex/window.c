@@ -31,7 +31,7 @@ int reposition(f, n)
  * argument it recenters "." in the current
  * window. Bound to "C-L".
  */
-int refresh(f, n)
+int rxfresh(f, n)
 	int f, n;
 {
 	if (f == FALSE) {

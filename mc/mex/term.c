@@ -9,6 +9,8 @@
 #define TERMC 1
 #include	"ed.h"
 
+WINDOW *windw1 = NULL;
+
 #if W32
 #include <windows.h>
 #include <stdio.h>
@@ -215,14 +217,15 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 	stty(1, &nstate);			/* set mode */
 #else
 #if	CURSES
-	WINDOW *status;
+  int y, x, y1, x1;
 	struct termios t;
 
-	status = initscr();
+if (windw1 == NULL) {
+	windw1 = initscr();
 #ifdef init_tabs
 	init_tabs = 0;
 #endif
-	if (status==NULL) {
+	if (windw1==NULL) {
 		fprintf(stderr, "Terminfo setup failed\n");
 		exit(1);
 	}
@@ -231,7 +234,6 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 #endif
 	term.t_ncol = columns;
 	term.t_nrow = lines - 1;
-
 	tcgetattr (fileno(stdin), &t);
 	t.c_cc[VINTR] = 0;
 	t.c_cc[VSUSP] = 0;
@@ -242,11 +244,25 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
   t.c_cc[VLNEXT] = 0;
 #endif
 	tcsetattr (fileno(stdin), TCSANOW, &t);
-
 /*	raw();*/
 	nonl();
 	noecho();
 	keypad (stdscr, TRUE);
+} else {
+if (windw1 == stdscr) {
+  wrefresh(stdscr);
+  windw1 = newwin(21, 62, 2, 18);
+  box(windw1, 0, 0);
+  wrefresh(windw1);
+}
+getmaxyx(windw1, y, x);
+getbegyx(windw1, y1, x1);
+windw1 = newwin(y-2, x-2, y1+1, x1+1);
+getmaxyx(windw1, term.t_nrow, term.t_ncol);
+term.t_nrow += -1;
+term.t_ncol +=  0;
+wrefresh(windw1);
+}
 #else
 	ioctl(0, TCGETA, &ostate);
 	nstate = ostate;
@@ -313,7 +329,14 @@ SetConsoleMode(stdoutHandle, outModeInit);
 	stty(1, &ostate);
 #else
 #if	CURSES
-	endwin();
+if (windw1 != stdscr) {
+  delwin(windw1);
+  windw1 = stdscr;
+  return 0;
+} else {
+  endwin();
+  return 1;
+}
 #else
 #if	VT100
 #endif
@@ -363,7 +386,7 @@ int ttputc(c)
 #endif
 #if	V7
 #if	CURSES
-	addch(c);
+	waddch(windw1, c);
 #else
 	fputc(c, stdout);
 #endif
@@ -409,7 +432,7 @@ int ttflush()
 #endif
 #if	V7
 #if	CURSES
-	refresh();
+	wrefresh(windw1);
 #else
 	fflush(stdout);
 #endif
@@ -424,7 +447,7 @@ int
 ttpending()
 {
 #if V7
-#ifdef FIONREAD
+#ifdef FIONREAD_disabled
 	long c;
   char *cp;
   cp = (char *) &c;
@@ -1174,19 +1197,19 @@ int tcuropen()
 int tcurmove(row, col)
 register int row, col;
 {
-	move(row, col);
+	wmove(windw1, row, col);
 	return 0;
 }
 
 int tcureeol()
 {
-	clrtoeol();
+	wclrtoeol(windw1);
 	return 0;
 }
 
 int tcureeop()
 {
-	clear();
+	wclear(windw1);
 	return 0;
 }
 
@@ -1198,13 +1221,13 @@ int tcurbeep()
 
 int tcurhglt()
 {
-	standout();
+	wstandout(windw1);
 	return 0;
 }
 
 int tcurnrml()
 {
-	standend();
+	wstandend(windw1);
 	return 0;
 }
 

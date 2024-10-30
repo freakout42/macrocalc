@@ -21,6 +21,7 @@
  * keyboard processing code, for the
  * MicroEMACS screen editor.
  */
+#include	<setjmp.h>
 #include	<stdio.h>
 #include	<string.h>
 #include	"ed.h"
@@ -57,6 +58,8 @@ void edmore(char fname[]);
 #define DACLOSE	991		/* closing the DA	*/
 
 char	*rcsid = "$Id: main.c,v 1.41 2024/05/22 17:56:04 axel Exp $";
+jmp_buf loop1;
+int changedandstored;
 int	logit = LOGIT;			/* mb: log keystrokes		*/
 int	playback = FALSE;		/* mb: playback from log file	*/
 #if ST_DA
@@ -156,7 +159,7 @@ extern  int	usebuffer();		/* Switch a window to a buffer  */
 extern  int	killbuffer();		/* Make a buffer go away.	*/
 extern  int	reposition();		/* Reposition window		*/
 extern  int	negrepos();		/* Reposition window other way	*/
-extern  int	refresh();		/* Refresh the screen		*/
+extern  int	rxfresh();		/* Refresh the screen		*/
 extern  int	twiddle();		/* Twiddle characters		*/
 extern  int	ltwiddle();		/* Twiddle lines - mb: added	*/
 extern  int	tab();			/* Insert tab			*/
@@ -220,7 +223,11 @@ KEYTAB  keytab[] = {
 	CNTL|'@',		setmark,
 	CNTL|'A',		gotobol,
 	CNTL|'B',		backchar,
+#ifndef EMBEDDED
 	CNTL|'C',		quit,		/* mb: was C-X C-C */
+#else
+	CNTL|'Y',		quit,		/* mb: was C-X C-C */
+#endif
 	0x163,			quit,		/* CentOS5.2 */
      ED|CNTL|'D',		forwdel,
 	CNTL|'E',		gotoeol,
@@ -239,7 +246,7 @@ KEYTAB  keytab[] = {
      ED|CNTL|'J',		indent,
 #endif
      ED|CNTL|'K',               killtxt,
-	CNTL|'L',		refresh,
+	CNTL|'L',		rxfresh,
      ED|CNTL|'M',		tnewline,
 	CNTL|'N',		forwline,
      ED|CNTL|'O',		instog,		/* openline, */
@@ -247,11 +254,21 @@ KEYTAB  keytab[] = {
 	CNTL|'S',		forwsearch,
 	CNTL|'R',		backpage,
      ED|CNTL|'T',		twiddle,
+#ifndef EMBEDDED
 	CNTL|'V',		forwpage,
      ED|CNTL|'W',		killregion,
+#else
+	CNTL|'W',		forwpage,
+     ED|CNTL|'C',		killregion,
+#endif
+#ifndef EMBEDDED
      ED|CNTL|'Y',		yank,
+#else
+     ED|CNTL|'V',		yank,
+#endif
 	CNTL|'Z',		quickexit,	/* quick save and exit  */
 	0x197,			quickexit,	/* CentOS5.2 */
+#ifndef EMBEDDED
 	CTLX|CNTL|'B',		renambuf,	/* mb: added */
 	CTLX|CNTL|'C',		spawncli,	/* Run CLI in subjob.	*/
 	CTLX|CNTL|'D',		fortog,		/* ar: added */
@@ -265,33 +282,42 @@ KEYTAB  keytab[] = {
 #endif
 	CTLX|CNTL|'V',		filevisit,
      ED|CTLX|CNTL|'W',		filewrite,
+#endif
 	CTLX|CNTL|'X',		swapmark,
      ED|CTLX|CNTL|'Y',		unyank,		/* mb: added */
 	CTLX|CNTL|'Z',		emacs_quit,
+#ifndef EMBEDDED
 	CTLX|CNTL|0x3F,		togdeldir,	/* DELETE key dir */
 	CTLX|'?',		listbuffers,
 	CTLX|'!',		spawn,
 #if CANLOG
 	CTLX|'&',		doplay,
 #endif
+#endif
 	CTLX|'=',		showcpos,
 	CTLX|'(',		ctlxlp,
 	CTLX|')',		ctlxrp,
+#ifndef EMBEDDED
 	CTLX|'1',		onlywind,
 	CTLX|'2',		splitwind,
 	CTLX|'B',		usebuffer,
+#endif
 	CTLX|'C',		casestog,
 	CTLX|'E',		ctlxe,
      ED|CTLX|'F',		reformat,	/* mb: added */
 	CTLX|'K',		killbuffer,
      ED|CTLX|'L',		setlmargin,	/* mb: added */
 	CTLX|'M',		defmacro,	/* mb: added */
+#ifndef EMBEDDED
 	CTLX|'N',		nextwind,
 	CTLX|'O',		nextwind,	/* mb: EMACS-like */
 	CTLX|'P',		prevwind,
+#endif
 	CTLX|'Q',		visitog,	/* mb: added */
      ED|CTLX|'R',		setfillcol,
+#ifndef EMBEDDED
      ED|CTLX|'S',		filesave,	/* mb: instead of ^X^S  */
+#endif
      ED|CTLX|'T',		ltwiddle,	/* mb: added */
 	CTLX|'V',		page_nextw,	/* mb: added */
 	CTLX|'Z',		back_nextw,	/* mb: added */
@@ -680,6 +706,7 @@ ascii:
 	return (status);
 }
 
+#ifndef EMBEDDED
 #if (ST_DA == 0)
 void usage()
 {
@@ -760,6 +787,7 @@ void usage()
 #endif
 }
 #endif
+#endif
 
 #if ST_DA
 #define register		/* avoid that in main()! */
@@ -807,140 +835,32 @@ escseq(c)
 }
 #endif
 
-#if MSDOS
-int _main(argc, argv)
-#else
-int main(argc, argv)
-#endif
-	int	argc;
-	char	*argv[];
-{
-	register int	c=0;
-	register int	f;
-	register int	n;
-	register int	state;
+int mainloop(char *fil, WINDOW *scr) {
+	int	c=0;
+	int	f, n, r;
 	int	negarg;
-	int	gline = 1;
-	int	visitmode = FALSE;
-	char	*cp;
-#if MSDOS
-	directvideo = TRUE;
-	_fmode = O_BINARY;
-#endif
-	nfiles = 0;
-#if ST_DA
-	maxnfiles = NFILES;
-#else
-	maxnfiles = argc + NFILES;
-	if ((clfn = (char **) malloc (maxnfiles * sizeof(char *))) == NULL)
-#if BFILES
-		_exit (1);
-#else
-		exit (1);
-#endif
-	while(--argc > 0 && ++argv != NULL) {
-		cp = *argv;
-		if(*cp == '-') {	/* cmd line parameter */
-			f = *(++cp);
-			if (f >= 'a' && f <= 'z')
-				f += ('A' - 'a');
-			if (f && cp[1]=='\0'	/* space before number   */
-			 && argc > 1 && argv[1] != NULL
-			 && (c=argv[1][0])>='0' && c<='9') {
-				if (f=='C' || f=='F' || f=='G'
-				 || f=='R' || f=='T') {
-					--argc;
-					++argv;
-					cp = (*argv) - 1;
-				}
-			}
-			n = 0;
-			while (f && (c=(*(++cp)))>='0' && c<='9')
-				n = 10*n + (c-'0');
-			if (f == 'C')
-				term.t_ncol = n;
-			else if (f == 'F') {
-				if (c == '-') {
-					lmargin = n;
-					n = 0;
-					while (f &&
-						(c=(*(++cp)))>='0' && c<='9')
-							n = 10*n + (c-'0');
-				}
-				fillcol = n;
-				if (lmargin + tabsize > fillcol)
-					lmargin = fillcol = 0;
-			}
-#if MSDOS
-			else if (f == 'D')
-				directvideo = FALSE;
-#endif
-			else if (f == 'G')
-				gline = n;
-#if (AtST | MSDOS)
-			else if (f == 'I')
-				vidrev = TRUE;
-#endif
-#if CANLOG
-			else if (f == 'L')
-				logit = (!logit);
-			else if (f == 'P')
-				playback = TRUE;
-#endif
-#if MSDOS
-			else if (f == 'M') {
-				if ((n>=0 && n<=3) || n==7)
-					vidmode = n;
-			}
-#endif
-			else if (f == 'R')
-				term.t_nrow = n-1;
-			else if (f == 'T')
-				tabsize = n;
-			else if (f == 'V')
-				visitmode = TRUE;
-			else
-				usage();
-		} else {			/* a filename	*/
-			clfn[nfiles++] = cp;
-#if (AtST | MSDOS | CPM | W32)
-			cpyfname (cp, cp);	/* tolower	*/
-#endif
-		}
-	}
-#endif
-#if AtST
-	if (Getrez() == 0) {
-		if (term.t_ncol > 40)
-			term.t_ncol = 40;
-	}
-#endif
-#if MSDOS
-	if (vidmode==0 || vidmode==1) {
-		if (term.t_ncol > 40)
-			term.t_ncol = 40;
-	}
-#endif
-	vtinit();
-	if (nfiles) {
-		cp = clfn[0];
-		edinit(cp);
-		cpyfname (curbp->b_fname, cp);
+	int	state;
+
+  changedandstored = 0;
+  if (scr) {
+    windw1 = scr;
+    vtinit();
+  }
+  if (fil) {
+    edinit("main");
+		cpyfname (curbp->b_fname, fil);
 		update(TRUE);
-		if (readin(cp) == FIOFNF)
-			mlwrite("[New file]");
-		if (visitmode) {
-			curbp->b_flag &= (~BFEDIT);
-			logit = FALSE;
-		}
-		for (fileindex = 1; fileindex<nfiles; fileindex++) {
-			edmore(clfn[fileindex]);
-		}
-	} else {				/* no filename given */
-		edinit("main");
-		fileindex = 0;
-	}
-	gotolinum(TRUE,gline);
+		if (readin(fil) == FIOFNF) {
+      free(curbp);
+      free(curwp);
+      vttidy();
+      return 0;
+    }
+    fileindex = 1;
+//    addline(fil, curbp);
+//    curwp->w_flag |= WFMOVE|WFHARD|WFFORCE;
+  }
+
 	kbdm[0] = CTLX|')';			/* Empty macro		*/
 	lastflag = 0;				/* Fake last flags.	*/
 	f = FALSE;
@@ -961,7 +881,8 @@ int main(argc, argv)
 	state = BASE;
 #endif
 
-	for(;;) {				/* main loop */
+  r = setjmp(loop1);
+	if (r == 0) for(;;) {				/* main loop */
 
 	while (c == NOKEY) {	/* mb: happens after errors in getkey() */
 		update(FALSE);
@@ -1281,13 +1202,163 @@ daloop:
 	}					/* end of switch */
 
 	}					/* end of for()  */
+return changedandstored;
+}						/* end of mainloop() */
 
-}						/* end of main() */
+#ifndef EMBEDDED
+#if MSDOS
+int _main(argc, argv)
+#else
+int main(argc, argv)
+#endif
+	int	argc;
+	char	*argv[];
+{
+	register int	c=0;
+	register int	f;
+	register int	n;
+	int	gline = 1;
+	int	visitmode = FALSE;
+	char	*cp;
+
+if (argc==3 && !strcmp(argv[1], "-e")) {
+#if CANLOG
+	logit = FALSE;
+#endif
+	vtinit();
+	mainloop(argv[2], windw1);
+	vttidy();
+	return 0;
+} else {
+#if MSDOS
+	directvideo = TRUE;
+	_fmode = O_BINARY;
+#endif
+	nfiles = 0;
+#if ST_DA
+	maxnfiles = NFILES;
+#else
+	maxnfiles = argc + NFILES;
+	if ((clfn = (char **) malloc (maxnfiles * sizeof(char *))) == NULL)
+#if BFILES
+		_exit (1);
+#else
+		exit (1);
+#endif
+	while(--argc > 0 && ++argv != NULL) {
+		cp = *argv;
+		if(*cp == '-') {	/* cmd line parameter */
+			f = *(++cp);
+			if (f >= 'a' && f <= 'z')
+				f += ('A' - 'a');
+			if (f && cp[1]=='\0'	/* space before number   */
+			 && argc > 1 && argv[1] != NULL
+			 && (c=argv[1][0])>='0' && c<='9') {
+				if (f=='C' || f=='F' || f=='G'
+				 || f=='R' || f=='T') {
+					--argc;
+					++argv;
+					cp = (*argv) - 1;
+				}
+			}
+			n = 0;
+			while (f && (c=(*(++cp)))>='0' && c<='9')
+				n = 10*n + (c-'0');
+			if (f == 'C')
+				term.t_ncol = n;
+			else if (f == 'F') {
+				if (c == '-') {
+					lmargin = n;
+					n = 0;
+					while (f &&
+						(c=(*(++cp)))>='0' && c<='9')
+							n = 10*n + (c-'0');
+				}
+				fillcol = n;
+				if (lmargin + tabsize > fillcol)
+					lmargin = fillcol = 0;
+			}
+#if MSDOS
+			else if (f == 'D')
+				directvideo = FALSE;
+#endif
+			else if (f == 'G')
+				gline = n;
+#if (AtST | MSDOS)
+			else if (f == 'I')
+				vidrev = TRUE;
+#endif
+#if CANLOG
+			else if (f == 'L')
+				logit = (!logit);
+			else if (f == 'P')
+				playback = TRUE;
+#endif
+#if MSDOS
+			else if (f == 'M') {
+				if ((n>=0 && n<=3) || n==7)
+					vidmode = n;
+			}
+#endif
+			else if (f == 'R')
+				term.t_nrow = n-1;
+			else if (f == 'T')
+				tabsize = n;
+			else if (f == 'V')
+				visitmode = TRUE;
+			else
+				usage();
+		} else {			/* a filename	*/
+			clfn[nfiles++] = cp;
+#if (AtST | MSDOS | CPM | W32)
+			cpyfname (cp, cp);	/* tolower	*/
+#endif
+		}
+	}
+#endif
+#if AtST
+	if (Getrez() == 0) {
+		if (term.t_ncol > 40)
+			term.t_ncol = 40;
+	}
+#endif
+#if MSDOS
+	if (vidmode==0 || vidmode==1) {
+		if (term.t_ncol > 40)
+			term.t_ncol = 40;
+	}
+#endif
+	vtinit();
+	if (nfiles) {
+		cp = clfn[0];
+		edinit(cp);
+		cpyfname (curbp->b_fname, cp);
+		update(TRUE);
+		if (readin(cp) == FIOFNF)
+			mlwrite("[New file]");
+		if (visitmode) {
+			curbp->b_flag &= (~BFEDIT);
+			logit = FALSE;
+		}
+		for (fileindex = 1; fileindex<nfiles; fileindex++) {
+			edmore(clfn[fileindex]);
+		}
+	} else {				/* no filename given */
+		edinit("main");
+		fileindex = 0;
+	}
+	gotolinum(TRUE,gline);
+  mainloop(NULL, NULL);
+}
+return 0;
+}
+#endif
 
 #ifdef register
 #undef register
 #endif
 
+#ifndef EMBEDDED
 /*
  *  mb: Display another file in another window.
  *      Called only if a second filename appears in command line.
@@ -1316,6 +1387,7 @@ edmore(fname)
 		mlwrite("Error reading next file!");
 	prevwind(0,1);
 }
+#endif
 
 /*
  * Read in a key.
@@ -1324,9 +1396,11 @@ edmore(fname)
  */
 int
 getkey() {
-	register int c, ub, lb=0;
+	register int c;
 
 #if CANLOG
+	register int ub, lb=0;
+
 	if (playback == TRUE) {
 		if (ropenlog() == ABORT) {
 			playback = ABORT;
@@ -1357,9 +1431,9 @@ getkey() {
 		mlwrite("Unable to open log file");
 		return (NOKEY);
 	}
-#endif
 
 logok:
+#endif
 
 	c = (*term.t_getchar)();
 #ifdef CNTLCH
@@ -1423,7 +1497,7 @@ logok:
 		case KEY_F(5):			/* F5 search forward */
 					c = (CNTL | 'S');		break;
 		case KEY_F(6):			/* F6 search backward */
-					c = (CNTL | 'R');		break;
+					c = (META | 'R');		break;
 		case KEY_F(7):			/* F7 search bracket */
 					c = (META | '{'); 		break;
 		case KEY_F(8):			/* F8 save/exit */
@@ -1453,8 +1527,8 @@ logok:
 		return (NOKEY);
 	}
 	flushlog(FALSE);		/* flushes only when full */
-#endif
 nolog:
+#endif
 	return (c);
 }
 
@@ -1496,9 +1570,11 @@ quickexit(f,n)
 	int f, n;
 {
 	if ((curbp->b_flag&BFCHG) != 0		/* Changed.		*/
-	&& (curbp->b_flag&BFTEMP) == 0)		/* Real.		*/
+	&& (curbp->b_flag&BFTEMP) == 0)	{ /* Real.		*/
 		if (filesave(f, n) != TRUE)
 			return (FALSE);
+    else changedandstored = 1;
+  }
 	return (quit(f, n));			/* conditionally quit	*/
 }
 
@@ -1530,7 +1606,7 @@ quit(f, n)
 			closelogf();
 		}
 #endif
-		vttidy();
+		if (vttidy())
 #if ST_DA
 		return (DACLOSE);
 #else
@@ -1540,6 +1616,11 @@ quit(f, n)
 		exit(GOOD);
 #endif
 #endif
+		else {
+      bbclear(curbp);
+      free(curwp);
+      longjmp(loop1, 1);
+    }
 	}
 	mlwrite("[aborted]");
 	return (s);
@@ -1675,7 +1756,7 @@ ctrlg()
   CNTL|'I',   tab,             //  9 KEY_NEXT:        /* tabulator */      c = (CNTL | 'I')
   CNTL|'J',   tnewline,        // 10
   CNTL|'K',   killtxt,         // 11
-  CNTL|'L',   refresh,         // 12
+  CNTL|'L',   rxfresh,         // 12
   CNTL|'M',   tnewline,        // 13
   CNTL|'N',   forwline,        // 14 KEY_DOWN:        /* down arrow */     c = (CNTL | 'N')
   CNTL|'O',   openline/IC!,    // 15 KEY_IC:          /* Ins toggle */     c = (CNTL | 'O')

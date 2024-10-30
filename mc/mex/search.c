@@ -36,6 +36,7 @@ char	*prompt;
 	static	 char	*oldpat[4] = {pat0, pat1, pat2, pat3};
 	char		dbuf[NPAT], buf[NPAT];
 
+  memset(buf, '\0', NPAT);
 	if (pat[0] != '\0') {			/* Old pattern		*/
 		dflt1 = pat;
 		goto start;
