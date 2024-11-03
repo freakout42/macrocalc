@@ -21,6 +21,8 @@ FILE	*std_err	= NULL;
 FILE	*std_nerr	= NULL;
 FILE	*std_erread	= NULL;
 
+struct termios otermio;
+
 WINDOW	*cur_init (int around)
 {
 WINDOW		*stdscreen;
@@ -76,6 +78,20 @@ if (around >= 3)
 	fcntl (inpipe[READ], F_SETFL, flags | O_NDELAY);
 	}
 
+/*atexit(cur_exit);tcsetattr (0, TCSANOW, &otermio);*/
+
+  tcgetattr (0, &termio); /* give me all attributes */
+  otermio = termio;
+  termio.c_cc[VINTR] = 0; /* ctrl-c */
+#ifdef VDSUSP
+  termio.c_cc[VDSUSP] = 0; /* ctrl-y */
+#endif
+  termio.c_cc[VSUSP] = 0; /* ctrl-z */
+#ifdef VLNEXT
+  termio.c_cc[VLNEXT] = 0;/* ctrl-v */
+#endif
+  tcsetattr (0, TCSANOW, &termio);
+
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "cur_init: %s\n", "initscr() done");
@@ -93,16 +109,6 @@ row_address		= NULL;
 #ifdef init_tabs
 init_tabs		= 0;
 #endif
-
-/*atexit(cur_exit);*/
-
-  tcgetattr (fileno(stdin), &termio);
-  termio.c_cc[VINTR] = 0;
-  termio.c_cc[VSUSP] = 0;
-#ifdef VLNEXT
-  termio.c_cc[VLNEXT] = 0;
-#endif
-  tcsetattr (fileno(stdin), TCSANOW, &termio);
 
 #ifdef USERAW
 	raw();

@@ -51,6 +51,7 @@ switch (ch)
  case KEY_CTRL('R'):	return KEY_PPAGE;
  case KEY_CTRL('U'):	return KEY_F(2);
  case KEY_CTRL('V'):	return KEY_NPAGE;
+ case KEY_CTRL('Z'):	return KEY_F(8);
  }
 return ch;
 }

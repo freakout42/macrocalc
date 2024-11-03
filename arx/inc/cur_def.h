@@ -43,6 +43,7 @@ struct  termio  nstate;
 #include <key2_def.h>
 
 extern int	cur_redir;
+extern struct termios otermio;
 
 #if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO)
 extern FILE	*std_in, *std_out, *std_err, *std_erread;
