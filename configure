@@ -8,8 +8,7 @@ case `uname -s` in
            test "${HARDID}" = "GenuineIntel" && HARDID=`uname -m`
            test "${HARDID}" = "i686" && HARDID=i386
            ;;
-  FreeBSD) VERSID=`uname -K`
-           case $VERSID in
+  FreeBSD) case `uname -K` in
             14*) PLATID=f4;;
             *)   PLATID=fb;;
            esac
