@@ -1,4 +1,4 @@
-/* $Id: rdb_writ.c,v 1.2 2016/11/01 16:20:52 axel Exp $
+/* $Id: rdb_writ.c,v 1.4 2024/10/30 08:59:20 axel Exp $
  */
 #include <stdio.h>
 #include "arx_def.h"

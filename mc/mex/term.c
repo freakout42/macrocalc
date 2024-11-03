@@ -234,6 +234,7 @@ if (windw1 == NULL) {
 #endif
 	term.t_ncol = columns;
 	term.t_nrow = lines - 1;
+  signal(SIGTSTP, SIG_IGN);
 	tcgetattr (fileno(stdin), &t);
 	t.c_cc[VINTR] = 0;
 	t.c_cc[VSUSP] = 0;

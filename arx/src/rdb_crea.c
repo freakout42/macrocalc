@@ -1,4 +1,4 @@
-/* $Id: rdb_crea.c,v 1.2 2015/07/01 13:31:13 axel Exp $
+/* $Id: rdb_crea.c,v 1.4 2024/10/30 08:59:20 axel Exp $
  * create /rdb-table from dbf-descriptor
  */
 #include <stdlib.h>

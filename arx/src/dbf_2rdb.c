@@ -1,4 +1,4 @@
-/* $Id: dbf_2rdb.c,v 1.7 2020/12/07 09:55:19 axel Exp $
+/* $Id: dbf_2rdb.c,v 1.9 2024/10/30 08:59:20 axel Exp $
  * copy dbf_record to /rdb-table (structure must be identical!)
  *
  * these cannot be found by ADSlocal driver:

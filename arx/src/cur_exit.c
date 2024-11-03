@@ -1,4 +1,4 @@
-/* $Id: cur_exit.c,v 1.3 1995/02/22 18:01:13 axel Rel $ */
+/* $Id: cur_exit.c,v 1.4 2024/11/03 10:44:18 axel Exp $ */
 
 #include "stdlib.h"
 #include "stdio.h"

@@ -1,4 +1,4 @@
-/* $Id: db2use.c,v 1.12 2021/12/16 12:03:51 axel Exp $
+/* $Id: db2use.c,v 1.14 2024/10/30 09:00:43 axel Exp $
  */
 #include <stdio.h>
 #include <stdlib.h>

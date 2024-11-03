@@ -1,4 +1,4 @@
-/* $Id: cur_getk.c,v 1.5 1995/02/27 18:25:32 axel Rel $
+/* $Id: cur_getk.c,v 1.8 2024/11/03 10:44:18 axel Exp $
  */
 
 #include <stdio.h>

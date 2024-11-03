@@ -1,4 +1,4 @@
-/* $Id: cur_init.c,v 1.23 2022/09/29 05:51:36 axel Exp $
+/* $Id: cur_init.c,v 1.24 2024/11/03 10:44:18 axel Exp $
  */
 
 #include <stdlib.h>
