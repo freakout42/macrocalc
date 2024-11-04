@@ -441,15 +441,6 @@ soelim: nro
 nro:	nro.o nrotxt.o nrocmd.o
 	$(CC) nro.o nrotxt.o nrocmd.o -o $@
 
-nro.o:	nro.c nro.h
-	$(CC) -c -o $@ nro.c
-
-nrotxt.o:	nrotxt.c nro.h
-	$(CC) -c -o $@ nrotxt.c
-
-nrocmd.o:	nrocmd.c nro.h
-	$(CC) -c -o $@ nrocmd.c
-
 nro.man:	nro nro.an nro.nro
 	-./nro nro.an nro.nro >$@
 

@@ -80,7 +80,7 @@ libarx_.a:	lib_akey.o lib_2iee.o lib_mesg.o \
 	ranlib $@
 
 dbrecall: dbrecall.c
-	cc -I../inc -O0 -g dbrecall.c -o dbrecall
+	$(CC) $(CFLAGS) -I../inc -O0 -g dbrecall.c -o dbrecall
 
 utf82iso885915.o: utf82iso885915.c oem2iso.h
 

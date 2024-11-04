@@ -5,7 +5,7 @@
 #include "arx_def.h"
 #include "dbf_def.h"
 
-errorex(n)
+int errorex(n)
   int n;
 {
   fprintf(stderr, "error: %d usage: dbrecall dbf recno\n", n);
