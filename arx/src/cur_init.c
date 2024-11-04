@@ -1,5 +1,4 @@
-/* $Id: cur_init.c,v 1.24 2024/11/03 10:44:18 axel Exp $
- */
+/* cur_init.c */
 
 #include <stdlib.h>
 #include <string.h>
@@ -34,9 +33,6 @@ struct termios termio;
 /* no floating-point exception */
 #ifdef SIGFPE
 signal(SIGFPE, SIG_IGN);
-#endif
-#ifdef SIGINT
-signal(SIGINT, SIG_IGN);
 #endif
 
 cur_redir = around;
@@ -78,24 +74,11 @@ if (around >= 3)
 	fcntl (inpipe[READ], F_SETFL, flags | O_NDELAY);
 	}
 
-/*atexit(cur_exit);tcsetattr (0, TCSANOW, &otermio);*/
-
-  tcgetattr (0, &termio); /* give me all attributes */
-  otermio = termio;
-  termio.c_cc[VINTR] = 0; /* ctrl-c */
-#ifdef VDSUSP
-  termio.c_cc[VDSUSP] = 0; /* ctrl-y */
-#endif
-  termio.c_cc[VSUSP] = 0; /* ctrl-z */
-#ifdef VLNEXT
-  termio.c_cc[VLNEXT] = 0;/* ctrl-v */
-#endif
-  tcsetattr (0, TCSANOW, &termio);
-
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "cur_init: %s\n", "initscr() done");
 #endif
+/*atexit(cur_exit);tcsetattr (0, TCSANOW, &otermio);*/
 
 #ifdef COHERENT
 back_tab		= NULL;
@@ -110,12 +93,25 @@ row_address		= NULL;
 init_tabs		= 0;
 #endif
 
+  signal(SIGTSTP, SIG_IGN);
+  tcgetattr (fileno(stdin), &termio); /* give me all attributes */
+  otermio = termio;
+  termio.c_cc[VINTR] = 0; /* ctrl-c */
+  termio.c_cc[VSUSP] = 0; /* ctrl-z */
+#ifdef VDSUSP
+  termio.c_cc[VDSUSP] = 0; /* ctrl-y */
+#endif
+#ifdef VLNEXT
+  termio.c_cc[VLNEXT] = 0;/* ctrl-v */
+#endif
+  tcsetattr (fileno(stdin), TCSANOW, &termio);
+
 #ifdef USERAW
 	raw();
 #else
-	noecho();
-	cbreak();
 	nonl();
+	noecho();
+/*	cbreak(); */
 #endif
 
 #ifndef __NCURSES_H

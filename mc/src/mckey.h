@@ -5,6 +5,8 @@
 #define BS KEY_BACKSPACE
 #define CR KEY_ENTER
 #define ESC KEY_ESC
+#define CANCEL KEY_CANCEL
+#define SUSPEND KEY_SUSPEND
 #define HOMEKEY KEY_HOME
 #define ENDKEY KEY_END
 #define UPKEY KEY_UP

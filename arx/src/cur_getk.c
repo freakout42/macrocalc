@@ -1,5 +1,4 @@
-/* $Id: cur_getk.c,v 1.8 2024/11/03 10:44:18 axel Exp $
- */
+/* cur_getk.c */
 
 #include <stdio.h>
 #include <arx_def.h>
@@ -41,6 +40,7 @@ switch (ch)
  case KEY_F0:		return KEY_F(10);
  case KEY_CTRL('A'):	return KEY_HOME;
  case KEY_CTRL('B'):	return KEY_LEFT;
+ case KEY_CTRL('C'):	return KEY_CANCEL;
  case KEY_CTRL('D'):	return KEY_DC;
  case KEY_CTRL('E'):	return KEY_END;
  case KEY_CTRL('F'):	return KEY_RIGHT;
@@ -51,6 +51,7 @@ switch (ch)
  case KEY_CTRL('R'):	return KEY_PPAGE;
  case KEY_CTRL('U'):	return KEY_F(2);
  case KEY_CTRL('V'):	return KEY_NPAGE;
+ case KEY_CTRL('Y'):	return KEY_CANCEL;
  case KEY_CTRL('Z'):	return KEY_F(8);
  }
 return ch;

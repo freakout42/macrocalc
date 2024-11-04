@@ -12,7 +12,7 @@
 void cur_exit (int code)
 {
 endwin();
-tcsetattr (0, TCSANOW, &otermio);
+/*tcsetattr (0, TCSANOW, &otermio); handled by endwin() because settings after initscr() */
 /*putchar ('\n');*/
 if (code!=EOF) exit (code);
 }
