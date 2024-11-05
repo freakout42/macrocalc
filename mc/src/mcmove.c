@@ -1,4 +1,4 @@
-/* mcmove.c,v 1.7 2001/06/06 14:30:37 axel */
+/* mcmove.c */
 
 #include <arx_def.h>
 #include <cur_def.h>
@@ -142,7 +142,7 @@ displayscreen(NOUPDATE);
 void moveend (void)
 {
 displaycur (NOHIGHLIGHT);
-rightcol = curcol = lastcol;
+curcol = rightcol = lastcol;
 currow = bottomrow = lastrow;
 setleftcol();
 settoprow();

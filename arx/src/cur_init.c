@@ -106,6 +106,7 @@ init_tabs		= 0;
 #endif
   tcsetattr (fileno(stdin), TCSANOW, &termio);
 
+/* avoid raw() and cbreak() they are nasty */
 #ifdef USERAW
 	raw();
 #else

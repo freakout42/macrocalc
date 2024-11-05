@@ -1,5 +1,4 @@
-/* $Id: mckey.h,v 1.1 1995/02/11 12:31:03 axel Rel $
- */
+/* mckey.h */
 
 #define FORMFEED \f
 #define BS KEY_BACKSPACE

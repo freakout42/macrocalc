@@ -1,4 +1,4 @@
-/* mcwindow.c,v 1.8 2001/06/06 06:09:29 axel */
+/* mcwindow.c */
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -62,9 +62,10 @@ if (leftmargin != oldleft) setrightcol();
 void settoprow (void)
 /* Figures out the value of windowrow based on the value of bottomrow */
 {
-if (bottomrow - ACTUALROWS < -1) bottomrow = ACTUALROWS-1;
-windowrow = bottomrow - ACTUALROWS + 1;
-setleftmargin();
+     if (bottomrow <  ACTUALROWS - 1) windowrow = 0;
+else if (bottomrow == ACTUALROWS - 1) windowrow = 1;
+else                                  windowrow = bottomrow - ACTUALROWS + 2;
+setbottomrow();
 } /* settoprow */
 
 void setbottomrow (void)

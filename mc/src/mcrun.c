@@ -1,4 +1,4 @@
-/* mcrun.c 1.10 2001/06/06 05:57:52 axel */
+/* mcrun.c */
 
 #include <arx_def.h>
 #include <cur_def.h>
