@@ -36,7 +36,7 @@ for your platform (lu-Linux fb-FreeBSD md-MacOS) and untar to `/opt/arx`, add
 Download `macrocalc-<releasetag>.i386.rpm` and  
 `sudo rpm --nodigest --nofiledigest -i macrocalc-<releasetag>.i386.rpm`  
 `sudo ldconfig`  
-After a relogin macrocalc will start by `321` or `mc`.
+After a relogin macrocalc will start by `321` or `mc`.  
 You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 
 5. __Docker image__  
