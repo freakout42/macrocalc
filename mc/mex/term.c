@@ -336,6 +336,7 @@ if (windw1 != stdscr) {
   return 0;
 } else {
   endwin();
+  windw1 = NULL;
   return 1;
 }
 #else

@@ -1371,7 +1371,7 @@ jam:
 int hardcopy() {return (FALSE);}
 #endif
 
-
+#ifndef EMBEDDED
 /*
  * file: spawn.c
  *
@@ -1535,29 +1535,6 @@ int spawncli(f, n)
 #endif
 }
 
-#if AtST
-dirout(c, e)
-	register int c;
-	int e;
-{
-	register int	d;
-	register char	*p;
-	char str[4];
-
-	d = '0';
-	while (c > 9) {
-		d += 1;
-		c -= 10;
-	}
-	p = str;
-	*p++ = d;
-	*p++ = c + '0';
-	*p++ = e;
-	*p = '\0';
-	mlputs(str);
-}
-#endif
-
 /*
  * Run a one-liner in a subjob.
  * When the command returns, wait for a single
@@ -1709,6 +1686,30 @@ done:
 	return(i==-1 || j==NULL ? TRUE : TRUE); /* nowarn unused */
 #endif
 }
+#endif /* EMBEDDED */
+
+#if AtST
+dirout(c, e)
+	register int c;
+	int e;
+{
+	register int	d;
+	register char	*p;
+	char str[4];
+
+	d = '0';
+	while (c > 9) {
+		d += 1;
+		c -= 10;
+	}
+	p = str;
+	*p++ = d;
+	*p++ = c + '0';
+	*p++ = e;
+	*p = '\0';
+	mlputs(str);
+}
+#endif
 
 #if	VMS
 /*
