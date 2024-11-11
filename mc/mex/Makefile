@@ -35,4 +35,4 @@ help.c: help_c.eng
 	cp help_c.eng $@
 
 clean:
-	rm -f *.o core* mex me curkeys.h help.c curkey2 libmex.a mex.exe
+	rm -f *.o core* mex me curkeys.h help.c curkey2 libmex.a mex.exe *.EXE *.OBJ HELP.C
