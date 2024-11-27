@@ -15,11 +15,18 @@ int
 instog(f,n)
 	int f, n;
 {
+	register WINDOW *wp;
 	ovrstrk = !ovrstrk;
 	if (ovrstrk)
 		mlwrite("[overstrike]");
 	else
 		mlwrite("[insert]");
+	wp = wheadp;
+	while (wp != NULL) {
+		if (wp->w_bufp == curbp)
+			wp->w_flag |= WFMODE;
+		wp = wp->w_wndp;
+	}
 	return (TRUE);
 }
 

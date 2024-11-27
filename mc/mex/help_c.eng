@@ -213,7 +213,7 @@ char *enter_str[] = {
 
 #endif
 
-#if (MSDOS | W32)
+#if (MSDOS)
 
 char *help_menu[] = {
 " ",
@@ -416,7 +416,7 @@ char *enter_str[] = {
 
 #endif
 
-#if (V7 | VMS | CPM)
+#if (V7 | VMS | CPM | W32)
 
 char *help_menu[] = {
 " ",
@@ -693,7 +693,7 @@ int help(f, n)
 		case 'O':
 			helpscrn = other_cmds;
 			break;
-#if (AtST | MSDOS | W32)
+#if (AtST | MSDOS)
 		case 'A':
 			helpscrn = alt_chars;
 			break;

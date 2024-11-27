@@ -57,7 +57,7 @@ void edmore(char fname[]);
 #define DASTART	990		/* starting the DA	*/
 #define DACLOSE	991		/* closing the DA	*/
 
-char	*rcsid = "$Id: main.c,v 1.43 2024/11/05 13:49:03 axel Exp $";
+char	*rcsid = "$Id: main.c,v 1.44 2024/11/27 12:16:41 axel Exp $";
 jmp_buf loop1;
 int changedandstored;
 int	logit = LOGIT;			/* mb: log keystrokes		*/
@@ -1474,7 +1474,11 @@ logok:
 		case KEY_PPAGE:		/* PGUP key */
 					c = (META | 'V');     		break;
 		case KEY_NPAGE:		/* PGDN key */
+#ifndef EMBEDDED
 					c = (CNTL | 'V');     		break;
+#else
+					c = (CNTL | 'W');     		break;
+#endif
 		case KEY_LL:			/* END key */
 #ifdef KEY_END
 		case KEY_END:			/* END key */

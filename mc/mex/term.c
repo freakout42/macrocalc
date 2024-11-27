@@ -101,9 +101,11 @@ struct	sgttyb	nstate;			/* values for editor mode */
 struct  termios  ostate;
 struct  termios  nstate;
 #else
+#ifndef WIN32
 #include <termio.h>
 struct  termio  ostate;
 struct  termio  nstate;
+#endif
 #endif
 #endif
 
@@ -218,7 +220,9 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 #else
 #if	CURSES
   int y, x, y1, x1;
+#ifndef WIN32
 	struct termios t;
+#endif
 
 if (windw1 == NULL) {
 	windw1 = initscr();
@@ -232,6 +236,7 @@ if (windw1 == NULL) {
 #ifdef hpux
 	if (strstr(getenv("TERM"), "hp")) hpterm = TRUE;
 #endif
+#ifndef WIN32
 	term.t_ncol = columns;
 	term.t_nrow = lines - 1;
   signal(SIGTSTP, SIG_IGN);
@@ -245,7 +250,9 @@ if (windw1 == NULL) {
   t.c_cc[VLNEXT] = 0;
 #endif
 	tcsetattr (fileno(stdin), TCSANOW, &t);
-/*	raw();*/
+#else
+	raw();
+#endif
 	nonl();
 	noecho();
 	keypad (stdscr, TRUE);
@@ -760,6 +767,7 @@ register int	n;
 }
 
 int ansimove(row, col)
+int row, col;
 {
 	ttputc(ESC);
 	ttputc('[');
@@ -1232,17 +1240,6 @@ int tcurnrml()
 	wstandend(windw1);
 	return 0;
 }
-
-void putpad(str)
-char	*str;
-{
-	tputs(str, 1, ttputc);
-}
-
-/*
-extern int	tput();
-extern char	*tgoto();
- */
 
 TERM term = {
 	0,		/* will be set from curses entry */

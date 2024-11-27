@@ -1,4 +1,4 @@
-/* $Id: ed.h,v 1.53 2024/11/08 08:53:12 axel Exp $
+/* $Id: ed.h,v 1.54 2024/11/27 12:16:41 axel Exp $
  * This file is the general header file for
  * all parts of the MicroEMACS display editor. It contains
  * definitions used by everyone, and it contains the stuff
@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "6.6"
+#define VERSION "6.7"
 
 #if (VT100)
 #define V7      1			/* V7 UN*X or Coherent          */
@@ -23,6 +23,7 @@
 #endif
 
 #if (_WIN32 | _WIN64)
+#ifndef EMBEDDED
 #define V7      0
 #define SYS_V   0
 #define BSD     0
@@ -32,6 +33,17 @@
 #define TERMCAP 0
 #define VT100   1
 #define CURSES	0
+#else
+#define V7      1
+#define SYS_V   1
+#define BSD     0
+#define W32     0
+#define ANSI    0
+#define VT52    0
+#define TERMCAP 0
+#define VT100   0
+#define CURSES	1
+#endif
 #endif
 
 #if (HP700)
@@ -252,8 +264,10 @@
 #if (TERMC & CURSES)
 #include <curses.h>
 #include <signal.h>
+#ifndef WIN32
 #include <term.h>
 #include <termios.h>
+#endif
 #endif
 #if ! (defined(WINDOW) || defined(_CURSES_INCLUDED) || defined(_CURSES_H_) || defined(_CURSES_H) || defined(CURSES_H) || defined(__NCURSES_H))
 /*

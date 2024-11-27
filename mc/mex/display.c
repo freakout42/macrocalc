@@ -381,6 +381,10 @@ start:
 		vtputc('*');
 	else
 		vtputc('-');
+	if (ovrstrk)
+		vtputc('x');
+	else
+		vtputc('>');
 	vtputc(' ');
 	n = 3;
 	if (verbose) {
