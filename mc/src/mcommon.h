@@ -19,6 +19,7 @@ extern unsigned char colors;
 extern unsigned char defaultformat;
 extern unsigned char defaultwidth;
 extern char currency;
+extern int ysiz, xsiz;
 extern int screencol, screenlin, leftmargin;
 extern int curcelline, inputline, cmdline, errorline, borderline, windowline;
 extern int leftcol, rightcol, toprow, topbotrow,

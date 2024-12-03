@@ -1,0 +1,64 @@
+MCLANG=us
+LEX=flex
+LFLAGS=-8
+YACC=bison
+YFLAGS=-d --yacc
+CC=gcc
+CURSESINC=-I/mingw32/include/ncurses
+CFLAGS=-DNCURSES_STATIC -DYY_SKIP_YYWRAP -I../../arx/inc $(CURSESINC)
+OBJS=mc.o mcommon.o mcutil.o mcfileio.o mcrmacro.o mcgetmsg.o mcmessag.o \
+	mccalc.o mcprint.o mcell.o mcelladr.o mcellact.o mcrange.o mcellstr.o mcmisc.o mcput.o mcdisply.o \
+	mcparse.o mcwindow.o mcrecalc.o mctime.o mcolor.o mcparl.o mcpary.o mcftab.o mcunit.o mcomplex.o \
+	mcstat.o mcrwalk.o mcfinc.o mcstring.o mclink.o mclogic.o \
+	mcinter.o mcfile.o mcget.o mcgetmnu.o mcmenu.o mcact.o mcinput.o mcstderr.o mcpipe.o mcommand.o \
+	mcellval.o mcrun.o mcmove.o mchelp.o 
+
+all: mc.exe
+
+mc.exe: $(OBJS)
+	$(CC) -static -L../../arx/src $(OBJS) -larx -larxc -lncurses -lm -o $@
+
+$(OBJS): mcver.h
+
+mcgetmsg.o: mcgetmsg.c mcmsg.h
+mcgetmnu.o: mcgetmnu.c mcmnu.h mcmnu2.h
+
+mcver.h: ../Name mcmsg.h mcmnu.h
+	awk ' {printf "#define MCTAG \"mc \"\n #define MCREL \"%s\"\n#define MCVER \"%s\"\n", \
+			substr($$2,2,2), substr($$2,5,2)}' \
+		<../Name >$@
+
+mcmsg.h: mcmessag.rdb
+	awk -F'\t' '$$2=="$(MCLANG)" {print "makemsg (" $$1 ", " $$3 ")"}' \
+		<mcmessag.rdb >$@
+
+mcmnu.h: mcmenus.rdb
+	awk -F'\t' '$$2=="$(MCLANG)" {print "makemnu (" $$1 ", " $$3 ")"}' \
+		<mcmenus.rdb >$@
+
+mcmnu2.h: mcmenus.rdb
+	awk -F'\t' '$$2=="$(MCLANG)" {print "\"" $$3 "\","}' \
+		<mcmenus.rdb >$@
+
+mcparl.o: mcparl.c l.tab.h
+	$(CC) $(CFLAGS) -Wno-error -c mcparl.c
+
+mcparl.c: mcparl.l
+	$(LEX) $(LFLAGS) mcparl.l
+	mv lex.yy.c $@
+
+mcpary.o: mcpary.c
+	$(CC) $(CFLAGS) -c mcpary.c
+
+l.tab.h mcpary.c: mcpary.y
+	$(YACC) $(YFLAGS) mcpary.y
+	mv y.tab.c mcpary.c
+	mv y.tab.h l.tab.h
+
+mcftab.o: mcftab.c f.tab.h
+
+f.tab.h: l.tab.h
+	grep 'define.FUNC' l.tab.h >$@
+
+clean:
+	rm -f mc.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mcpary.c mcparl.c f.tab.h

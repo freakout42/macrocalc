@@ -27,7 +27,7 @@ char *v1;
 
 v1 = NULL;
 for (p = v; *p; p++)
-  if ((q = index(s, *p))) {
+  if ((q = strchr(s, *p))) {
 #ifdef FIND_THEM_ALL
     fprintf(stderr, "%3d %c\n", (unsigned char)(*p), i[q - s]);
 #endif

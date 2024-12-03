@@ -68,7 +68,9 @@ if ((arxpath = getenv("ARX")) == NULL) {
       strcat (libpath, "/..");
     }
   }
+#ifndef WIN32
   setenv("ARX", libpath, 0);
+#endif
 } else {
   strcpy (libpath, arxpath);
 }

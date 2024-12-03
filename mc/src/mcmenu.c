@@ -1,5 +1,6 @@
 /* mcmenu.c 1.12 2016/03/14 18:53:42 axel */
 
+#include <stdio.h>
 #include <stddef.h>
 #include <arx_def.h>
 #include "mc.h"
@@ -60,7 +61,7 @@ switch (getmenu(WMENU))
 	wimenu(INSERT);
 	break;
  case 1:
-	wimenu(DELETE);
+	wimenu(DELETI);
 	break;
  case 2:
 	setcolwidth(curcol);

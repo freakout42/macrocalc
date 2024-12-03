@@ -2,6 +2,10 @@
 
 #include "mcver.h"
 
+#ifdef WIN32
+#define MSGINLINE
+#endif
+
 #define makemsg(n,s)	n,
 enum	{
 #include "mcmsg.h"

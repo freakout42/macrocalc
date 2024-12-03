@@ -33,6 +33,7 @@ unsigned char defaultformat = DEFAULTFORMAT;
 unsigned char defaultwidth = DEFAULTWIDTH;
 unsigned char colors = TRUE;
 char currency = '$';
+int ysiz, xsiz;
 int screencol = 80;
 int screenlin = 24;
 int leftmargin = 3;

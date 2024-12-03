@@ -12,7 +12,9 @@
 #include "mc.h"
 #include "mcunit.h"
 
+#ifndef WIN32
 #define MCUNITS
+#endif
 #ifdef MCUNITS
 #define UNITPIPE
 #endif
@@ -92,6 +94,9 @@ float		m, d;
 char		inbuf[MAXINPUT+1]	= "";
 char		*starp;
 
+#ifdef WIN32
+return s;
+#else
 if (!units) return s;
 #ifdef DEBUG
 fprintf (stderr, "unitconv: %f [%s] = ? [%s]\n", s, su, tu);
@@ -151,6 +156,7 @@ fprintf (stderr, "unitconv: %f [%s] = %f [%s]\n\n",
 fclose(unitin);
 #endif
 return m>1. ? s * m : s / d;
+#endif
 } /* unitconv */
 
 char *unitnorm (char *n, char *u)

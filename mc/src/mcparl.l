@@ -18,6 +18,10 @@
 #include "mcftab.h"
 #include "mcfunc.h"
 
+#ifdef WIN32
+#define yywrap() 1
+#endif
+
 #include "l.tab.h"
 
 extern int  yyerrorflg;

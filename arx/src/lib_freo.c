@@ -1,5 +1,4 @@
-/* $Id: lib_freo.c,v 1.5 1995/05/10 05:04:19 axel Rel $
- */
+/* lib_freo.c */
 
 #include <unistd.h>
 #include <stdio.h>
@@ -15,7 +14,9 @@ fd = dup (fileno(stream));
 if ( ((f = fdopen (fd, mode)) == NULL)	&&
      ((f = fdopen (fd, "r")) == NULL)	&&
      ((f = fdopen (fd, "w")) == NULL) )	{perror("fdopen");return NULL;}
+#ifndef WIN32
 fcntl (fd, F_SETFD, 1);
+#endif
 if (filename != NULL)
 	{
 	if (freopen (filename, mode, stream) != stream) return NULL;

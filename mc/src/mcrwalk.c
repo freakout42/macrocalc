@@ -1,9 +1,7 @@
 /* $Id: mcrwalk.c,v 1.1 1999/10/24 05:59:08 axel Exp $
  */
 
-#ifdef DEBUG
 #include <stdio.h>
-#endif
 #include <stdlib.h>
 #include <string.h>
 #include <arx_def.h>

@@ -3,6 +3,7 @@
  */
 
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #ifdef DEBUG_X
 #include <fcntl.h>
@@ -48,6 +49,8 @@ if (readmenus())
 
 #ifdef DEBUG
 	#define	CURINIT	0
+#elif WIN32
+  #define	CURINIT	0
 #else
 	#define	CURINIT	3
 #endif
@@ -56,6 +59,7 @@ if (cur_init(CURINIT) == NULL)
 	fprintf (stderr, "mc: no curses.\n");
 	exit (EXIT_FAILURE);
 	}
+getmaxyx(stdscr, ysiz, xsiz);
 if (colors && has_colors()) {
   mcolor0();
 } else {

@@ -20,7 +20,9 @@ FILE	*std_err	= NULL;
 FILE	*std_nerr	= NULL;
 FILE	*std_erread	= NULL;
 
+#ifndef WIN32
 struct termios otermio;
+#endif
 
 WINDOW	*cur_init (int around)
 {
@@ -28,14 +30,16 @@ WINDOW		*stdscreen;
 int		inpipe[2];
 unsigned int	flags;
 char		*devtty = "/dev/tty";
+
+cur_redir = around;
+
+#ifndef WIN32
 struct termios termio;
 
 /* no floating-point exception */
 #ifdef SIGFPE
 signal(SIGFPE, SIG_IGN);
 #endif
-
-cur_redir = around;
 
 if (around >= 1)
 	{
@@ -73,6 +77,7 @@ if (around >= 3)
 	flags = fcntl (inpipe[READ], F_GETFL, 0);
 	fcntl (inpipe[READ], F_SETFL, flags | O_NDELAY);
 	}
+#endif
 
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
@@ -93,6 +98,7 @@ row_address		= NULL;
 init_tabs		= 0;
 #endif
 
+#ifndef WIN32
   signal(SIGTSTP, SIG_IGN);
   tcgetattr (fileno(stdin), &termio); /* give me all attributes */
   otermio = termio;
@@ -105,15 +111,14 @@ init_tabs		= 0;
   termio.c_cc[VLNEXT] = 0;/* ctrl-v */
 #endif
   tcsetattr (fileno(stdin), TCSANOW, &termio);
-
-/* avoid raw() and cbreak() they are nasty */
-#ifdef USERAW
-	raw();
 #else
+/* avoid raw() and cbreak() they are nasty */
+	raw();
+  meta(stdscr, TRUE);
+#endif
 	nonl();
 	noecho();
 /*	cbreak(); */
-#endif
 
 #ifndef __NCURSES_H
 intrflush(stdscr,FALSE);

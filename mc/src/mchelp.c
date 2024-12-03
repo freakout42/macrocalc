@@ -1,6 +1,6 @@
-/* $Id: mchelp.c,v 1.7 1999/10/24 05:58:08 axel Exp $
- */
+/* mchelp.c */
 
+#include <stdio.h>
 #include <string.h>
 #include <arx_def.h>
 #include "mc.h"

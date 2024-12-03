@@ -1,9 +1,6 @@
 /* mcparse.c */
 
-#ifdef DEBUG
 #include <stdio.h>
-#endif
-
 #include <assert.h>
 #include <string.h>
 #include <math.h>
@@ -69,6 +66,9 @@ int parse (CELLPTR c, char *parsed)
 #endif
 
 {
+#ifdef WIN32
+return 0;
+#else
 #ifdef LOTUS
 char *polform;
 short len;
@@ -117,6 +117,7 @@ memcpy(formula, &len, sizeof(short));
 return cptype(pc);
 #else
 return errno;
+#endif
 #endif
 } /* parse */
 

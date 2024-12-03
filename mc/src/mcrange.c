@@ -1,6 +1,7 @@
 /* $Id: mcrange.c,v 1.2 1995/02/24 09:50:13 axel Rel $
  */
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <arx_def.h>

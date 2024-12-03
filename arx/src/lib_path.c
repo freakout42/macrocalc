@@ -14,12 +14,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <arx_def.h>
-#ifdef UNIX
-#include <unistd.h>
-#elif MSDOS
+#ifdef MSDOS
 #include <access.h>
 #include <io.h>
 #include "tc_dos.h"
+#else
+#include <unistd.h>
 #endif
 
 char *lib_path (char *path, char *filename, int mode)

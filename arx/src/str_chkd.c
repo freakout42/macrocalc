@@ -1,6 +1,7 @@
 /* $Id: str_chkd.c,v 1.4 2015/07/01 13:31:13 axel Exp $
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <math.h>

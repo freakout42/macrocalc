@@ -9,7 +9,11 @@
 #if defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #include <sys/wait.h>
 #else
+#ifndef WIN32
 #include <wait.h>
+#else
+#define SYSTEM
+#endif
 #endif
 #include "arx_def.h"
 #include "cur_def.h"

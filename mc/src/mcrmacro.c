@@ -14,6 +14,7 @@
 void runmacro (int prompt)
 /* Runs a macro */
 {
+#ifndef WIN32
 char	macrocall[MAXINPUT+1] = "";
 
 if (prompt)
@@ -36,4 +37,5 @@ if (cur_maco (macrocall) == NULL)
 	errormsg(MSGNOOPEN);
 	return;
 	}
+#endif
 } /* runmacro */

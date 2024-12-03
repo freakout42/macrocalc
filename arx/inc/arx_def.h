@@ -34,8 +34,10 @@
 #define READ	0
 #define WRITE	1
 
+#ifndef max
 #define max(x, y)	(((x) < (y)) ? (y) : (x))
 #define min(x, y)	(((x) < (y)) ? (x) : (y))
+#endif
 
 #if defined(i386) || defined(_I386) || defined(_M_IX86) || defined(__x86_64)
 #define lib_cano(v)
@@ -113,8 +115,11 @@ double lib_iee2 (double d);
 #elif __DARWIN_UNIX03
 #define PLATFORM	"MacOSX"
 
+#elif WIN32
+#define PLATFORM	"Windows"
+
 #else
-#define PLATFORM	"ELF-i386"
+#define PLATFORM	"Unknown"
 #endif
 
 #define	COPYRIGHT	PLATFORM " (c)" "2024" " " CORPORATION
@@ -137,7 +142,7 @@ void lib_mesg (char *msg, ...);
 #define LOGEB2          0.14426950408889634e+01
 #endif
 
-#if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO)
+#if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO) || defined(WIN32)
 
 /* force usage of fgets() instead of dangerous gets() */
 #define gets(buf) fgets(buf, sizeof(buf), stdin)
@@ -186,7 +191,7 @@ struct file *lib_stat (char *f);
 #define DEFSHELL	"msh.prg"
 #endif
 
-#ifdef MSDOS
+#if defined(MSDOS) || defined(WIN32)
 #define PATHSEP		'\\'
 #define	PATHSEPSTRING	"\\"
 #define LISTSEP		';'
@@ -199,7 +204,7 @@ struct file *lib_stat (char *f);
 #include <unistd.h>
 #endif
 
-#if defined(__FreeBSD__) || defined(linux) || defined(sparc) || defined(_AIX) || defined(__SVR4) || defined(__DARWIN_UNIX03)
+#if defined(__FreeBSD__) || defined(linux) || defined(sparc) || defined(_AIX) || defined(__SVR4) || defined(__DARWIN_UNIX03) || defined(WIN32)
 #define DIRSIZ 255
 #else
 #include <sys/dir.h>
