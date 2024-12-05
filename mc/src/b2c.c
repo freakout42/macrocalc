@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,7 +45,6 @@ char *argv[];
     if( (dest=fopen( Dummy, "wb+" )) == NULL )
     {
       printf("ERROR : I can't open destination file   %s\n",Dummy);
-      (void)fcloseall();
       exit(20L);
     }
 
@@ -63,7 +61,6 @@ char *argv[];
     if( ferror( dest ) )
     {
      printf( "ERROR writing on target file:  %s\n",argv[2] );
-     (void)fcloseall();
      exit(20L);
     }
 
@@ -78,6 +75,7 @@ char *argv[];
     fprintf(dest,"\n};\n\n");
     printf( "done writing %d bytes\n", l*LINE+c+1 );
 
-    (void)fcloseall();
+    fclose(source);
+    fclose(dest);
 
 }
