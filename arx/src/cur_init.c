@@ -31,8 +31,6 @@ int		inpipe[2];
 unsigned int	flags;
 char		*devtty = "/dev/tty";
 
-cur_redir = around;
-
 #ifndef WIN32
 struct termios termio;
 
@@ -78,6 +76,8 @@ if (around >= 3)
 	fcntl (inpipe[READ], F_SETFL, flags | O_NDELAY);
 	}
 #endif
+
+cur_redir = around;
 
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
