@@ -45,8 +45,8 @@ You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 `export LINES="$(tput lines)"`  
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
-6. Windows .exe Download
-    https://github.com/freakout42/macrocalc/releases/download/v10.50/mc-10.50-win32.exe  
+6. Windows .exe Download  
+https://github.com/freakout42/macrocalc/releases/download/v10.50/mc-10.50-win32.exe  
 can be started from a powershell or cmd console. Some of the more unixoid
 functions might be missing and the tools like `mc2wks` are not yet available
 for windows. 
