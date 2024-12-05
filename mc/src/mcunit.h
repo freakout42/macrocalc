@@ -1,5 +1,4 @@
-/* $Id: mcunit.h,v 1.1 1995/02/19 10:02:38 axel Rel $
- */
+/* mcunit.h */
 
 int unitinit (void);
 int unitclose (void);

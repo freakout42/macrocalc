@@ -11,9 +11,8 @@
 #else
 #ifndef WIN32
 #include <wait.h>
-#else
-#define SYSTEM
 #endif
+#define SYSTEM
 #endif
 #include "arx_def.h"
 #include "cur_def.h"

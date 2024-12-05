@@ -22,6 +22,7 @@
 #ifdef WIN32
 #define ARXPATH "."
 #else
+#define O_BINARY 0
 #define ARXPATH		"/opt/arx"
 #endif
 
