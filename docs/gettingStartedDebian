@@ -1,0 +1,30 @@
+#!/bin/sh
+if ! flex --version 2>/dev/null; then
+  if [ -f /etc/redhat-release ]; then
+    sudo yum -y update
+    sudo yum -y group install "Development Tools"
+    sudo yum -y install python3
+    sudo yum -y install unixODBC
+    sudo yum -y install unixODBC-devel
+    sudo yum -y install ncurses-devel
+    sudo yum -y install sqlite
+    rpm -i https://github.com/freakout42/formax/releases/download/v0.9.9/sqliteodbc-0.9998-1.x86_64.rpm
+  else
+    sudo apt-get -y update
+    sudo apt-get -y install build-essential
+    sudo apt-get -y install python
+    sudo apt-get -y install unixodbc
+    sudo apt-get -y install libsqliteodbc
+    sudo apt-get -y install libncurses5-dev
+    sudo apt-get -y install flex
+#   sudo apt-get -y install gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 wine64
+#   x86_64-w64-mingw32-gcc -g -o hello hello.c
+  fi
+fi
+./configure clean
+./configure
+make
+sudo make install
+. /etc/profile.d/arx.sh
+mc -u
+exit
