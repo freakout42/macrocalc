@@ -6,17 +6,18 @@ YFLAGS=-d --yacc
 CC=gcc
 CURSESINC=-I/mingw32/include/ncurses
 CFLAGS=-DNCURSES_STATIC -DYY_SKIP_YYWRAP -I../../arx/inc $(CURSESINC)
+LDFLAGS=-static -L../../arx/src
 OBJS=mc.o mcommon.o mcutil.o mcfileio.o mcrmacro.o mcgetmsg.o mcmessag.o \
 	mccalc.o mcprint.o mcell.o mcelladr.o mcellact.o mcrange.o mcellstr.o mcmisc.o mcput.o mcdisply.o \
 	mcparse.o mcwindow.o mcrecalc.o mctime.o mcolor.o mcparl.o mcpary.o mcftab.o mcunit.o mcomplex.o \
 	mcstat.o mcrwalk.o mcfinc.o mcstring.o mclink.o mclogic.o \
 	mcinter.o mcfile.o mcget.o mcgetmnu.o mcmenu.o mcact.o mcinput.o mcstderr.o mcpipe.o mcommand.o \
-	mcellval.o mcrun.o mcmove.o mchelp.o 
+	mcellval.o mcrun.o mcmove.o mchelp.o mcunits.o
 
 all: mc.exe
 
 mc.exe: $(OBJS)
-	$(CC) -static -L../../arx/src $(OBJS) -larx -larxc -lncurses -lm -o $@
+	$(CC) $(LDFLAGS) $(OBJS) -larx -larxc -lncurses -lm -o $@
 
 $(OBJS): mcver.h
 
@@ -60,5 +61,24 @@ mcftab.o: mcftab.c f.tab.h
 f.tab.h: l.tab.h
 	grep 'define.FUNC' l.tab.h >$@
 
+#mcunits2.exe: mcunits.o
+#	$(CC) $(CFLAGS) $(LDFLAGS) mcunits.o -larx -lm -o $@
+
+mcunits.o: mcunits.c binunits.h
+	$(CC) $(CFLAGS) -c mcunits.c
+
+binunits.h: binunits b2c.exe
+	./b2c.exe binunits binunits hdrbuf
+
+binunits: mcunits.exe
+	cd ..; src/mcunits.exe -u
+	mv ../lib/binunits $@
+
+b2c.exe: b2c.c
+	$(CC) b2c.c -o $@
+
+mcunits.exe: mcunits.c
+	$(CC) -DMAINUNIT $(CFLAGS) $(LDFLAGS) mcunits.c -larx -lm -o $@
+
 clean:
-	rm -f mc.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mcpary.c mcparl.c f.tab.h
+	rm -f *.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mcpary.c mcparl.c f.tab.h binunits*

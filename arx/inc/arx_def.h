@@ -19,7 +19,11 @@
 #define	RET_WARNING	2	/* successful, but questionable outcome */
 #define	RET_FATAL	3	/* a serious error occurred */
 
+#ifdef WIN32
+#define ARXPATH "."
+#else
 #define ARXPATH		"/opt/arx"
+#endif
 
 #define	WHITESPACE	char *whitespace = " \t\n\r\f"
 

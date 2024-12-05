@@ -26,6 +26,11 @@
  * This  tells that it is the real
  * thing and how much to read in.
  */
+#ifndef MAINUNIT
+#include "binunits.h"
+#define printf nullprintf
+static void nullprintf(char *x, ...) {}
+#endif
 typedef	struct	HDR {
 	unsigned h_magic;
 	unsigned h_nunits;
@@ -132,6 +137,7 @@ int eqplural (char *s, char *t)
 	return (*s=='\0' || (*s++=='s' && *s=='\0'));
 }
 
+#ifdef MAINUNIT
 /*
  * Diagnostics
  */
@@ -156,6 +162,7 @@ char *alloc (unsigned int nb)
 		cerr("out of memory");
 	return (rp);
 }
+#endif
 
 /*
  * allocate a new copy.
@@ -165,6 +172,7 @@ char *newcpy (char *s)
 	return(strcpy(malloc(strlen(s) + 1), s));
 }
 
+#ifdef MAINUNIT
 /*
  * find a file on a path in the environment, or a default path
  * with an access priveledge.
@@ -200,6 +208,7 @@ char *pathn (char *name, char *envpath, char *deflpath, char *acs)
 	}
 	return(fullname);
 }
+#endif
 
 /*
  * Attempt to read in the already-stored
@@ -224,6 +233,7 @@ int binary (void)
 	register int bfd;
 	time_t timeasc;
 
+#ifdef MAINUNIT
 	ufname  = newcpy(pathn(ufile, "ARX", ARXPATH, "r"));
 	bufname = newcpy(pathn(binufile, "ARX", ARXPATH, "r"));
 	if(!bufname[0]) { /* no binary */
@@ -242,19 +252,32 @@ int binary (void)
 	}
 	if(uflag)	/* update only */
 		return(0);
-	if((bfd = open(bufname, 0)) < 0)
+	if((bfd = open(bufname, O_BINARY)) < 0)
 		return (0);
 	if(read(bfd, &hdr, sizeof(hdr)) != sizeof(hdr))
 		goto bad;
+#else
+  memcpy(&hdr, hdrbuf, sizeof(hdr));
+#endif
+fprintf(stderr,"%d\n",sizeof(hdr));
 	if(hdr.h_magic != UMAGIC)
 		goto bad;
 	nunits = hdr.h_nunits;
-	sstart = alloc(hdr.h_ssize);
+	sstart = malloc(hdr.h_ssize);
+fprintf(stderr,"%d\n",hdr.h_ssize);
+#ifdef MAINUNIT
 	if (read(bfd, sstart, hdr.h_ssize) != hdr.h_ssize)
 		goto bad;
-	units = (UNIT *)alloc(n = nunits*sizeof(UNIT));
+#else
+  memcpy(sstart, hdrbuf+sizeof(hdr), hdr.h_ssize);
+#endif
+	units = (UNIT *)malloc(n = nunits*sizeof(UNIT));
+#ifdef MAINUNIT
 	if (read(bfd, units, n) != n)
 		goto bad;
+#else
+  memcpy(units, hdrbuf+(sizeof(hdr)+hdr.h_ssize), n);
+#endif
 	for (n=0; n!=nunits; n++)
 		{
 		units[n].u_name += (long)sstart;
@@ -263,7 +286,9 @@ int binary (void)
 				units[n].u_name, n, units[n].u_val);
 			}
 		}
+#ifdef MAINUNIT
 	close(bfd);
+#endif
 	return (1);
 bad:
 	close(bfd);
@@ -274,6 +299,9 @@ int nextc (void)
 {
 	register int c;
 
+#ifndef MAINUNIT
+  if (!(lastc = *bufname++)) lastc = '\n';
+#else
 	if (peekc != EOF) {
 		c = peekc;
 		peekc = EOF;
@@ -288,6 +316,7 @@ int nextc (void)
 			lastc = getc(fd);
 		} while(lastc!='\n' && lastc!=EOF);
 	}
+#endif
 	return (lastc);
 }
 
@@ -316,8 +345,12 @@ int getunit (UNIT *u, char *prompt)
 	double factor;
 
 Again:
+#ifdef MAINUNIT
 	if (prompt != NULL) printf("%s", prompt);
 	if (dflag) fprintf(stderr, "%s", prompt);
+#else
+  bufname = prompt;
+#endif
 	u->u_val = 1.;
 	for (i=0; i != NDIM; i++)
 		u->u_dim[i] = 0;
@@ -479,14 +512,17 @@ Again:
 			u->u_dim[j] += units[i].u_dim[j]*expon;
 	}
 Bad:
+#ifdef MAINUNIT
 	while (c!='\n' && c!=EOF)
 		c = nextc();
 	if (prompt!=NULL)
 		goto Again;
 	printf("line %d\n", lineno);
+#endif
 	return (1);
 }
 
+#ifdef MAINUNIT
 char *getname (b)
 	char *b;
 {
@@ -522,7 +558,7 @@ void update (void)
 	register int bfd;
 
 	printf("Rebuilding %s from %s ...\n", bufname, ufname);
-	if ((fd = fopen(ufname, "r")) == NULL)
+	if ((fd = fopen(ufname, "rb")) == NULL)
 		cerr("can't open unit file `%s'", ufile);
 	setbuf(fd, inbuf);
 	units = (UNIT *)alloc(NUNITS*sizeof(UNIT));
@@ -547,7 +583,7 @@ void update (void)
 	 * Write out, if possible, binary
 	 * information for faster response next time.
 	 */
-	if ((bfd = creat(bufname, 0644)) >= 0) {
+	if ((bfd = open(bufname, O_WRONLY|O_CREAT|O_TRUNC|O_BINARY, 0644)) >= 0) {
 		hdr.h_magic = UMAGIC;
 		hdr.h_nunits = nunits;
 		hdr.h_ssize = send-sstart;
@@ -581,7 +617,9 @@ void init (void)
 {
 	if (!binary())
 		update();
+#ifdef MAINUNIT
 	printf("%d units\n", nunits);
+#endif
 	peekc = EOF;
 	if (uflag)
 		exit(0);
@@ -635,3 +673,21 @@ Again:
 	printf("* %g\n/ %g\n", have.u_val/want.u_val, want.u_val/have.u_val);
 	goto Again;
 }
+#else
+void mcunitconvert(char *inbuf, char *havestr, char *wantstr) {
+	UNIT have, want;
+	register int i;
+
+	if (!getunit(&have, havestr)
+	 || !getunit(&want, wantstr)) {
+			sprintf(inbuf, "Conformability\n");
+  } else {
+	for (i=0; i!=NDIM; i++)
+		if (have.u_dim[i] != want.u_dim[i]) {
+			sprintf(inbuf, "Conformability\n");
+		} else {
+      sprintf(inbuf, "* %g\n/ %g\n", have.u_val/want.u_val, want.u_val/have.u_val);
+    }
+  }
+}
+#endif

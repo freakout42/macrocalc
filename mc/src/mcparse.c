@@ -66,9 +66,6 @@ int parse (CELLPTR c, char *parsed)
 #endif
 
 {
-#ifdef WIN32
-return 0;
-#else
 #ifdef LOTUS
 char *polform;
 short len;
@@ -110,14 +107,12 @@ if (cptype(pc) == DATETYPE) {
   if (cpfor(pc) == 0) cpfor(pc) = SPECIAL|DATE;
 }
 yyclrbuf();
-
 #ifdef LOTUS
 len = yybuf - polform;
 memcpy(formula, &len, sizeof(short));
 return cptype(pc);
 #else
 return errno;
-#endif
 #endif
 } /* parse */
 
