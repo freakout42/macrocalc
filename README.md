@@ -12,7 +12,7 @@ MacroCALC is the only spreadsheet that manages units: 1 mile + 1 km = 1.62 miles
 It also has support of complex numbers with complex arithmetic and functions.
 So sqrt(-1) = i and E ^ (I * PI) + 1 = 0.
 
-5 Install options
+6 Install options
 -----------------
 
 1. __Build from source und install for one user only without sudo__  
@@ -45,7 +45,11 @@ You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 `export LINES="$(tput lines)"`  
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
-**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
+6. Windows .exe Download
+    https://github.com/freakout42/macrocalc/releases/download/v10.50/mc-10.50-win32.exe  
+can be started from a powershell or cmd console. Some of the more unixoid
+functions might be missing and the tools like `mc2wks` are not yet available
+for windows. 
 
 Getting started
 ---------------
@@ -68,6 +72,8 @@ you have now A2=1 A3=2 A4=3 and A1..A4 as range. Now navigate to B1 and:
 you have copied the range A1..A4 to B1..B4 and set B2=3 B3=4 and B4=5.
 Why is B4=5 and not 3 or 7? Because you typed $ after a3 this makes it
 a relative cell reference [+0;-1] and refers to B3 in the copied formula.
+
+**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
 
 Using units
 -----------
