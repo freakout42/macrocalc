@@ -1,9 +1,6 @@
-/* mcell.c 1.12 2001/07/02 10:23:58 axel */
+/* mcell.c */
 
-#ifdef DEBUG
 #include <stdio.h>
-#endif
-
 #include <assert.h>
 #include <ctype.h>
 #include <string.h>

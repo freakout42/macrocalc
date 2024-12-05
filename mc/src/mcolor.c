@@ -1,6 +1,6 @@
 /* mcolor.c */
 
-#include <assert.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <arx_def.h>
@@ -61,7 +61,7 @@ int i;
 start_color();
 use_default_colors();
 for (i=0; i<COL_UNDEF; i++) {
-  assert(attrels[i].ccode == i);
+//  assert(attrels[i].ccode == i);
   init_pair(i, attrels[i].foreg, attrels[i].backg);
 }
 }

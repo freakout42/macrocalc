@@ -1,7 +1,7 @@
 %option nounput
 %option noinput
 %{
-/* mcparl.l 1.27 2007/06/15 09:43:37 axel */
+/* mcparl.l */
 
 #include <math.h>
 #include <ctype.h>
@@ -17,6 +17,10 @@
 #include "mcparse.h"
 #include "mcftab.h"
 #include "mcfunc.h"
+
+#ifdef WIN32
+#define yywrap() 1
+#endif
 
 #include "l.tab.h"
 

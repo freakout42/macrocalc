@@ -1,5 +1,4 @@
-/* $Id: mcunit.h,v 1.1 1995/02/19 10:02:38 axel Rel $
- */
+/* mcunit.h */
 
 int unitinit (void);
 int unitclose (void);
@@ -8,3 +7,5 @@ char *unitnorm (char *n, char *u);
 char *unitinv (char *n, char *u);
 char *unitmult (char *n, char *u1, char *u2);
 char *unitdiv (char *n, char *u1, char *u2);
+int binary();
+void mcunitconvert(char *inbuf, char *su, char *tu);

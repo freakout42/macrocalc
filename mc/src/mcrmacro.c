@@ -1,5 +1,4 @@
-/* $Id: mcrmacro.c,v 1.5 2002/10/17 12:25:50 axel Exp $
- */
+/* mcrmacro.c */
 
 #include <string.h>
 #include <stdio.h>
@@ -14,6 +13,7 @@
 void runmacro (int prompt)
 /* Runs a macro */
 {
+#ifndef WIN32
 char	macrocall[MAXINPUT+1] = "";
 
 if (prompt)
@@ -36,4 +36,5 @@ if (cur_maco (macrocall) == NULL)
 	errormsg(MSGNOOPEN);
 	return;
 	}
+#endif
 } /* runmacro */

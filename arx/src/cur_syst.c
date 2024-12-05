@@ -1,5 +1,4 @@
-/* $Id: cur_syst.c,v 1.10 2012/02/20 20:00:35 axel Exp $
- */
+/* cur_syst.c */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,7 +8,10 @@
 #if defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #include <sys/wait.h>
 #else
+#ifndef WIN32
 #include <wait.h>
+#endif
+#define SYSTEM
 #endif
 #include "arx_def.h"
 #include "cur_def.h"

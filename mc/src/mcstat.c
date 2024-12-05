@@ -1,5 +1,6 @@
-/* mcstat.c 1.4 1999/10/24 05:58:08 axel */
+/* mcstat.c */
 
+#include <stdio.h>
 #include <stddef.h>
 #include <arx_def.h>
 #include <math.h>

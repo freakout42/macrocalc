@@ -12,8 +12,7 @@
 #include "mc.h"
 #include "mcunit.h"
 
-#define MCUNITS
-#ifdef MCUNITS
+#ifndef MSGINLINE
 #define UNITPIPE
 #endif
 
@@ -33,7 +32,11 @@ int unitinit (void)
 sprintf (pcmd, "%s/bin/mcunits", libpath);
 units = !lib_twpo (&unitin, &unitout, pcmd);
 #else
+#ifdef MSGINLINE
+units = binary();
+#else
 units = TRUE;
+#endif
 #endif
 return !units;
 } /* unitinit */
@@ -45,10 +48,12 @@ if (!units) return RET_SUCCESS;
 #ifdef UNITPIPE
 return fclose(unitin) | fclose(unitout);
 #else
+units = FALSE;
 return RET_SUCCESS;
 #endif
 } /* unitclose */
 
+#ifndef MSGINLINE
 static int unitread (char *inbuf)
 {
 char *s = inbuf;
@@ -83,6 +88,7 @@ while ((c = fgetc (unitin)) != EOF)
 	}
 return *inbuf++ = EOF;
 }
+#endif
 
 double unitconv (double s, char *su, char *tu)
 /* convert from source unit to target unit */
@@ -108,6 +114,20 @@ if (su==NULL || tu==NULL) {errno = CONFUNIT; return HUGE_VAL;}
 #endif
 if (su==NULL || !*su) return s;
 if (tu==NULL || !*tu) {errno = CONFUNIT; return HUGE_VAL;}
+#ifdef MSGINLINE
+
+//fprintf (unitout, "%s\n", su);
+//fprintf (unitout, "%s\n", tu);
+//mode = unitread (inbuf);
+
+mcunitconvert(inbuf, su, tu);
+if (((starp = strchr(inbuf, '*'))==NULL) || sscanf(starp, "* %f / %f", &m, &d) != 2)
+	{
+	errno = strstr (inbuf, "onformability") ? CONFUNIT : UNRECUNIT;
+	return HUGE_VAL;
+	}
+
+#else
 
 #ifdef UNITPIPE
 if (mode == FIRST)
@@ -149,6 +169,7 @@ fprintf (stderr, "unitconv: %f [%s] = %f [%s]\n\n",
 #endif
 #ifndef UNITPIPE
 fclose(unitin);
+#endif
 #endif
 return m>1. ? s * m : s / d;
 } /* unitconv */

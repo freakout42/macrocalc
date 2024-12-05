@@ -1,9 +1,6 @@
 /* mcparse.c */
 
-#ifdef DEBUG
 #include <stdio.h>
-#endif
-
 #include <assert.h>
 #include <string.h>
 #include <math.h>
@@ -110,7 +107,6 @@ if (cptype(pc) == DATETYPE) {
   if (cpfor(pc) == 0) cpfor(pc) = SPECIAL|DATE;
 }
 yyclrbuf();
-
 #ifdef LOTUS
 len = yybuf - polform;
 memcpy(formula, &len, sizeof(short));

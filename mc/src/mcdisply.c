@@ -1,8 +1,6 @@
-/* mcdisply.c 1.14 2001/07/02 10:23:58 axel */
+/* mcdisply.c */
 
-#ifdef DEBUG
 #include <stdio.h>
-#endif
 #include <string.h>
 #include <ctype.h>
 #include <arx_def.h>
@@ -258,8 +256,8 @@ formdisplay = !formdisplay;
 void redrawscreen (void)
 /* Displays the entire screen */
 {
-if (columns!=0) screencol = columns; /* set screen dimensions */
-if (lines!=0) screenlin = lines;
+if (xsiz!=0) screencol = xsiz; /* set screen dimensions */
+if (ysiz!=0) screenlin = ysiz;
 if (borderline==0) { /* -l layout */
 	curcelline	= SCREENROWS+1;
 	errorline	= SCREENROWS+2;

@@ -1,4 +1,4 @@
-/* mcommon.h,v 1.15 2002/10/17 12:25:50 axel */
+/* mcommon.h */
 
 extern char license;
 extern char *progname;
@@ -19,6 +19,7 @@ extern unsigned char colors;
 extern unsigned char defaultformat;
 extern unsigned char defaultwidth;
 extern char currency;
+extern int ysiz, xsiz;
 extern int screencol, screenlin, leftmargin;
 extern int curcelline, inputline, cmdline, errorline, borderline, windowline;
 extern int leftcol, rightcol, toprow, topbotrow,

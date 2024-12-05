@@ -5,6 +5,11 @@
 #undef _POSIX_SOURCE
 #endif
 
+#ifdef WIN32
+#include <windows.h>
+#include <ncurses/ncurses.h>
+#endif
+
 #ifndef CURSES_H
 #include <curses.h>
 #endif
@@ -45,7 +50,7 @@ struct  termio  nstate;
 extern int	cur_redir;
 extern struct termios otermio;
 
-#if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO)
+#if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO) || defined(WIN32)
 extern FILE	*std_in, *std_out, *std_err, *std_erread;
 FILE		*cur_maco();
 #endif

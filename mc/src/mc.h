@@ -1,6 +1,10 @@
-/* mc.h,v 1.7 1997/05/21 15:26:58 axel */
+/* mc.h */
 
 #include "mcver.h"
+
+#ifdef WIN32
+#define MSGINLINE
+#endif
 
 #define makemsg(n,s)	n,
 enum	{

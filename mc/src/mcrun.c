@@ -1,5 +1,6 @@
 /* mcrun.c */
 
+#include <stdio.h>
 #include <arx_def.h>
 #include <cur_def.h>
 #include "mc.h"

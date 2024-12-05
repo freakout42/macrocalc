@@ -1,5 +1,4 @@
-/* $Id: mcgetmnu.c,v 1.8 1997/05/21 14:59:11 axel Exp $
- */
+/* mcgetmnu.c */
 
 #include <stdio.h>
 #include <string.h>
@@ -9,10 +8,19 @@
 #include "mc.h"
 #include "mcgetmnu.h"
 
+#ifdef MSGINLINE
+static char *mnu[] = {
+#include "mcmnu2.h"
+NULL };
+#else
 extern char *mnu[];
+#endif
 
 int readmenus (void)
 {
+#ifdef MSGINLINE
+return 0;
+#else
 char menufilename[MAXFILE+1];
 char menuline[MAXSCREENWIDTH+1];
 FILE *menu;
@@ -32,6 +40,7 @@ if ((menu = fopen (menufilename, "r")))
 	}
 else	return RET_ERROR;
 return RET_SUCCESS;
+#endif
 }
 
 int getmenu (int n)

@@ -1,5 +1,6 @@
-/* mcfinc.c,v 1.2 1995/02/24 10:22:52 axel */
+/* mcfinc.c */
 
+#include <stdio.h>
 #include <math.h>
 #include <errno.h>
 #include <arx_def.h>

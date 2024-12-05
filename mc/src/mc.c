@@ -68,7 +68,9 @@ if ((arxpath = getenv("ARX")) == NULL) {
       strcat (libpath, "/..");
     }
   }
+#ifndef WIN32
   setenv("ARX", libpath, 0);
+#endif
 } else {
   strcpy (libpath, arxpath);
 }
@@ -82,6 +84,9 @@ while (argv2[rcargc] && ++rcargc < MAXRCARGS)
   argv2[rcargc] = strtok(NULL, " ");
 argv2[rcargc] = NULL;
 }
+#ifdef MSGINLINE
+unitinit();
+#endif
 while (1) {
   if (rcargc > 1) {
     c = getopt (rcargc, argv2, opts);
@@ -162,11 +167,13 @@ while (1) {
 		rdonly	= TRUE;
 		break;
 	 case 'u':
+#ifndef MSGINLINE
 		if (unitinit())
 			{
 			fprintf (stderr, "mc: cannot start mcunits.\n");
 			exit (EXIT_FAILURE);
 			}
+#endif
 		break;
 	 case 'p':
 	 case 'q':

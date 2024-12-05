@@ -1,5 +1,6 @@
-/* mcommand.c 1.11 2001/06/06 14:30:37 axel */
+/* mcommand.c */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>

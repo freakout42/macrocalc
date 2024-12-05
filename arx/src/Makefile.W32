@@ -1,0 +1,34 @@
+ARXREL=8
+ARXVER=5
+CC=gcc
+CURSESINC=-I/mingw32/include/ncurses
+CFLAGS=-DNCURSES_STATIC -I../inc $(CURSESINC)
+OBJS=lib_akey.o lib_2iee.o lib_mesg.o \
+	lib_freo.o lib_path.o lib_stat.o lib_fsiz.o lib_mktm.o \
+	str_gets.o str_trim.o str_tlen.o str_repl.o str_upr.o str_chkd.o str_inc.o str_abbr.o \
+	rdb_open.o rdb_crea.o rdb_clos.o rdb_read.o rdb_writ.o rdb_2dbf.o \
+	dbf_open.o dbf_crea.o dbf_clos.o dbf_read.o dbf_writ.o dbf_2rdb.o \
+	dbf_from.o dbf_info.o dbf_afix.o \
+	utf82iso885915.o \
+	sql_crea.o sql_writ.o sql_crep.o sql_wrip.o sql_wrio.o yml_crea.o yml_writ.o
+OBJC=cur_init.o cur_exit.o cur_getk.o cur_gets.o cur_satt.o \
+	cur_syst.o cur_goll.o cur_rest.o cur_fixt.o cur_gmnu.o
+
+all: libarx.a libarxc.a
+
+libarx.a: ../inc/key_def.h $(OBJS)
+	ar rsv $@ $(OBJS)
+
+libarxc.a: libarx.a $(OBJC)
+	ar rsv $@ $(OBJC)
+
+../inc/key_def.h: ../inc/key1_def.c ../inc/key2_def.h
+	$(CC) $(CFLAGS) -DCURKEY2 ../inc/key1_def.c -o curkey2.exe
+	./curkey2.exe | cat - ../inc/key2_def.h >$@
+	rm curkey2.exe
+
+lib_akey.o: lib_akey.c ../inc/arx_def.h
+	$(CC) $(CFLAGS) -DARXREL='"$(ARXREL)"' -DARXVER='"$(ARXVER)"' -c lib_akey.c
+
+clean:
+	rm -f ../inc/key_def.h libarx*.a *.o

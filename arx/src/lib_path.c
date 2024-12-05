@@ -1,4 +1,4 @@
-/* lib_path.c,v 1.6 1997/04/06 10:53:32 axel
+/* lib_path.c
  * Path lookup.
  *
  * Path takes a path search list, a file name, and an access mode,
@@ -14,12 +14,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <arx_def.h>
-#ifdef UNIX
-#include <unistd.h>
-#elif MSDOS
+#ifdef MSDOS
 #include <access.h>
 #include <io.h>
 #include "tc_dos.h"
+#else
+#include <unistd.h>
 #endif
 
 char *lib_path (char *path, char *filename, int mode)

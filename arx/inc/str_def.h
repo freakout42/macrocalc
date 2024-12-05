@@ -1,9 +1,9 @@
-/* str_def.h,v 1.9 2015/02/05 09:23:57 axel */
+/* str_def.h */
 
 #define str_bpad(s)	{memset (s,' ',sizeof(s)); s[sizeof(s)-1] = ' ';}
 #define str_npad(s)	{memset (s,' ',sizeof(s)); s[sizeof(s)-1] = '\0';}
 
-#if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO)
+#if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO) || defined(WIN32)
 char *str_gets (FILE *fp, char *s, size_t n);
 char *str_gecs (FILE *fp, char *s, size_t n);
 #endif

@@ -1,6 +1,6 @@
-/* $Id: mchelp.c,v 1.7 1999/10/24 05:58:08 axel Exp $
- */
+/* mchelp.c */
 
+#include <stdio.h>
 #include <string.h>
 #include <arx_def.h>
 #include "mc.h"
@@ -11,8 +11,12 @@
 
 void mchelp (void)
 {
+#ifdef WIN32
+char helpcmd[256] = "start ";
+strcat(helpcmd, "https://mc.freakout.de/mc1.html");
+#else
 char helpcmd[256] = "man ";
-
 strcat(helpcmd, progname);
+#endif
 mcsystem (helpcmd, FALSE);
 }
