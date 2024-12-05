@@ -1,5 +1,6 @@
 %option nounput
 %option noinput
+%option noyywrap nodefault
 %{
 /* mcmacro.l */
 
@@ -50,6 +51,12 @@ void putout (s)
 	char *s;
 {
 for (; *s; s++) printf ("%d\n", *s);
+}
+
+extern int yylex (void);
+int main(void) {
+  while (yylex() != 0) { }
+  return 0;
 }
 %}
 n	[0-9]
