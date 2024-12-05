@@ -259,12 +259,10 @@ int binary (void)
 #else
   memcpy(&hdr, hdrbuf, sizeof(hdr));
 #endif
-fprintf(stderr,"%d\n",sizeof(hdr));
 	if(hdr.h_magic != UMAGIC)
 		goto bad;
 	nunits = hdr.h_nunits;
 	sstart = malloc(hdr.h_ssize);
-fprintf(stderr,"%d\n",hdr.h_ssize);
 #ifdef MAINUNIT
 	if (read(bfd, sstart, hdr.h_ssize) != hdr.h_ssize)
 		goto bad;
