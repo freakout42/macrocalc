@@ -141,4 +141,6 @@ yytoparse += yybufpos(yytoparse);
 errpos = gettoparse(yytoparse);
 yyerrorflg = 1;
 }
+
+int yywrap(void) { return 1; }
 #endif

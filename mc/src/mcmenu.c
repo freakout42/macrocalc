@@ -278,7 +278,11 @@ switch (getmenu(MENU))
 	mcrefresh();
 	break;
  case 7:
+#ifdef WIN32
+	mcsystem("CMD", FALSE);
+#else
 	mcsystem("${SHELL-/bin/sh}", FALSE);
+#endif
 	break;
  case 8:
 	if (!checkforsave()) stop = TRUE;

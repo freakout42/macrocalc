@@ -256,11 +256,11 @@ pol2tex.o:	pol2tex.c lotus.h mcelldef.h mcelladr.h mcfunc.h \
 
 mc2pary.o:	mcpary.c lotus.h mc.h
 	cp mcpary.c mc2pary.c
-	$(CC) $(CFLAGS) -DLOTUS -c mc2pary.c
+	$(CC) $(CFLAGS) -Dlint -DLOTUS -c mc2pary.c
 	rm -f mc2pary.c
 
 mcpary.o:	mcpary.c mc.h mcomplex.h
-	$(CC) $(CFLAGS) -c mcpary.c
+	$(CC) $(CFLAGS) -Dlint -c mcpary.c
 
 mcomplex.o: mcelldef.h mcfunc.h
 

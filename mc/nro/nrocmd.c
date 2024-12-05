@@ -248,7 +248,7 @@ maceval(p,m)
 char *p;
 char m[];
 {
-	int i, j;
+	int i;
 	char *argp[10];
 	char c;
 

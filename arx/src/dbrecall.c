@@ -17,9 +17,6 @@ int main (argc, argv)
   char *argv[];
 {
 struct DBFPROLOG2 d2;
-struct DBMANPROLOG dm;
-struct FIELD_RECORD2 f2[MAX_FIELDS2];
-struct FIELD_DBMAN fm[MAX_FIELDS];
 unsigned char fld;
 unsigned short n;
 size_t i = 0;

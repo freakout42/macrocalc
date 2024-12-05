@@ -230,10 +230,11 @@ int binary (void)
 {
 	register char *sstart;
 	register int n;
+
+#ifdef MAINUNIT
 	register int bfd;
 	time_t timeasc;
 
-#ifdef MAINUNIT
 	ufname  = newcpy(pathn(ufile, "ARX", ARXPATH, "r"));
 	bufname = newcpy(pathn(binufile, "ARX", ARXPATH, "r"));
 	if(!bufname[0]) { /* no binary */
@@ -289,17 +290,19 @@ int binary (void)
 #endif
 	return (1);
 bad:
+#ifdef MAINUNIT
 	close(bfd);
+#endif
 	return (0);
 }
 
 int nextc (void)
 {
-	register int c;
-
 #ifndef MAINUNIT
   if (!(lastc = *bufname++)) lastc = '\n';
 #else
+	register int c;
+
 	if (peekc != EOF) {
 		c = peekc;
 		peekc = EOF;
@@ -342,8 +345,8 @@ int getunit (UNIT *u, char *prompt)
 	int j, expon, digit, div, pow;
 	double factor;
 
-Again:
 #ifdef MAINUNIT
+Again:
 	if (prompt != NULL) printf("%s", prompt);
 	if (dflag) fprintf(stderr, "%s", prompt);
 #else

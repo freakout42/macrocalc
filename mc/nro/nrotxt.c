@@ -375,7 +375,7 @@ char *p;
 int size;
 {
 	char c[7];
-	int i, j, k;
+	int i, j;
 	int aval;
 
 	aval = abs(value);
