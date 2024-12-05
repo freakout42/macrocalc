@@ -261,14 +261,13 @@ main(argc,argv)
 int argc;
 char *argv[];
 {
-	FILE *ifp, *ofp;
+	FILE *ifp;
 	int i;
 	int swflg;
 
 	swflg = FALSE;
 	pout = stdout;
 	ifp = stdin;
-	ofp = stdout;
 	init();
 	dc.soflg = strstr(argv[0], "soelim") != NULL;
 	for (i=1; i<argc; ++i)
