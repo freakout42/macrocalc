@@ -1,4 +1,4 @@
-/* mcdisply.c 1.14 2001/07/02 10:23:58 axel */
+/* mcdisply.c */
 
 #include <stdio.h>
 #include <string.h>

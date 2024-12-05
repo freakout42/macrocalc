@@ -1,5 +1,4 @@
-/* $Id: mcrwalk.c,v 1.1 1999/10/24 05:59:08 axel Exp $
- */
+/* mcrwalk.c */
 
 #include <stdio.h>
 #include <stdlib.h>

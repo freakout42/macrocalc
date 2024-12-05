@@ -1,5 +1,4 @@
-/* $Id: mcbool.h,v 1.5 2004/05/16 09:15:54 axel Exp $
- */
+/* mcbool.h */
 
 #define DELETI 0
 #define INSERT 1

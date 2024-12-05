@@ -1,5 +1,4 @@
-/* $Id: cur_syst.c,v 1.10 2012/02/20 20:00:35 axel Exp $
- */
+/* cur_syst.c */
 
 #include <stdlib.h>
 #include <stdio.h>

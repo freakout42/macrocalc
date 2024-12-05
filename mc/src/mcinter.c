@@ -1,6 +1,4 @@
-/* mcinter.c
- * #define DEBUG
- */
+/* mcinter.c */
 
 #include <string.h>
 #include <stdio.h>

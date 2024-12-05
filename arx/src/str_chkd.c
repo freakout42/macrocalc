@@ -1,5 +1,4 @@
-/* $Id: str_chkd.c,v 1.4 2015/07/01 13:31:13 axel Exp $
- */
+/* str_chkd.c */
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,4 +1,4 @@
-/* mcellact.c 1.13 2004/12/11 16:21:11 axel */
+/* mcellact.c */
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,5 +1,4 @@
-/* $Id: mcrmacro.c,v 1.5 2002/10/17 12:25:50 axel Exp $
- */
+/* mcrmacro.c */
 
 #include <string.h>
 #include <stdio.h>

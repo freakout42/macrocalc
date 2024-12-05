@@ -1,7 +1,7 @@
 %option nounput
 %option noinput
 %{
-/* mcparl.l 1.27 2007/06/15 09:43:37 axel */
+/* mcparl.l */
 
 #include <math.h>
 #include <ctype.h>

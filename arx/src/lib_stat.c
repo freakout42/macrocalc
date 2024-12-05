@@ -1,4 +1,4 @@
-/* $Id: lib_stat.c,v 1.5 2004/04/12 11:16:15 axel Exp $
+/* lib_stat.c
  * get stat file information
  */
 #include <stdio.h>

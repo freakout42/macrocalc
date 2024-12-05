@@ -1,4 +1,4 @@
-/* mcmessag.c,v 1.6 1999/10/18 11:48:23 axel */
+/* mcmessag.c */
 
 #include <stdio.h>
 #include <string.h>

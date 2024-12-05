@@ -1,5 +1,4 @@
-/* $Id: mcrange.c,v 1.2 1995/02/24 09:50:13 axel Rel $
- */
+/* mcrange.c */
 
 #include <stdio.h>
 #include <string.h>

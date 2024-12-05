@@ -1,5 +1,4 @@
-/* $Id: mcgetmsg.c,v 1.6 1995/05/10 05:08:41 axel Rel $
- */
+/* mcgetmsg.c */
 
 #include <stdio.h>
 #include <string.h>

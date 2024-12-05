@@ -1,4 +1,4 @@
-/* mcmenu.c 1.12 2016/03/14 18:53:42 axel */
+/* mcmenu.c */
 
 #include <stdio.h>
 #include <stddef.h>

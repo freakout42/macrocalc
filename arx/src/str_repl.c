@@ -1,4 +1,4 @@
-/* str_repl.c,v 1.3 2015/02/05 09:23:57 axel
+/* str_repl.c
  * Replace chars like tr
  */
 

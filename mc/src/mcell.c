@@ -1,4 +1,4 @@
-/* mcell.c 1.12 2001/07/02 10:23:58 axel */
+/* mcell.c */
 
 #include <stdio.h>
 #include <assert.h>

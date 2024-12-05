@@ -1,4 +1,4 @@
-/* mcommon.h,v 1.15 2002/10/17 12:25:50 axel */
+/* mcommon.h */
 
 extern char license;
 extern char *progname;

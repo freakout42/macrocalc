@@ -1,4 +1,4 @@
-/* mcunits.c 1.13 2017/07/11 15:02:09 axel
+/* mcunits.c
  * units -- do multiplicative unit conversions
  */
 
