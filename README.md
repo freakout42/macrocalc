@@ -28,9 +28,9 @@ done by a recursive `rm -r /opt/arx`. For convenience `/opt/arx/bin` should be
 added to the PATH in a system appropriate manner. `321` or `mc` will then work.
 
 3. __Binary with precompiled tarball__  
-Download the released asset `mc-<releasetag>-<platform>-<hardware>.tar.gz`
-for your platform (lu-Linux fb-FreeBSD md-MacOS) and untar to `/opt/arx`, add
-`/opt/arx/bin` to $PATH and you are done to use the system by `321` or `mc`.
+Download the released asset `mc-<releasetag>-<platform>-<hardware>.tar.gz` for
+your platform (lu-Linux l6-Linux64 fb-FreeBSD md-MacOS) and untar to `/opt/arx`.
+Add `/opt/arx/bin` to $PATH and you are done to use the system by `321` or `mc`.
 
 4. __RPM package install__  
 Download `macrocalc-<releasetag>.i386.rpm` and  
