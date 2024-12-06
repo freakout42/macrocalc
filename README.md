@@ -73,11 +73,11 @@ you have copied the range A1..A4 to B1..B4 and set B2=3 B3=4 and B4=5.
 Why is B4=5 and not 3 or 7? Because you typed $ after a3 this makes it
 a relative cell reference [+0;-1] and refers to B3 in the copied formula.
 
-**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
-
 Using units
 -----------
-Do not forget to start 321 with the -u option like: `321 -u`
+
+**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE UNITS**
+
 To enter a value with an unit add the unit at the end enclosed in
 curly brackets. For example to enter 1 meter and 1 km and add both:
 
