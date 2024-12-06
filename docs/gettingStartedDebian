@@ -25,6 +25,5 @@ fi
 ./configure
 make
 sudo make install
-. /etc/profile.d/arx.sh
-mc -u
+/opt/arx/bin/mc -u
 exit
