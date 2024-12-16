@@ -33,6 +33,7 @@ void loadsheet (int prompt)
 /* Loads a new spreadsheet */
 {
 FILE	*file;
+char msgcmd[MAXFILE*2+1];
 int	loaded;
 
 if (prompt)
@@ -45,7 +46,13 @@ if (access(filename, R_OK))
 	errormsg(MSGNOEXIST);
 	return;
 	}
-if ((file = fopen(filename, "r")) == NULL)
+if (prompt == 2) {
+  sprintf(msgcmd, "mc2wks -r <%s", filename);
+  file = popen(msgcmd, "r");
+} else {
+  file = fopen(filename, "r");
+}
+if (file == NULL)
 	{
 	errormsg(MSGNOOPEN);
 	return;
@@ -78,12 +85,13 @@ void savesheet (int prompt)
 /* Saves the current spreadsheet */
 {
 FILE	*file;
+char msgcmd[MAXFILE*2+1];
 int	overwrite;
 
 recalc();
 if (autoexec) outpipeall();
 if (rdonly) {changed = FALSE;}
-if (!changed) {return;}
+if (!changed && prompt!=2) {return;}
 if (prompt || *filename=='\0') {
 writeprompt(MSGFILENAME);
 if (!editstring(filename, "", MAXFILE) || *filename=='\0') return;
@@ -93,7 +101,13 @@ if (!access(filename, W_OK))
 		return;
 	}
 }
-if ((file = fopen(filename, "w")) == NULL)
+if (prompt == 2) {
+  sprintf(msgcmd, "mc2wks >%s", filename);
+  file = popen(msgcmd, "w");
+} else {
+  file = fopen(filename, "w");
+}
+if (file == NULL)
 	{
 	errormsg(MSGNOOPEN);
 	return;

@@ -244,6 +244,14 @@ switch (getmenu (FMENU))
 	loadsheet(PROMPT);
 	break;
  case 4:
+	savesheet(2);
+	break;
+ case 5:
+	checkforsave();
+	clearsheet();
+	loadsheet(2);
+	break;
+ case 6:
 	errorstr(rcsinfo);
 	break;
  }
