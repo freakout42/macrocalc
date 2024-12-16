@@ -21,6 +21,7 @@
 #include "l.tab.h"
 
 extern int  yyerrorflg;
+int yywrap(void);
 
 #ifndef FLEX_SCANNER
 #undef input

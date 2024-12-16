@@ -46,7 +46,11 @@ void uncolor(int pairi);
 #define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
 #define A_COLOR      NCURSES_BITS(((1UL) << 8) - 1UL,0)
 #define A_STANDOUT   NCURSES_BITS(1UL,8)
+#ifdef WIN32
+#define A_UNDERLINE  NCURSES_BITS(1UL,8)
+#else
 #define A_UNDERLINE  NCURSES_BITS(1UL,9)
+#endif
 #define A_REVERSE    NCURSES_BITS(1UL,10)
 #define A_BLINK      NCURSES_BITS(1UL,11)
 #define A_DIM        NCURSES_BITS(1UL,12)
