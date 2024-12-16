@@ -16,16 +16,6 @@
 
 #if (__FreeBSD__ | __APPLE__)
 #include <termios.h>
-/*
-struct  termios  ostate;
-struct  termios  nstate;
- */
-#else
-/*
-#include <termio.h>
-struct  termio  ostate;
-struct  termio  nstate;
- */
 #endif
 
 #ifdef ARX_POSIX_SOURCE
@@ -33,22 +23,15 @@ struct  termio  nstate;
 #undef ARX_POSIX_SOURCE
 #endif
 
-#ifdef COHERENT
-/*#define CURSESBUG*/
-#ifndef __NCURSES_H
-#define wgetch cur_getc
-#endif
-#endif
-
-#ifdef strchr
-#undef strchr
-#undef strrchr
-#endif
-
 #include <key2_def.h>
 
 extern int	cur_redir;
 extern struct termios otermio;
+
+#ifdef WIN32
+#undef  A_UNDERLINE
+#define A_UNDERLINE  A_STANDOUT
+#endif
 
 #if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO) || defined(WIN32)
 extern FILE	*std_in, *std_out, *std_err, *std_erread;

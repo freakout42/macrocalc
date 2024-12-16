@@ -1,5 +1,10 @@
 /* mcolor.h,v 1.2 1995/02/26 17:04:33 axel */
 
+#ifdef WIN32
+#undef  A_UNDERLINE
+#define A_UNDERLINE  A_DIM
+#endif
+
 /* enum { COLOR_BLACK, COLOR_RED, COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE, COLOR_MAGENTA, COLOR_CYAN, COLOR_WHITE };
           =0           =1         =2           =3            =4          =5             =6          =7             */
 
@@ -39,24 +44,6 @@ int mcode2att(int colcode);
 void mcolor0(void);
 void setcolor(int pairi);
 void uncolor(int pairi);
-
-#ifdef USECOLOR
-#define A_NORMAL     0L
-#define A_ATTRIBUTES NCURSES_BITS(~(1UL - 1UL),0)
-#define A_CHARTEXT  (NCURSES_BITS(1UL,0) - 1UL)
-#define A_COLOR      NCURSES_BITS(((1UL) << 8) - 1UL,0)
-#define A_STANDOUT   NCURSES_BITS(1UL,8)
-#ifdef WIN32
-#define A_UNDERLINE  NCURSES_BITS(1UL,8)
-#else
-#define A_UNDERLINE  NCURSES_BITS(1UL,9)
-#endif
-#define A_REVERSE    NCURSES_BITS(1UL,10)
-#define A_BLINK      NCURSES_BITS(1UL,11)
-#define A_DIM        NCURSES_BITS(1UL,12)
-#define A_BOLD       NCURSES_BITS(1UL,13)
-#define A_PROTECT    NCURSES_BITS(1UL,16)
-#endif
 
 /* 16 colors - not used
 #define BLACK 0
