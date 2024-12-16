@@ -7,20 +7,25 @@ CC=gcc
 CURSESINC=-I/mingw32/include/ncurses
 CFLAGS=-DNCURSES_STATIC -DYY_SKIP_YYWRAP -I../../arx/inc $(CURSESINC)
 LDFLAGS=-static -L../../arx/src
-OBJS=mc.o mcommon.o mcutil.o mcfileio.o mcrmacro.o mcgetmsg.o mcmessag.o \
-	mccalc.o mcprint.o mcell.o mcelladr.o mcellact.o mcrange.o mcellstr.o mcmisc.o mcput.o mcdisply.o \
-	mcparse.o mcwindow.o mcrecalc.o mctime.o mcolor.o mcparl.o mcpary.o mcftab.o mcunit.o mcomplex.o \
-	mcstat.o mcrwalk.o mcfinc.o mcstring.o mclink.o mclogic.o \
-	mcinter.o mcfile.o mcget.o mcgetmnu.o mcmenu.o mcact.o mcinput.o mcstderr.o mcpipe.o mcommand.o \
-	mcellval.o mcrun.o mcmove.o mchelp.o mcunits.o
+MCOBJS=mcommon.o mcfileio.o mcprint.o mcrange.o mcrwalk.o mccalc.o mcutil.o mcmisc.o \
+	mcellstr.o mcell.o mcelladr.o mcgetmsg.o mcparse.o mcparl.o mconvert.o mctime.o \
+	mcftab.o mcfinc.o mcstring.o mclink.o mclogic.o mcstat.o mcunit.o mcunits.o
+DOBJ=mcinter.o mcolor.o mcstderr.o mcfile.o mcmove.o mcmessag.o mcgetmnu.o mcinput.o mcdisply.o \
+	mcget.o mcput.o
+OBJS=mc.o mcrmacro.o mcellact.o mcpary.o \
+	mcwindow.o mcrecalc.o mcomplex.o \
+	mcmenu.o mcact.o mcpipe.o mcommand.o mcellval.o mcrun.o mchelp.o
+MC2OBJS=mc2wks.o wksfio.o wksrecd.o pol2tex.o mcell123.o mc2parse.o mc2pary.o
 
-all: mc.exe
+all: mc2wks.exe mc.exe
 
-mc.exe: $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -larx -larxc -lncurses -lm -o $@
+mc.exe: $(MCOBJS) $(OBJS) $(DOBJ)
+	$(CC) $(LDFLAGS) $(OBJS) $(MCOBJS) $(DOBJ) -larx -larxc -lncurses -lm -o $@
 
-$(OBJS): mcver.h
+mc2wks.exe: $(MCOBJS) $(MC2OBJS)
+	$(CC) $(LDFLAGS) $(MC2OBJS) $(MCOBJS) -larx -lm -o $@
 
+$(MCOBJS): mcver.h
 mcgetmsg.o: mcgetmsg.c mcmsg.h
 mcgetmnu.o: mcgetmnu.c mcmnu.h mcmnu2.h
 
@@ -61,9 +66,6 @@ mcftab.o: mcftab.c f.tab.h
 f.tab.h: l.tab.h
 	grep 'define.FUNC' l.tab.h >$@
 
-#mcunits2.exe: mcunits.o
-#	$(CC) $(CFLAGS) $(LDFLAGS) mcunits.o -larx -lm -o $@
-
 mcunits.o: mcunits.c binunits.h
 	$(CC) $(CFLAGS) -c mcunits.c
 
@@ -80,5 +82,19 @@ b2c.exe: b2c.c
 mcunits.exe: mcunits.c
 	$(CC) -DMAINUNIT $(CFLAGS) $(LDFLAGS) mcunits.c -larx -lm -o $@
 
+mcell123.o: mcell123.c lotus.h mc.h mcell123.h
+
+mc2parse.o: mcparse.c mc.h mcell.h
+	cp mcparse.c mc2parse.c
+	$(CC) $(CFLAGS) -DLOTUS -c mc2parse.c
+	rm -f mc2parse.c
+
+pol2tex.o: pol2tex.c lotus.h mcelldef.h mcelladr.h mcfunc.h \
+	f.tab.h mcell123.h
+
+mc2pary.o: mcpary.c lotus.h
+	cp mcpary.c mc2pary.c
+	$(CC) $(CFLAGS) -DLOTUS -c mc2pary.c
+
 clean:
-	rm -f *.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mcpary.c mcparl.c f.tab.h binunits*
+	rm -f *.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mc*pary.c mcparl.c f.tab.h binunits*
