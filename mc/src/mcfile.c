@@ -28,16 +28,19 @@ FILE *tf;
 void tmpclose(int rm) {
 if (ulnk) unlink(pth);
 else {
-strncpy(pth, "C:\\Windows\\Temp\\fmXXXXXX", MAXFILE-1);
-tf = fdopen(mkstemp(tfp), "w");
-fwrite(mc2wksexe, 1, MC2WKSEXE_LEN, tf);
-fclose(tf);
+  strncpy(pth, "C:\\Windows\\Temp\\mc2wksXXXXXX", MAXFILE-1);
+  mktemp(pth);
+  strcat(pth, ".exe");
+  tf = fopen(pth, "wb");
+  fwrite(mc2wksexe, 1, MC2WKSEXE_LEN, tf);
+  fclose(tf);
+}
 #else
 if (!ulnk) {
-sprintf(pth, "%s/bin/mc2wks", libpath);
-sprintf(pth, "mc2wks");
-#endif
+  sprintf(pth, "%s/bin/mc2wks", libpath);
+  sprintf(pth, "mc2wks");
 }
+#endif
 return pth;
 }
 
@@ -93,7 +96,11 @@ switch (loaded)
  	if (autoexec) inpipeall();
 	break;
  }
+#ifdef WIN32
+pclose (file);
+#else
 fclose (file);
+#endif
 mc2wkspath(1);
 setrightcol();
 setbottomrow();
@@ -135,7 +142,11 @@ if (file == NULL)
 	}
 message(MSGSAVING);
 savefile (file, FULL);
+#ifdef WIN32
+pclose (file);
+#else
 fclose (file);
+#endif
 mc2wkspath(1);
 message(MSGNULL);
 changed = FALSE;
