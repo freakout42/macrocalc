@@ -24,9 +24,11 @@ all: mc2wks.exe mc.exe
 
 mc.exe: $(MCOBJS) $(OBJS) $(DOBJ)
 	$(CC) $(LDFLAGS) $(OBJS) $(MCOBJS) $(DOBJ) -larx -larxc -lncurses -lm -o $@
+	strip $@
 
 mc2wks.exe: $(MCOBJS) $(MC2OBJS)
 	$(CC) $(LDFLAGS) $(MC2OBJS) $(MCOBJS) -larx -lm -o $@
+	strip $@
 
 $(MCOBJS): mcver.h
 mcgetmsg.o: mcgetmsg.c mcmsg.h

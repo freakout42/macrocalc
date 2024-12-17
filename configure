@@ -19,6 +19,7 @@ esac
 HARDID=${HARDID:-x86}
 DISTID=mc-$VERSID-$PLATID-$HARDID
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done
+for MODEID in arx mc; do cd $MODEID/src; make -f Makefile.W32 clean >/dev/null 2>&1; cd ../..; done
 rm -rf Makefile dist
 test "$1" = "clean" && exit
 echo "configuring for $DISTID" >&2
