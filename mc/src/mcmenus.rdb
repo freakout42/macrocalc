@@ -36,7 +36,7 @@ COMENU	us	blacK Red Green Yellow Blue Magenta Cyan White
 COMENU	ge	Schwarz Rot Grün gElb Blau Magenta Cyan Weiß
 COMENU	fr	blacK Red Green Yellow Blue Magenta Cyan White
 COMENU	pl	blacK Red Green Yellow Blue Magenta Cyan White
-FMENU	us	Save Part Retrieve Merge About
+FMENU	us	Save Part Retrieve Merge saveWks Loadwks About
 FMENU	ge	Speichern Teil Laden Kombinieren Ueber
 FMENU	fr	Sauver Part Recuperer Fusionner About
 FMENU	pl	Zapisz Part Pobierz Do³±cz About

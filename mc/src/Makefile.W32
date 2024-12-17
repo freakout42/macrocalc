@@ -69,6 +69,9 @@ mcftab.o: mcftab.c f.tab.h
 f.tab.h: l.tab.h
 	grep 'define.FUNC' l.tab.h >$@
 
+mc2wksexe.h: mc2wks.exe b2c.exe
+	./b2c.exe mc2wks.exe mc2wksexe hdrbuf
+
 mcunits.o: mcunits.c binunits.h
 	$(CC) $(CFLAGS) -c mcunits.c
 

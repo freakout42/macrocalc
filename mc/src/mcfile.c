@@ -20,6 +20,27 @@
 #include "mcprint.h"
 #include "mcfile.h"
 
+static char *mc2wkspath(int ulnk) {
+static char pth[MAXFILE+1];
+#ifdef WIN32
+#include "mc2wksexe.h"
+FILE *tf;
+void tmpclose(int rm) {
+if (ulnk) unlink(pth);
+else {
+strncpy(pth, "C:\\Windows\\Temp\\fmXXXXXX", MAXFILE-1);
+tf = fdopen(mkstemp(tfp), "w");
+fwrite(mc2wksexe, 1, MC2WKSEXE_LEN, tf);
+fclose(tf);
+#else
+if (!ulnk) {
+sprintf(pth, "%s/bin/mc2wks", libpath);
+sprintf(pth, "mc2wks");
+#endif
+}
+return pth;
+}
+
 void clearsheet (void)
 /* Clears the current spreadsheet */
 {
@@ -47,7 +68,7 @@ if (access(filename, R_OK))
 	return;
 	}
 if (prompt == 2) {
-  sprintf(msgcmd, "mc2wks -r <%s", filename);
+  sprintf(msgcmd, "%s -r <%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "r");
 } else {
   file = fopen(filename, "r");
@@ -73,7 +94,7 @@ switch (loaded)
 	break;
  }
 fclose (file);
-leftcol = curcol;
+mc2wkspath(1);
 setrightcol();
 setbottomrow();
 recalcworksheet();
@@ -102,7 +123,7 @@ if (!access(filename, W_OK))
 	}
 }
 if (prompt == 2) {
-  sprintf(msgcmd, "mc2wks >%s", filename);
+  sprintf(msgcmd, "%s >%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "w");
 } else {
   file = fopen(filename, "w");
@@ -115,6 +136,7 @@ if (file == NULL)
 message(MSGSAVING);
 savefile (file, FULL);
 fclose (file);
+mc2wkspath(1);
 message(MSGNULL);
 changed = FALSE;
 } /* savesheet */
