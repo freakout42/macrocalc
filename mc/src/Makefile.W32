@@ -72,11 +72,7 @@ f.tab.h: l.tab.h
 mcfile.o: mcfile.c mc2wksexe.h
 
 mc2wksexe.h: mc2wks.exe b2c.exe
-	./b2c.exe mc2wks.exe mc2wksexe hdrbuf
 	./b2c.exe mc2wks.exe mc2wksexe mc2wksexe
-
-mc2wksexe.h: mc2wks.exe b2c.exe
-	./b2c.exe mc2wks.exe mc2wksexe hdrbuf
 
 mcunits.o: mcunits.c binunits.h
 	$(CC) $(CFLAGS) -c mcunits.c
@@ -109,4 +105,4 @@ mc2pary.o: mcpary.c lotus.h
 	$(CC) $(CFLAGS) -DLOTUS -c mc2pary.c
 
 clean:
-	rm -f *.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mc*pary.c mcparl.c f.tab.h binunits*
+	rm -f *.exe *.o mcver.h mcmsg.h mcmnu.h mcmnu2.h l.tab.h mc*pary.c mcparl.c f.tab.h binunits* mc2wksexe.h

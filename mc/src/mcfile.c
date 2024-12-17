@@ -25,7 +25,6 @@ static char pth[MAXFILE+1];
 #ifdef WIN32
 #include "mc2wksexe.h"
 FILE *tf;
-void tmpclose(int rm) {
 if (ulnk) unlink(pth);
 else {
   strncpy(pth, "C:\\Windows\\Temp\\mc2wksXXXXXX", MAXFILE-1);
