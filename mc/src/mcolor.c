@@ -38,7 +38,11 @@ static attrel attrels[] = {
 
   { HIGHLIGHTCOLOR,      A_REVERSE,         COLOR_BLUE,    COLOR_WHITE },   /* highlighted current cell */
   { HIGHLIGHTERRORCOLOR, A_REVERSE|A_BLINK, COLOR_RED,     COLOR_WHITE },   /* highlighted current cell with error */
+#ifdef WIN32
+  { HEADERCOLOR,         A_BOLD,            COLOR_YELLOW,  COLOR_MAGENTA }, /* column and row headers */
+#else
   { HEADERCOLOR,         A_REVERSE,         COLOR_CYAN,    COLOR_BLACK },   /* column and row headers */
+#endif
   { CURHEADERCOLOR,      A_BOLD,            COLOR_WHITE,   COLOR_BLUE },    /* current col/row header */
   { MARKCOLOR,           A_REVERSE,         COLOR_MAGENTA, COLOR_YELLOW },  /* marked range info */
   { AUTOCALCCOLOR,       A_REVERSE,         0,             0 },             /* autocalc info */

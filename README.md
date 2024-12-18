@@ -46,8 +46,10 @@ You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
 6. Windows .exe Download  
-https://github.com/freakout42/macrocalc/releases/download/v10.51/mc-10.52-w3-i386.exe  
-can be started from a powershell or cmd console or from the new windows terminal.
+https://github.com/freakout42/macrocalc/releases/download/v10.51/mc-10.52-w3-i386.exe.zip  
+and unzip to 321.exe which can be directly executed with doubleclick or
+installed on the PATH (ex.: C:\Windows\System32) and then started from a powershell
+or cmd console or from the new windows terminal with `321.exe`.
 
 Getting started
 ---------------
