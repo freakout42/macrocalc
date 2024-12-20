@@ -44,7 +44,16 @@ int l;
 char m[MAXSCREENWIDTH+1];
 
 license = lib_akey (logo, FALSE);
-progname = strrchr(argv[0],'/');
+progname = strrchr(argv[0], PATHSEP);
+#ifdef WIN32
+if (progname==NULL) {
+  strcpy(libpath, ".");
+  progname = argv[0];
+} else {
+  *progname++ = '\0';
+  strncpy(libpath, argv[0], MAXFILE-1);
+}
+#else
 if (progname==NULL) progname=argv[0]; else progname++;
 if ((arxpath = getenv("ARX")) == NULL) {
   if (progname == argv[0]) {
@@ -74,6 +83,7 @@ if ((arxpath = getenv("ARX")) == NULL) {
 } else {
   strcpy (libpath, arxpath);
 }
+#endif
 tzset(); /* set timezone */
 /* while ((c = getopt (argc, argv, opts)) != EOF) added $MACROCALC */
 rcargc = 1; /* ==1 : no env options */

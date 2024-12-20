@@ -23,6 +23,7 @@
 static char *mc2wkspath(int ulnk) {
 static char pth[MAXFILE+1];
 #ifdef WIN32
+#ifdef USEINMC2WKS
 #include "mc2wksexe.h"
 FILE *tf;
 if (ulnk) unlink(pth);
@@ -36,8 +37,12 @@ else {
 }
 #else
 if (!ulnk) {
+  sprintf(pth, "%s\\mc2wks", libpath);
+}
+#endif
+#else
+if (!ulnk) {
   sprintf(pth, "%s/bin/mc2wks", libpath);
-  sprintf(pth, "mc2wks");
 }
 #endif
 return pth;

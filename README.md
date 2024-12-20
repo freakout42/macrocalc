@@ -47,9 +47,8 @@ You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 
 6. Windows .exe Download  
 https://github.com/freakout42/macrocalc/releases/download/v10.51/mc-10.52-w3-i386.exe.zip  
-and unzip to 321.exe which can be directly executed with doubleclick or
-installed anywhere on your PATH and then started from a `powershell` or
-`cmd` console or from the new windows terminal with `321.exe`.
+and unzip mc.exe and mc2wks.exe. Start it with any console with full
+pathname or double-click it with the explorer.
 
 Getting started
 ---------------
