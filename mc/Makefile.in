@@ -391,7 +391,7 @@ mcmnu.rdb: ../src/mcmnu.h
 	awk -F"	" '$$2=="us" {print $$3}' <../src/mcmenus.rdb  | tr ';' , >$@
 
 binunits:	../src/binunits.o
-	cp $< $@
+	cp ../src/binunits.o $@
 
 #-------------------------------------------------------------------------------
 manall:	mc.1 mcunits.1 nro.1 db2rdb.1
