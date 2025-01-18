@@ -8,7 +8,7 @@ Section: MacroCALC (1)<BR><A HREF="#index">Index</A>
 <B>mc</B>
 - Command
 <BR>
-MacroCALC v10.33. Interactive spreadsheet calculator.
+MacroCALC v10.52. Interactive spreadsheet calculator.
 <BR>
 On Systems where <B>mc</B> is used by other programs,
 <B>321</B> can be used as an alias for <B>mc</B>.
@@ -647,7 +647,7 @@ or begin the text with one of the
 justification signs.
 <P>
 Cell names in formulas are typed in with the column followed by the row enclosed
-in square brackets separated by comma.
+in square brackets separated by semicolon.
 Relative cell references start with a sign.
 An absolute cell reference can be written without brackets or comma.
 Toggle absolute cell references in formulas with relative references by pressing F4 (or $).
@@ -656,7 +656,7 @@ Named Ranges can be used directly with the rangename.
 <P>
 <DL COMPACT><DT><DD>
 <PRE>
-ex. A1+[A,2]*[B,-1]^5/([+0,+2]+SUM(Myrange))
+ex. A1+[A;2]*[B;-1]^5/([+0;+2]+SUM(Myrange))
 </PRE>
 </DL>
 <BR>
@@ -675,7 +675,7 @@ Think of this as a way of defining user functions in a worksheet.
 <DL COMPACT><DT><DD>
 <PRE>
 ex. A1: value:   1.00
-    B1: formula: 2*[-1,+0] = 2.00
+    B1: formula: 2*[-1;+0] = 2.00
     A2: value:   2.00
     B2: formula: &amp;B1       = 4.00
 </PRE>
@@ -1169,43 +1169,43 @@ ex. IF(10&gt;2,3*2,4+5) = 6
 <A NAME="lbBA">&nbsp;</A>
 <H2>Financial functions_</H2>
 <DL COMPACT>
-<DT>CTERM(INTerest,FutureValue,PresentValue)<DD>
+<DT>CTERM(INTerest;FutureValue;PresentValue)<DD>
 The number of compounding periods required for an
 investment of PV (present value) to grow to FV (future
 value), if the investment is earning INT interest per
 compounding period.
-<DT>DDB(Cost,Salvage,Life,Period)<DD>
+<DT>DDB(Cost;Salvage;Life;Period)<DD>
 Accelerated depreciation value for an asset, given the
 initial cost, the life expectancy, the end value and the
 depreciation period.  The depreciation is calculated
 using the double declining balance method.
-<DT>FV(Annuity,interest rate,period)<DD>
+<DT>FV(Annuity;interest rate;period)<DD>
 Returns the future value corresponding to  an  annuity
 occurring over the specified period.  Reverse of the
 above.
 <BR>
-ex. FV(700,0.0925,30) = 99979.77
-<DT>PMT(Principal,interest,period)<DD>
+ex. FV(700;0.0925;30) = 99979.77
+<DT>PMT(Principal;interest;period)<DD>
 Returns the amount of an annuity equal to the
 principal amortized over the period.
 <BR>
-ex. PMT(75000,0.0925,30) = 7462.61
-<DT>PV(Annuity,interest rate,period)<DD>
+ex. PMT(75000;0.0925;30) = 7462.61
+<DT>PV(Annuity;interest rate;period)<DD>
 Returns the present value corresponding  to  an  annuity
 occurring over the specified period.  Reverse of the
 above.
 <BR>
-ex. PV(700,0.0925,30) = 7035.08
-<DT>RATE(FutureValue,PresentValue,N)<DD>
+ex. PV(700;0.0925;30) = 7035.08
+<DT>RATE(FutureValue;PresentValue;N)<DD>
 Interest rate required for an investment of PVAL to be
 worth FVAL, in N compounding periods.
-<DT>SLN(Cost,Salvage,Life)<DD>
+<DT>SLN(Cost;Salvage;Life)<DD>
 Straight line depreciation of an asset over ONE period
 of LIFE.
-<DT>SYD(Cost,Salvage,Life,Period)<DD>
+<DT>SYD(Cost;Salvage;Life;Period)<DD>
 Depreciation of an asset using the Sum-of-Years
 depreciation method.
-<DT>TERM(Payment,Interest,FutureValue)<DD>
+<DT>TERM(Payment;Interest;FutureValue)<DD>
 Number of periods required to accumulate an investment
 of FVAL making regular payments of PMT and accruing
 interest at the rate of INT per period.

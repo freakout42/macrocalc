@@ -413,7 +413,7 @@ tmac.ant: tmac.an
 
 mc1.html:	mc.1 tmac.ant
 	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | man2html 2>/dev/null | sed 1,2d | sed '/^$$/d' | grep -v 'Return to Main Contents' | sed '1a<link rel="stylesheet" href="/assets/man.css">' | sed '/^This document was created by/,/^Time: /d' | sed 's/<BR>Updated: //' >$@
-	diff ../../docs/$@ $@
+	diff $@ ../../docs/$@
 
 mc2.html:	mc.1 tmac.ant
 	grep -v mccont.r <mc.r | soelim | sed 's/^\.SH/.AH/' | cat tmac.ant - | groff -mandoc -Thtml >$@
