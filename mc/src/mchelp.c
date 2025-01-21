@@ -15,6 +15,7 @@ char helpcmd[256];
 #ifdef WIN32
 strcpy(helpcmd, "start https://mc.freakout.de/mc1.html");
 #else
+/* Fixes #16 */
 sprintf(helpcmd, "man %s/man/man1/%s.1", libpath, progname);
 #endif
 mcsystem (helpcmd, FALSE);
