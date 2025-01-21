@@ -495,6 +495,6 @@ if (dataproc)
 	}
     }
     rdb_clos (drdb);
-    dbf_clos (ddbf);
+    if (reverse) dbf_clos (ddbf);
 return !(adsill||adsfix) ^ (i!=0);
 }
