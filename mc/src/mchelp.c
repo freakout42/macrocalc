@@ -11,12 +11,11 @@
 
 void mchelp (void)
 {
+char helpcmd[256];
 #ifdef WIN32
-char helpcmd[256] = "start ";
-strcat(helpcmd, "https://mc.freakout.de/mc1.html");
+strcpy(helpcmd, "start https://mc.freakout.de/mc1.html");
 #else
-char helpcmd[256] = "man ";
-strcat(helpcmd, progname);
+sprintf(helpcmd, "man %s/man/man1/%s.1", libpath, progname);
 #endif
 mcsystem (helpcmd, FALSE);
 }
