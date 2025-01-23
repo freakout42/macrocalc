@@ -79,6 +79,18 @@ if (around >= 3)
 
 cur_redir = around;
 
+#ifdef WIN32
+#define ISO_8859_15_CP 28605
+/*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
+SetConsoleCP(ISO_8859_15_CP);
+SetConsoleOutputCP(ISO_8859_15_CP);
+#else
+#define ISO_8859_15_CP "en_US.iso885915"
+setenv("LC_ALL", ISO_8859_15_CP, 1);
+setenv("LANG", ISO_8859_15_CP, 1);
+/* ESC % @ */
+#endif
+
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
 fprintf (stderr, "cur_init: %s\n", "initscr() done");

@@ -31,6 +31,9 @@ register int		ch;
 
 wrefresh (w);
 ch = wgetch (w);
+#ifdef WIN32
+if (ch < 0) ch = 256 + ch;
+#endif
 switch (ch)
  {
  case KEY_BS:		return KEY_BACKSPACE;

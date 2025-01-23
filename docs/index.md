@@ -65,6 +65,25 @@ Here is an example for Linux/bash:
 
 **REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
 
+### non-ascii characters
+
+Since the sourcecode of MacroCALC is from 1979 there is no unicode (UTF-8) support.
+To get international characters configure your terminal for an 8-bit codebase:
+
+If you are using PuTTY you must set for the session:
+
+    Window->Translation->Remote character set = ISO-8859-15
+
+With the MacOS Terminal application:
+
+    Settings->General->Profiles->International->
+      Text Encoding = Western (ISO Latin 9)
+    X Set locale environment variables on startup
+
+Start a local xterm with:
+
+    LC_ALL=en_US.iso885915 LANG=en_US.iso885915-US xterm
+
 ### getting started
 
 Navigate through the sheet with the arrow-keys. The dot (.) marks the

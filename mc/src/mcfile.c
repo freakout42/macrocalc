@@ -78,7 +78,7 @@ if (prompt == 2) {
   sprintf(msgcmd, "%s -r <%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "r");
 } else {
-  file = fopen(filename, "r");
+  file = fopen(filename, "rb");
 }
 if (file == NULL)
 	{
@@ -137,7 +137,7 @@ if (prompt == 2) {
   sprintf(msgcmd, "%s >%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "w");
 } else {
-  file = fopen(filename, "w");
+  file = fopen(filename, "wb");
 }
 if (file == NULL)
 	{
