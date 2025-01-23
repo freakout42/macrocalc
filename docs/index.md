@@ -67,7 +67,7 @@ Here is an example for Linux/bash:
 
 ### non-ascii characters
 
-Since the sourcecode of MacroCALC is from 1979 there is no unicode (UTF-8) support.
+The sourcecode of MacroCALC is from 1979 without unicode (UTF-8) support.
 To get international characters configure your terminal for an 8-bit codebase:
 
 If you are using PuTTY you must set for the session:
