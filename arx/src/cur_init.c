@@ -85,9 +85,10 @@ cur_redir = around;
 SetConsoleCP(ISO_8859_15_CP);
 SetConsoleOutputCP(ISO_8859_15_CP);
 #else
-#define ISO_8859_15_CP "en_US.iso885915"
-setenv("LC_ALL", ISO_8859_15_CP, 1);
-setenv("LANG", ISO_8859_15_CP, 1);
+/* #define ISO_8859_15_CP "en_US.iso885915"
+ * setenv("LC_ALL", ISO_8859_15_CP, 1);
+ * setenv("LANG", ISO_8859_15_CP, 1);
+ */
 /* ESC % @ */
 #endif
 
