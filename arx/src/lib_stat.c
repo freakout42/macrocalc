@@ -3,6 +3,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <dirent.h>
 #include <time.h>
 #ifndef WIN32
 #include <pwd.h>
@@ -20,12 +21,12 @@ static struct file	fi;
 struct stat		stbuf;
 struct passwd		*pwdbuf;
 struct group		*grpbuf;
-static char		basename[DIRSIZ+1];
+static char		basename[NAME_MAX+1];
 char			*fn;
 
 if (stat (f, &stbuf) == -1) return NULL;
 fn	= strrchr (f, PATHSEP);
-strncpy (basename, fn ? fn+1 : f, DIRSIZ+1);
+strncpy (basename, fn ? fn+1 : f, NAME_MAX+1);
 fi.name	= basename;
 fi.mode	= stbuf.st_mode;
 fi.gid	= stbuf.st_gid;

@@ -209,12 +209,6 @@ struct file *lib_stat (char *f);
 #include <unistd.h>
 #endif
 
-#if defined(__FreeBSD__) || defined(linux) || defined(sparc) || defined(_AIX) || defined(__SVR4) || defined(__DARWIN_UNIX03) || defined(WIN32)
-#define DIRSIZ 255
-#else
-#include <sys/dir.h>
-#endif
-
 #define MAXPATH	1024		/* Size of static pathname buffer */
 extern char *lib_path (char *path, char *file, int mode);
 

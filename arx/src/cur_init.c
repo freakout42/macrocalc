@@ -8,7 +8,7 @@
 #include <arx_def.h>
 #include <cur_def.h>
 #include <fcntl.h>
-#if (COHERENT | linux)
+#if (COHERENT | linux | __CYGWIN__)
 #include <term.h>
 #endif
 
