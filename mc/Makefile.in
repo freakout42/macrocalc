@@ -264,10 +264,12 @@ mcpary.o:	mcpary.c mc.h mcomplex.h
 
 mcomplex.o: mcelldef.h mcfunc.h
 
-y.tab.h mcpary.c:	mcpary.y
+mcpary.c:	mcpary.y
 	$(YACC) $(YFLAGS) mcpary.y
 	mv y.tab.c $@
-	cmp -s y.tab.h l.tab.h || cp y.tab.h l.tab.h
+
+l.tab.h:	mcpary.c
+	@cmp -s y.tab.h l.tab.h || { echo cp y.tab.h l.tab.h; cp y.tab.h l.tab.h; }
 
 f.tab.h: l.tab.h
 	grep 'define.FUNC' l.tab.h >$@
