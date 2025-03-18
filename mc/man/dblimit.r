@@ -13,7 +13,7 @@ memo-fields.
 Since
 .B Dbase
 field names are limited to 11 characters,
-the field names are shortened when transfered from
+the field names are shortened when transferred from
 .B /rdb
 to \fBDbase\fP.
 
