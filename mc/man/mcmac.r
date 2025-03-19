@@ -12,7 +12,7 @@ An auto-execute macro (see
 ) starts executing
 immediately after the worksheet is loaded.
 .LP
-Every letter in the macro is simply feeded into
+Every letter in the macro is simply fed into
 .B mc
 as normal input.
 Exceptions are

@@ -52,9 +52,9 @@ A FIELD DESCRIPTOR:      <----------------------------------+
 +--------+----------------+-------------------------------+
 .DE
 .P
-The data records are layed out as follows:
+The data records are laid out as follows:
 .IP 1.
-Data records are preceeded by one byte that is a
+Data records are preceded by one byte that is a
 space (20H) if the record is not deleted and an
 asterisk (2AH) if it is deleted.
 .IP 2.

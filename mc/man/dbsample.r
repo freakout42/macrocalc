@@ -38,7 +38,7 @@ The following shell command converts the
 \fBDBase\fP-file \fIdbasefile\fP to \fB/rdb\fP-format,
 processes it with
 .B sed
-substituting all occurences of the string "1410" with "credits".
+substituting all occurrences of the string "1410" with "credits".
 The output forms a new
 \fBDBase\fP-file \fInewdbfile\fP.
 .DS

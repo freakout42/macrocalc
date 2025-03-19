@@ -45,7 +45,7 @@ directly from the build-driectory. To start the spreadsheet simply:
 
 ### install (system-wide)
 
-"sudo make install" will install systemwide in /opt/arx/ after a successfull
+"sudo make install" will install systemwide in /opt/arx/ after a successful
 build by simply untar'ing ./dist/arx.tar.gz into /opt.
 Nothing outside /opt/arx/ will be touched in any way by the installation.
 Removing mc is simply a recursive "rm -r /opt/arx".

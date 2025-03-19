@@ -26,7 +26,7 @@ Prints \fBDbase\fP header information on standard error output.
 .IP \\fBi\\fP
 Image mode.
 Does not read data. Only the header is read.
-Is only useable together with verbose mode.
+Is only usable together with verbose mode.
 .IP \\fBk\\fP
 Strukture mode.
 Sends a Dbase structure definition table to stdout.
