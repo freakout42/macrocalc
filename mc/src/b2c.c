@@ -18,7 +18,7 @@ long int filesize( FILE *fp )
   }
 
 
-void Upper_chars(char *buffer)
+void Upper_chars(unsigned char *buffer)
 {
  unsigned int c;
 

@@ -3,7 +3,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
-#include <ctype.h>
 #include <errno.h>
 #include <arx_def.h>
 #include "mc.h"
