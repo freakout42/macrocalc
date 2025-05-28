@@ -1,4 +1,4 @@
-/* $Id: rdb_2dbf.c,v 1.4 2020/12/07 09:55:19 axel Exp $
+/* rdb_2dbf.c
  * copy /rdb-table to dbf_record (structure must be identical!)
  */
 #include <stdio.h>

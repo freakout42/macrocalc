@@ -1,5 +1,4 @@
-/* $Id: mclink.c,v 1.5 1997/01/23 19:08:09 axel Exp $
- */
+/* mclink.c */
 
 #include <stdlib.h>
 #include <stdio.h>

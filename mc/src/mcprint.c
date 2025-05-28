@@ -1,5 +1,4 @@
-/* $Id: mcprint.c,v 1.6 2001/06/06 06:01:16 axel Exp $
- */
+/* mcprint.c */
 
 #include <string.h>
 #include <stdio.h>

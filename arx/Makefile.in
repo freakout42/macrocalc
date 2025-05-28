@@ -2,7 +2,7 @@
 # for: $Os
 
 ARXREL=8
-ARXVER=9
+ARXVER=10
 
 ARX=../../arx
 DIRS=inc src lib
