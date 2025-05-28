@@ -30,8 +30,6 @@ exit (EXIT_SYNTAX);
 
 int main (int argc, char *argv[])
 {
-extern int optind;
-extern char *optarg;
 int c = 0;
 char *arxpath;
 #define MAXRCARGS 8

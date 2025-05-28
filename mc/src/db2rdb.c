@@ -44,8 +44,6 @@ unsigned char	fld, fldrdb;
 struct	DBF	*ddbf, *drdb;
 struct FIELD_RECORD *f, *frdb;
 
-extern int 	optind;
-extern char 	*optarg;
 int		c;
 int		append	= FALSE;
 int		external= FALSE;
