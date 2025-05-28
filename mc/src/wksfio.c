@@ -98,19 +98,19 @@ while (getwksrecord (&r) != L_EOF)
 		att	= CONSTANT;
 		lib_cano(r.data.integer.value);
 		val	= r.data.integer.value;
-		sprintf (tex, "%d", r.data.integer.value);
+		snprintf (tex, MAXINPUT, "%d", r.data.integer.value);
 		goto allocate;
 	 case L_NUMBER:
 		att	= CONSTANT;
 		myd2d.c	= r.data.number.value;
 		val	= lib_iee2 (myd2d.d);
-		sprintf (tex, "%f", val);
+		snprintf (tex, MAXINPUT, "%f", val);
 		goto allocate;
 	 case L_LABEL:
 	 	convertlabel (&r);
 		att	= TEXT;
 		val	= 0.;
-		strcpy	(tex, r.data.label.s);
+		strncpy	(tex, r.data.label.s, MAXINPUT);
 		goto allocate;
 	 case L_FORMULA:
 		att	= FORMULA;

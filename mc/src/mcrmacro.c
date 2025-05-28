@@ -21,7 +21,7 @@ if (prompt)
 	writeprompt(MSGMACRONAME);
 	if (!editstring (macroname, "", MAXINPUT)) return;
 	}
-if (*macroexec) sprintf (macrocall, "echo '%s'|%s/bin/mcmacro", macroexec, libpath);
+if (*macroexec) snprintf (macrocall, MAXINPUT, "echo '%s'|%s/bin/mcmacro", macroexec, libpath);
 else if (!*macroname || !strcmp (macroname, "-")) return;
 else	{
 	if (access(macroname, R_OK))
@@ -29,7 +29,7 @@ else	{
 		errormsg(MSGNOEXIST);
 		return;
 		}
-	sprintf (macrocall, "%s/bin/mcmacro <%s", libpath, macroname);
+	snprintf (macrocall, MAXINPUT, "%s/bin/mcmacro <%s", libpath, macroname);
 	}
 if (cur_maco (macrocall) == NULL)
 	{

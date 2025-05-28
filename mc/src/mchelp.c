@@ -16,7 +16,7 @@ char helpcmd[256];
 strcpy(helpcmd, "start https://mc.freakout.de/mc1.html");
 #else
 /* Fixes #16 */
-sprintf(helpcmd, "man %s/man/man1/%s.1", libpath, progname);
+snprintf(helpcmd, 256, "man %s/man/man1/%s.1", libpath, progname);
 #endif
 mcsystem (helpcmd, FALSE);
 }

@@ -19,7 +19,7 @@ va_list args;
 char s[MAXINPUT+1];
 
 va_start(args, format);
-vsprintf(s, format, args);
+vsnprintf(s, MAXINPUT, format, args);
 va_end(args);
 errorstr(s);
 }

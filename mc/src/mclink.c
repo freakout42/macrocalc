@@ -17,7 +17,7 @@ char	buf[MAXINPUT+2];
 char	adr[MAXADR];
 
 celladrstring (col, row, adr);
-sprintf (buf, "%s/bin/mcellval %s %s", libpath, sf, adr);
+snprintf (buf, MAXINPUT, "%s/bin/mcellval %s %s", libpath, sf, adr);
 if (	!(p = popen (buf, "r"))
    ||	fgets (buf, sizeof(buf), p) == NULL
    ||	pclose (p)	)

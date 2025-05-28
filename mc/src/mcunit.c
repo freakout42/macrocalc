@@ -29,7 +29,7 @@ int unitinit (void)
 /* init unit conversion */
 {
 #ifdef UNITPIPE
-sprintf (pcmd, "%s/bin/mcunits", libpath);
+snprintf (pcmd, MAXFILE+8, "%s/bin/mcunits", libpath);
 units = !lib_twpo (&unitin, &unitout, pcmd);
 #else
 #ifdef MSGINLINE

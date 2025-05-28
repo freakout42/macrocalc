@@ -26,7 +26,7 @@ char	command[1024];
 cur_rest();
 
 #ifdef SYSTEM
-if (cur_redir >= 3)	sprintf (command, "%s 2>&%d", cmd, fileno(std_err));
+if (cur_redir >= 3)	snprintf (command, 1024, "%s 2>&%d", cmd, fileno(std_err));
 else			strcpy (command, cmd);
 status	= system (command);
 

@@ -22,7 +22,7 @@ int	col, row, dummy;
 
 if (border)
 	{
-	sprintf (s, "%*s\\fB", LEFTMARGIN, "");
+	snprintf (s, MAXPRINT, "%*s\\fB", LEFTMARGIN, "");
 	for (col = omarkcol; col <= markcol; col++)
 		{
 		centercolstring (col, colstr);
@@ -32,7 +32,7 @@ if (border)
 	}
 for (row = omarkrow; row <= markrow; row++)
 	{
-	if (border) sprintf (s, "\\fB%*d\\fP", LEFTMARGIN, row + 1);
+	if (border) snprintf (s, MAXPRINT, "\\fB%*d\\fP", LEFTMARGIN, row + 1);
 	else	s[0] = '\0';
 	for (col = omarkcol; col <= markcol; col++)
 		strcat (s, cellstring (col, row, &dummy, FPRINT));

@@ -26,7 +26,7 @@ char menuline[MAXSCREENWIDTH+1];
 FILE *menu;
 int i = 0;
 
-sprintf (menufilename, "%s/lib/mcmnu.rdb", libpath);
+snprintf (menufilename, MAXFILE, "%s/lib/mcmnu.rdb", libpath);
 if ((menu = fopen (menufilename, "r")))
 	{
 	while (str_gets (menu, menuline, sizeof (menuline)))

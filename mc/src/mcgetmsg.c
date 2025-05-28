@@ -21,7 +21,7 @@ return 0;
 FILE	*msg;
 char	msgcmd[MAXFILE*2+1];
 
-sprintf (msgcmd, "%s/bin/mcmsg %d <%s/lib/mcmsg.rdb", libpath, n, libpath);
+snprintf (msgcmd, MAXFILE*2, "%s/bin/mcmsg %d <%s/lib/mcmsg.rdb", libpath, n, libpath);
 
 #ifdef DEBUG
 fprintf (stderr, "getmsg: %s\n", msgcmd);

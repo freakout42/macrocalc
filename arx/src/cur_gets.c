@@ -40,7 +40,7 @@ while (!done)					/* input loop		*/
 		so = se + pos - width + 1;
 		}
 	wmove(w, y, x);				/* move to print string	*/
-	sprintf(tmp, "%-*.*s", width, width, so);/* output string	*/
+	snprintf(tmp, width, "%-*.*s", width, width, so);/* output string	*/
 	tmp[width] = '\0';			/* cut to width		*/
 	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' '; /* tab era	*/
 	waddstr(w, tmp);			/* paint out string	*/
@@ -106,7 +106,7 @@ while (!done)					/* input loop		*/
 	 case KEY_ESC:				/* cancel editing	*/
 	 case KEY_CTRL('C'):
 		wmove(w, y, x);
-		sprintf(tmp, "%-*.*s", width, width, s);
+		snprintf(tmp, width, "%-*.*s", width, width, s);
 		tmp[width] = '\0';
 		while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' ';
 		waddstr(w, tmp);

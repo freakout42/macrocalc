@@ -31,7 +31,7 @@ switch (colcode & BIMASK) {
 colcode &= TYPEM;
 getyx (stdscr, oldy, oldx);
 va_start (args, format);
-vsprintf (s, format, args);
+vsnprintf (s, MAXINPUT, format, args);
 va_end (args);
 
 #ifdef CURSESBUG
