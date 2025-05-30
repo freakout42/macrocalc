@@ -68,7 +68,7 @@ for (fld=0; fld<sd->fields; fld++)
 	 case 'F':
 		if ((val = str_chkd (st)) != HUGE_VAL)
 			{
-			snprintf (tt, tf->len, "%*.*f", tf->len, tf->dec, val);
+			snprintf (tt, tf->len+1, "%*.*f", tf->len, tf->dec, val);
 			if (tt[tf->len] != '\0' ||
 			    (tf->dec>0 && tt[tf->len-tf->dec-1]!='.'))
 				{
