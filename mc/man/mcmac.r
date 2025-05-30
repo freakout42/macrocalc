@@ -1,4 +1,4 @@
-.Id $Id: mcmac.r,v 1.6 1997/06/28 15:25:45 axel Exp $
+.Id mcmac.r
 .SH Macros
 A macro is a sequence of keystrokes or commands which can
 be  performed automatically, just like a program within the spreadsheet.

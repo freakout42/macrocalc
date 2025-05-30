@@ -94,7 +94,7 @@ o : e
 	cpcimag(pc) = $1.cimag;
 	if (cpiscmplx(pc)) {
     cpunit(pc) = fbuf;
-    sprintf(cpunit(pc), (cpcimag(pc) > 999999.998 || cpcimag(pc) < -99999.998) ? " i%10.2e" : " i%10.3f", cpcimag(pc));
+    snprintf(cpunit(pc), 16, (cpcimag(pc) > 999999.998 || cpcimag(pc) < -99999.998) ? " i%10.2e" : " i%10.3f", cpcimag(pc));
   } else {
     cpcimag(pc) = 0.0;
     cpunit(pc) = $1.unit;

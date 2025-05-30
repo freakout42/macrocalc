@@ -37,12 +37,12 @@ else {
 }
 #else
 if (!ulnk) {
-  sprintf(pth, "%s\\mc2wks", libpath);
+  snprintf(pth, MAXFILE, "%s\\mc2wks", libpath);
 }
 #endif
 #else
 if (!ulnk) {
-  sprintf(pth, "%s/bin/mc2wks", libpath);
+  snprintf(pth, MAXFILE, "%s/bin/mc2wks", libpath);
 }
 #endif
 return pth;
@@ -75,7 +75,7 @@ if (access(filename, R_OK))
 	return;
 	}
 if (prompt == 2) {
-  sprintf(msgcmd, "%s -r <%s", mc2wkspath(0), filename);
+  snprintf(msgcmd, MAXFILE, "%s -r <%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "r");
 } else {
   file = fopen(filename, "rb");
@@ -134,7 +134,7 @@ if (!access(filename, W_OK))
 	}
 }
 if (prompt == 2) {
-  sprintf(msgcmd, "%s >%s", mc2wkspath(0), filename);
+  snprintf(msgcmd, MAXFILE, "%s >%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "w");
 } else {
   file = fopen(filename, "wb");
@@ -198,7 +198,7 @@ if (prompt)
 	}
 else	strcpy (filenpr, "-");
 border = (border == 'Y');
-sprintf (pcmd, "%s/bin/mcprint %s", libpath, filenpr);
+snprintf (pcmd, MAXFILE, "%s/bin/mcprint %s", libpath, filenpr);
 if ((file = popen(pcmd, "w")) == NULL)
 	{
 	errormsg(MSGNOOPEN);

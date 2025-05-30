@@ -1,4 +1,4 @@
-/* $Id: rdb_2dbf.c,v 1.4 2020/12/07 09:55:19 axel Exp $
+/* rdb_2dbf.c
  * copy /rdb-table to dbf_record (structure must be identical!)
  */
 #include <stdio.h>
@@ -13,6 +13,7 @@ int rdb_2dbf (struct DBF *td, struct DBF *sd)
 unsigned char fld, length;
 struct FIELD_RECORD *sf, *tf;
 char *tt, *st;
+int tl;
 double	val;
 int year, month, day;
 
@@ -67,7 +68,7 @@ for (fld=0; fld<sd->fields; fld++)
 	 case 'F':
 		if ((val = str_chkd (st)) != HUGE_VAL)
 			{
-			sprintf (tt, "%*.*f", tf->len, tf->dec, val);
+			snprintf (tt, tf->len+1, "%*.*f", tf->len, tf->dec, val);
 			if (tt[tf->len] != '\0' ||
 			    (tf->dec>0 && tt[tf->len-tf->dec-1]!='.'))
 				{
@@ -93,7 +94,7 @@ for (fld=0; fld<sd->fields; fld++)
 					sf->name, sd->current_record, st);
 			}
     iso885915_to_oem858(st);
-		sprintf (tt, "%-*s", tf->len, st);
+		snprintf (tt, tf->len+1, "%-*s", tf->len, st);
 		break;
 	 case 'X':
 		break;

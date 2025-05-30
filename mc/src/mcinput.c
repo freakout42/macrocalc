@@ -21,8 +21,8 @@ int	i, good	= FALSE;
 char	n[7], s[MAXSCREENWIDTH+1], message[MAXSCREENWIDTH+1];
 
 getmessage (s, MSGBADNUMBER);
-sprintf (message, s, low, high);
-sprintf (n, "%d", def);
+snprintf (message, MAXSCREENWIDTH, s, low, high);
+snprintf (n, 7, "%d", def);
 do
 	{
 	if (!editstring(n, "1234567890", 6)) return FALSE;

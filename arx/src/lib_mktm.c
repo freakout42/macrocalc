@@ -1,8 +1,6 @@
-/* $Id: lib_mktm.c,v 1.2 1999/10/14 18:22:30 axel Exp $
- */
+/* lib_mktm.c */
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <sys/types.h>
 #include <time.h>
 

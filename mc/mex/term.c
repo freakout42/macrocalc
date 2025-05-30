@@ -1107,7 +1107,7 @@ tcapopen()
 
 	if((tgetent(tcbuf, tv_stype)) != 1)
 	{
-		sprintf(err_str, "Unknown terminal type %s!", tv_stype);
+		snprintf(err_str, 72, "Unknown terminal type %s!", tv_stype);
 		puts(err_str);
 		exit(1);
 	}

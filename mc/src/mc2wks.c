@@ -51,8 +51,6 @@ fatal (EXIT_FATAL, msg[n]);
 
 int main (int argc, char *argv[])
 {
-extern int optind;
-extern char *optarg;
 int c;
 #ifdef LICS2IBM
 int bits = DEFAULTBITS;

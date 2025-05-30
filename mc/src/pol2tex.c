@@ -49,7 +49,7 @@ while ((opcode = *p.c++) != F_RETURN)
 	 case F_CONSTANT:
 	 	moveitem (d);
 	 	d = lib_iee2 (d);
-		sprintf (tex, "%f", d);
+		snprintf (tex, MAXINPUT, "%f", d);
 #ifdef DEBUG
 		fprintf (stderr, "pol2tex: constant=%f\n", d);
 #endif
@@ -78,19 +78,19 @@ while ((opcode = *p.c++) != F_RETURN)
 	 case F_RETURN:
 		break;
 	 case F_PARANTHESES:
-		sprintf (tex, "(%s)", stack[sp-1]);
+		snprintf (tex, MAXINPUT, "(%s)", stack[sp-1]);
 		goto change;
 	 case F_INTEGER:
 		moveitem (i);
 		lib_cano(i);
-		sprintf (tex, "%d", i);
+		snprintf (tex, MAXINPUT, "%d", i);
 		goto shift;
 	 case F_STRING:
-	 	sprintf (tex, "\"%s\"", p.c);
+	 	snprintf (tex, MAXINPUT, "\"%s\"", p.c);
 		p.c += strlen((char*)p.c) + 1;
 		goto shift;
 	 case F_UNARYMINUS:
-		sprintf (tex, "-%s", stack[sp-1]);
+		snprintf (tex, MAXINPUT, "-%s", stack[sp-1]);
 		goto change;
 	 case F_ADDITION:
 		strcpy (s, "+");
@@ -132,7 +132,7 @@ while ((opcode = *p.c++) != F_RETURN)
 		strcpy (s, "#OR#");
 		goto reducepair;
 	 case F_NOT:
-		sprintf (tex, "#NOT#%s", stack[sp-1]);
+		snprintf (tex, MAXINPUT, "#NOT#%s", stack[sp-1]);
 		goto change;
 	 case F_UNARYPLUS:
 		break;
@@ -146,7 +146,7 @@ while ((opcode = *p.c++) != F_RETURN)
 			switch (f->token)
 			 {
 			 case FUNC0:
-				sprintf (tex, "@%s()", f->name);
+				snprintf (tex, MAXINPUT, "@%s()", f->name);
 				goto shift;
 			 case FUNCR:
 				pn = *p.c++;
@@ -159,16 +159,16 @@ while ((opcode = *p.c++) != F_RETURN)
 				/*FALLTHRU*/
 			 case FUNC1:
 			 case FUNCS:
-				sprintf (tex, "@%s(%s)", f->name, stack[sp-1]);
+				snprintf (tex, MAXINPUT, "@%s(%s)", f->name, stack[sp-1]);
 				goto change;
 			 case FUNC2:
-				sprintf (tex, "@%s(%s%c%s)", f->name, stack[sp-2], SEPCH, stack[sp-1]);
+				snprintf (tex, MAXINPUT, "@%s(%s%c%s)", f->name, stack[sp-2], SEPCH, stack[sp-1]);
 				goto reduce;
 			 case FUNC3:
-				sprintf (tex, "@%s(%s%c%s%c%s)", f->name, stack[sp-3], SEPCH, stack[sp-2], SEPCH, stack[sp-1]);
+				snprintf (tex, MAXINPUT, "@%s(%s%c%s%c%s)", f->name, stack[sp-3], SEPCH, stack[sp-2], SEPCH, stack[sp-1]);
 				goto reduce2;
 			 case FUNC4:
-				sprintf (tex, "@%s(%s%c%s%c%s%c%s)", f->name, stack[sp-4], SEPCH, stack[sp-3], SEPCH, stack[sp-2], SEPCH, stack[sp-1]);
+				snprintf (tex, MAXINPUT, "@%s(%s%c%s%c%s%c%s)", f->name, stack[sp-4], SEPCH, stack[sp-3], SEPCH, stack[sp-2], SEPCH, stack[sp-1]);
 				goto reduce3;
 			 }
 			}
@@ -183,10 +183,10 @@ while ((opcode = *p.c++) != F_RETURN)
 		stack[sp++] = strdup(tex);
 		break;
 	 reducepair:
-		sprintf (tex, "%s%s%s", stack[sp-2], s, stack[sp-1]);
+		snprintf (tex, MAXINPUT, "%s%s%s", stack[sp-2], s, stack[sp-1]);
 		goto reduce;
 	 reducestrpair:
-		sprintf (tex, "%c%s%s%c%s",
+		snprintf (tex, MAXINPUT, "%c%s%s%c%s",
 			*stack[sp-2]=='"'?' ':'#', stack[sp-2], s,
 			*stack[sp-1]=='"'?' ':'#', stack[sp-1]);
 		goto reduce;
