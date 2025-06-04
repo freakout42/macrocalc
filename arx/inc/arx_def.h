@@ -132,6 +132,8 @@ double lib_iee2 (double d);
 #define UNIX
 #endif
 
+#define CHARSET "en_US.iso885915"
+
 int lib_akey (char *logo, int show);
 char *lib_veid (void);
 void lib_fatl (int s, char *msg, ...);

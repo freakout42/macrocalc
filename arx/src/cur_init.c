@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
+#include <locale.h>
 #include <arx_def.h>
 #include <cur_def.h>
 #include <fcntl.h>
@@ -30,6 +31,8 @@ WINDOW		*stdscreen;
 int		inpipe[2];
 unsigned int	flags;
 char		*devtty = "/dev/tty";
+char *username;
+char *lclocale;
 
 #ifndef WIN32
 struct termios termio;
@@ -79,7 +82,9 @@ if (around >= 3)
 
 cur_redir = around;
 
+/* user and charset environment */
 #ifdef WIN32
+username = getenv("USERNAME");
 #define ISO_8859_15_CP 28605
 /*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
 SetConsoleCP(ISO_8859_15_CP);
@@ -90,7 +95,10 @@ SetConsoleOutputCP(ISO_8859_15_CP);
  * setenv("LANG", ISO_8859_15_CP, 1);
  */
 /* ESC % @ */
+username = getenv("USER");
+setenv("LC_ALL", CHARSET, 1);
 #endif
+lclocale = setlocale(LC_ALL, CHARSET);
 
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
