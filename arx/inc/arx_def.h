@@ -127,12 +127,20 @@ double lib_iee2 (double d);
 #define PLATFORM	"Unknown"
 #endif
 
-#define	COPYRIGHT	PLATFORM " (c)" "2024" " " CORPORATION
+#define	COPYRIGHT	PLATFORM " (c)" "2025" " " CORPORATION
 #if defined(unix) || defined(__unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #define UNIX
 #endif
 
+/* dynamic
+#ifdef WACS_ULCORNER
+#define UTF8 1
+#define CHARSET "en_US.UTF-8"
+#else
 #define CHARSET "en_US.iso885915"
+#endif
+ */
+#define CHARSET ""
 
 int lib_akey (char *logo, int show);
 char *lib_veid (void);

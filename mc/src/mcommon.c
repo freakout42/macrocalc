@@ -34,6 +34,7 @@ unsigned char defaultwidth = DEFAULTWIDTH;
 unsigned char colors = TRUE;
 char currency = '$';
 int ysiz, xsiz;
+char cursesversion[4];
 int screencol = 80;
 int screenlin = 24;
 int leftmargin = 3;

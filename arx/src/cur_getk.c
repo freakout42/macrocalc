@@ -12,7 +12,7 @@ macro = popen (mf, "r");
 return macro;
 }
 
-int cur_getk (WINDOW *w)
+int cur_getk ()
 {
 int ch;
 
@@ -22,15 +22,19 @@ if (macro != NULL)
 	pclose (macro);
 	macro	= NULL;
 	}
-return cur_getp(w);
+return cur_getp(stdscr);
 }
 
 int cur_getp (WINDOW *w)
 {
-register int		ch;
+int ch;
 
 wrefresh (w);
+#ifdef UTF8
+add_wch(&ch);
+#else
 ch = wgetch (w);
+#endif
 #ifdef WIN32
 if (ch < 0) ch = 256 + ch;
 #endif

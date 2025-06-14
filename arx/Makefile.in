@@ -1,13 +1,13 @@
 # arx $Id: Makefile.in,v 1.99 2022/09/29 05:51:36 axel Exp $
 # for: $Os
 
-ARXREL=8
-ARXVER=10
+ARXREL=9
+ARXVER=1
 
 ARX=../../arx
 DIRS=inc src lib
 
-CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='" $(PLATFORM)"'
+CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='" $(PLATFORM)"' -DLIBUILD
 NROFF=$Nroff
 NFLAGS=$Nflag
 AR=$Ar

@@ -1,7 +1,5 @@
-/* $Id: cur_rest.c,v 1.6 2012/02/20 20:00:35 axel Exp $
- */
+/* cur_rest.c */
 
-#define CURSESBUG
 #include <stdio.h>
 #include <errno.h>
 #include <curses.h>
@@ -27,13 +25,6 @@ fprintf (stderr, "tflags: %4x\n", state.sg_flags);
 
 saveterm();
 resetterm();
-
-#ifdef CURSESBUG
-if (exit_attribute_mode!=NULL) tputs (exit_attribute_mode, 1, cur_tput);
-#if NCURSES_VERSION_MAJOR < 5
-curscr->_attrs = A_NORMAL;
-#endif
-#endif
 
 cur_goll();
 cur_tput('\n');

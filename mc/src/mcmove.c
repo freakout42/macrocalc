@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <arx_def.h>
+#define LIBUILD
 #include <cur_def.h>
 #include "mc.h"
 #include "mcdisply.h"

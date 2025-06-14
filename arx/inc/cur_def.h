@@ -1,4 +1,7 @@
-/* cur_def.h */
+/* cur_def.h
+ * https://superjamie.github.io/2022/08/06/ncursesw
+ */
+#define _XOPEN_SOURCE_EXTENDED 1
 
 #ifdef _POSIX_SOURCE
 #define ARX_POSIX_SOURCE _POSIX_SOURCE
@@ -10,8 +13,28 @@
 #include <ncurses/ncurses.h>
 #endif
 
+#ifdef LIBUILD
 #ifndef CURSES_H
+#ifdef UTF8
+#include <ncurses/ncursesw.h>
+#define CURVARIANT w
+#else
 #include <curses.h>
+#define CURVARIANT n
+#endif
+#endif
+#define curcs1(m, i, l) #m "." #i "-" #l
+#define curcs(m, i, l) curcs1(m, i, l)
+#define CURSESVERSION curcs(NCURSES_VERSION_MAJOR, NCURSES_VERSION_MINOR, CURVARIANT)
+#else
+typedef void *WINDOW;
+extern WINDOW *stdscr;
+#define move(y,x) wmove(stdscr,y,x)
+extern int clrtoeol (void);
+extern int clearok (WINDOW *,unsigned);
+extern int delch (void);
+extern int wmove (WINDOW *,int,int);
+#include <key_def.h>
 #endif
 
 #if (__FreeBSD__ | __APPLE__)
@@ -38,9 +61,9 @@ extern FILE	*std_in, *std_out, *std_err, *std_erread;
 FILE		*cur_maco();
 #endif
 
-WINDOW *cur_init (int around);
+WINDOW *cur_init (int around, int *ysz, int *xsz, unsigned char *col);
 void cur_exit (int status);
-int cur_getk (WINDOW *w);
+int cur_getk ();
 int cur_getp (WINDOW *w);
 int cur_gets (WINDOW *w, int y, int x, int width, int att, char *s, int pos, char *legal, int maxlength, int *chg, char *(*f4edit)(char *fml, char *pos));
 int cur_satt (WINDOW *w, unsigned int attrib);

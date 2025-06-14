@@ -1,8 +1,9 @@
-/* mcput.c,v 1.5 1995/05/20 16:21:37 axel */
+/* mcput.c */
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <arx_def.h>
+#define LIBUILD
 #include <cur_def.h>
 #include "mc.h"
 #include "mcput.h"
@@ -34,11 +35,6 @@ va_start (args, format);
 vsnprintf (s, MAXINPUT, format, args);
 va_end (args);
 
-#ifdef CURSESBUG
-mvaddch (0, 79, ' ');
-refresh();
-#endif
-
 cur_satt (stdscr, color);
 setcolor(colcode);
 s[SCREENWIDTH+1] = '\0';
@@ -58,10 +54,5 @@ for (; x1<=x2; x1++)
 	{
 	move (x1, y1),
 	clrtoeol();
-
-#ifdef CURSESBUG
-	mvaddch (x1, 79, ' ');
-#endif
-
 	}
 }

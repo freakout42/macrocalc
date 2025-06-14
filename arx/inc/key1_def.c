@@ -20,6 +20,8 @@ defkey(END)
 defkey(HOME)
 defkey(IC)
 defkey(DC)
+defkey(SUSPEND)
+defkey(CANCEL)
 defkey(F0)
 defkey(F(n))
 return 0;

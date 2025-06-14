@@ -4,10 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <arx_def.h>
+#include <cur_def.h>
 
 #define KEYLENGTH	4
 
-static char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " $";
+static char *rcsinfolib = "$""Id: arxlib " ARXREL "." ARXVER " " PLATFORM CCOMPILER " " CURSESVERSION " $";
 
 int lib_akey (char *logo, int show)
 {

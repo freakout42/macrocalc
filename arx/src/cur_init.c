@@ -25,7 +25,7 @@ FILE	*std_erread	= NULL;
 struct termios otermio;
 #endif
 
-WINDOW	*cur_init (int around)
+WINDOW	*cur_init (int around, int *ysz, int *xsz, unsigned char *col)
 {
 WINDOW		*stdscreen;
 int		inpipe[2];
@@ -33,6 +33,7 @@ unsigned int	flags;
 char		*devtty = "/dev/tty";
 char *username;
 char *lclocale;
+int ysiz, xsiz;
 
 #ifndef WIN32
 struct termios termio;
@@ -93,10 +94,10 @@ SetConsoleOutputCP(ISO_8859_15_CP);
 /* #define ISO_8859_15_CP "en_US.iso885915"
  * setenv("LC_ALL", ISO_8859_15_CP, 1);
  * setenv("LANG", ISO_8859_15_CP, 1);
+ * setenv("LC_ALL", CHARSET, 1);
  */
 /* ESC % @ */
 username = getenv("USER");
-setenv("LC_ALL", CHARSET, 1);
 #endif
 lclocale = setlocale(LC_ALL, CHARSET);
 
@@ -145,6 +146,15 @@ init_tabs		= 0;
 intrflush(stdscr,FALSE);
 #endif
 keypad(stdscr,TRUE);
+
+getmaxyx(stdscr, ysiz, xsiz);
+*ysz = ysiz;
+*xsz = xsiz;
+if (*col && has_colors()) {
+  mcolor0();
+} else {
+  *col = FALSE;
+}
 
 return stdscreen;
 }

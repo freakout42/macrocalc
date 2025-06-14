@@ -52,17 +52,11 @@ if (readmenus())
 #else
 	#define	CURINIT	3
 #endif
-if (cur_init(CURINIT) == NULL)
+if (cur_init(CURINIT, &ysiz, &xsiz, &colors) == NULL)
 	{
 	fprintf (stderr, "mc: no curses.\n");
 	exit (EXIT_FAILURE);
 	}
-getmaxyx(stdscr, ysiz, xsiz);
-if (colors && has_colors()) {
-  mcolor0();
-} else {
-  colors = FALSE;
-}
 #ifdef DEBUG
 /* fd = fileno(std_erread);
  * flags = fcntl (fd, F_GETFL, 0);

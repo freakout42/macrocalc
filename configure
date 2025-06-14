@@ -3,7 +3,8 @@ test -f mc/Name || exit 1
 VERSID=`awk '{print substr($2,2)}' mc/Name`
 case `uname -s` in
   Linux|CYGWIN_NT-*)   HARDID=`uname -i 2>/dev/null`
-           if [ "$HARDID" = "x86_64" ]; then PLATID=l6; else PLATID=lu; fi           
+           if [ "$HARDID" = "x86_64" ]; then PLATID=l6; else PLATID=lu; fi
+           test -f /usr/include/ncursesw/curses.h && PLATID=lw
            test "${HARDID:-unknown}" = "unknown" && HARDID=`uname -m`
            test "${HARDID}" = "GenuineIntel" && HARDID=`uname -m`
            test "${HARDID}" = "i686" && HARDID=i386

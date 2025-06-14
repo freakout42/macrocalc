@@ -10,19 +10,12 @@
 
 int getkey (void)
 {
-return cur_getk (stdscr);
+return cur_getk();
 }
 
 void clearinput (void)
 /* Clears the input line */
 {
-
-#ifdef CURSESBUG
-move (23, 79);
-delch ();
-mvaddch (inputline, 79, ' ');
-#endif
-
 move (inputline, 0);
 clrtoeol();
 } /* clearinput */
