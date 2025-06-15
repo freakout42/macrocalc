@@ -1,5 +1,4 @@
-/* $Id: mcput.h,v 1.1 1995/02/16 21:49:09 axel Rel $
- */
+/* mcput.h */
 
 void mcrefresh (void);
 void writef (int x, int y, int color, int width, char *format, ...);

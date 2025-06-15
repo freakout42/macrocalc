@@ -73,3 +73,4 @@ int cur_gmnu (WINDOW *w, int y, int x, int width, char *m);
 void cur_rest (void);
 void cur_fixt (void);
 int cur_tput (int c);
+void cur_refr (void);

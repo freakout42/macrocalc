@@ -1,10 +1,17 @@
-/* $Id: cur_goll.c,v 1.6 1999/10/14 18:21:57 axel Exp $
- * curses goto lower left
+/* cur_goll.c
+ * curses misc output
  */
 
 #include <stdio.h>
 #include <cur_def.h>
 #include <term.h>
+
+void cur_refr (void)
+/* Refresh the entire screen */
+{
+clearok (stdscr, TRUE);
+return;
+}
 
 int cur_tput (int c)
 {

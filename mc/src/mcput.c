@@ -12,8 +12,7 @@
 void mcrefresh (void)
 /* Refresh the entire screen */
 {
-clearok (stdscr, TRUE);
-return;
+cur_refr();
 } /* mcrefresh */
 
 void writef (int x, int y, int colcode, int width, char *format, ...)
