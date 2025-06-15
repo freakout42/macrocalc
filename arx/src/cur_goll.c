@@ -6,6 +6,13 @@
 #include <cur_def.h>
 #include <term.h>
 
+void cur_coor (int *y, int *x) {
+int	cy=0, cx=0; /* screen positions */
+getyx (stdscr, cy, cx);
+*y = cy;
+*x = cx;
+}
+
 void cur_refr (void)
 /* Refresh the entire screen */
 {

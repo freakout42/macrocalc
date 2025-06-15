@@ -26,14 +26,19 @@
 #define curcs1(m, i, l) #m "." #i "-" #l
 #define curcs(m, i, l) curcs1(m, i, l)
 #define CURSESVERSION curcs(NCURSES_VERSION_MAJOR, NCURSES_VERSION_MINOR, CURVARIANT)
+#include <key2_def.h>
 #else
 typedef void *WINDOW;
 extern WINDOW *stdscr;
 #define move(y,x) wmove(stdscr,y,x)
-extern int clrtoeol (void);
-extern int clearok (WINDOW *,unsigned);
-extern int delch (void);
-extern int wmove (WINDOW *,int,int);
+int clrtoeol (void);
+int clearok (WINDOW *,unsigned);
+int delch (void);
+int wmove (WINDOW *,int,int);
+int deleteln (void);
+int insertln (void);
+int mvprintw (int,int,char *,...);
+int beep (void);
 #include <key_def.h>
 #endif
 
@@ -45,8 +50,6 @@ extern int wmove (WINDOW *,int,int);
 #define _POSIX_SOURCE ARX_POSIX_SOURCE
 #undef ARX_POSIX_SOURCE
 #endif
-
-#include <key2_def.h>
 
 extern int	cur_redir;
 extern struct termios otermio;
@@ -74,3 +77,8 @@ void cur_rest (void);
 void cur_fixt (void);
 int cur_tput (int c);
 void cur_refr (void);
+int mcode2att(int colcode);
+void mcolor0(void);
+void setcolor(int pairi);
+void uncolor(int pairi);
+void cur_coor (int *y, int *x);

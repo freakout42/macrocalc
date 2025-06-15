@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <arx_def.h>
+#include <cur_def.h>
 #include "mc.h"
 #include "mcgetmnu.h"
 #include "mcellact.h"

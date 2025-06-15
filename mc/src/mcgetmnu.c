@@ -4,7 +4,6 @@
 #include <string.h>
 #include <arx_def.h>
 #include <str_def.h>
-#define LIBUILD
 #include <cur_def.h>
 #include "mc.h"
 #include "mcgetmnu.h"

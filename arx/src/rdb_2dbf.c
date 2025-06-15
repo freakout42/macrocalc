@@ -13,7 +13,6 @@ int rdb_2dbf (struct DBF *td, struct DBF *sd)
 unsigned char fld, length;
 struct FIELD_RECORD *sf, *tf;
 char *tt, *st;
-int tl;
 double	val;
 int year, month, day;
 

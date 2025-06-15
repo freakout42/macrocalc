@@ -4,7 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <arx_def.h>
-#define LIBUILD
 #include <cur_def.h>
 #include <term.h>
 #include "mc.h"

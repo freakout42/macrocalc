@@ -1,6 +1,6 @@
 /* mcellstr.c */
 
-#pragma GCC diagnostic ignored "-Wformat-overflow"
+//#pragma GCC diagnostic ignored "-Wformat-overflow"
 
 #include <stdio.h>
 #include <string.h>

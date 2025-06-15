@@ -6,6 +6,10 @@
 #define defke2(keyname, keyvalue) defke3(keyname, keyvalue)
 #define defkey(keyname)           defke2(#keyname, KEY_##keyname)
 
+#define defat3(keyname, keyvalue) printf("#define A_%s %s\n", keyname, #keyvalue);
+#define defat2(keyname, keyvalue) defat3(keyname, keyvalue)
+#define defatt(attname)           defat2(#attname, A_##attname)
+
 int main() {
 defkey(BACKSPACE)
 defkey(NEXT)
@@ -24,6 +28,9 @@ defkey(SUSPEND)
 defkey(CANCEL)
 defkey(F0)
 defkey(F(n))
+defatt(NORMAL)
+defatt(BOLD)
+defatt(UNDERLINE)
 return 0;
 }
 #else

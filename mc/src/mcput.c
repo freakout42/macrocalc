@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <arx_def.h>
-#define LIBUILD
 #include <cur_def.h>
 #include "mc.h"
 #include "mcput.h"
@@ -29,7 +28,7 @@ switch (colcode & BIMASK) {
   case ITALIC: color |= A_UNDERLINE; break;
 }
 colcode &= TYPEM;
-getyx (stdscr, oldy, oldx);
+cur_coor (&oldy, &oldx);
 va_start (args, format);
 vsnprintf (s, MAXINPUT, format, args);
 va_end (args);
