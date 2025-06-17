@@ -1,4 +1,4 @@
-/* wksfio.c 1.15 2001/11/07 19:18:33 axel */
+/* wksfio.c */
 
 //#pragma GCC diagnostic ignored "-Waddress-of-packed-member"
 
