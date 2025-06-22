@@ -15,6 +15,7 @@
 
 int	cur_redir;
 int cur_colors;
+int cur_utf8;
 
 FILE	*std_in		= NULL;
 FILE	*std_out	= NULL;
@@ -179,6 +180,7 @@ SetConsoleOutputCP(ISO_8859_15_CP);
 username = getenv("USER");
 #endif
 lclocale = setlocale(LC_ALL, CHARSET);
+cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
 
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG

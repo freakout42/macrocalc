@@ -3,6 +3,7 @@
 //#pragma GCC diagnostic ignored "-Wformat-overflow"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <float.h>
@@ -71,21 +72,32 @@ static void textstring (char *instring, char *outstring,
 			int col, unsigned int format, int formatting)
 /* Sets the string representation of text */
 {
+#ifdef NOUTF8
 char		*ljust = "%-*s", *rjust = "%*s ";
+#else
+char		*ljust = "%-s", *rjust = "%s ";
+#endif
 char		*just	= ljust;
+char *adjusted;
 unsigned char	width	= colwidth[col];
 
 if (formatting!=NOFORMAT && formatting!=FVALUE && format==(SPECIAL|HIDDEN)) {*outstring = '\0'; return;}
 switch (*instring)
  {
  case STRRIGHT:
-	if (formatting) {just = rjust; width--;}
+	if (formatting) {just = rjust; width = -(width - 1);}
 	/*FALLTHRU*/
  case STRLEFT:
  case STRCENTER:
 	instring++;
  default:
+#ifdef NOUTF8
 	sprintf(outstring, just, width, instring);
+#else
+	adjusted = str_sub(instring, 0, width);
+	sprintf(outstring, just, adjusted);
+  free(adjusted);
+#endif
 	switch (formatting) {
 	 case FORMAT:
 	 case FPRINT:
