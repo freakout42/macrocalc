@@ -29,7 +29,6 @@
 #include <key2_def.h>
 #else
 typedef void *WINDOW;
-extern int cur_utf8;
 extern WINDOW *stdscr;
 #define move(y,x) wmove(stdscr,y,x)
 int clrtoeol (void);

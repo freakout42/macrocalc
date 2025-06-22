@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <locale.h>
 #include <arx_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include <fcntl.h>
 #if (COHERENT | linux | __CYGWIN__)
@@ -15,7 +16,6 @@
 
 int	cur_redir;
 int cur_colors;
-int cur_utf8;
 
 FILE	*std_in		= NULL;
 FILE	*std_out	= NULL;

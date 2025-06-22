@@ -10,8 +10,9 @@
 #include <arx_def.h>
 #include <str_def.h>
 
+int cur_utf8 = 0;
+
 char *str_sub(char *s, int f, int l) {
-/* count += (*s++ & 0xC0) != 0x80; */
 char *tg;
 char sv;
 char *p;
@@ -20,7 +21,7 @@ int n, m, o;
 o = abs(l);
 n = 0;
 q = s;
-for (p = s; *p; p++) {
+for (p = s; *p; p++) if (!cur_utf8 || (*p & 0xC0) != 0x80) {
   if (n == f) q = p;
   if (n >= f+o) break;
   n++;
@@ -58,6 +59,8 @@ return (p-s+1);
 main()
 {
 	char buf[80];
+
+  int cur_utf8 = 1;
 
 	while (NULL != gets(buf)) {
     buf[strlen(buf)-1] = '\0';

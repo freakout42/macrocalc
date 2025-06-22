@@ -22,6 +22,7 @@ char *str_repl (char *v, char *s, char *t);
 double str_chkd (const char *s);
 char *str_inc (char *s, const char ic);
 char *str_ins (char *s, char *i);
+extern int cur_utf8;
 
 #ifdef DUMMY
 char *str_repl (char *s, size_t size, const char *old, const char *new);
