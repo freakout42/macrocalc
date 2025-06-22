@@ -547,6 +547,7 @@ t : STR
 	yyopcode (F_VARIABLE, &c123, sizeof(c123));
 #else
 	$$ = celltext (adrval($2.col), adrval($2.row));
+  if ($$ == NULL) $$ = yystr ("");
 #ifdef DEBUG
 	fprintf (stderr, "mcpary: STRCAT s=\"%s\"\n", $$);
 #endif

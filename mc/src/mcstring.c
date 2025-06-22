@@ -1,9 +1,8 @@
-/* $Id: mcstring.c,v 1.3 1995/02/24 10:25:13 axel Rel $
- */
+/* mcstring.c */
 
 #include <string.h>
 
 double length (char *s)
 {
-return (int)strlen(s);
+return s==NULL ? -1 : (int)strlen(s);
 }
