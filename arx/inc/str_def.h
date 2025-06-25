@@ -10,7 +10,7 @@ char *str_gecs (FILE *fp, char *s, size_t n);
 
 char *str_trim (char *s);
 int str_tlen (char *s);
-char *str_sub(char *s, int f, int l);
+char *str_sub(char *s, int f, int l, int z);
 char *str_upr (char *s);
 char *str_low (char *s);
 char *str_tr (char *v, char s, char t);

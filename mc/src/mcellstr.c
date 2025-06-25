@@ -72,20 +72,24 @@ static void textstring (char *instring, char *outstring,
 			int col, unsigned int format, int formatting)
 /* Sets the string representation of text */
 {
+#define NOUTF8y
 #ifdef NOUTF8
 char		*ljust = "%-*s", *rjust = "%*s ";
 #else
 char		*ljust = "%-s", *rjust = "%s ";
+char *adjusted;
 #endif
 char		*just	= ljust;
-char *adjusted;
-unsigned char	width	= colwidth[col];
+int width	= colwidth[col];
 
 if (formatting!=NOFORMAT && formatting!=FVALUE && format==(SPECIAL|HIDDEN)) {*outstring = '\0'; return;}
 switch (*instring)
  {
  case STRRIGHT:
-	if (formatting) {just = rjust; width = -(width - 1);}
+  if (formatting) {just = rjust; width--;}
+#ifndef NOUTF8
+  if (formatting) width = -width;
+#endif
 	/*FALLTHRU*/
  case STRLEFT:
  case STRCENTER:
@@ -94,14 +98,17 @@ switch (*instring)
 #ifdef NOUTF8
 	sprintf(outstring, just, width, instring);
 #else
-	adjusted = str_sub(instring, 0, width);
+	adjusted = str_sub(instring, 0, width, (formatting==FORMAT || formatting==FPRINT) ? colwidth[col] : 0);
+//  fprintf(stderr, ":%s: = str_sub(:%s:, 0, %d, 0)\n", adjusted, instring, width);
 	sprintf(outstring, just, adjusted);
   free(adjusted);
 #endif
 	switch (formatting) {
 	 case FORMAT:
 	 case FPRINT:
+#ifdef NOUTF8
 		outstring[colwidth[col]] = '\0';
+#endif
 		break;
 	 }
 	break;
@@ -281,6 +288,10 @@ int		pos;
 CELLPTR		cp;
 unsigned char	typ = EMPTY;
 int		visible = FALSE;
+#undef NOUTF8
+#ifndef NOUTF8
+char *adjusted;
+#endif
 
 s = s1+1;
 cp = cell (col, row);
@@ -308,12 +319,20 @@ if (cp == NULL)
 	else
 		{
 		p = celltext(newcol, row);
-		for (pos = 0; newcol < col; pos += colwidth[newcol++]);
+		for (pos = 0; newcol < col; pos += colwidth[newcol++]); /* left side truncate */
+#ifdef NOUTF8
 		p += min(strlen(p), (size_t)pos);
 		visible = (*p != '\0');
 		strncpy(temp, p, colwidth[col]);
 		temp[colwidth[col]] = '\0';
 		sprintf(s, "%s%*s", temp, (int)(colwidth[col] - strlen(temp)), "");
+#else
+    adjusted = str_sub(p, pos, colwidth[col], colwidth[col]);
+    visible = !strcspn(adjusted, " ");
+// fprintf(stderr, "%d:%s: = str_sub(:%s:, %d, %d, %d)\n", visible, adjusted, p, pos, colwidth[col], colwidth[col]);
+    strcpy(s, adjusted);
+    free(adjusted);
+#endif
 		*color = TEXTCOLOR;
 		}
 	}
