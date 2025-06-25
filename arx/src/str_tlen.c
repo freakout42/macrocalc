@@ -14,7 +14,7 @@ int cur_utf8 = 0;
 
 char *str_sub(char *s, int f, int l, int z) {
 char *tg;
-char sv;
+char sv = '\0';
 char *p;
 char *q;
 int n, m, o, r;
