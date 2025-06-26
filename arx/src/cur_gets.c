@@ -6,11 +6,18 @@
  */
 
 #include <stdio.h>
-#include <curses.h>
 #include <string.h>
 #include <arx_def.h>
 #include <str_def.h>
 #include <cur_def.h>
+
+static void cur_adds(WINDOW *w, char *s) {
+#ifdef UTF8
+  waddstr(w, s);
+#else
+  waddstr(w, s);
+#endif
+}
 
 int cur_gets (WINDOW *w, int y, int x, int width, int att,
 	char *s, int pos, char *legal, int maxlength, int *chg,
@@ -21,7 +28,7 @@ int done = FALSE;				/* end-of-loop flag	*/
 int changed = FALSE;				/* changed the string	*/
 int first = TRUE;				/* first input flag	*/
 int c = 0;					/* input key		*/
-int sx = x+pos;					/* current position x	*/
+int sx;					/* current position x	*/
 int len = strlen(s);				/* currrent string len	*/
 char *tab;					/* position of tab	*/
 char se[MAXINPUT];				/* my copy of string	*/
@@ -29,8 +36,21 @@ char *so = se;					/* position in string	*/
 char tmp[MAXSCREENWIDTH+1];			/* output string	*/
 int endx = x + width - 1;			/* end position		*/
 char *f4pos; /* pos after f4-processing */
+#ifdef UTF8
+int i;
+wchar_t sew[MAXINPUT+1];
+#endif
+
 if (strlen(s) > MAXINPUT) return(KEY_ESC);
+pos = str_pos(s, pos);
+sx = x+pos;					/* current position x	*/
+#ifdef UTF8
+len = mbstowcs(sew, s, MAXINPUT);
+if (len == -1) return(KEY_ESC);
+for (i=0; i<=len; i++) se[i] = (unsigned char)sew[i];
+#else
 strcpy(se, s);					/* save input string	*/
+#endif
 cur_satt(w, att);				/* set attribute	*/
 while (!done)					/* input loop		*/
 	{
@@ -43,7 +63,7 @@ while (!done)					/* input loop		*/
 	snprintf(tmp, width, "%-*.*s", width, width, so);/* output string	*/
 	tmp[width] = '\0';			/* cut to width		*/
 	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' '; /* tab era	*/
-	waddstr(w, tmp);			/* paint out string	*/
+	cur_adds(w, tmp);			/* paint out string	*/
 	if (pos==-1) break;			/* done if only paint	*/
 	if (so > se && sx > x) mvwaddch (w, y, x, '<');/* signal overfl	*/
 	if ((int)strlen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
@@ -109,7 +129,7 @@ while (!done)					/* input loop		*/
 		snprintf(tmp, width, "%-*.*s", width, width, s);
 		tmp[width] = '\0';
 		while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' ';
-		waddstr(w, tmp);
+		cur_adds(w, tmp);
 		changed = FALSE;
 		done = TRUE;
 		break;
@@ -158,7 +178,16 @@ while (!done)					/* input loop		*/
 	se[len] = '\0';
 	}
 cur_satt(w, 0);
-if (changed) strcpy(s, se);
+if (changed) {
+#ifdef UTF8
+len = strlen(se);
+for (i=0; i<=len; i++) sew[i] = (unsigned char)se[i];
+len = wcstombs(s, sew, MAXINPUT*2);
+//if (len == -1) return(KEY_ESC);
+#else
+strcpy(s, se);
+#endif
+}
 if (chg) *chg = changed;
 return(c);
 }

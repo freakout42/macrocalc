@@ -28,10 +28,14 @@ return cur_getp(stdscr);
 int cur_getp (WINDOW *w)
 {
 int ch;
+#ifdef UTF8
+wint_t keypress = { 0 };
+#endif
 
 wrefresh (w);
 #ifdef UTF8
-add_wch(&ch);
+wget_wch (w, &keypress);
+ch = keypress;
 #else
 ch = wgetch (w);
 #endif

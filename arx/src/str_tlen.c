@@ -12,6 +12,23 @@
 
 int cur_utf8 = 0;
 
+int str_pos(char *s, int f) {
+char *p;
+int n, m;
+n = 0;
+m = 0;
+for (p = s; *p; p++) {
+  if (m++ >= f) break;
+  if (!cur_utf8 || (*p & 0xC0) != 0x80) n++;
+  }
+return n;
+}
+
+/* s iso or utf-8 (cur_utf8=TRUE) char[]
+ * f from pos
+ * l min size padded <0 right align
+ * z max length
+ */
 char *str_sub(char *s, int f, int l, int z) {
 char *tg;
 char sv = '\0';
@@ -69,6 +86,7 @@ main()
 {
 	char buf[80];
 	char *out;
+  int pos;
 
 cur_utf8 = 1;
 
@@ -90,5 +108,15 @@ testsub(0123,   2, -4,  0, "  23"            );
 testsub(metric,11, 16, 16, "                ");
 testsub(hallochen1234567890123456789,0,10,10, "hallochen1");
 testsub(hall£chen1234567890123456789,0,10,10, "hall£chen1");
+
+#define testpos(bf, fi, li) \
+strcpy(buf, #bf); \
+pos = str_pos(buf, fi); \
+if (pos != li) printf(#fi ", " #li " failed with :%s: %d\n", buf, pos);
+
+testpos(hall£chen10,10,9);
+testpos(hall£chen10,0,0);
+testpos(hall£chen10,2,2);
+testpos(hall£chen10,12,11);
 }
 #endif
