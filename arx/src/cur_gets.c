@@ -45,7 +45,6 @@ int endx = x + width - 1;			/* end position		*/
 char *f4pos; /* pos after f4-processing */
 #ifdef UTF8
 int i;
-char *tmp2;
 wchar_t sew[MAXINPUT+1];
 #endif
 
@@ -73,10 +72,9 @@ while (!done)					/* input loop		*/
 	fprintf(stderr,"snprintf(tmp, MAXSCREENWIDTH*2, \"%%-*.*s\", %d, width, :%s:)=>:%s:\n",width,so,tmp);
 	tmp[width] = '\0';			//cut to width
  */
-	tmp2 = str_sub(so, 0, width, width);/* output string	*/
-	while ((tab = strchr(tmp2,'\t')) != NULL) *tab = ' '; /* tab era	*/
-	cur_adds(w, tmp2);			/* paint out string	*/
-	free(tmp2);
+	str_sub(tmp, so, 0, width, width);/* output string	*/
+	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' '; /* tab era	*/
+	cur_adds(w, tmp);			/* paint out string	*/
 	if (pos==-1) break;			/* done if only paint	*/
 	if (so > se && sx > x) mvwaddch (w, y, x, '<');/* signal overfl	*/
 	if ((int)strlen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');

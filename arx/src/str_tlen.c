@@ -29,8 +29,7 @@ return n;
  * l min size padded <0 right align
  * z max length
  */
-char *str_sub(char *s, int f, int l, int z) {
-char *tg;
+char *str_sub(char *tg, char *s, int f, int l, int z) {
 char sv = '\0';
 char *p;
 char *q;
@@ -53,7 +52,7 @@ if (z > 0) {
   *p = '\0';
 }
 m = strlen(q);
-if ((tg = malloc(m + 1 + o + r)) == NULL) return NULL;
+if (tg==NULL && ((tg = malloc(m + 1 + o + r)) == NULL)) return NULL;
 if (o-n > 0) {
  if (l < 0) {
   memset(tg, ' ', o-n);

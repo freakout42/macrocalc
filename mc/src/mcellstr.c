@@ -98,8 +98,8 @@ switch (*instring)
 #ifdef NOUTF8
 	sprintf(outstring, just, width, instring);
 #else
-	adjusted = str_sub(instring, 0, width, (formatting==FORMAT || formatting==FPRINT) ? colwidth[col] : 0);
-//  fprintf(stderr, ":%s: = str_sub(:%s:, 0, %d, 0)\n", adjusted, instring, width);
+	adjusted = str_sub(NULL, instring, 0, width, (formatting==FORMAT || formatting==FPRINT) ? colwidth[col] : 0);
+//  fprintf(stderr, ":%s: = str_sub(NULL, :%s:, 0, %d, 0)\n", adjusted, instring, width);
 	sprintf(outstring, just, adjusted);
   free(adjusted);
 #endif
@@ -327,9 +327,9 @@ if (cp == NULL)
 		temp[colwidth[col]] = '\0';
 		sprintf(s, "%s%*s", temp, (int)(colwidth[col] - strlen(temp)), "");
 #else
-    adjusted = str_sub(p, pos, colwidth[col], colwidth[col]);
+    adjusted = str_sub(NULL, p, pos, colwidth[col], colwidth[col]);
     visible = !strcspn(adjusted, " ");
-// fprintf(stderr, "%d:%s: = str_sub(:%s:, %d, %d, %d)\n", visible, adjusted, p, pos, colwidth[col], colwidth[col]);
+// fprintf(stderr, "%d:%s: = str_sub(NULL, :%s:, %d, %d, %d)\n", visible, adjusted, p, pos, colwidth[col], colwidth[col]);
     strcpy(s, adjusted);
     free(adjusted);
 #endif
