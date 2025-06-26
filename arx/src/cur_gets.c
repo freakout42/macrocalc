@@ -10,10 +10,17 @@
 #include <arx_def.h>
 #include <str_def.h>
 #include <cur_def.h>
+#include <stdlib.h>
 
 static void cur_adds(WINDOW *w, char *s) {
 #ifdef UTF8
-  waddstr(w, s);
+int i, len;
+wchar_t sew[MAXINPUT+1];
+char se[MAXINPUT*2];
+len = strlen(s);
+for (i=0; i<=len; i++) sew[i] = (unsigned char)s[i];
+len = wcstombs(se, sew, MAXINPUT*2);
+  waddstr(w, se);
 #else
   waddstr(w, s);
 #endif
@@ -33,11 +40,12 @@ int len = strlen(s);				/* currrent string len	*/
 char *tab;					/* position of tab	*/
 char se[MAXINPUT];				/* my copy of string	*/
 char *so = se;					/* position in string	*/
-char tmp[MAXSCREENWIDTH+1];			/* output string	*/
+char tmp[MAXSCREENWIDTH*2+1];			/* output string	*/
 int endx = x + width - 1;			/* end position		*/
 char *f4pos; /* pos after f4-processing */
 #ifdef UTF8
 int i;
+char *tmp2;
 wchar_t sew[MAXINPUT+1];
 #endif
 
@@ -60,10 +68,15 @@ while (!done)					/* input loop		*/
 		so = se + pos - width + 1;
 		}
 	wmove(w, y, x);				/* move to print string	*/
-	snprintf(tmp, width, "%-*.*s", width, width, so);/* output string	*/
-	tmp[width] = '\0';			/* cut to width		*/
-	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' '; /* tab era	*/
-	cur_adds(w, tmp);			/* paint out string	*/
+/* printf does not work with utf8 locale
+	snprintf(tmp, MAXSCREENWIDTH*2, "%-*.*s", width, width, so);
+	fprintf(stderr,"snprintf(tmp, MAXSCREENWIDTH*2, \"%%-*.*s\", %d, width, :%s:)=>:%s:\n",width,so,tmp);
+	tmp[width] = '\0';			//cut to width
+ */
+	tmp2 = str_sub(so, 0, width, width);/* output string	*/
+	while ((tab = strchr(tmp2,'\t')) != NULL) *tab = ' '; /* tab era	*/
+	cur_adds(w, tmp2);			/* paint out string	*/
+	free(tmp2);
 	if (pos==-1) break;			/* done if only paint	*/
 	if (so > se && sx > x) mvwaddch (w, y, x, '<');/* signal overfl	*/
 	if ((int)strlen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
