@@ -67,7 +67,7 @@ while (!done)					/* input loop		*/
 		so = se + pos - width + 1;
 		}
 	wmove(w, y, x);				/* move to print string	*/
-/* printf does not work with utf8 locale
+/* printf does not work with utf8 locale because we faked to use iso8859-1
 	snprintf(tmp, MAXSCREENWIDTH*2, "%-*.*s", width, width, so);
 	fprintf(stderr,"snprintf(tmp, MAXSCREENWIDTH*2, \"%%-*.*s\", %d, width, :%s:)=>:%s:\n",width,so,tmp);
 	tmp[width] = '\0';			//cut to width

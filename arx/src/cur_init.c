@@ -144,6 +144,10 @@ cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
 
 if (around < 0) return NULL;
 
+#ifndef UTF8
+if (cur_utf8) return NULL;
+#endif
+
 if (around >= 1)
 	{
 	if ((std_in = lib_freo (devtty, "r+", stdin)) == NULL)
