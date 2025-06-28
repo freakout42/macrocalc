@@ -185,6 +185,7 @@ while (1) {
 		break;
 	 case 'p':
 	 case 'q':
+    cur_init(-1, NULL, NULL, NULL);
 		markfull = TRUE;
 		initvars();
 		switch (loadfile (stdin))

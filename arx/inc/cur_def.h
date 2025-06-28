@@ -15,11 +15,11 @@
 
 #ifdef LIBUILD
 #ifndef CURSES_H
-#ifdef UTF8
-#include <ncurses/ncursesw.h>
+#include <curses.h>
+#ifdef NCURSES_WACS
+#define UTF8
 #define CURVARIANT w
 #else
-#include <curses.h>
 #define CURVARIANT n
 #endif
 #endif

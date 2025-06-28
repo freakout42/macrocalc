@@ -219,6 +219,7 @@ struct file *lib_stat (char *f);
 #include <unistd.h>
 #endif
 
+#define MAXSTRING	64*1024 /* max string length */
 #define MAXPATH	1024		/* Size of static pathname buffer */
 extern char *lib_path (char *path, char *file, int mode);
 

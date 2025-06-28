@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <locale.h>
 #include <arx_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include <fcntl.h>
 #if (COHERENT | linux | __CYGWIN__)
@@ -122,6 +123,31 @@ struct termios termio;
 signal(SIGFPE, SIG_IGN);
 #endif
 
+/* user and charset environment */
+#ifdef WIN32
+username = getenv("USERNAME");
+#define ISO_8859_15_CP 28605
+/*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
+SetConsoleCP(ISO_8859_15_CP);
+SetConsoleOutputCP(ISO_8859_15_CP);
+#else
+/* #define ISO_8859_15_CP "en_US.iso885915"
+ * setenv("LC_ALL", ISO_8859_15_CP, 1);
+ * setenv("LANG", ISO_8859_15_CP, 1);
+ * setenv("LC_ALL", CHARSET, 1);
+ */
+/* ESC % @ */
+username = getenv("USER");
+#endif
+lclocale = setlocale(LC_ALL, CHARSET);
+cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
+
+if (around < 0) return NULL;
+
+#ifndef UTF8
+if (cur_utf8) return NULL;
+#endif
+
 if (around >= 1)
 	{
 	if ((std_in = lib_freo (devtty, "r+", stdin)) == NULL)
@@ -161,24 +187,6 @@ if (around >= 3)
 #endif
 
 cur_redir = around;
-
-/* user and charset environment */
-#ifdef WIN32
-username = getenv("USERNAME");
-#define ISO_8859_15_CP 28605
-/*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
-SetConsoleCP(ISO_8859_15_CP);
-SetConsoleOutputCP(ISO_8859_15_CP);
-#else
-/* #define ISO_8859_15_CP "en_US.iso885915"
- * setenv("LC_ALL", ISO_8859_15_CP, 1);
- * setenv("LANG", ISO_8859_15_CP, 1);
- * setenv("LC_ALL", CHARSET, 1);
- */
-/* ESC % @ */
-username = getenv("USER");
-#endif
-lclocale = setlocale(LC_ALL, CHARSET);
 
 if ((stdscreen = initscr()) == NULL) return NULL;
 #ifdef DEBUG
