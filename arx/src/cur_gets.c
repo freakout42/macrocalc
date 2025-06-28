@@ -12,16 +12,13 @@
 #include <cur_def.h>
 #include <stdlib.h>
 
-static void cur_adds(WINDOW *w, char *s) {
 #ifdef UTF8
-int i, len;
-wchar_t sew[MAXINPUT+1];
-char se[MAXINPUT*2];
-len = strlen(s);
-for (i=0; i<=len; i++) sew[i] = (unsigned char)s[i];
-len = wcstombs(se, sew, MAXINPUT*2);
-  waddstr(w, se);
+static int cur_slen(wchar_t *s) { return wcslen(s); }
+static void cur_adds(WINDOW *w, wchar_t *s) {
+  waddwstr(w, s);
 #else
+static int cur_slen(char *s) { return strlen(s); }
+static void cur_adds(WINDOW *w, char *s) {
   waddstr(w, s);
 #endif
 }
@@ -37,24 +34,26 @@ int first = TRUE;				/* first input flag	*/
 int c = 0;					/* input key		*/
 int sx;					/* current position x	*/
 int len = strlen(s);				/* currrent string len	*/
+int i;
+#ifdef UTF8
+wchar_t se[MAXINPUT+1];
+wchar_t *so = se;					/* position in string	*/
+wchar_t tmp[MAXSCREENWIDTH*2+1];			/* output string	*/
+#else
 char *tab;					/* position of tab	*/
-char se[MAXINPUT];				/* my copy of string	*/
+char se[MAXINPUT+1];				/* my copy of string	*/
 char *so = se;					/* position in string	*/
 char tmp[MAXSCREENWIDTH*2+1];			/* output string	*/
-int endx = x + width - 1;			/* end position		*/
-char *f4pos; /* pos after f4-processing */
-#ifdef UTF8
-int i;
-wchar_t sew[MAXINPUT+1];
 #endif
+int endx = x + width - 1;			/* end position		*/
+//char *f4pos; /* pos after f4-processing */
 
 if (strlen(s) > MAXINPUT) return(KEY_ESC);
 pos = str_pos(s, pos);
 sx = x+pos;					/* current position x	*/
 #ifdef UTF8
-len = mbstowcs(sew, s, MAXINPUT);
+len = mbstowcs(se, s, MAXINPUT);
 if (len == -1) return(KEY_ESC);
-for (i=0; i<=len; i++) se[i] = (unsigned char)sew[i];
 #else
 strcpy(se, s);					/* save input string	*/
 #endif
@@ -71,13 +70,25 @@ while (!done)					/* input loop		*/
 	snprintf(tmp, MAXSCREENWIDTH*2, "%-*.*s", width, width, so);
 	fprintf(stderr,"snprintf(tmp, MAXSCREENWIDTH*2, \"%%-*.*s\", %d, width, :%s:)=>:%s:\n",width,so,tmp);
 	tmp[width] = '\0';			//cut to width
+ELSE
+	str_sub(tmp, so, 0, width, width);
+
+	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' ';
  */
-	str_sub(tmp, so, 0, width, width);/* output string	*/
-	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' '; /* tab era	*/
+
+  for (i=0; i<width; i++) {
+    switch (*so) {
+      case '\t': so++;
+      case '\0': tmp[i++] = ' '; break;
+      default:   tmp[i++] = *so++;
+    }
+  }
+  *tmp = '\0';
+
 	cur_adds(w, tmp);			/* paint out string	*/
 	if (pos==-1) break;			/* done if only paint	*/
 	if (so > se && sx > x) mvwaddch (w, y, x, '<');/* signal overfl	*/
-	if ((int)strlen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
+	if (cur_slen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
 	wmove(w, y, sx);			/* move to cursor pos	*/
 	wrefresh(w);				/* show the screen	*/
 	switch (c = cur_getk (w))		/* get pressed key	*/
@@ -137,26 +148,36 @@ while (!done)					/* input loop		*/
 	 case KEY_ESC:				/* cancel editing	*/
 	 case KEY_CTRL('C'):
 		wmove(w, y, x);
-		snprintf(tmp, width, "%-*.*s", width, width, s);
-		tmp[width] = '\0';
-		while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' ';
+
+  for (i=0; i<width; i++) {
+    switch (*s) {
+      case '\t': s++;
+      case '\0': tmp[i++] = ' '; break;
+      default:   tmp[i++] = *s++;
+    }
+  }
+  *tmp = '\0';
+
 		cur_adds(w, tmp);
 		changed = FALSE;
 		done = TRUE;
 		break;
+/*
 	 case '$':
 	 case KEY_F(4):
 		if (f4edit && (f4pos = f4edit(se, se+pos))) {
-			len = strlen(se);
+			len = cur_slen(se);
 			pos = f4pos - se;
 			sx	= x + pos;
 			changed = TRUE;
 			break;
 		}
+*/
 	 default:				/* char input?		*/
 		if     (    ((c >= ' ') && (c <= '~'))
 			 || (c == '\t')
-			 || ((c >= 0x80) && (c <= 0xff)) )
+			 || ((c >= 0x80) && (c <= 0xff))
+			 || ((c > 0xff)) )
 		    {
 		    if (    ((legal[0] == 0)	/* legal input?		*/
 			 || (strchr(legal, c) != NULL)) )
@@ -191,10 +212,7 @@ while (!done)					/* input loop		*/
 cur_satt(w, 0);
 if (changed) {
 #ifdef UTF8
-len = strlen(se);
-for (i=0; i<=len; i++) sew[i] = (unsigned char)se[i];
-len = wcstombs(s, sew, MAXINPUT*2);
-//if (len == -1) return(KEY_ESC);
+len = wcstombs(s, se, MAXINPUT*2);
 #else
 strcpy(s, se);
 #endif
