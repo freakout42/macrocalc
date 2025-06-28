@@ -11,6 +11,7 @@
 #define defatt(attname)           defat2(#attname, A_##attname)
 
 int main() {
+defkey(ENTER)
 defkey(BACKSPACE)
 defkey(NEXT)
 defkey(UP)

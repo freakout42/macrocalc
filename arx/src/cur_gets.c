@@ -13,10 +13,36 @@
 #include <stdlib.h>
 
 #ifdef UTF8
+static int cur_scpy(wchar_t *t, wchar_t *s, int z) {
+int i, j;
+j = 0;
+for (i=0; i<z; i++) {
+  switch (*s) {
+    case '\t': j++; s++;
+    case '\0': *t++ = ' '; break;
+    default:   j++; *t++ = *s++;
+    }
+  }
+  *t = '\0';
+return j;
+}
 static int cur_slen(wchar_t *s) { return wcslen(s); }
 static void cur_adds(WINDOW *w, wchar_t *s) {
   waddwstr(w, s);
 #else
+static int cur_scpy(char *t, char *s, int z) {
+int i, j;
+j = 0;
+for (i=0; i<z; i++) {
+  switch (*s) {
+    case '\t': j++; s++;
+    case '\0': *t++ = ' '; break;
+    default:   j++; *t++ = *s++;
+    }
+  }
+  *t = '\0';
+return j;
+}
 static int cur_slen(char *s) { return strlen(s); }
 static void cur_adds(WINDOW *w, char *s) {
   waddstr(w, s);
@@ -34,13 +60,12 @@ int first = TRUE;				/* first input flag	*/
 int c = 0;					/* input key		*/
 int sx;					/* current position x	*/
 int len = strlen(s);				/* currrent string len	*/
-int i;
 #ifdef UTF8
+int i;
 wchar_t se[MAXINPUT+1];
 wchar_t *so = se;					/* position in string	*/
 wchar_t tmp[MAXSCREENWIDTH*2+1];			/* output string	*/
 #else
-char *tab;					/* position of tab	*/
 char se[MAXINPUT+1];				/* my copy of string	*/
 char *so = se;					/* position in string	*/
 char tmp[MAXSCREENWIDTH*2+1];			/* output string	*/
@@ -66,29 +91,12 @@ while (!done)					/* input loop		*/
 		so = se + pos - width + 1;
 		}
 	wmove(w, y, x);				/* move to print string	*/
-/* printf does not work with utf8 locale because we faked to use iso8859-1
-	snprintf(tmp, MAXSCREENWIDTH*2, "%-*.*s", width, width, so);
-	fprintf(stderr,"snprintf(tmp, MAXSCREENWIDTH*2, \"%%-*.*s\", %d, width, :%s:)=>:%s:\n",width,so,tmp);
-	tmp[width] = '\0';			//cut to width
-ELSE
-	str_sub(tmp, so, 0, width, width);
-
-	while ((tab = strchr(tmp,'\t')) != NULL) *tab = ' ';
- */
-
-  for (i=0; i<width; i++) {
-    switch (*so) {
-      case '\t': so++;
-      case '\0': tmp[i++] = ' '; break;
-      default:   tmp[i++] = *so++;
-    }
-  }
-  *tmp = '\0';
-
+  cur_scpy(tmp, so, width);
 	cur_adds(w, tmp);			/* paint out string	*/
 	if (pos==-1) break;			/* done if only paint	*/
 	if (so > se && sx > x) mvwaddch (w, y, x, '<');/* signal overfl	*/
 	if (cur_slen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
+//fprintf(stderr,"%c:%d:%d\n",*so,pos,width);
 	wmove(w, y, sx);			/* move to cursor pos	*/
 	wrefresh(w);				/* show the screen	*/
 	switch (c = cur_getk (w))		/* get pressed key	*/
@@ -148,18 +156,12 @@ ELSE
 	 case KEY_ESC:				/* cancel editing	*/
 	 case KEY_CTRL('C'):
 		wmove(w, y, x);
-
-  for (i=0; i<width; i++) {
-    switch (*s) {
-      case '\t': s++;
-      case '\0': tmp[i++] = ' '; break;
-      default:   tmp[i++] = *s++;
-    }
-  }
-  *tmp = '\0';
-
+    cur_scpy(tmp, s, width);
 		cur_adds(w, tmp);
 		changed = FALSE;
+		done = TRUE;
+		break;
+	 case KEY_ENTER:
 		done = TRUE;
 		break;
 /*
@@ -174,10 +176,11 @@ ELSE
 		}
 */
 	 default:				/* char input?		*/
+//fprintf(stderr,"%d\n",c);
 		if     (    ((c >= ' ') && (c <= '~'))
 			 || (c == '\t')
 			 || ((c >= 0x80) && (c <= 0xff))
-			 || ((c > 0xff)) )
+			 || ((c > 0x1ff)) )
 		    {
 		    if (    ((legal[0] == 0)	/* legal input?		*/
 			 || (strchr(legal, c) != NULL)) )
@@ -195,7 +198,7 @@ ELSE
 				else if (pos >= len)
 					len++;
 				}
-			se[pos] = (char)c;
+			se[pos] = c;
 			if (len < maxlength || pos < len-1)
 				{
 				pos++;
