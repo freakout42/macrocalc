@@ -71,7 +71,8 @@ char *so = se;					/* position in string	*/
 char tmp[MAXSCREENWIDTH*2+1];			/* output string	*/
 #endif
 int endx = x + width - 1;			/* end position		*/
-//char *f4pos; /* pos after f4-processing */
+char *f4pos; /* pos after f4-processing */
+char f4str[MAXINPUT*2+1]; /* copy for f4 */
 
 if (strlen(s) > MAXINPUT) return(KEY_ESC);
 pos = str_pos(s, pos);
@@ -96,7 +97,6 @@ while (!done)					/* input loop		*/
 	if (pos==-1) break;			/* done if only paint	*/
 	if (so > se && sx > x) mvwaddch (w, y, x, '<');/* signal overfl	*/
 	if (cur_slen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
-//fprintf(stderr,"%c:%d:%d\n",*so,pos,width);
 	wmove(w, y, sx);			/* move to cursor pos	*/
 	wrefresh(w);				/* show the screen	*/
 	switch (c = cur_getk (w))		/* get pressed key	*/
@@ -164,19 +164,28 @@ while (!done)					/* input loop		*/
 	 case KEY_ENTER:
 		done = TRUE;
 		break;
-/*
 	 case '$':
 	 case KEY_F(4):
-		if (f4edit && (f4pos = f4edit(se, se+pos))) {
+		if (f4edit) {
+#ifdef UTF8
+     wcstombs(f4str, se, MAXINPUT*2);
+#else
+     strcpy(f4str, se);
+#endif
+     if ((f4pos = f4edit(f4str, f4str+pos))) {
+#ifdef UTF8
+      mbstowcs(se, f4str, MAXINPUT);
+#else
+      strcpy(se, f4str);
+#endif
 			len = cur_slen(se);
-			pos = f4pos - se;
+			pos = f4pos - f4str;
 			sx	= x + pos;
 			changed = TRUE;
-			break;
+     }
 		}
-*/
+		break;
 	 default:				/* char input?		*/
-//fprintf(stderr,"%d\n",c);
 		if     (    ((c >= ' ') && (c <= '~'))
 			 || (c == '\t')
 			 || ((c >= 0x80) && (c <= 0xff))
