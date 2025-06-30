@@ -33,7 +33,7 @@ char *str_sub(char *tg, char *s, int f, int l, int z) {
 char sv = '\0';
 char *p;
 char *q;
-int n, m, o, r;
+int n, m, v, o, r;
 o = abs(l);
 n = 0;
 r = strlen(s);
@@ -52,6 +52,7 @@ if (z > 0) {
   *p = '\0';
 }
 m = strlen(q);
+v = str_pos(q, m);
 if (tg==NULL && ((tg = malloc(m + 1 + o + r)) == NULL)) return NULL;
 if (o-n > 0) {
  if (l < 0) {
@@ -59,8 +60,8 @@ if (o-n > 0) {
   strcpy(tg+o-n, q);
  } else {
   strcpy(tg, q);
-  memset(tg+m, ' ', o-m);
-  tg[m+o-m] = '\0';
+  memset(tg+m, ' ', o-v);
+  tg[m+o-v] = '\0';
  } } else {
   strcpy(tg, q);
 }
@@ -91,7 +92,7 @@ cur_utf8 = 1;
 
 #define testsub(bf, fi, li, zi, sb) \
 strcpy(buf, #bf); \
-out = str_sub(buf, fi, li, zi); \
+out = str_sub(NULL, buf, fi, li, zi); \
 if (strcmp(out, sb)) printf(#fi ", " #li ", " #zi " failed with :%s: -> :%s:\n", buf, out); \
 free(out)
 
@@ -107,6 +108,7 @@ testsub(0123,   2, -4,  0, "  23"            );
 testsub(metric,11, 16, 16, "                ");
 testsub(hallochen1234567890123456789,0,10,10, "hallochen1");
 testsub(hall£chen1234567890123456789,0,10,10, "hall£chen1");
+testsub(1£2,0,10,10, "1£2       ");
 
 #define testpos(bf, fi, li) \
 strcpy(buf, #bf); \

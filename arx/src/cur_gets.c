@@ -156,7 +156,10 @@ while (!done)					/* input loop		*/
 	 case KEY_ESC:				/* cancel editing	*/
 	 case KEY_CTRL('C'):
 		wmove(w, y, x);
-    cur_scpy(tmp, s, width);
+#ifdef UTF8
+    mbstowcs(se, s, MAXINPUT);
+#endif
+    cur_scpy(tmp, se, width);
 		cur_adds(w, tmp);
 		changed = FALSE;
 		done = TRUE;
@@ -200,7 +203,7 @@ while (!done)					/* input loop		*/
 				{
 				if (insert)
 					{
-					memmove(se+pos+1, se+pos, len - pos +1);
+					memmove(se+pos+1, se+pos, (len - pos + 1) * sizeof(wchar_t));
 					*(se+pos) = ' ';
 					len++;
 					}

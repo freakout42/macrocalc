@@ -15,8 +15,12 @@
 #include <sys/stat.h>
 #include "arx_def.h"
 
-#if defined(MAXNAMLEN) && !defined(NAME_MAX)
+#if !defined(NAME_MAX)
+#if defined(MAXNAMLEN)
 #define NAME_MAX MAXNAMLEN
+#else
+#define NAME_MAX 255
+#endif
 #endif
 
 struct file *lib_stat (char *f)

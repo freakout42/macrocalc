@@ -7,7 +7,7 @@ ARXVER=4
 ARX=../../arx
 DIRS=inc src lib
 
-CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='" $(PLATFORM)"' -DLIBUILD
+CFLAG=-I$(ARX)/inc $(DEBUG) -D__PLATFORM__='" $(PLATFORM)"' -DNCURSES_WIDECHAR=$Curwide
 NROFF=$Nroff
 NFLAGS=$Nflag
 AR=$Ar

@@ -10,10 +10,9 @@
 
 #ifdef WIN32
 #include <windows.h>
-#include <ncurses/ncurses.h>
 #endif
 
-#ifdef LIBUILD
+#ifdef NCURSES_WIDECHAR
 #ifndef CURSES_H
 #include <curses.h>
 #ifdef NCURSES_WACS

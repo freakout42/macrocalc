@@ -33,6 +33,7 @@ defkey(F0)
 defkey(F(n))
 defatt(NORMAL)
 defatt(BOLD)
+defatt(DIM)
 defatt(UNDERLINE)
 return 0;
 }
