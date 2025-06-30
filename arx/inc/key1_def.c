@@ -2,6 +2,8 @@
 #ifdef CURKEY2
 #include <stdio.h>
 
+#define chtype int
+
 #define defke3(keyname, keyvalue) printf("#define KEY_%s %s\n", keyname, #keyvalue);
 #define defke2(keyname, keyvalue) defke3(keyname, keyvalue)
 #define defkey(keyname)           defke2(#keyname, KEY_##keyname)
