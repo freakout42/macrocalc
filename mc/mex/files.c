@@ -686,8 +686,7 @@ register int    closeit;
  * a macro for this. Most of the grief is error
  * checking of some sort.
  */
-int writeout(fn)
-char    *fn;
+int writeout(char *fn)
 {
 	register int    s;
 	register LINE   *lp;

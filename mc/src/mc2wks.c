@@ -163,5 +163,6 @@ if (erro)
 		);
 	}
 
+fclose(stdout);
 return EXIT_SUCCESS;
 }

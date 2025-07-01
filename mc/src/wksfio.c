@@ -43,7 +43,7 @@ assert(sizeof(r.data.formula) == LL_formula);
 assert(sizeof(r.data.integer) == LL_integer);
 
 /* check if first record is Lotus BOF-record	*/
-if (getwksrecord (&r) != L_BOF || r.reclen != LL_bof)
+if (getwksrecord (&r, file) != L_BOF || r.reclen != LL_bof)
 	fatal (10, "no wks-file.");
 lib_cano(r.data.bof.ver);
 if (	((i = r.data.bof.ver) != T_WKS &&
@@ -52,7 +52,7 @@ if (	((i = r.data.bof.ver) != T_WKS &&
 	fatal (10, "no wks-file.");
 
 /* read and write all records	*/
-while (getwksrecord (&r) != L_EOF)
+while (getwksrecord (&r, file) != L_EOF)
 	{
 	switch (r.opcode)
 	 {
@@ -176,20 +176,22 @@ union	{	mydouble c;
 assert(sizeof(r.data.formula) == LL_formula);
 assert(sizeof(r.data.integer) == LL_integer);
 
+setbuf(file, NULL);
+
 /* first record is Lotus BOF-record	*/
 r.opcode			= L_BOF;
 r.reclen			= LL_bof;
 r.data.bof.ver			= T_WKS;	/* or T_WK1 ?		*/
 lib_cano(r.data.bof.ver);
-putwksrecord (&r);
+putwksrecord (&r, file);
 r.opcode			= L_SPLIT;
 r.reclen			= LL_split;
 r.data.split.splitype		= 0;
-putwksrecord (&r);
+putwksrecord (&r, file);
 r.opcode			= L_SYNC;
 r.reclen			= LL_split;
 r.data.sync.synctype		= 0;
-putwksrecord (&r);
+putwksrecord (&r, file);
 r.opcode			= L_WINDOW1;
 r.reclen			= LL_window1;
 r.data.window1.curcol		= curcol;
@@ -226,7 +228,7 @@ lib_cano(r.data.window1.borderwidthcol);
 lib_cano(r.data.window1.borderwidthrow);
 lib_cano(r.data.window1.windowwidth);
 lib_cano(r.data.window1.unused1);
-putwksrecord (&r);
+putwksrecord (&r, file);
 
 for (col = 0; col <= lastcol; col++) if (colwidth[col] != 9)
 	{
@@ -236,7 +238,7 @@ for (col = 0; col <= lastcol; col++) if (colwidth[col] != 9)
 	r.data.colw1.width	= colwidth[col];
 	lib_cano(r.data.colw1.col);
 	lib_cano(r.data.colw1.width);
-	putwksrecord (&r);
+	putwksrecord (&r, file);
 	}
 for (rg = rnames; rg != NULL; rg = rg->next)
 	{
@@ -253,7 +255,7 @@ for (rg = rnames; rg != NULL; rg = rg->next)
 	lib_cano(r.data.name.cell1.row);
 	lib_cano(r.data.name.cell2.col);
 	lib_cano(r.data.name.cell2.row);
-	putwksrecord (&r);
+	putwksrecord (&r, file);
 	}
 for (row = 0; row <= lastrow; row++)
  {
@@ -315,7 +317,7 @@ for (row = 0; row <= lastrow; row++)
 		ca.col			= col;
 		ca.row			= row;
 		convertcelladr (&r.data.label.cell, &ca);
-		putwksrecord (&r);
+		putwksrecord (&r, file);
 		break;
 	 case EOFPIPE:
 		break;
@@ -329,7 +331,7 @@ for (row = 0; row <= lastrow; row++)
 /* last record is Lotus BOF-record	*/
 r.opcode	= L_EOF;
 r.reclen	= LL_eof;
-putwksrecord (&r);
+putwksrecord (&r, file);
 
 return RET_SUCCESS;
 } /* towks */
