@@ -22,12 +22,10 @@ void Upper_chars(unsigned char *buffer)
 {
  unsigned int c;
 
- for (c=0; c <= strlen(buffer)-1; c++) *(buffer+c)=toupper( *(buffer+c) );
+ for (c=0; c <= strlen((char *)buffer)-1; c++) *(buffer+c)=toupper( *(buffer+c) );
 }
 
-int main( argc, argv )
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     FILE *source,*dest;
     unsigned char buffer[BUF_LEN], Dummy[20];
@@ -39,18 +37,18 @@ char *argv[];
       exit(20L);
     }
 
-    strcpy(Dummy,argv[2]);
-    strcat(Dummy,".h");               /* add suffix .h to target name */
+    strcpy((char *)Dummy,argv[2]);
+    strcat((char *)Dummy,".h");               /* add suffix .h to target name */
 
-    if( (dest=fopen( Dummy, "wb+" )) == NULL )
+    if( (dest=fopen( (char *)Dummy, "wb+" )) == NULL )
     {
       printf("ERROR : I can't open destination file   %s\n",Dummy);
       exit(20L);
     }
 
-    strcpy(Dummy,argv[3]);
+    strcpy((char *)Dummy,argv[3]);
     Upper_chars(Dummy);    /* lower to upper chars */
-    strcat(Dummy,"_LEN");  /* add the suffix _LEN to the struct name */
+    strcat((char *)Dummy,"_LEN");  /* add the suffix _LEN to the struct name */
                            /* for the #define stantment              */
 
 

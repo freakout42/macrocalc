@@ -319,7 +319,8 @@ if (cp == NULL)
 	else
 		{
 		p = celltext(newcol, row);
-		for (pos = 0; newcol < col; pos += colwidth[newcol++]); /* left side truncate */
+		for (pos = 0; newcol < col; pos += colwidth[newcol++])
+      ; /* left side truncate */
 #ifdef NOUTF8
 		p += min(strlen(p), (size_t)pos);
 		visible = (*p != '\0');

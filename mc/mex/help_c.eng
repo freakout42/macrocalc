@@ -626,9 +626,9 @@ char *enter_str[] = {
  * everything works. Returns FALSE if there is
  * an error (if there is no memory).
  */
-int make_help(buffer, data)
-	BUFFER	*buffer;
-	char	*data[];	/* array of strings */
+int make_help(
+	BUFFER	*buffer,
+	char	*data[])	/* array of strings */
 {
 	register char	**dp;
 
@@ -644,8 +644,7 @@ int make_help(buffer, data)
  * Show help menu and then requested screens.
  * Bound to "E-?". By mb:
  */
-int help(f, n)
-	int f, n;
+int help(int f, int n)
 {
 	register int  c = 'Y';
 	register char **helpscrn;
