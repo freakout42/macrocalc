@@ -139,7 +139,7 @@ SetConsoleOutputCP(ISO_8859_15_CP);
 /* ESC % @ */
 username = getenv("USER");
 #endif
-lclocale = setlocale(LC_ALL, CHARSET);
+if ((lclocale = setlocale(LC_ALL, "")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
 cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
 
 if (around < 0) return NULL;

@@ -132,16 +132,6 @@ double lib_iee2 (double d);
 #define UNIX
 #endif
 
-/* dynamic
-#ifdef WACS_ULCORNER
-#define UTF8 1
-#define CHARSET "en_US.UTF-8"
-#else
-#define CHARSET "en_US.iso885915"
-#endif
- */
-#define CHARSET ""
-
 int lib_akey (char *logo, int show);
 char *lib_veid (void);
 void lib_fatl (int s, char *msg, ...);

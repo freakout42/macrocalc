@@ -137,7 +137,7 @@ while (!done)					/* input loop		*/
 		if (pos > 0)
 			{
 			changed = TRUE;
-			memmove(&se[pos - 1], &se[pos], len - pos + 1);
+			memmove(&se[pos - 1], &se[pos], (len - pos + 1) * sizeof(wchar_t));
 			len--;
 			pos--;
 			if (sx > x)	sx--;
@@ -148,7 +148,7 @@ while (!done)					/* input loop		*/
 		if (pos < len)
 			{
 			changed = TRUE;
-			memmove(&se[pos], &se[pos + 1], len - pos);
+			memmove(&se[pos], &se[pos + 1], (len - pos) * sizeof(wchar_t));
 			len--;
 			}
 		else if (len==0) {c = KEY_CTRL('D'); done = TRUE;}

@@ -18,8 +18,10 @@
 #ifdef NCURSES_WACS
 #define UTF8
 #define CURVARIANT w
+#define CHARSET "en_US.UTF-8"
 #else
 #define CURVARIANT n
+#define CHARSET "en_US.iso885915"
 #endif
 #endif
 #define curcs1(m, i, l) #m "." #i "-" #l
