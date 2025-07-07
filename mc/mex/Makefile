@@ -1,11 +1,19 @@
 # Makefile for MEX on Unix
 
+ifneq (,$(wildcard /usr/include/ncursesw/curses.h))
+  CURSESVARANT := ncursesw
+else
+  CURSESVARANT := ncurses
+endif
+
+CC=gcc4
 CFLAGS=-Os -w
-# -Wall
+# -Wall -Wextra -Wno-unused-parameter
+# -w
 # -g -O0
-LIBS=-lcurses
-SRC=buffer.c cursor.c display.c files.c line.c random.c search.c term.c window.c word.c main.c
-OBJ=buffer.o cursor.o display.o files.o line.o random.o search.o term.o window.o word.o help.o
+LIBS=-l$(CURSESVARANT)
+SRC=utf82iso885915.c buffer.c cursor.c display.c files.c line.c random.c search.c term.c window.c word.c main.c
+OBJ=utf82iso885915.o buffer.o cursor.o display.o files.o line.o random.o search.o term.o window.o word.o help.o
 
 all: mex libmex.a
 
@@ -25,10 +33,10 @@ mainloop.o: main.c curkeys.h
 	$(CC) $(CFLAGS) -DEMBEDDED -Wno-missing-braces -c main.c -o $@
 
 term.o: term.c ed.h
-	$(CC) $(CFLAGS) -I/usr/include/ncurses -c term.c
+	$(CC) $(CFLAGS) -I/usr/include/$(CURSESVARANT) -c term.c
 
 curkeys.h: curkeys.c
-	$(CC) -I/usr/include/ncurses curkeys.c -o curkey2
+	$(CC) -I/usr/include/$(CURSESVARANT) curkeys.c -o curkey2
 	./curkey2 >$@
 	rm curkey2
 

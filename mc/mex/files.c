@@ -58,8 +58,7 @@ getfsize(fn)
 #endif
 
 #if BFILES
-bputc(c)
-	register int c;
+int bputc(int c)
 {
 	if (fbpos >= ftail) {	/* RAM full, write it out */
 #if AtST
@@ -134,9 +133,8 @@ bgetc()
 
 	return (*fbpos++);
 }
-int
-bungetc(c)
-	int c;
+
+int bungetc(int c)
 {
 	oldbfc = c;
 }
@@ -145,9 +143,10 @@ bungetc(c)
 /*
  * mb: Copy a file name, possibly converting to lowercase.
  */
-void cpyfname (bname, fname)
-char    bname[];
-char    fname[];
+void cpyfname (
+char    bname[],
+char    fname[]
+)
 {
 	register char   *cp1;
 	register char   *cp2;
@@ -170,8 +169,7 @@ char    fname[];
  * mb: common code for fileread() and filevisit().
  */
 
-int
-addfile (fname)  char *fname;  {
+int addfile (char *fname) {
 	char *fnp;
 	if (nfiles < maxnfiles
 	 && (fnp=malloc(NFILEN)) != NULL) {
@@ -183,9 +181,7 @@ addfile (fname)  char *fname;  {
 }
 
 #ifndef EMBEDDED
-int choosefile(prompt, fname, flag)
-	char	*prompt, *fname;
-	int	flag;
+int choosefile(char	*prompt, char *fname, int flag)
 {
 	register char	*dflt;
 	int	s, old;
@@ -258,8 +254,7 @@ start:
 /*
  * Open a file for reading.
  */
-int ffropen(fn)
-char    *fn;
+int ffropen(char *fn)
 {
 #if BFILES
 
@@ -310,8 +305,7 @@ static	int		foreignformat;
  * Return TRUE if all is well, and
  * FALSE on error (cannot create).
  */
-int ffwopen(fn)
-char    *fn;
+int ffwopen(char *fn)
 {
 #if BFILES
 #if AtST
@@ -432,10 +426,7 @@ void frclose()
 #endif
 }
 
-int
-ffgetline(buf, nbuf)
-register char   buf[];
-register int    nbuf;
+int ffgetline(char buf[], int nbuf)
 {
 	register int    c, i, t;
 
@@ -517,6 +508,9 @@ register int    nbuf;
 		}
 		return (FIOEOF);
 	}
+
+  if (cur_utf8) to_utf16(buf, nbuf);
+
 	return (FIOSUC);
 }
 
@@ -527,8 +521,7 @@ register int    nbuf;
  * Also called by the mainline, to read in a file
  * specified on the command line as an argument.
  */
-int readin(fname)
-char    fname[];
+int readin(char fname[])
 {
 	register LINE   *lp1;
 	register char	*cp;
@@ -634,13 +627,11 @@ char    fname[];
  * the free newline. Return the status.
  * Check only at the newline.
  */
-int
-ffputline(buf, nbuf, closeit)
-register char   buf[];
-register int    nbuf;
-register int    closeit;
+int ffputline(char buf[], int nbuf, int closeit)
 {
 	register int    i, c;
+
+  if (cur_utf8) nbuf = to_utf8(buf, nbuf);
 
 	c = 0;				/* in case nbuf==0 */
 	for (i=0; i<nbuf; ++i) {
@@ -732,8 +723,7 @@ int writeout(char *fn)
  * Bound to "C-X C-R".   mb: added keep&insert stuff.
  */
 #ifndef EMBEDDED
-int fileread(f, n)
-	int f, n;
+int fileread(int f, int n)
 {
 	register BUFFER	*bp;
 	register int	s, ins;
@@ -780,8 +770,7 @@ int fileread(f, n)
  * mb: combined "out" portion of new & old cases,
  *	added "fileindex" stuff.
  */
-int filevisit(f, n)
-	int f, n;
+int filevisit(int f, int n)
 {
 	register BUFFER *bp;
 	char		fname[NFILEN];
@@ -851,9 +840,7 @@ out:
  * I suppose that this information could be put in
  * a better place than a line of code.
  */
-void makename(bname, fname)
-char    bname[];
-char    fname[];
+void makename(char bname[], char fname[])
 {
 	register char   *cp1;
 	register char   *cp2;
@@ -905,8 +892,7 @@ char    fname[];
  * with ITS EMACS. Bound to "C-X C-W".
  * mb: added default filename.
  */
-int filewrite(f, n)
-	int f, n;
+int filewrite(int f, int n)
 {
 	int	s;
 	char	fname[NFILEN];
@@ -937,8 +923,7 @@ int filewrite(f, n)
  * name for the buffer. Bound to "C-X C-S". May
  * get called by "C-Z".
  */
-int filesave(f, n)
-	int f, n;
+int filesave(int f, int n)
 {
 	register WINDOW *wp;
 	register int    s;
@@ -970,8 +955,7 @@ int filesave(f, n)
  * the name in the BUFFER structure, and mark the windows
  * as needing an update.
  */
-int filename(f, n)
-	int f, n;
+int filename(int f, int n)
 {
 	register WINDOW *wp;
 	char		fname[NFILEN];
@@ -1081,8 +1065,7 @@ void closelogf()
 }
 
 void
-flushlog(flag)
-	int flag;
+flushlog(int flag)
 {
 	/*int size = 0;*/
 
@@ -1100,8 +1083,7 @@ flushlog(flag)
 }
 
 int
-putlog(c)
-	int c;
+putlog(int c)
 {
 	/*int tmp;*/
 	logbuf[logfc++] = c;
@@ -1217,8 +1199,7 @@ void closelogf()
 }
 
 int
-putlog(c)
-	int c;
+putlog(int c)
 {
 	int s;
 	s = fputc (c, logfp);
@@ -1226,8 +1207,7 @@ putlog(c)
 	return (s);
 }
 
-void flushlog(flag)
-	int flag;
+void flushlog(int flag)
 {
 	if ((flag && logfc > 0) || logfc >= LOGFLUSH)
 		fflush(logfp);
@@ -1411,8 +1391,7 @@ extern	short	iochan;				/* In "termio.c"	*/
  * some (unknown) condition, you don't get one
  * free when DCL starts up.
  */
-int spawncli(f, n)
-	int f, n;
+int spawncli(int f, int n)
 {
 #if	VMS
 	if (playback == TRUE)
@@ -1541,8 +1520,7 @@ int spawncli(f, n)
  * garbage so a full repaint is done.
  * Bound to "C-X !".
  */
-int spawn(f, n)
-	int f, n;
+int spawn(int f, int n)
 {
 #if	VMS
 	register int	s;
