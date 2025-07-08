@@ -28,6 +28,7 @@ int lmarkrow= 0;
 do {
   curcell = cell (curcol, currow);
   input = generalprompt();
+  if (input < 0) input *= -1;
   switch (input)
    {
    case F1 :

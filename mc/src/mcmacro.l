@@ -15,33 +15,33 @@ struct Macrotab
 	char		*name;
 	int		key;
 	} macrotab[]	=
-	{{"DOWN", KEY_DOWN}
-	,{"LEFT", KEY_LEFT}
-	,{"RIGHT", KEY_RIGHT}
-	,{"UP", KEY_UP}
-	,{"D", KEY_DOWN}
-	,{"L", KEY_LEFT}
-	,{"R", KEY_RIGHT}
-	,{"U", KEY_UP}
-	,{"PGDN", KEY_NPAGE}
-	,{"PGUP", KEY_PPAGE}
-	,{"BIGRIGHT", KEY_TAB}
-	,{"BIGLEFT", KEY_BTAB}
-	,{"RETURN", KEY_RETURN}
+	{{"DOWN", -KEY_DOWN}
+	,{"LEFT", -KEY_LEFT}
+	,{"RIGHT", -KEY_RIGHT}
+	,{"UP", -KEY_UP}
+	,{"D", -KEY_DOWN}
+	,{"L", -KEY_LEFT}
+	,{"R", -KEY_RIGHT}
+	,{"U", -KEY_UP}
+	,{"PGDN", -KEY_NPAGE}
+	,{"PGUP", -KEY_PPAGE}
+	,{"BIGRIGHT", -KEY_TAB}
+	,{"BIGLEFT", -KEY_BTAB}
+	,{"RETURN", -KEY_RETURN}
 	,{"MENU", '/'}
 	,{"MARK", '.'}
-	,{"DEL", KEY_DC}
-	,{"DELETE", KEY_DC}
-	,{"EDIT", KEY_F(2)}
-	,{"END", KEY_LL}
+	,{"DEL", -KEY_DC}
+	,{"DELETE", -KEY_DC}
+	,{"EDIT", -KEY_F(2)}
+	,{"END", -KEY_LL}
 	,{"ESC", KEY_ESC}
 	,{"ESCAPE", KEY_ESC}
-	,{"GOTO", KEY_F(5)}
-	,{"HELP", KEY_F(1)}
-	,{"HOME", KEY_HOME}
-	,{"INS", KEY_IC}
-	,{"INSERT", KEY_IC}
-	,{"CALC", KEY_F(9)}
+	,{"GOTO", -KEY_F(5)}
+	,{"HELP", -KEY_F(1)}
+	,{"HOME", -KEY_HOME}
+	,{"INS", -KEY_IC}
+	,{"INSERT", -KEY_IC}
+	,{"CALC", -KEY_F(9)}
 	,{"BLANK", ' '}
 	,{NULL, 0}
 	};

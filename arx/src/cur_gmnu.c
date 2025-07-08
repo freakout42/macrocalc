@@ -67,12 +67,12 @@ do	{
 	if (key<=0xff && isalpha(key)) key = toupper (key);
 	switch (key)
 	 {
-	 case KEY_RIGHT:
+	 case -KEY_RIGHT:
 		if (++code > maxcode) {
 			code = 0;
 			}
 		break;
-	 case KEY_LEFT:
+	 case -KEY_LEFT:
 		if (code > 0) code--;
 		else code = maxcode;
 		break;
@@ -80,15 +80,15 @@ do	{
 	 	skey = KEY_ESC;
 		break;	 	
 	 default:
-	 	for (c=0; c<MAXMENUITEM; c++)
+		for (c=0; c<MAXMENUITEM; c++)
 			if (item[c]==key) {
 				code = c;
-			 	skey = KEY_ENTER;
+				skey = -KEY_ENTER;
 				break;
 				}
 		break;
-	 case KEY_ENTER:
-	 	skey = KEY_ENTER;
+	 case -KEY_ENTER:
+		skey = -KEY_ENTER;
 		break;
 	 }
 	npos = strchr(pos[code], ' ');
@@ -108,5 +108,5 @@ do	{
 		}
 	} while (skey==0);
 clear_menu(w, y, x, width);
-return skey==KEY_ENTER ? -(code+1) : skey==KEY_ESC ? 0 : skey;
+return skey==-KEY_ENTER ? -(code+1) : skey==KEY_ESC ? 0 : skey;
 }

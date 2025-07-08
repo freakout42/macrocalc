@@ -13,7 +13,7 @@
 #define KEY_END KEY_LL
 #endif
 #ifndef KEY_BTAB
-#define KEY_BTAB 0534
+#define KEY_BTAB 0541
 #endif
 
 /* user colors */

@@ -31,6 +31,9 @@ defkey(SUSPEND)
 defkey(CANCEL)
 defkey(F0)
 defkey(F(n))
+#ifdef KEY_BTAB
+defkey(BTAB)
+#endif
 defatt(NORMAL)
 defatt(BOLD)
 defatt(DIM)

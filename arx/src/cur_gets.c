@@ -101,22 +101,22 @@ while (!done)					/* input loop		*/
 	wrefresh(w);				/* show the screen	*/
 	switch (c = cur_getk (w))		/* get pressed key	*/
 	 {
-	 case KEY_HOME:				/* go to start of field	*/
+	 case -KEY_HOME:				/* go to start of field	*/
 		pos	= 0;
 		sx	= x;
 		so	= se;
 		break;
-	 case KEY_LL:				/* go to end of field	*/
+	 case -KEY_LL:				/* go to end of field	*/
 #if (KEY_LL != KEY_END)
-	 case KEY_END:				/* go to end of field	*/
+	 case -KEY_END:				/* go to end of field	*/
 #endif
 		pos	= min (len, maxlength-1);
 		sx	= x + pos;
 		break;
-	 case KEY_IC:				/* toggle insert mode	*/
+	 case -KEY_IC:				/* toggle insert mode	*/
 		insert = !insert;
 		break;
-	 case KEY_LEFT:				/* move left		*/
+	 case -KEY_LEFT:				/* move left		*/
 		if (pos > 0)
 			{
 			pos--;
@@ -124,7 +124,7 @@ while (!done)					/* input loop		*/
 			else		so--;
 			}
 		break;
-	 case KEY_RIGHT:			/* move right		*/
+	 case -KEY_RIGHT:			/* move right		*/
 		if (pos < len)
 			{
 			pos++;
@@ -132,7 +132,7 @@ while (!done)					/* input loop		*/
 			}
 		else done = TRUE;
 		break;
-	 case KEY_BACKSPACE:			/* erase backward	*/
+	 case -KEY_BACKSPACE:			/* erase backward	*/
 	 case KEY_CTRL('H'):
 		if (pos > 0)
 			{
@@ -144,7 +144,7 @@ while (!done)					/* input loop		*/
 			else		so--;
 			}
 		break;
-	 case KEY_DC:				/* erase current	*/
+	 case -KEY_DC:				/* erase current	*/
 		if (pos < len)
 			{
 			changed = TRUE;
@@ -164,11 +164,11 @@ while (!done)					/* input loop		*/
 		changed = FALSE;
 		done = TRUE;
 		break;
-	 case KEY_ENTER:
+	 case -KEY_ENTER:
 		done = TRUE;
 		break;
 	 case '$':
-	 case KEY_F(4):
+	 case -KEY_F(4):
 		if (f4edit) {
 #ifdef UTF8
      wcstombs(f4str, se, MAXINPUT*2);
@@ -189,11 +189,7 @@ while (!done)					/* input loop		*/
 		}
 		break;
 	 default:				/* char input?		*/
-		if     (    ((c >= ' ') && (c <= '~'))
-			 || (c == '\t')
-			 || ((c >= 0x80) && (c <= 0xff))
-			 || ((c > 0x1ff)) )
-		    {
+		if ( ((c >= ' ') && (c <= '~')) || (c == '\t') || (c >= 0x80) ) {
 		    if (    ((legal[0] == 0)	/* legal input?		*/
 			 || (strchr(legal, c) != NULL)) )
 			{
