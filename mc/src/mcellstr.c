@@ -280,9 +280,9 @@ char *cellstring (int col, int row, int *color, int formatting)
    also returns the color of the cell */
 {
 int		newcol;
-static char	s1[MAXINPUT+2];
+static char	s1[MAXINPUT*2+2];
 char *s;
-char		temp[MAXINPUT+1];
+char		temp[MAXINPUT*4+2];
 char		*p;
 int		pos;
 CELLPTR		cp;

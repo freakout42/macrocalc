@@ -61,7 +61,6 @@ int c = 0;					/* input key		*/
 int sx;					/* current position x	*/
 int len = strlen(s);				/* currrent string len	*/
 #ifdef UTF8
-int i;
 wchar_t se[MAXINPUT+1];
 wchar_t *so = se;					/* position in string	*/
 wchar_t tmp[MAXSCREENWIDTH*2+1];			/* output string	*/

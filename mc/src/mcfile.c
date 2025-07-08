@@ -61,7 +61,7 @@ void loadsheet (int prompt)
 /* Loads a new spreadsheet */
 {
 FILE	*file;
-char msgcmd[MAXFILE*2+1];
+char msgcmd[MAXFILE*4+1];
 int	loaded;
 
 if (prompt)
@@ -75,7 +75,7 @@ if (access(filename, R_OK))
 	return;
 	}
 if (prompt == 2) {
-  snprintf(msgcmd, MAXFILE, "%s -r <%s", mc2wkspath(0), filename);
+  snprintf(msgcmd, MAXFILE*4, "%s -r <%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "r");
 } else {
   file = fopen(filename, "rb");
@@ -134,7 +134,7 @@ if (!access(filename, W_OK))
 	}
 }
 if (prompt == 2) {
-  snprintf(msgcmd, MAXFILE, "%s >%s", mc2wkspath(0), filename);
+  snprintf(msgcmd, MAXFILE*4, "%s >%s", mc2wkspath(0), filename);
   file = popen(msgcmd, "w");
 } else {
   file = fopen(filename, "wb");
@@ -198,7 +198,7 @@ if (prompt)
 	}
 else	strcpy (filenpr, "-");
 border = (border == 'Y');
-snprintf (pcmd, MAXFILE, "%s/bin/mcprint %s", libpath, filenpr);
+snprintf (pcmd, MAXFILE+255, "%s/bin/mcprint %s", libpath, filenpr);
 if ((file = popen(pcmd, "w")) == NULL)
 	{
 	errormsg(MSGNOOPEN);

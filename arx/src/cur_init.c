@@ -111,7 +111,7 @@ WINDOW		*stdscreen;
 int		inpipe[2];
 unsigned int	flags;
 char		*devtty = "/dev/tty";
-char *username;
+/*char *username;*/
 char *lclocale;
 int ysiz, xsiz;
 
@@ -125,7 +125,7 @@ signal(SIGFPE, SIG_IGN);
 
 /* user and charset environment */
 #ifdef WIN32
-username = getenv("USERNAME");
+/*username = getenv("USERNAME");*/
 #define ISO_8859_15_CP 28605
 /*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
 SetConsoleCP(ISO_8859_15_CP);
@@ -135,9 +135,9 @@ SetConsoleOutputCP(ISO_8859_15_CP);
  * setenv("LC_ALL", ISO_8859_15_CP, 1);
  * setenv("LANG", ISO_8859_15_CP, 1);
  * setenv("LC_ALL", CHARSET, 1);
+ * username = getenv("USER");
  */
 /* ESC % @ */
-username = getenv("USER");
 #endif
 if ((lclocale = setlocale(LC_ALL, "")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
 cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
