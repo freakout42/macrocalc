@@ -117,7 +117,7 @@ void savesheet (int prompt)
 /* Saves the current spreadsheet */
 {
 FILE	*file;
-char msgcmd[MAXFILE*2+1];
+char msgcmd[MAXFILE*4+1];
 int	overwrite;
 
 recalc();
@@ -188,7 +188,7 @@ void printsheet (int prompt)
 int	border			= 'N';
 char	filenpr[MAXFILE+1]	= "";
 FILE	*file;
-char	pcmd[MAXFILE+128];
+char	pcmd[MAXFILE+256];
 
 if (prompt)
 	{
