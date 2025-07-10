@@ -537,5 +537,6 @@ int tnewline(int f, int n);
 int forwdel(int f, int n);
 
 unsigned int to_latin9(const unsigned int code);
+unsigned int to_ucpoint(const unsigned int code);
 int to_utf8(char *buf, int nbuf);
 int to_utf16(char *buf, int nbuf);

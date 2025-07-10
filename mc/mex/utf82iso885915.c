@@ -26,6 +26,23 @@ unsigned int to_latin9(const unsigned int code)
     }
 }
 
+unsigned int to_ucpoint(const unsigned int code)
+{
+    /* only ISO-8859-15 exceptions are converted */
+    if (code < 128U || code > 256U) return code;
+    switch (code) {
+    case 188U:    return 0x0152U; /* U+0152 = 0xBC: OE ligature */
+    case 189U:    return 0x0153U; /* U+0153 = 0xBD: oe ligature */
+    case 166U:    return 0x0160U; /* U+0160 = 0xA6: S with caron */
+    case 168U:    return 0x0161U; /* U+0161 = 0xA8: s with caron */
+    case 190U:    return 0x0178U; /* U+0178 = 0xBE: Y with diaresis */
+    case 180U:    return 0x017DU; /* U+017D = 0xB4: Z with caron */
+    case 184U:    return 0x017EU; /* U+017E = 0xB8: z with caron */
+    case 164U:    return 0x20ACU; /* U+20AC = 0xA4: Euro */
+    default:      return code;
+    }
+}
+
 int to_utf16(char *buf, int nbuf) {
   wchar_t *se;
   int i, len;
@@ -40,8 +57,9 @@ int to_utf8(char *buf, int nbuf) {
   wchar_t *se;
   int len, i;
   se = malloc((nbuf+2) * sizeof(wchar_t));
-  for (i=0; i<nbuf; i++) se[i] = (unsigned char)buf[i];
-  len = wcstombs(buf, se, nbuf+1);
+  for (i=0; i<nbuf; i++) se[i] = to_ucpoint((unsigned char)buf[i]);
+                         se[i] = '\0';
+  len = wcstombs(buf, se, nbuf*2);
   free(se);
   return len;
 }

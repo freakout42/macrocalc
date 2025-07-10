@@ -632,7 +632,6 @@ int ffputline(char buf[], int nbuf, int closeit)
 	register int    i, c;
 
   if (cur_utf8) nbuf = to_utf8(buf, nbuf);
-
 	c = 0;				/* in case nbuf==0 */
 	for (i=0; i<nbuf; ++i) {
 #if BFILES

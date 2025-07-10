@@ -230,7 +230,7 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 #ifdef UTF8
   char *lclocale;
   if ((lclocale = setlocale(LC_ALL, "")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
-  cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
+  cur_utf8 = lclocale ? strstr(lclocale, "UTF-8") != NULL : 0;
 #endif
 
 if (windw1 == NULL) {
@@ -407,13 +407,14 @@ int ttputc(c)
 #ifdef UTF8
   cchar_t d;
   wchar_t e[2];
-  e[0] = c;
+if (cur_utf8) {
+  e[0] = to_ucpoint(c);
   e[1] = '\0';
   setcchar(&d, e, 0, 0, NULL);
 	wadd_wch(windw1, &d);
-#else
-	waddch(windw1, c);
+} else
 #endif
+	waddch(windw1, c);
 #else
 	fputc(c, stdout);
 #endif
@@ -579,10 +580,10 @@ int ttgetc()
 
 #ifdef UTF8
 wint_t keypress = { 0 };
-ch = (get_wch(&keypress) == KEY_CODE_YES) ? keypress : to_latin9(keypress);
-#else
-ch = getch();
+if (cur_utf8) ch = (get_wch(&keypress) == KEY_CODE_YES) ? keypress : to_latin9(keypress);
+else
 #endif
+ch = getch();
 #ifdef WIN32
 if (ch < 0) ch = 256 + ch;
 #endif
