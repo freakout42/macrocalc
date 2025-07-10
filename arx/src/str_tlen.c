@@ -1,4 +1,4 @@
-/* $Id: str_tlen.c,v 1.1 2015/02/04 11:34:13 axel Exp $
+/* str_tlen.c
  * length without trailing whitespace
  * substring with printf %*.*s capabilities from utf-8 mbstowcs
  */

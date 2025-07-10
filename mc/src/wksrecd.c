@@ -1,5 +1,4 @@
-/* $Id: wksrecd.c,v 1.4 1995/03/09 19:40:47 axel Rel $
- */
+/* wksrecd.c */
 
 #include <stddef.h>
 #include <stdio.h>
