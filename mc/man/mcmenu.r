@@ -43,7 +43,7 @@ mode on and off.
 Turns formula display mode on and off.
 .IP \fIErase\fP 9
 Erases entire worksheet.
-.IP \fITitels\fP 9
+.IP \fITitles\fP 9
 .RS
 .PD 0
 .IP \fIHorizontal\fP 12
