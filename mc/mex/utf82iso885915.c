@@ -9,6 +9,7 @@
 
 //include "oem2iso.h"
 
+static int usednoniso;
 unsigned int to_latin9(const unsigned int code)
 {
     /* Code points 0 to U+00FF are the same in both. */
@@ -22,7 +23,8 @@ unsigned int to_latin9(const unsigned int code)
     case 0x017DU:    return 180U; /* U+017D = 0xB4: Z with caron */
     case 0x017EU:    return 184U; /* U+017E = 0xB8: z with caron */
     case 0x20ACU:    return 164U; /* U+20AC = 0xA4: Euro */
-    default:         return 191U;
+    default: usednoniso = -1;
+                     return 191U; /* U+00BF = 0xBF: ? inverted */
     }
 }
 
@@ -48,9 +50,10 @@ int to_utf16(char *buf, int nbuf) {
   int i, len;
   se = malloc((nbuf+2) * sizeof(wchar_t));
   len = mbstowcs(se, buf, nbuf+2);
+  usednoniso = 1;
   for (i=0; i<=len; i++) buf[i] = to_latin9(se[i]);
   free(se);
-  return len;
+  return len * usednoniso;
 }
 
 int to_utf8(char *buf, int nbuf) {
