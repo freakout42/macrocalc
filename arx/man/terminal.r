@@ -46,17 +46,17 @@ F8       k8      kf8      Function 8.
 F9       k9      kf9      Function 9.
 F10      k0      kf0      Function 10 = Exit.
 
-Attribut termcap terminfo Comment
--------- ------- -------- ------------------------------
-Blink    mb      blink    Blink mode on
-Bold     md      bold     Bold mode on
-Reverse  so      rev      Reverse mode on
-Standout so      smso     Standout mode on
-Underlin us      smul     Underline mode on
-Normal   me      sgr0     Normal mode on
-Standard se      rmse     Standout mode off
-Standard se      rmso     Standout mode off
-Standard ue      rmul     Underline mode off
+Attribute termcap terminfo Comment
+--------- ------- -------- ------------------------------
+Blink     mb      blink    Blink mode on
+Bold      md      bold     Bold mode on
+Reverse   so      rev      Reverse mode on
+Standout  so      smso     Standout mode on
+Underlin  us      smul     Underline mode on
+Normal    me      sgr0     Normal mode on
+Standard  se      rmse     Standout mode off
+Standard  se      rmso     Standout mode off
+Standard  ue      rmul     Underline mode off
 .DE
 .P
 .BP CAUTION
