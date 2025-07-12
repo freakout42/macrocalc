@@ -6,7 +6,6 @@ else
   CURSESVARANT := ncurses
 endif
 
-CC=gcc4
 CFLAGS=-Os -w
 # -Wall -Wextra -Wno-unused-parameter
 # -w

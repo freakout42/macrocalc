@@ -278,11 +278,11 @@ for (row = 0; row <= lastrow; row++)
 		r.opcode		= L_FORMULA;
 		myd2d.d			= lib_2iee(cpvalue(cp));
 		r.data.formula.value	= myd2d.c;
+		type = parse2 (cp, &r);
 #ifdef DEBUG
 		fprintf (stderr, "towks: &r.data.formula.size=%d\n",
 			&r.data.formula.size);
 #endif
-		type = parse2 (cp, &r.data.formula.size);
 #ifdef DEBUG
 	fprintf (stderr, "towks: c:%d r:%d = type=%d\n", col, row, type);
 #endif

@@ -10,7 +10,6 @@
 #include "mcell.h"
 #include "mcelladr.h"
 #include "mcmessag.h"
-#include "mcparse.h"
 
 extern int 	yydebug;
 int		yybegin();
@@ -19,7 +18,9 @@ void		yysetbuf();
 void		yyclrbuf();
 int		yybufpos();
 
-#ifndef LOTUS
+#ifdef LOTUS
+#include "lotus.h"
+#else
 int origcol, origrow; /* original column */
 int errpos; /* position of parsing error */
 CELLPTR pc;
@@ -29,6 +30,7 @@ char *yybparse; /* pointer to parsed formula */
 char *yytoparse; /* pointer to left formula */
 int yyerrorflg; /* error flag for lex-parser */
 #endif
+#include "mcparse.h"
 
 /* build parse string with references embedded */
 static int gettoparse (char *err)
@@ -58,8 +60,8 @@ return s - yysparse;
 
 /* Parses the cell c */
 #ifdef LOTUS
-int parse2 (CELLPTR c, short *formula)
-/* Returns the formula of the evaluated string */
+int parse2 (CELLPTR c, Lotrec *wksrecord)
+/* Returns the formula of the evaluated string - short *formula) */
 #else
 int parse (CELLPTR c, char *parsed)
 /* Parses into the cell c and parsed formula */
@@ -89,7 +91,7 @@ yybuf = yybuffer;
 *yybuffer = '\0';
 
 #else
-yybuf = polform = (char*)(formula + 1);
+yybuf = polform = (char*)wksrecord->data.formula.code;
 
 #endif
 yysetbuf(yybparse);
@@ -109,7 +111,7 @@ if (cptype(pc) == DATETYPE) {
 yyclrbuf();
 #ifdef LOTUS
 len = yybuf - polform;
-memcpy(formula, &len, sizeof(short));
+wksrecord->data.formula.size = len;
 return cptype(pc);
 #else
 return errno;
