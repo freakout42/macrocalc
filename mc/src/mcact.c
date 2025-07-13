@@ -84,7 +84,7 @@ if (allocated)
 	displayscreen(NOUPDATE);
 	}
 if (!allocated) errormsg(MSGLOMEM);
-switch(edi)
+if (edi < 0) switch(-edi)
  {
  case HOMEKEY:
  case ENDKEY:
