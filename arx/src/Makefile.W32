@@ -1,8 +1,8 @@
 ARXREL=8
 ARXVER=5
 CC=gcc
-CURSESINC=-I/mingw32/include/ncurses
-CFLAGS=-DNCURSES_WIDECHAR=0 -DNCURSES_STATIC -I../inc $(CURSESINC)
+CURSESINC=-I/mingw32/include/ncursesw
+CFLAGS=-DNCURSES_WIDECHAR=1 -DNCURSES_STATIC -I../inc $(CURSESINC)
 OBJS=lib_akey.o lib_2iee.o lib_mesg.o \
 	lib_freo.o lib_path.o lib_stat.o lib_fsiz.o lib_mktm.o \
 	str_gets.o str_trim.o str_tlen.o str_repl.o str_upr.o str_chkd.o str_inc.o str_abbr.o \

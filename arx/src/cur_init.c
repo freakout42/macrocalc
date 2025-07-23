@@ -117,6 +117,7 @@ int ysiz, xsiz;
 
 #ifndef WIN32
 struct termios termio;
+#endif
 
 /* no floating-point exception */
 #ifdef SIGFPE
@@ -128,8 +129,12 @@ signal(SIGFPE, SIG_IGN);
 /*username = getenv("USERNAME");*/
 #define ISO_8859_15_CP 28605
 /*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
-SetConsoleCP(ISO_8859_15_CP);
-SetConsoleOutputCP(ISO_8859_15_CP);
+//SetConsoleCP(ISO_8859_15_CP);
+//SetConsoleOutputCP(ISO_8859_15_CP);
+SetConsoleCP(CP_UTF8);
+SetConsoleOutputCP(CP_UTF8);
+//lclocale = CHARSET;
+lclocale = setlocale(LC_ALL, "en_US.UTF-8");
 #else
 /* #define ISO_8859_15_CP "en_US.iso885915"
  * setenv("LC_ALL", ISO_8859_15_CP, 1);
@@ -138,15 +143,15 @@ SetConsoleOutputCP(ISO_8859_15_CP);
  * username = getenv("USER");
  */
 /* ESC % @ */
+if ((lclocale = setlocale(LC_ALL, "")) == NULL) setlocale(LC_ALL, CHARSET);
 #endif
-if ((lclocale = setlocale(LC_ALL, "")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
 cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
-
-if (around < 0) return NULL;
-
 #ifndef UTF8
 if (cur_utf8) return NULL;
 #endif
+
+#ifndef WIN32
+if (around < 0) return NULL;
 
 if (around >= 1)
 	{

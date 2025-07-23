@@ -1,4 +1,4 @@
-/* $Id: ed.h,v 1.56 2025/07/10 08:56:24 axel Exp $
+/* $Id: ed.h,v 1.58 2025/07/23 14:01:29 axel Exp $
  * This file is the general header file for
  * all parts of the MicroEMACS display editor. It contains
  * definitions used by everyone, and it contains the stuff
@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "7.0"
+#define VERSION "7.1"
 
 #define _XOPEN_SOURCE_EXTENDED 1
 
@@ -34,7 +34,8 @@
 #define VT52    0
 #define TERMCAP 0
 #define VT100   1
-#define CURSES	0
+#define CURSES  0
+#define UTF8    1
 #else
 #define V7      1
 #define SYS_V   1
@@ -345,6 +346,7 @@ typedef struct  BUFFER {
 #define BFEDIT  0x04			/* mb: OK to change (added)	*/
 #define BFFORE  0x08			/* ar: foreign format (added)	*/
 #define BFTAIL  0x10			/* ar: foreign short (added)	*/
+#define BFUTF8  0x20			/* ar: utf8 format   (added)	*/
 
 /*
  * The starting position of a
@@ -540,3 +542,5 @@ unsigned int to_latin9(const unsigned int code);
 unsigned int to_ucpoint(const unsigned int code);
 int to_utf8(char *buf, int nbuf);
 int to_utf16(char *buf, int nbuf);
+int utf162utf8(char* out, int c);
+int iso2ucode(unsigned char cod);

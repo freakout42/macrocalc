@@ -2,8 +2,10 @@ MEX is a tiny, simple, and portable Emacs-like screen Editor.
 It has a help screen and every feature an editor MUST have.
 It has no additional features, therefore it is fast and tiny.
 Ideal for editing a three line shell- or perl-script or a small
-config file - the best alternative for all vi-haters.
-Runs on terminal and in ssh and telnet sessions.
+config file - the best alternative for all vi-haters. The 7.1
+version can handle utf8-coded files. Runs on terminal and in
+ssh and telnet sessions as well as in the windows console.
 
 you find precompiled binaries in:
   https://github.com/freakout42/microemacs/releases/tag/v59
+  https://github.com/freakout42/microemacs/releases/tag/v71

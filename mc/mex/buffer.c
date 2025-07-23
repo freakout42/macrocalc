@@ -280,6 +280,21 @@ int fortog(f,n)
 	return (TRUE);
 }
 
+/* ar: added function to toggle utf8 mode */
+
+int utftog(f,n)
+	int f, n;
+{
+	if (curbp->b_flag & BFUTF8) {
+		mlwrite("[keep utf8 mode]");
+		curbp->b_flag &= ~BFUTF8;
+	} else {
+		mlwrite("[reverse utf8 mode]");
+		curbp->b_flag |= BFUTF8;
+	}
+	return (TRUE);
+}
+
 /* mb: added function to toggle edit/view */
 
 int editog(f,n)

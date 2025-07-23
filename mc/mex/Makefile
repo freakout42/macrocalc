@@ -7,6 +7,7 @@ else
 endif
 
 CFLAGS=-Os -w
+# -Os -w
 # -Wall -Wextra -Wno-unused-parameter
 # -w
 # -g -O0

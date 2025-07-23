@@ -512,10 +512,10 @@ int ffgetline(char buf[], int nbuf)
 
   if (cur_utf8) if (to_utf16(buf, nbuf) < 0)
 		if (!noiso885915ucode) {
-				t = mlyesno("File has non-ISO-8859-15 chars: loosing - REALLY EDIT");
+				t = mlyesno("File has non-mappable chars: loosing - REALLY EDIT");
 				mlerase();
 				if (!t) return (FIOERR);
-				mlwrite("File has non-ISO-8859-15 chars: loosing");
+				mlwrite("File has non-mappable chars: loosing");
         noiso885915ucode = TRUE;
 				}
 
@@ -638,9 +638,9 @@ int readin(char fname[])
  */
 int ffputline(char buf[], int nbuf, int closeit)
 {
-	register int    i, c;
+  int i, c;
 
-  if (cur_utf8) nbuf = to_utf8(buf, nbuf);
+  if (cur_utf8 ^ ((curbp->b_flag&BFUTF8)==BFUTF8)) nbuf = to_utf8(buf, nbuf);
 	c = 0;				/* in case nbuf==0 */
 	for (i=0; i<nbuf; ++i) {
 #if BFILES

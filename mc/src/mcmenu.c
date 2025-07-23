@@ -226,9 +226,11 @@ switch (getmenu(RMENU))
  }
 } /* rmenu */
 
+extern int cur_utf8;
 static void fmenu (void)
 /* Executes the commands in the file menu */
 {
+char version[132];
 switch (getmenu (FMENU))
  {
  case 0:
@@ -253,7 +255,8 @@ switch (getmenu (FMENU))
 	loadsheet(2);
 	break;
  case 6:
-	errorstr(rcsinfo);
+  snprintf(version, 130, "%s w=%c", rcsinfo, cur_utf8 ? '1' : '0');
+	errorstr(version);
 	break;
  }
 } /* fmenu */
