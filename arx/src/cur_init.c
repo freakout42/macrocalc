@@ -16,6 +16,9 @@
 
 int	cur_redir;
 int cur_colors;
+#ifdef WIN32
+HANDLE stdinHandle;
+#endif
 
 FILE	*std_in		= NULL;
 FILE	*std_out	= NULL;
@@ -133,8 +136,11 @@ signal(SIGFPE, SIG_IGN);
 //SetConsoleOutputCP(ISO_8859_15_CP);
 SetConsoleCP(CP_UTF8);
 SetConsoleOutputCP(CP_UTF8);
-//lclocale = CHARSET;
-lclocale = setlocale(LC_ALL, "en_US.UTF-8");
+lclocale = CHARSET;
+if ((lclocale = setlocale(LC_ALL, ".UTF-8")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
+cur_utf8 = 1;
+stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
+SetConsoleMode(stdinHandle, 0); //ENABLE_WINDOW_INPUT);
 #else
 /* #define ISO_8859_15_CP "en_US.iso885915"
  * setenv("LC_ALL", ISO_8859_15_CP, 1);
@@ -144,8 +150,8 @@ lclocale = setlocale(LC_ALL, "en_US.UTF-8");
  */
 /* ESC % @ */
 if ((lclocale = setlocale(LC_ALL, "")) == NULL) setlocale(LC_ALL, CHARSET);
-#endif
 cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
+#endif
 #ifndef UTF8
 if (cur_utf8) return NULL;
 #endif

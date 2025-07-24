@@ -4,6 +4,7 @@
 
 # define size_t unsigned int
 
+#include <wchar.h>
 #include "oem2iso.h"
 
 static inline unsigned int to_latin9(const unsigned int code)
@@ -24,18 +25,16 @@ static inline unsigned int to_latin9(const unsigned int code)
     }
 }
 
-/* Convert an UTF-8 string to ISO-8859-15.
+/* Convert an UTF-8 string to UCODE
  * All invalid sequences are ignored.
  * Note: output == input is allowed,
- * but   input < output < input + length
- * is not.
+ * but   input < output < input + length is not.
  * Output has to have room for (length+1) chars, including the trailing NUL byte.
  */
-size_t utf8_to_latin9(char *output, const char *input, const size_t length)
-{
-    unsigned char             *out = (unsigned char *)output;
+int utf8_to_ucode(wchar_t *output, char *input, int length) {
+    wchar_t                   *out = output;
     const unsigned char       *in  = (const unsigned char *)input;
-    const unsigned char *const end = (const unsigned char *)input + length;
+    const unsigned char *const end = (const unsigned char *)input + strlen(input);
     unsigned int               c;
 
     while (in < end)
@@ -49,8 +48,8 @@ size_t utf8_to_latin9(char *output, const char *input, const size_t length)
             if (in + 1 >= end)
                 break;
             if ((in[1] & 192U) == 128U) {
-                c = to_latin9( (((unsigned int)(in[0] & 0x1FU)) << 6U)
-                             |  ((unsigned int)(in[1] & 0x3FU)) );
+                c =   (((unsigned int)(in[0] & 0x1FU)) << 6U)
+                    | ((unsigned int)(in[1] & 0x3FU)) ;
                 if (c < 256)
                     *(out++) = c;
             }
@@ -62,9 +61,9 @@ size_t utf8_to_latin9(char *output, const char *input, const size_t length)
                 break;
             if ((in[1] & 192U) == 128U &&
                 (in[2] & 192U) == 128U) {
-                c = to_latin9( (((unsigned int)(in[0] & 0x0FU)) << 12U)
-                             | (((unsigned int)(in[1] & 0x3FU)) << 6U)
-                             |  ((unsigned int)(in[2] & 0x3FU)) );
+                c =   (((unsigned int)(in[0] & 0x0FU)) << 12U)
+                    | (((unsigned int)(in[1] & 0x3FU)) << 6U)
+                    |  ((unsigned int)(in[2] & 0x3FU)) ;
                 if (c < 256)
                     *(out++) = c;
             }
@@ -77,10 +76,10 @@ size_t utf8_to_latin9(char *output, const char *input, const size_t length)
             if ((in[1] & 192U) == 128U &&
                 (in[2] & 192U) == 128U &&
                 (in[3] & 192U) == 128U) {
-                c = to_latin9( (((unsigned int)(in[0] & 0x07U)) << 18U)
-                             | (((unsigned int)(in[1] & 0x3FU)) << 12U)
-                             | (((unsigned int)(in[2] & 0x3FU)) << 6U)
-                             |  ((unsigned int)(in[3] & 0x3FU)) );
+                c =   (((unsigned int)(in[0] & 0x07U)) << 18U)
+                    | (((unsigned int)(in[1] & 0x3FU)) << 12U)
+                    | (((unsigned int)(in[2] & 0x3FU)) << 6U)
+                    |  ((unsigned int)(in[3] & 0x3FU)) ;
                 if (c < 256)
                     *(out++) = c;
             }
@@ -94,11 +93,11 @@ size_t utf8_to_latin9(char *output, const char *input, const size_t length)
                 (in[2] & 192U) == 128U &&
                 (in[3] & 192U) == 128U &&
                 (in[4] & 192U) == 128U) {
-                c = to_latin9( (((unsigned int)(in[0] & 0x03U)) << 24U)
-                             | (((unsigned int)(in[1] & 0x3FU)) << 18U)
-                             | (((unsigned int)(in[2] & 0x3FU)) << 12U)
-                             | (((unsigned int)(in[3] & 0x3FU)) << 6U)
-                             |  ((unsigned int)(in[4] & 0x3FU)) );
+                c =   (((unsigned int)(in[0] & 0x03U)) << 24U)
+                    | (((unsigned int)(in[1] & 0x3FU)) << 18U)
+                    | (((unsigned int)(in[2] & 0x3FU)) << 12U)
+                    | (((unsigned int)(in[3] & 0x3FU)) << 6U)
+                    |  ((unsigned int)(in[4] & 0x3FU)) ;
                 if (c < 256)
                     *(out++) = c;
             }
@@ -113,12 +112,12 @@ size_t utf8_to_latin9(char *output, const char *input, const size_t length)
                 (in[3] & 192U) == 128U &&
                 (in[4] & 192U) == 128U &&
                 (in[5] & 192U) == 128U) {
-                c = to_latin9( (((unsigned int)(in[0] & 0x01U)) << 30U)
-                             | (((unsigned int)(in[1] & 0x3FU)) << 24U)
-                             | (((unsigned int)(in[2] & 0x3FU)) << 18U)
-                             | (((unsigned int)(in[3] & 0x3FU)) << 12U)
-                             | (((unsigned int)(in[4] & 0x3FU)) << 6U)
-                             |  ((unsigned int)(in[5] & 0x3FU)) );
+                c =   (((unsigned int)(in[0] & 0x01U)) << 30U)
+                    | (((unsigned int)(in[1] & 0x3FU)) << 24U)
+                    | (((unsigned int)(in[2] & 0x3FU)) << 18U)
+                    | (((unsigned int)(in[3] & 0x3FU)) << 12U)
+                    | (((unsigned int)(in[4] & 0x3FU)) << 6U)
+                    |  ((unsigned int)(in[5] & 0x3FU)) ;
                 if (c < 256)
                     *(out++) = c;
             }
@@ -128,9 +127,9 @@ size_t utf8_to_latin9(char *output, const char *input, const size_t length)
             in++;               /* 11111110 and 11111111 are invalid */
 
     /* Terminate the output string. */
-    *out = '\0';
+    *out = 0;
 
-    return (size_t)(out - (unsigned char *)output);
+    return out - output;
 }
 
 void oem858_to_iso885915(char *output)

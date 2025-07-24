@@ -7,7 +7,7 @@ LFLAGS=-8
 YACC=bison
 YFLAGS=-d --yacc
 CC=gcc
-CURSESINC=-I/mingw32/include/ncurses
+CURSESINC=-I/mingw32/include/ncursesw
 CFLAGS=-DNCURSES_STATIC -DYY_SKIP_YYWRAP -I../../arx/inc $(CURSESINC)
 LDFLAGS=-static -L../../arx/src
 MCOBJS=mcommon.o mcfileio.o mcprint.o mcrange.o mcrwalk.o mccalc.o mcutil.o mcmisc.o \
@@ -22,8 +22,8 @@ MC2OBJS=mc2wks.o wksfio.o wksrecd.o pol2tex.o mcell123.o mc2parse.o mc2pary.o
 
 all: mc2wks.exe mc.exe
 
-mc.exe: $(MCOBJS) $(OBJS) $(DOBJ)
-	$(CC) $(LDFLAGS) $(OBJS) $(MCOBJS) $(DOBJ) -larx -larxc -lncurses -lm -o $@
+mc.exe: $(MCOBJS) $(OBJS) $(DOBJ) ../../arx/src/libarxc.a
+	$(CC) $(LDFLAGS) $(OBJS) $(MCOBJS) $(DOBJ) -larx -larxc -lncursesw -lm -o $@
 	strip $@
 
 mc2wks.exe: $(MCOBJS) $(MC2OBJS)

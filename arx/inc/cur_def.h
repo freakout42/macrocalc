@@ -18,7 +18,11 @@
 #ifdef NCURSES_WACS
 #define UTF8
 #define CURVARIANT w
+#ifdef WIN32
+#define CHARSET "English_United States.65001"
+#else
 #define CHARSET "en_US.UTF-8"
+#endif
 #else
 #define CURVARIANT n
 #define CHARSET "en_US.iso885915"
@@ -58,6 +62,7 @@ extern struct termios otermio;
 #ifdef WIN32
 #undef  A_UNDERLINE
 #define A_UNDERLINE  A_STANDOUT
+extern HANDLE stdinHandle;
 #endif
 
 #if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO) || defined(WIN32)
@@ -83,3 +88,4 @@ void mcolor0(void);
 void setcolor(int pairi);
 void uncolor(int pairi);
 void cur_coor (int *y, int *x);
+int to_utf8(char *buf, int nbuf);

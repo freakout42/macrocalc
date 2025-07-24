@@ -77,7 +77,12 @@ if (strlen(s) > MAXINPUT) return(KEY_ESC);
 pos = str_pos(s, pos);
 sx = x+pos;					/* current position x	*/
 #ifdef UTF8
-len = mbstowcs(se, s, MAXINPUT);
+len =
+#ifdef nonolib
+      mbstowcs(se, s, MAXINPUT);
+#else
+      utf8_to_ucode(se, s, MAXINPUT);
+#endif
 if (len == -1) return(KEY_ESC);
 #else
 strcpy(se, s);					/* save input string	*/
@@ -156,7 +161,11 @@ while (!done)					/* input loop		*/
 	 case KEY_CTRL('C'):
 		wmove(w, y, x);
 #ifdef UTF8
+#ifdef nonolib
     mbstowcs(se, s, MAXINPUT);
+#else
+    utf8_to_ucode(se, s, MAXINPUT);
+#endif
 #endif
     cur_scpy(tmp, se, width);
 		cur_adds(w, tmp);
@@ -170,13 +179,21 @@ while (!done)					/* input loop		*/
 	 case -KEY_F(4):
 		if (f4edit) {
 #ifdef UTF8
+#ifdef nonolib
      wcstombs(f4str, se, MAXINPUT*2);
+#else
+     str_w2u8(f4str, se, MAXINPUT*2);
+#endif
 #else
      strcpy(f4str, se);
 #endif
      if ((f4pos = f4edit(f4str, f4str+pos))) {
 #ifdef UTF8
+#ifdef nonolib
       mbstowcs(se, f4str, MAXINPUT);
+#else
+      utf8_to_ucode(se, f4str, MAXINPUT);
+#endif
 #else
       strcpy(se, f4str);
 #endif
@@ -222,7 +239,12 @@ while (!done)					/* input loop		*/
 cur_satt(w, 0);
 if (changed) {
 #ifdef UTF8
-len = wcstombs(s, se, MAXINPUT*2);
+len =
+#ifdef nonolib
+     wcstombs(s, se, MAXINPUT*2);
+#else
+     str_w2u8(s, se, MAXINPUT*2);
+#endif
 #else
 strcpy(s, se);
 #endif

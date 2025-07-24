@@ -9,6 +9,8 @@ char *str_gecs (FILE *fp, char *s, size_t n);
 #endif
 
 char *str_trim (char *s);
+int str_w2u8(char *tgt, int *src, int siz);
+int utf8_to_ucode(int *output, char *input, int length);
 int str_tlen (char *s);
 int str_pos(char *s, int f);
 char *str_sub(char *t, char *s, int f, int l, int z);
