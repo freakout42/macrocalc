@@ -22,8 +22,8 @@ MC2OBJS=mc2wks.o wksfio.o wksrecd.o pol2tex.o mcell123.o mc2parse.o mc2pary.o
 
 all: mc2wks.exe mc.exe
 
-mc.exe: $(MCOBJS) $(OBJS) $(DOBJ) ../../arx/src/libarxc.a
-	$(CC) $(LDFLAGS) $(OBJS) $(MCOBJS) $(DOBJ) -larx -larxc -lncursesw -lm -o $@
+mc.exe: $(MCOBJS) $(OBJS) $(DOBJ) ../../arx/src/libarxc.a ../../arx/src/libarx.a
+	$(CC) $(LDFLAGS) $(OBJS) $(MCOBJS) $(DOBJ) -larxc -larx -lncursesw -lm -o $@
 	strip $@
 
 mc2wks.exe: $(MCOBJS) $(MC2OBJS)

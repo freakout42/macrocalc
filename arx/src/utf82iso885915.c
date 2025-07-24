@@ -4,6 +4,7 @@
 
 # define size_t unsigned int
 
+#include <string.h>
 #include <wchar.h>
 #include "oem2iso.h"
 

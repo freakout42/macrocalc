@@ -24,9 +24,9 @@ for ( ; bits >= 0; bits -= 6) *out++= ((c >> bits) & 0x3F) | 0x80;
 return out - out1;
 }
 
-int str_w2u8(char *tgt, int *src, int siz) {
+int str_w2u8(char *tgt, wchar_t *src, int siz) {
 char *t;
-int *s;
+wchar_t *s;
 t = tgt;
 for (s = src; *s; s++) t += utf162utf8(t, *s);
 return t - tgt;
