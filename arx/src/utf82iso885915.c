@@ -2,8 +2,6 @@
  * Return 0..255 for valid ISO-8859-15 code points, 256 otherwise.
  */
 
-# define size_t unsigned int
-
 #include <string.h>
 #include <wchar.h>
 #include "oem2iso.h"

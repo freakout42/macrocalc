@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <arx_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include "mc.h"
 #include "mcget.h"

@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include "mc.h"
 #include "mcstderr.h"

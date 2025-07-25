@@ -4,6 +4,7 @@
 #include <string.h>
 #include <errno.h>
 #include <arx_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include "mc.h"
 #include "mcinput.h"

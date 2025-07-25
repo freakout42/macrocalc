@@ -1,5 +1,10 @@
 /* str_def.h */
 
+#ifndef _WCHAR_T_DECLARED
+typedef int wchar_t;
+#define _WCHAR_T_DECLARED
+#endif
+
 #define str_bpad(s)	{memset (s,' ',sizeof(s)); s[sizeof(s)-1] = ' ';}
 #define str_npad(s)	{memset (s,' ',sizeof(s)); s[sizeof(s)-1] = '\0';}
 
