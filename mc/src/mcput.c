@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <arx_def.h>
+//#include <str_def.h>
 #include <cur_def.h>
 #include "mc.h"
 #include "mcput.h"
@@ -21,6 +22,11 @@ va_list	args;
 int	oldx, oldy;
 char	s[MAXINPUT+1];
 int color;
+#ifndef NOUTF8
+extern int cur_utf8;
+char *out = NULL;
+wchar_t t[MAXINPUT+1];
+#endif
 
 color = mcode2att(colcode & TYPEM);
 switch (colcode & BIMASK) {
@@ -36,7 +42,18 @@ va_end (args);
 cur_satt (stdscr, color);
 setcolor(colcode);
 s[SCREENWIDTH+1] = '\0';
+
+#ifdef UTF8
+if (cur_utf8) {
+  out = str_sub(out, s, 0, width, 0);
+  utf8_to_ucode(t, out, MAXINPUT);
+  move (y, x);
+  addwstr(t);
+  free(out);
+} else
+#endif
 mvprintw (y, x, "%-*s", width, s);
+
 #ifdef DEBUG
 fprintf (stderr, "put: y:%2d x:%2d s:\"%-*s\">%08x\n", y, x, width, s, color);
 #endif
