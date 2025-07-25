@@ -29,6 +29,7 @@ char *t;
 wchar_t *s;
 t = tgt;
 for (s = src; *s; s++) t += utf162utf8(t, *s);
+*t = '\0';
 return t - tgt;
 }
 

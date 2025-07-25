@@ -51,8 +51,7 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
             if ((in[1] & 192U) == 128U) {
                 c =   (((unsigned int)(in[0] & 0x1FU)) << 6U)
                     | ((unsigned int)(in[1] & 0x3FU)) ;
-                if (c < 256)
-                    *(out++) = c;
+                *(out++) = c;
             }
             in += 2;
 
@@ -65,8 +64,7 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
                 c =   (((unsigned int)(in[0] & 0x0FU)) << 12U)
                     | (((unsigned int)(in[1] & 0x3FU)) << 6U)
                     |  ((unsigned int)(in[2] & 0x3FU)) ;
-                if (c < 256)
-                    *(out++) = c;
+                *(out++) = c;
             }
             in += 3;
 
@@ -81,8 +79,7 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
                     | (((unsigned int)(in[1] & 0x3FU)) << 12U)
                     | (((unsigned int)(in[2] & 0x3FU)) << 6U)
                     |  ((unsigned int)(in[3] & 0x3FU)) ;
-                if (c < 256)
-                    *(out++) = c;
+                *(out++) = c;
             }
             in += 4;
 
@@ -99,8 +96,7 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
                     | (((unsigned int)(in[2] & 0x3FU)) << 12U)
                     | (((unsigned int)(in[3] & 0x3FU)) << 6U)
                     |  ((unsigned int)(in[4] & 0x3FU)) ;
-                if (c < 256)
-                    *(out++) = c;
+                *(out++) = c;
             }
             in += 5;
 
@@ -119,8 +115,7 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
                     | (((unsigned int)(in[3] & 0x3FU)) << 12U)
                     | (((unsigned int)(in[4] & 0x3FU)) << 6U)
                     |  ((unsigned int)(in[5] & 0x3FU)) ;
-                if (c < 256)
-                    *(out++) = c;
+                *(out++) = c;
             }
             in += 6;
 

@@ -12,6 +12,14 @@
 #include <cur_def.h>
 #include <stdlib.h>
 
+#ifdef uselibc
+#define MYMBSTOWCS mbstowcs
+#define MYWCSTOMBS wcstombs
+#else
+#define MYMBSTOWCS utf8_to_ucode
+#define MYWCSTOMBS str_w2u8
+#endif
+
 #ifdef UTF8
 static int cur_scpy(wchar_t *t, wchar_t *s, int z) {
 int i, j;
@@ -77,12 +85,7 @@ if (strlen(s) > MAXINPUT) return(KEY_ESC);
 pos = str_pos(s, pos);
 sx = x+pos;					/* current position x	*/
 #ifdef UTF8
-len =
-#ifdef nonolib
-      mbstowcs(se, s, MAXINPUT);
-#else
-      utf8_to_ucode(se, s, MAXINPUT);
-#endif
+len = MYMBSTOWCS(se, s, MAXINPUT);
 if (len == -1) return(KEY_ESC);
 #else
 strcpy(se, s);					/* save input string	*/
@@ -161,11 +164,7 @@ while (!done)					/* input loop		*/
 	 case KEY_CTRL('C'):
 		wmove(w, y, x);
 #ifdef UTF8
-#ifdef nonolib
-    mbstowcs(se, s, MAXINPUT);
-#else
-    utf8_to_ucode(se, s, MAXINPUT);
-#endif
+    MYMBSTOWCS(se, s, MAXINPUT);
 #endif
     cur_scpy(tmp, se, width);
 		cur_adds(w, tmp);
@@ -179,21 +178,13 @@ while (!done)					/* input loop		*/
 	 case -KEY_F(4):
 		if (f4edit) {
 #ifdef UTF8
-#ifdef nonolib
-     wcstombs(f4str, se, MAXINPUT*2);
-#else
-     str_w2u8(f4str, se, MAXINPUT*2);
-#endif
+     MYWCSTOMBS(f4str, se, MAXINPUT*2);
 #else
      strcpy(f4str, se);
 #endif
      if ((f4pos = f4edit(f4str, f4str+pos))) {
 #ifdef UTF8
-#ifdef nonolib
-      mbstowcs(se, f4str, MAXINPUT);
-#else
-      utf8_to_ucode(se, f4str, MAXINPUT);
-#endif
+      MYMBSTOWCS(se, f4str, MAXINPUT);
 #else
       strcpy(se, f4str);
 #endif
@@ -239,12 +230,7 @@ while (!done)					/* input loop		*/
 cur_satt(w, 0);
 if (changed) {
 #ifdef UTF8
-len =
-#ifdef nonolib
-     wcstombs(s, se, MAXINPUT*2);
-#else
-     str_w2u8(s, se, MAXINPUT*2);
-#endif
+len = MYWCSTOMBS(s, se, MAXINPUT*2);
 #else
 strcpy(s, se);
 #endif
