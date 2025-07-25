@@ -89,3 +89,4 @@ void setcolor(int pairi);
 void uncolor(int pairi);
 void cur_coor (int *y, int *x);
 int to_utf8(char *buf, int nbuf);
+int addwstr(const wchar_t *wstr);
