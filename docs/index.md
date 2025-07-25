@@ -1,7 +1,7 @@
 **mc** - MacroCALC is a Lotus 1-2-3 compatible character based spreadsheet that
 supports 100000 rows, 700 columns, 40 functions, display formats, file
-linking, macro programming and user definable functions. MacroCALC is fully
-integrated with [nt]roff, units, man, awk, perl and sh.
+linking, macro programming, user definable functions and UTF-8 encoded strings.
+MacroCALC is fully integrated with [nt]roff, units, man, awk, perl and sh.
 
 mc can act as a filter to use pipes to perform complex transforms on streams of data.
 It contains a C-interface as well as Lotus WKS and dBASE file support.
