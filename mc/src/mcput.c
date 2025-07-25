@@ -1,6 +1,7 @@
 /* mcput.c */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <arx_def.h>
 #include <str_def.h>
