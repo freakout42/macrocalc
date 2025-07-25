@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <arx_def.h>
-//#include <str_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include "mc.h"
 #include "mcput.h"
@@ -43,7 +43,7 @@ cur_satt (stdscr, color);
 setcolor(colcode);
 s[SCREENWIDTH+1] = '\0';
 
-#ifdef UTF8
+#ifndef NOUTF8
 if (cur_utf8) {
   out = str_sub(out, s, 0, width, 0);
   utf8_to_ucode(t, out, MAXINPUT);
