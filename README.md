@@ -50,26 +50,6 @@ https://github.com/freakout42/macrocalc/releases/download/v10.53/mc-10.53-w3-i38
 and unzip mc.exe and mc2wks.exe. Start it with any console with full
 pathname or double-click it with the explorer.
 
-Non-ascii characters
---------------------
-
-The sourcecode of MacroCALC is from 1979 - there is no unicode (UTF-8) support.
-For international characters configure your terminal for an 8-bit codebase:
-
-If you are using PuTTY you must set for the session:
-
-    Window->Translation->Remote character set = ISO-8859-15
-
-With the MacOS Terminal application:
-
-    Settings->General->Profiles->International->
-      Text Encoding = Western (ISO Latin 9)
-    X Set locale environment variables on startup
-
-Start a local xterm with:
-
-    LC_ALL=en_US.iso885915 LANG=en_US.iso885915-US xterm
-
 Getting started
 ---------------
 Navigate through the sheet with the arrow-keys. The dot (.) marks the
@@ -109,3 +89,25 @@ License
     Simplified BSD License
     Copyright (c) 2024, Axel K. Reinhold
     All rights reserved.
+
+<!---
+Non-ascii characters
+--------------------
+
+The sourcecode of MacroCALC is from 1979 - there is no unicode (UTF-8) support.
+For international characters configure your terminal for an 8-bit codebase:
+
+If you are using PuTTY you must set for the session:
+
+    Window->Translation->Remote character set = ISO-8859-15
+
+With the MacOS Terminal application:
+
+    Settings->General->Profiles->International->
+      Text Encoding = Western (ISO Latin 9)
+    X Set locale environment variables on startup
+
+Start a local xterm with:
+
+    LC_ALL=en_US.iso885915 LANG=en_US.iso885915-US xterm
+-->
