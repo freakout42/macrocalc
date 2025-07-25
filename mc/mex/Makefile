@@ -1,6 +1,6 @@
 # Makefile for MEX on Unix
 
-ifneq (,$(wildcard /usr/lib/libncursesw.a))
+ifneq (,$(wildcard /usr/lib/libncursesw.a)$(wildcard /usr/include/ncursesw/curses.h))
   CURSESVARANT := ncursesw
 else
   CURSESVARANT := ncurses
