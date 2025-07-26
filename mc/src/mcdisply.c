@@ -26,7 +26,7 @@ int col;
 char colstr[MAXSCREENWIDTH+1];
 
 if (!borders) return;
-writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "");
+writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "YY");
 for (col = leftcol; col <= rightcol; col++)
 	{
 	centercolstring(col, colstr);

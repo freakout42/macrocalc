@@ -1,5 +1,4 @@
-/* $Id: mcstderr.c,v 1.6 1997/04/05 15:47:34 axel Exp $
- */
+/* mcstderr.c */
 
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -1,9 +1,9 @@
 **mc** - MacroCALC is a Lotus 1-2-3 compatible character based spreadsheet that
 supports 100000 rows, 700 columns, 40 functions, display formats, file linking,
-macro programming, pipes and user definable functions. It runs on every
-terminal or emulation that has a correct terminfo-entry. The user-interface is
-very convenient and well-known by 1-2-3 users. Function- and arrow-keys and
-extended video attributes are supported.
+macro programming, user definable functions and UTF-8 encoded strings.
+It runs on every terminal or emulation that has a correct terminfo-entry.
+The user-interface is very convenient and well-known by 1-2-3 users.
+Function- and arrow-keys and extended video attributes are supported.
 
 [![MacroCALC](https://mc.freakout.de/assets/logo.jpg "MacroCALC")](https://mc.freakout.de/ "MacroCALC")
 
@@ -46,9 +46,9 @@ You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
 6. Windows .exe Download  
-https://github.com/freakout42/macrocalc/releases/download/v11.03/mc-11.02-w3-i386.exe.zip  
-and unzip mc.exe and mc2wks.exe. Start it with any console with full
-pathname or double-click it with the explorer.
+https://github.com/freakout42/macrocalc/releases/download/v11.03/mc-11.03-w3-i386.exe.zip  
+and unzip mc.exe and mc2wks.exe - ideally into a directory on your %PATH%.
+Start it with any console with full pathname or double-click it with the explorer.
 
 Getting started
 ---------------

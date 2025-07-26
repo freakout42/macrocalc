@@ -1,6 +1,7 @@
 /* str_tlen.c
  * length without trailing whitespace
  * substring with printf %*.*s capabilities from utf-8 mbstowcs
+ * cc -I../inc -DTEST str_tlen.c -olll
  */
 
 #include <ctype.h>
@@ -116,6 +117,9 @@ strcpy(buf, #bf); \
 out = str_sub(NULL, buf, fi, li, zi); \
 if (strcmp(out, sb)) printf(#fi ", " #li ", " #zi " failed with :%s: -> :%s:\n", buf, out); \
 free(out)
+
+str_sub(out, "", 0, 3, 0);
+printf("str_sub(out, \"\", 0, 3, 0) = :%s:\n", out);
 
 testsub(012345, 2,  2,  0, "2345"            );
 testsub(012345, 2,  7,  0, "2345   "         );
