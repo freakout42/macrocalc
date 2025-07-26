@@ -19,6 +19,10 @@
 #include "mcdisply.h"
 #include "mcolor.h"
 
+void printnull (void) {
+writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "");
+}
+
 void printcol (void)
 /* Prints the column headings */
 {
@@ -26,7 +30,6 @@ int col;
 char colstr[MAXSCREENWIDTH+1];
 
 if (!borders) return;
-writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "YY");
 for (col = leftcol; col <= rightcol; col++)
 	{
 	centercolstring(col, colstr);

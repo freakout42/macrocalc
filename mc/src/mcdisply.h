@@ -1,6 +1,6 @@
-/* $Id: mcdisply.h,v 1.2 1999/10/23 11:57:13 axel Exp $
- */
+/* mcdisply.h */
 
+void printnull (void);
 void printcol (void);
 void clearlastcol (void);
 void printrow (void);

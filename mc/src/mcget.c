@@ -11,6 +11,7 @@
 
 int getkey (void)
 {
+printnull();
 return cur_getk();
 }
 
