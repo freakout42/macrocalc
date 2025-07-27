@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <arx_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 
 static FILE *macro = NULL;
@@ -34,9 +35,9 @@ wint_t keypress = { 0 };
 #endif
 
 wrefresh (w);
+
 #ifdef UTF8
 #ifdef WIN32
-
   DWORD n = 0;
   int uc, sc, ck;
   ch = 0;
@@ -84,17 +85,21 @@ wrefresh (w);
      }
     }
   }
-#else
+#else /* WIN32 */
+if (cur_utf8) {
 keycode = (wget_wch(w, &keypress) == KEY_CODE_YES) ? -1 : 1;
 ch = keypress;
-#endif
-#else
+} else
+#endif /* WIN32 */
+#endif /* UTF8 */
+{
 ch = wgetch (w);
 keycode = ch > 255 ? -1 : 1;
+}
 #ifdef WIN32
 if (ch < 0) ch = 256 + ch;
 #endif
-#endif
+
 switch (ch)
  {
  case KEY_BS:        return -KEY_BACKSPACE;

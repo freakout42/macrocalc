@@ -34,9 +34,32 @@ for (i=0; i<z; i++) {
   *t = '\0';
 return j;
 }
+static int cur_wcpy(wchar_t *t, char *s) {
+int i, j, z;
+z = strlen(s);
+j = 0;
+for (i=0; i<z; i++) {
+  switch (*s) {
+    case '\t': j++; s++;
+    case '\0': *t++ = ' '; break;
+    default:   j++; *t++ = (unsigned char)*s++;
+    }
+  }
+  *t = '\0';
+return j;
+}
+static char *cur_8cpy(wchar_t *s) {
+static char t[MAXINPUT+1];
+char *y;
+for (y=t; *s; s++) *y++ = (unsigned char)*s;
+*y = '\0';
+return t;
+}
 static int cur_slen(wchar_t *s) { return wcslen(s); }
 static void cur_adds(WINDOW *w, wchar_t *s) {
-  waddwstr(w, s);
+if (cur_utf8) waddwstr(w, s);
+else waddstr(w, cur_8cpy(s));
+}
 #else
 static int cur_scpy(char *t, char *s, int z) {
 int i, j;
@@ -54,8 +77,8 @@ return j;
 static int cur_slen(char *s) { return strlen(s); }
 static void cur_adds(WINDOW *w, char *s) {
   waddstr(w, s);
-#endif
 }
+#endif
 
 int cur_gets (WINDOW *w, int y, int x, int width, int att,
 	char *s, int pos, char *legal, int maxlength, int *chg,
@@ -85,7 +108,7 @@ if (strlen(s) > MAXINPUT) return(KEY_ESC);
 pos = str_pos(s, pos);
 sx = x+pos;					/* current position x	*/
 #ifdef UTF8
-len = MYMBSTOWCS(se, s, MAXINPUT);
+len = cur_utf8 ? MYMBSTOWCS(se, s, MAXINPUT) : cur_wcpy(se, s);
 if (len == -1) return(KEY_ESC);
 #else
 strcpy(se, s);					/* save input string	*/
@@ -174,11 +197,13 @@ while (!done)					/* input loop		*/
 	 case -KEY_ENTER:
 		done = TRUE;
 		break;
-	 case '$':
 	 case -KEY_F(4):
+    c = '$';
+	 case '$':
 		if (f4edit) {
 #ifdef UTF8
-     MYWCSTOMBS(f4str, se, MAXINPUT*2);
+     if (cur_utf8) MYWCSTOMBS(f4str, se, MAXINPUT*2);
+     else          strcpy(f4str, cur_8cpy(se));
 #else
      strcpy(f4str, se);
 #endif
@@ -192,9 +217,9 @@ while (!done)					/* input loop		*/
 			pos = f4pos - f4str;
 			sx	= x + pos;
 			changed = TRUE;
+			break;
      }
 		}
-		break;
 	 default:				/* char input?		*/
 		if ( ((c >= ' ') && (c <= '~')) || (c == '\t') || (c >= 0x80) ) {
 		    if (    ((legal[0] == 0)	/* legal input?		*/
@@ -230,7 +255,8 @@ while (!done)					/* input loop		*/
 cur_satt(w, 0);
 if (changed) {
 #ifdef UTF8
-len = MYWCSTOMBS(s, se, MAXINPUT*2);
+if (cur_utf8) MYWCSTOMBS(s, se, MAXINPUT*2);
+else          strcpy(s, cur_8cpy(se));
 #else
 strcpy(s, se);
 #endif

@@ -41,7 +41,8 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
             *(out++) = *(in++); /* Valid codepoint */
         else
         if (*in < 192)
-            in++;               /* 10000000 .. 10111111 are invalid */
+            break;
+/*          in++;                * 10000000 .. 10111111 are invalid */
         else
         if (*in < 224) {        /* 110xxxxx 10xxxxxx */
             if (in + 1 >= end)
@@ -123,7 +124,8 @@ int utf8_to_ucode(wchar_t *output, char *input, int length) {
     /* Terminate the output string. */
     *out = 0;
 
-    return out - output;
+    if (in < end) return -1;
+    else          return out - output;
 }
 
 void oem858_to_iso885915(char *output)

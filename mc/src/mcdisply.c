@@ -20,7 +20,11 @@
 #include "mcolor.h"
 
 void printnull (void) {
-writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "");
+static int lastchg = TRUE;
+if (lastchg != changed) {
+  if (borders) writef(0, borderline, HEADERCOLOR, LEFTMARGIN, changed ? " *" : "");
+  lastchg = changed;
+}
 }
 
 void printcol (void)

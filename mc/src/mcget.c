@@ -8,6 +8,7 @@
 #include "mc.h"
 #include "mcget.h"
 #include "mcolor.h"
+#include "mcdisply.h"
 
 int getkey (void)
 {

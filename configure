@@ -18,6 +18,7 @@ case `uname -s` in
   SunOS)   PLATID=sx; HARDID=`uname -m`;;
   *) echo 'unknown platform - please help porting' >&2;;
 esac
+test "$1" = "lu" && PLATID=lu
 HARDID=${HARDID:-x86}
 DISTID=mc-$VERSID-$PLATID-$HARDID
 for MODEID in arx mc; do cd $MODEID; make -f Makefile.in clean >/dev/null 2>&1; cd ..; done

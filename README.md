@@ -29,7 +29,7 @@ added to the PATH in a system appropriate manner. `321` or `mc` will then work.
 
 3. __Binary with precompiled tarball__  
 Download the released asset `mc-<releasetag>-<platform>-<hardware>.tar.gz` for
-your platform (lu-Linux l6-Linux64 fb-FreeBSD md-MacOS) and untar to `/opt/arx`.
+your platform (lw-Linux l6-Linux64 fb-FreeBSD md-MacOS) and untar to `/opt/arx`.
 Add `/opt/arx/bin` to $PATH and you are done to use the system by `321` or `mc`.
 
 4. __RPM package install__  

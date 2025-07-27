@@ -72,7 +72,6 @@ static void textstring (char *instring, char *outstring,
 			int col, unsigned int format, int formatting)
 /* Sets the string representation of text */
 {
-#define NOUTF8y
 #ifdef NOUTF8
 char		*ljust = "%-*s", *rjust = "%*s ";
 #else
