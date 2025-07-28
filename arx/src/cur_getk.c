@@ -80,8 +80,13 @@ if (cur_utf8) {
           }
         }
       } else {
+       if (uc == '\t' && (ck & SHIFT_PRESSED)) {
+        keycode = -1;
+        ch = KEY_BTAB;
+       } else {
         keycode = 1;
         ch = uc;
+       }
       }
      }
     }
