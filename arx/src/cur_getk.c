@@ -36,7 +36,9 @@ wint_t keypress = { 0 };
 
 wrefresh (w);
 
-#if defined(UTF8) && defined(WIN32)
+#ifdef UTF8
+if (cur_utf8) {
+#ifdef WIN32
   DWORD n = 0;
   int uc, sc, ck;
   ch = 0;
@@ -84,24 +86,20 @@ wrefresh (w);
      }
     }
   }
-#endif
-
-#if defined(UTF8) && !defined(WIN32)
-if (cur_utf8) {
+#else
 keycode = (wget_wch(w, &keypress) == KEY_CODE_YES) ? -1 : 1;
 ch = keypress;
+#endif /* WIN32 */
 } else
-#endif
-
-#if !defined(UTF8) || !defined(WIN32)
+#endif /* UTF8 */
 {
 ch = wgetch (w);
 keycode = ch > 255 ? -1 : 1;
 }
-#endif
-
-#if !defined(UTF8) && defined(WIN32)
+#ifndef UTF8
+#ifdef WIN32
 if (ch < 0) ch = 256 + ch;
+#endif
 #endif
 
 switch (ch)
