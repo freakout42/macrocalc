@@ -230,7 +230,7 @@ extern int cur_utf8;
 static void fmenu (void)
 /* Executes the commands in the file menu */
 {
-#ifdef UTF8
+#ifndef NOUTF8
 char version[132];
 #endif
 switch (getmenu (FMENU))
@@ -257,7 +257,7 @@ switch (getmenu (FMENU))
 	loadsheet(2);
 	break;
  case 6:
-#ifdef UTF8
+#ifndef NOUTF8
   snprintf(version, 130, "%s w=%c", rcsinfo, cur_utf8 ? '1' : '0');
 	errorstr(version);
 #else
