@@ -725,7 +725,7 @@ int help(int f, int n)
 		mlwrite("[aborted]");
 		return (onlywind(f,n));
 	}
-#if (AtST | MSDOS | W32)
+#if (AtST | MSDOS)
 	mlwrite("[Alt-1 returns to one window]");
 #else
 	mlwrite("[^X 1 returns to one window]");
