@@ -175,8 +175,8 @@ size_t utf8_to_latin9(unsigned char *output, unsigned char *input, size_t length
 
 int to_utf16(char *buf, int nbuf) {
   char *buf2;
-  buf2 = strdup(buf);
   int len;
+  buf2 = strdup(buf);
   usednoniso = 1;
   len = utf8_to_latin9((unsigned char *)buf, (unsigned char *)buf2, strlen(buf2));
   free(buf2);

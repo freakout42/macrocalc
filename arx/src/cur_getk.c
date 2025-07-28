@@ -36,8 +36,7 @@ wint_t keypress = { 0 };
 
 wrefresh (w);
 
-#ifdef UTF8
-#ifdef WIN32
+#if defined(UTF8) && defined(WIN32)
   DWORD n = 0;
   int uc, sc, ck;
   ch = 0;
@@ -85,18 +84,23 @@ wrefresh (w);
      }
     }
   }
-#else /* WIN32 */
+#endif
+
+#if defined(UTF8) && !defined(WIN32)
 if (cur_utf8) {
 keycode = (wget_wch(w, &keypress) == KEY_CODE_YES) ? -1 : 1;
 ch = keypress;
 } else
-#endif /* WIN32 */
-#endif /* UTF8 */
+#endif
+
+#if !defined(UTF8) || !defined(WIN32)
 {
 ch = wgetch (w);
 keycode = ch > 255 ? -1 : 1;
 }
-#ifdef WIN32
+#endif
+
+#if !defined(UTF8) && defined(WIN32)
 if (ch < 0) ch = 256 + ch;
 #endif
 
