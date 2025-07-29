@@ -132,7 +132,8 @@ char		*tstring;
 char		*fstring;
 char		*fnormal	= "%*s ";
 char		*fpercent	= "%*s%%";
-static char	fdollar[]	= "?%*s ";
+static char	fdollar[]	= "%s%%*s ";
+char		fdollar2[20];
 char		*fleft		= "%-*s ";
 int		width, prec, pos;
 struct tm	*vtime;
@@ -141,7 +142,6 @@ struct tm	*vtime;
 fprintf(stderr, "valuestring: %f\n", value);
 #endif
 fstring	= fnormal;
-*fdollar= currency;
 width	= colwidth[col] - 1;
 if (value == HUGE_VAL)
 	{
@@ -164,7 +164,8 @@ switch (formatting) {
 	sprintf(s, "%*.*e", 1, (int)(format & PLACES), value);
 	break;
      case CURRENCY:
-	fstring = fdollar;
+  sprintf(fdollar2, fdollar, currency);
+	fstring = fdollar2;
 	width--;
 	goto formfix;
      case PERCENT:
@@ -265,7 +266,7 @@ fprintf(stderr, "valuestring: %f=\"%s\"\n", value, s);
 	}
     else {
 	sprintf(vstring, fstring, width, s);
-	vstring[colwidth[col]] = '\0';
+	vstring[colwidth[col] + ((format & FORMATM) == CURRENCY ? strlen(currency)-1 : 0)] = '\0';
 	}
  }
 *color = VALUECOLOR;

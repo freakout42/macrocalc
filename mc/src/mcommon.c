@@ -32,7 +32,7 @@ unsigned char rdonly = FALSE;
 unsigned char defaultformat = DEFAULTFORMAT;
 unsigned char defaultwidth = DEFAULTWIDTH;
 unsigned char colors = TRUE;
-char currency = '$';
+char *currency = "$";
 int ysiz, xsiz;
 char cursesversion[4];
 int screencol = 80;

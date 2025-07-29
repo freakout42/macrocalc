@@ -18,7 +18,7 @@ extern unsigned char autocalc, borders, cellcont, highlight, menudisp, rdonly, a
 extern unsigned char colors;
 extern unsigned char defaultformat;
 extern unsigned char defaultwidth;
-extern char currency;
+extern char *currency;
 extern int ysiz, xsiz;
 extern int screencol, screenlin, leftmargin;
 extern int curcelline, inputline, cmdline, errorline, borderline, windowline;

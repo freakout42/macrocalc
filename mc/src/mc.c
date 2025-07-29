@@ -160,7 +160,7 @@ while (1) {
 		 }
 		break;
 	 case 'y':
-		currency	= *optarg;
+		currency	= strdup(optarg);
 		break;
 	 case 'l':
 		borderline	= 0;
