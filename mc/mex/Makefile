@@ -6,6 +6,12 @@ else
   CURSESVARANT := ncurses
 endif
 
+ifneq (,$(wildcard /usr/lib64/libtinfow.so.6))
+  TINFOLIB := -ltinfow
+else
+  TINFOLIB := 
+endif
+
 CFLAGS=-Os -w
 # -Os -w
 # -Wall -Wextra -Wno-unused-parameter

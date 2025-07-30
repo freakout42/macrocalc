@@ -5,6 +5,7 @@ f4:FreeBSD:cc:-Wno-return-type -w:ld::-r:lex:-8:-ll::yacc:-d:-ly::/usr/lib/libnc
 md:MacOS Darwin:gcc:-Wno-unknown-warning-option -Wno-deprecated-non-prototype -Wno-address-of-packed-member:ld::-r:flex:-8:-ll::bison:-d --yacc::::-lcurses:/usr/include/curses.h::nroff:ar::1
 lb:Linux glibc/bison:gcc:-Wall:ld::-r:flex:-8:/opt/flex/lib/libfl.a:libyywrap.o:bison:-d --yacc -Wno-conflicts-sr -Wno-conflicts-rr::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar::1
 lw:Linux utf8:gcc:-Os -Wall:ld::-r:flex:-8:::bison:-d --yacc::-I/usr/include/ncursesw::-lncursesw:/usr/include/ncursesw/curses.h::nroff:ar::1
+lo:Linux gentoo:gcc:-Os -Wall:ld::-r:flex:-8:::bison:-d --yacc::-I/usr/include/ncursesw::-lncursesw -ltinfow:/usr/include/ncursesw/curses.h::nroff:ar::1
 gs:Linux static:gcc:-Wall -static:ld:-Bstatic:-r:flex:-8:/usr/lib/libfl.a:libyywrap.o:yacc:-d::-I/usr/include/ncurses:/usr/lib/libncurses.a::/usr/include/ncurses/curses.h::nroff:ar::0
 hp:HP-UX 10.20:cc:-Aa -D_HPUX_SOURCE -D__YYSCLASS="":ld -aarchive:-L/usr/local/lib:-r:flex:-8:-lfl::yacc:-d:-ly:-I/usr/include/curses_colr:-lcur_colr::/usr/include/cur_colr/curses.h::nroff:ar::0
 sx:Solaris9/x86:gcc::ld::-r:flex:-8:-lfl::bison:-d --yacc:::/usr/lib/libcurses.a::/usr/include/curses.h::nroff:ar::0
