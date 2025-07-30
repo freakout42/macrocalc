@@ -149,7 +149,9 @@ SetConsoleMode(stdinHandle, 0); //ENABLE_WINDOW_INPUT);
  * username = getenv("USER");
  */
 /* ESC % @ */
-if ((lclocale = setlocale(LC_ALL, "")) == NULL) setlocale(LC_ALL, CHARSET);
+if ((lclocale = setlocale(LC_ALL, "")) == NULL)
+  if ((lclocale = setlocale(LC_ALL, CHARSET)) == NULL)
+    lclocale = setlocale(LC_ALL, "C");
 cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
 #endif
 #ifndef UTF8
