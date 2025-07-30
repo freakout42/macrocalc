@@ -17,7 +17,7 @@ CFLAGS=-Os -w
 # -Wall -Wextra -Wno-unused-parameter
 # -w
 # -g -O0
-LIBS=-l$(CURSESVARANT)
+LIBS=-l$(CURSESVARANT) $(TINFOLIB)
 SRC=utf82iso885915.c buffer.c cursor.c display.c files.c line.c random.c search.c term.c window.c word.c main.c
 OBJ=utf82iso885915.o buffer.o cursor.o display.o files.o line.o random.o search.o term.o window.o word.o help.o
 
