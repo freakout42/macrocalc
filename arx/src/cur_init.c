@@ -152,7 +152,7 @@ SetConsoleMode(stdinHandle, 0); //ENABLE_WINDOW_INPUT);
 if ((lclocale = setlocale(LC_ALL, "")) == NULL)
   if ((lclocale = setlocale(LC_ALL, CHARSET)) == NULL)
     lclocale = setlocale(LC_ALL, "C");
-cur_utf8 = strstr(lclocale, "UTF-8") != NULL;
+cur_utf8 = strstr(lclocale, "UTF") || strstr(lclocale, "utf");
 #endif
 #ifndef UTF8
 if (cur_utf8) return NULL;
