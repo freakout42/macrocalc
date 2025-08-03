@@ -60,7 +60,7 @@ srcclean:
 		mc2parse.c mc2pary.c *.tab.? mcpary.vcg \
 		mcmsg.h mcmnu.h core y.output libmcf.a \
 		mc 321 mcmacro mcmsg mcunits mcread mc2wks db2rdb \
-		mcparse mctoggle mcunit mcunits binunits* mcalign b2c *.o *.a makefile* core.*
+		mcparse mctoggle mcunit mcunits mcunits1 binunits* mcalign b2c *.o *.a makefile* core.*
 
 IOBJ=	mcrun.o mcmenu.o mcommand.o mcpipe.o mcrecalc.o mcellact.o mchelp.o mcwindow.o mcact.o
 FOBJ=	mcfileio.o mcprint.o mcpform.o mcrange.o mcrwalk.o
@@ -117,8 +117,11 @@ db2rdb:	db2rdb.o db2use.o
 mcunit:	mcunit.c mc.h
 	$(CC) $(CFLAGS) -DTEST mcunit.c $(ARXLIB) -o $@
 
+mcunit.o: mcunit.c
+	$(CC) $(CFLAGS) -DUNITPIPE_not -c mcunit.c
+
 mcunits.o: mcunits.c binunits.h
-	$(CC) $(CFLAGS) -c mcunits.c
+	$(CC) $(CFLAGS) -DUSEPRECOMPILED -c mcunits.c
 
 binunits.h: binunits.o b2c
 	./b2c binunits.o binunits hdrbuf
@@ -132,6 +135,9 @@ b2c: b2c.c
 
 mcunits:	mcunits.c
 	$(CC) -DMAINUNIT $(CFLAGS) mcunits.c $(ARXLIB) -o $@
+
+mcunits1:	mcunits
+	$(CC) -DMAINUNIT -DUSEPRECOMPILED $(CFLAGS) mcunits.c $(ARXLIB) -o $@
 
 mcelladr:	mcelladr.c mc.h mcparse.h
 	$(CC) $(CFLAGS) -DTEST mcelladr.c -o $@

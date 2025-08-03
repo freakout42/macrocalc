@@ -12,16 +12,14 @@
 #include "mc.h"
 #include "mcunit.h"
 
-#ifndef MSGINLINE
-#define UNITPIPE
-#endif
-
 #define	HAVE	0
 #define	WANT	1
 #define	FIRST	2
 
+#ifdef UNITPIPE
 static FILE *unitin = (FILE*)1;
 static FILE *unitout = NULL;
+#endif
 char pcmd[MAXFILE+10];
 static int units = FALSE;
 
@@ -30,13 +28,10 @@ int unitinit (void)
 {
 #ifdef UNITPIPE
 snprintf (pcmd, MAXFILE+8, "%s/bin/mcunits", libpath);
+//snprintf (pcmd, MAXFILE+8, "%s/src/mcunits1", libpath);
 units = !lib_twpo (&unitin, &unitout, pcmd);
 #else
-#ifdef MSGINLINE
 units = binary();
-#else
-units = TRUE;
-#endif
 #endif
 return !units;
 } /* unitinit */
@@ -53,7 +48,7 @@ return RET_SUCCESS;
 #endif
 } /* unitclose */
 
-#ifndef MSGINLINE
+#ifdef UNITPIPE
 static int unitread (char *inbuf)
 {
 char *s = inbuf;
@@ -81,10 +76,8 @@ while ((c = fgetc (unitin)) != EOF)
 #endif
 	*inbuf = '\0';
 	if (errno==ESPIPE) errno = 0;
-#ifdef UNITPIPE
 	if (strstr (s, "have: ")) return HAVE;
 	if (strstr (s, "want: ")) return WANT;
-#endif
 	}
 return *inbuf++ = EOF;
 }
@@ -93,7 +86,9 @@ return *inbuf++ = EOF;
 double unitconv (double s, char *su, char *tu)
 /* convert from source unit to target unit */
 {
+#ifdef UNITPIPE
 static int	mode	= FIRST;
+#endif
 float		m, d;
 char		inbuf[MAXINPUT+1]	= "";
 char		*starp;
@@ -114,22 +109,24 @@ if (su==NULL || tu==NULL) {errno = CONFUNIT; return HUGE_VAL;}
 #endif
 if (su==NULL || !*su) return s;
 if (tu==NULL || !*tu) {errno = CONFUNIT; return HUGE_VAL;}
-#ifdef MSGINLINE
+#ifndef UNITPIPE
 
 //fprintf (unitout, "%s\n", su);
 //fprintf (unitout, "%s\n", tu);
 //mode = unitread (inbuf);
 
 mcunitconvert(inbuf, su, tu);
+#ifdef DEBUG
+fprintf (stderr, "mcunitconvert: %s %s -> %s\n", su, tu, inbuf);
+#endif
 if (((starp = strchr(inbuf, '*'))==NULL) || sscanf(starp, "* %f / %f", &m, &d) != 2)
 	{
 	errno = strstr (inbuf, "onformability") ? CONFUNIT : UNRECUNIT;
 	return HUGE_VAL;
 	}
 
-#else
+#else /* !UNITPIPE */
 
-#ifdef UNITPIPE
 if (mode == FIRST)
 	{
 	mode = unitread (inbuf);
@@ -140,20 +137,12 @@ while (mode != HAVE)
 	mode = unitread (inbuf);
 	}
 if (mode==EOF) return HUGE_VAL;
-#else
-if (lib_twpo (&unitin, &unitout, "units")) return HUGE_VAL;
-#endif
 fprintf (unitout, "%s\n", su);
 #ifdef DEBUG
 fprintf (stderr, "unitconv: put mcunits: \"%s\"\n", su);
 #endif
-#ifdef UNITPIPE
 if ((mode = unitread (inbuf)) != WANT) {errno = UNRECUNIT; return HUGE_VAL;}
-#endif
 fprintf (unitout, "%s\n", tu);
-#ifndef UNITPIPE
-fclose(unitout);
-#endif
 mode = unitread (inbuf);
 #ifdef DEBUG
 fprintf (stderr, "unitconv: get mcunits: \"%s\"\n", inbuf);
@@ -163,13 +152,10 @@ if (((starp = strchr(inbuf, '*'))==NULL) || sscanf(starp, "* %f / %f", &m, &d) !
 	errno = strstr (inbuf, "onformability") ? CONFUNIT : UNRECUNIT;
 	return HUGE_VAL;
 	}
+#endif /* UNITPIPE */
 #ifdef DEBUG
-fprintf (stderr, "unitconv: %f [%s] = %f [%s]\n\n",
-	s, su, m>1. ? s * m : s / d, tu);
-#endif
-#ifndef UNITPIPE
-fclose(unitin);
-#endif
+fprintf (stderr, "unitconv: %f [%s] = %f [%s] (* %f)\n\n",
+	s, su, m>1. ? s * m : s / d, tu, m);
 #endif
 return m>1. ? s * m : s / d;
 } /* unitconv */

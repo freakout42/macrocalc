@@ -92,7 +92,7 @@ while (argv2[rcargc] && ++rcargc < MAXRCARGS)
   argv2[rcargc] = strtok(NULL, " ");
 argv2[rcargc] = NULL;
 }
-#ifdef MSGINLINE
+#ifndef UNITPIPE
 unitinit();
 #endif
 while (1) {
@@ -175,7 +175,7 @@ while (1) {
 		rdonly	= TRUE;
 		break;
 	 case 'u':
-#ifndef MSGINLINE
+#ifdef UNITPIPE
 		if (unitinit())
 			{
 			fprintf (stderr, "mc: cannot start mcunits.\n");

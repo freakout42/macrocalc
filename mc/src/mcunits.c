@@ -13,6 +13,7 @@
 #include <sys/stat.h>
 #include <arx_def.h>
 
+#define MAXINPUT 32767
 #define	PATHSIZE 128
 #define	NDIM	12
 #define	NUNITS	3000
@@ -26,8 +27,10 @@
  * This  tells that it is the real
  * thing and how much to read in.
  */
-#ifndef MAINUNIT
+#ifdef USEPRECOMPILED
 #include "binunits.h"
+#endif
+#ifndef MAINUNIT
 #define printf nullprintf
 static void nullprintf(char *x, ...) {}
 #endif
@@ -37,7 +40,7 @@ typedef	struct	HDR {
 	unsigned h_ssize;		/* String space size */
 }	HDR;
 
-HDR	hdr;
+static HDR	hdr;
 
 typedef	struct	UNIT {
 	char		*u_name;
@@ -45,24 +48,29 @@ typedef	struct	UNIT {
 	signed char	u_dim[NDIM];
 }	UNIT;
 
-UNIT	*units;
+static UNIT	*units;
+
+#ifdef MAINUNIT
+#ifndef USEPRECOMPILED
 struct	stat	sb;
 char	ufile[] = "lib/mcunits.rdb";
 char	binufile[] = "lib/binunits";
 char	*ufname;
-char	*bufname;
-char	buf[NBUF];
-char	inbuf[BUFSIZ];
-
-int nunits;
-int uflag = 0;			/* Update information only */
-int dflag = 0;			/* Debug to stderr */
-FILE *fd;
-int peekc = EOF;
-int lastc = EOF;
-int lineno = 1;
-
-struct{
+static char	*bufname;
+#endif
+static char inbuf[BUFSIZ];
+static int uflag = 0;			/* Update information only */
+static FILE *fd;
+static int lineno = 1;
+#else
+static char	*buffer;
+#endif
+static char	buf[NBUF];
+static int nunits;
+static int dflag = 0;			/* Debug to stderr */
+static int peekc = EOF;
+static int lastc = EOF;
+static struct{
 	char *prefix;
 	double factor;
 }pre[]={
@@ -173,6 +181,7 @@ char *newcpy (char *s)
 }
 
 #ifdef MAINUNIT
+#ifndef USEPRECOMPILED
 /*
  * find a file on a path in the environment, or a default path
  * with an access priveledge.
@@ -209,6 +218,7 @@ char *pathn (char *name, char *envpath, char *deflpath, char *acs)
 	return(fullname);
 }
 #endif
+#endif
 
 /*
  * Attempt to read in the already-stored
@@ -231,7 +241,7 @@ int binary (void)
 	register char *sstart;
 	register int n;
 
-#ifdef MAINUNIT
+#if defined(MAINUNIT) && !defined(USEPRECOMPILED)
 	register int bfd;
 	time_t timeasc;
 
@@ -264,14 +274,14 @@ int binary (void)
 		goto bad;
 	nunits = hdr.h_nunits;
 	sstart = malloc(hdr.h_ssize);
-#ifdef MAINUNIT
+#if defined(MAINUNIT) && !defined(USEPRECOMPILED)
 	if (read(bfd, sstart, hdr.h_ssize) != hdr.h_ssize)
 		goto bad;
 #else
   memcpy(sstart, hdrbuf+sizeof(hdr), hdr.h_ssize);
 #endif
 	units = (UNIT *)malloc(n = nunits*sizeof(UNIT));
-#ifdef MAINUNIT
+#if defined(MAINUNIT) && !defined(USEPRECOMPILED)
 	if (read(bfd, units, n) != n)
 		goto bad;
 #else
@@ -285,12 +295,12 @@ int binary (void)
 				units[n].u_name, n, units[n].u_val);
 			}
 		}
-#ifdef MAINUNIT
+#if defined(MAINUNIT) && !defined(USEPRECOMPILED)
 	close(bfd);
 #endif
 	return (1);
 bad:
-#ifdef MAINUNIT
+#if defined(MAINUNIT) && !defined(USEPRECOMPILED)
 	close(bfd);
 #endif
 	return (0);
@@ -299,7 +309,7 @@ bad:
 int nextc (void)
 {
 #ifndef MAINUNIT
-  if (!(lastc = *bufname++)) lastc = '\n';
+  if (!(lastc = *buffer++)) lastc = '\n';
 #else
 	register int c;
 
@@ -350,14 +360,15 @@ Again:
 	if (prompt != NULL) printf("%s", prompt);
 	if (dflag) fprintf(stderr, "%s", prompt);
 #else
-  bufname = prompt;
+  buffer = prompt;
 #endif
 	u->u_val = 1.;
 	for (i=0; i != NDIM; i++)
 		u->u_dim[i] = 0;
 	div = 0;
 	pow = 1;
-	for(;;)switch(c=nextc()){
+	for(;;)
+  switch(c=nextc()){
 	case ' ':
 	case '\t':
 		break;
@@ -524,6 +535,7 @@ Bad:
 }
 
 #ifdef MAINUNIT
+#ifndef USEPRECOMPILED
 char *getname (b)
 	char *b;
 {
@@ -625,6 +637,7 @@ void init (void)
 	if (uflag)
 		exit(0);
 }
+#endif
 
 void punit (UNIT *u)
 {
@@ -658,7 +671,11 @@ int main (int argc, char *argv[])
 			exit(1);
 		}
 	}
-	init();
+#ifdef USEPRECOMPILED
+	binary();
+#else
+  init();
+#endif
 	setbuf(fd = stdin, inbuf);
 Again:
 	if (!getunit(&have, "You have: ")
@@ -677,18 +694,26 @@ Again:
 #else
 void mcunitconvert(char *inbuf, char *havestr, char *wantstr) {
 	UNIT have, want;
-	register int i;
+	int i, j, k, failed;
+  char unitstr[MAXINPUT];
 
-	if (!getunit(&have, havestr)
-	 || !getunit(&want, wantstr)) {
-			sprintf(inbuf, "Conformability\n");
-  } else {
-	for (i=0; i!=NDIM; i++)
-		if (have.u_dim[i] != want.u_dim[i]) {
-			sprintf(inbuf, "Conformability\n");
-		} else {
-      sprintf(inbuf, "* %g\n/ %g\n", have.u_val/want.u_val, want.u_val/have.u_val);
+  strcpy(unitstr, havestr);
+  strcat(unitstr, "\n");
+	j = getunit(&have, unitstr);
+  strcpy(unitstr, wantstr);
+  strcat(unitstr, "\n");
+	k = getunit(&want, unitstr);
+  failed = 0;
+  if (!j || !k) failed = 1;
+  else {
+    for (i=0; i!=NDIM; i++) {
+      if (have.u_dim[i] != want.u_dim[i]) {
+        failed = 1;
+        break;
+      }
     }
   }
+  if (failed) sprintf(inbuf, "Conformability\n");
+  else        sprintf(inbuf, "* %g\n/ %g\n", have.u_val/want.u_val, want.u_val/have.u_val);
 }
 #endif
