@@ -238,8 +238,9 @@ char *pathn (char *name, char *envpath, char *deflpath, char *acs)
  */
 int binary (void)
 {
-	register char *sstart;
-	register int n;
+  char *sstart;
+  char *name1;
+  int n;
 
 #if defined(MAINUNIT) && !defined(USEPRECOMPILED)
 	register int bfd;
@@ -289,7 +290,9 @@ int binary (void)
 #endif
 	for (n=0; n!=nunits; n++)
 		{
-		units[n].u_name += (long)sstart;
+    /* offset for the real position */
+    name1 = sstart + (long)units[n].u_name;
+    units[n].u_name = name1;
 		if (dflag && units[n].u_name != NULL) {
 			fprintf (stderr, "u_name=%s u_val=units[%03d].u_val=%f\n",
 				units[n].u_name, n, units[n].u_val);

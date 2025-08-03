@@ -77,7 +77,7 @@ mc2wksexe.h: mc2wks.exe b2c.exe
 	./b2c.exe mc2wks.exe mc2wksexe mc2wksexe
 
 mcunits.o: mcunits.c binunits.h
-	$(CC) $(CFLAGS) -c mcunits.c
+	$(CC) $(CFLAGS) -DUSEPRECOMPILED -c mcunits.c
 
 binunits.h: binunits b2c.exe
 	./b2c.exe binunits binunits hdrbuf
