@@ -63,8 +63,6 @@ Here is an example for Linux/bash:
     PATH=$PATH:$ARX/bin
     MANPATH=$MANPATH:$ARX/man
 
-**REMEMBER TO START MacroCALC WITH THE `-u` OPTION TO USE THE UNIT FUNCTIONALITY**
-
 ### getting started
 
 Navigate through the sheet with the arrow-keys. The dot (.) marks the
