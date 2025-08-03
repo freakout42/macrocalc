@@ -46,7 +46,7 @@ You need i686 glibc installed on 64bit machines: `sudo yum install glibc.i686`
 `docker run -e COLUMNS -e LINES -e TERM -ti ghcr.io/freakout42/macrocalc:latest`  
 
 6. Windows .exe Download  
-https://github.com/freakout42/macrocalc/releases/download/v11.03/mc-11.03-w3-i386.exe.zip  
+https://github.com/freakout42/macrocalc/releases/download/v11.04/mc-11.04-w3-i386.exe.zip  
 and unzip mc.exe and mc2wks.exe - ideally into a directory on your %PATH%.
 Start it with any console with full pathname or double-click it with the explorer.
 
