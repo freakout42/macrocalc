@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <arx_def.h>
+#include <str_def.h>
 #include <cur_def.h>
 #include "mc.h"
 #include "mcgetmnu.h"
@@ -226,13 +227,9 @@ switch (getmenu(RMENU))
  }
 } /* rmenu */
 
-extern int cur_utf8;
 static void fmenu (void)
 /* Executes the commands in the file menu */
 {
-#ifndef NOUTF8
-char version[132];
-#endif
 switch (getmenu (FMENU))
  {
  case 0:
@@ -257,12 +254,7 @@ switch (getmenu (FMENU))
 	loadsheet(2);
 	break;
  case 6:
-#ifndef NOUTF8
-  snprintf(version, 130, "%s w=%c", rcsinfo, cur_utf8 ? '1' : '0');
-	errorstr(version);
-#else
-	errorstr(rcsinfo);
-#endif
+	errorstr(arx_vers(rcsinfo));
 	break;
  }
 } /* fmenu */

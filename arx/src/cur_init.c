@@ -87,7 +87,7 @@ int i;
 start_color();
 use_default_colors();
 for (i=0; i<COL_UNDEF; i++) {
-//  assert(attrels[i].ccode == i);
+/* assert(attrels[i].ccode == i); */
   init_pair(i, attrels[i].foreg, attrels[i].backg);
 }
 }
@@ -129,18 +129,19 @@ signal(SIGFPE, SIG_IGN);
 
 /* user and charset environment */
 #ifdef WIN32
-/*username = getenv("USERNAME");*/
-#define ISO_8859_15_CP 28605
-/*if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;*/
-//SetConsoleCP(ISO_8859_15_CP);
-//SetConsoleOutputCP(ISO_8859_15_CP);
+/* username = getenv("USERNAME");
+ * #define ISO_8859_15_CP 28605
+ * if (IsValidCodePage(ISO_8859_15_CP) == 0) return NULL;
+ * SetConsoleCP(ISO_8859_15_CP);
+ * SetConsoleOutputCP(ISO_8859_15_CP);
+ */
 SetConsoleCP(CP_UTF8);
 SetConsoleOutputCP(CP_UTF8);
 lclocale = CHARSET;
 if ((lclocale = setlocale(LC_ALL, ".UTF-8")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
 cur_utf8 = 1;
 stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
-SetConsoleMode(stdinHandle, 0); //ENABLE_WINDOW_INPUT);
+SetConsoleMode(stdinHandle, 0); /* ENABLE_WINDOW_INPUT); */
 #else
 /* #define ISO_8859_15_CP "en_US.iso885915"
  * setenv("LC_ALL", ISO_8859_15_CP, 1);

@@ -12,7 +12,7 @@
 #include <cur_def.h>
 #include <stdlib.h>
 
-#ifdef uselibc
+#ifdef USELIBC
 #define MYMBSTOWCS mbstowcs
 #define MYWCSTOMBS wcstombs
 #else
@@ -79,6 +79,22 @@ static void cur_adds(WINDOW *w, char *s) {
   waddstr(w, s);
 }
 #endif
+
+void cur_puts(int y, int x, char *s, int w) {
+#ifdef UTF8
+char *out = NULL;
+wchar_t t[MAXINPUT+1];
+
+if (cur_utf8) {
+  out = str_sub(out, s, 0, w, 0);
+  utf8_to_ucode(t, out, MAXINPUT);
+  move (y, x);
+  addwstr(t);
+  free(out);
+} else
+#endif
+mvprintw (y, x, "%-*s", w, s);
+}
 
 int cur_gets (WINDOW *w, int y, int x, int width, int att,
 	char *s, int pos, char *legal, int maxlength, int *chg,

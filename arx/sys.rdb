@@ -1,5 +1,5 @@
 Sys:Os:Cc:Cflag:Lx:Ldflag:Ldr:Lex:Lflag:Llib:Yywrap:Yacc:Yflag:Ylib:Curses:Curalib:Curslib:Curinc:Omiss:Nroff:Ar:Nflag:Curwide
-lu:Linux:gcc:-Os -Wall -Werror -DNOUTF8:ld::-r:flex:-8:-lfl::bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c:0
+lu:Linux:gcc:-Os -Wall -Werror:ld::-r:flex:-8:-lfl::bison:-d --yacc::-I/usr/include/ncurses::-lncurses:/usr/include/ncurses/curses.h::nroff:ar:-c:0
 fb:FreeBSD:cc:-Wno-return-type -w:ld::-r:lex:-8:-ll::yacc:-d:-ly:-I/usr/include/ncursesw:/usr/lib/libncursesw.a::/usr/include/ncursesw/curses.h::nroff:ar::1
 f4:FreeBSD:cc:-Wno-return-type -w:ld::-r:lex:-8:-ll::yacc:-d:-ly::/usr/lib/libncursesw_real.a /usr/lib/libtinfow.a::/usr/include/ncursesw/curses.h::nroff:ar::1
 md:MacOS Darwin:gcc:-Wno-unknown-warning-option -Wno-deprecated-non-prototype -Wno-address-of-packed-member:ld::-r:flex:-8:-ll::bison:-d --yacc::::-lcurses:/usr/include/curses.h::nroff:ar::1
