@@ -90,3 +90,9 @@ a relative cell reference `[+0;-1]` and refers to B3 in the copied formula.
 Simplified BSD License  
 Copyright (c) 2024, Axel K. Reinhold  
 All rights reserved.  
+
+### versions
+
+- diamond v11.04 UTF-8   commit/61a327d04d5c491b9bc1b75ecdf6022b72cc2573
+- golden  v10.53 Windows commit/538fdc0c743f688adf7710bd86fd0f5cad41ed5d
+- legacy  v10.15 univers commit/9232af97ba28d40bc4410d6bcae4afc46403042b
