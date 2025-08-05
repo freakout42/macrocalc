@@ -1,6 +1,6 @@
 /* wksfio.c */
 
-//#pragma GCC diagnostic ignored "-Waddress-of-packed-member"
+/* #pragma GCC diagnostic ignored "-Waddress-of-packed-member" */
 
 #include <assert.h>
 #include <string.h>

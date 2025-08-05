@@ -10,6 +10,7 @@ char *str_gets (FILE *fp, char *s, size_t n);
 char *str_gecs (FILE *fp, char *s, size_t n);
 #endif
 
+char *arx_vers (char *r);
 char *str_trim (char *s);
 int str_w2u8(char *tgt, wchar_t *src, int siz);
 int utf8_to_ucode(wchar_t *output, char *input, int length);

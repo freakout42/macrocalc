@@ -28,7 +28,7 @@ int unitinit (void)
 {
 #ifdef UNITPIPE
 snprintf (pcmd, MAXFILE+8, "%s/bin/mcunits", libpath);
-//snprintf (pcmd, MAXFILE+8, "%s/src/mcunits1", libpath);
+/* snprintf (pcmd, MAXFILE+8, "%s/src/mcunits1", libpath); */
 units = !lib_twpo (&unitin, &unitout, pcmd);
 #else
 units = binary();
@@ -110,10 +110,6 @@ if (su==NULL || tu==NULL) {errno = CONFUNIT; return HUGE_VAL;}
 if (su==NULL || !*su) return s;
 if (tu==NULL || !*tu) {errno = CONFUNIT; return HUGE_VAL;}
 #ifndef UNITPIPE
-
-//fprintf (unitout, "%s\n", su);
-//fprintf (unitout, "%s\n", tu);
-//mode = unitread (inbuf);
 
 mcunitconvert(inbuf, su, tu);
 #ifdef DEBUG

@@ -79,7 +79,7 @@ double lib_iee2 (double d);
 #else
 #define gnucver ""
 #endif
-#define CCOMPILER gnucver " " __DATE__
+#define CCOMPILER gnucver
 
 #ifdef COHERENT
 #define PLATFORM	"COFF-i386"

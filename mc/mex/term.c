@@ -187,7 +187,7 @@ if (cur_utf8) {
 }
 #endif
 stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
-SetConsoleMode(stdinHandle, 0); //ENABLE_WINDOW_INPUT);
+SetConsoleMode(stdinHandle, 0); /* ENABLE_WINDOW_INPUT); */
 stdoutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 GetConsoleMode(stdoutHandle, &outMode);
 outModeInit = outMode;
