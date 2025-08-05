@@ -495,7 +495,7 @@ comand(p)
 char *p;
 {
 	int ct, val;
-	int spval;
+	int spval = 0;
 	int index;
 	char argtyp;
 	char name[MAXLINE];
