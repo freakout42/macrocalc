@@ -5,13 +5,12 @@
  * a barely buffered fashion on the display.
  * All operating systems.
  */
-
 #define TERMC 1
 #include	"ed.h"
 
 WINDOW *windw1 = NULL;
 
-#if W32
+#if W32 || defined(WIN32)
 #include <windows.h>
 #include <stdio.h>
 #ifdef UTF8
@@ -20,9 +19,11 @@ WINDOW *windw1 = NULL;
 #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING  0x0004
 #endif
+#if W32
 static HANDLE stdinHandle;
 static HANDLE stdoutHandle;
 static DWORD outModeInit;
+#endif
 #endif
 
 #if AtST
@@ -127,7 +128,6 @@ struct  termio  nstate;
  * finds the terminal, then assigns a channel to it
  * and sets it raw. On CPM it is a no-op.
  */
-int cur_utf8 = 1;
 int ttopen()
 {
 #if	VMS
@@ -238,10 +238,12 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 	struct termios t;
 #endif
 
+#ifndef EMBEDDED
 #ifdef UTF8
   char *lclocale;
   if ((lclocale = setlocale(LC_ALL, "")) == NULL) lclocale = setlocale(LC_ALL, CHARSET);
   cur_utf8 = lclocale ? strstr(lclocale, "UTF-8") != NULL : 0;
+#endif
 #endif
 
 if (windw1 == NULL) {
@@ -628,34 +630,45 @@ int ttgetc()
 #if	CURSES
 	int ch = 0;
 #ifdef UTF8
-wint_t keypress = { 0 };
-int t;
+  int keypress;
 #endif
-
 while (ch == 0) {
+#ifdef EMBEDDED
+extern int getkeypressed();
+  keypress = getkeypressed();
+  if (keypress < 0) ch = -keypress;
+  else ch = to_latin9(keypress);
+#else
 #ifdef UTF8
-if (cur_utf8) ch = (get_wch(&keypress) == KEY_CODE_YES) ? keypress : to_latin9(keypress);
-else
-#endif /* UTF8 */
-ch = getch();
-#ifdef UTF8
-  if (ch == 191) {
-     t = mlyesno("Non-mappable char: loosing - ACCEPT");
-     mlerase();
-     update(TRUE);
-     if (!t) ch = 0;
-  }
-#endif
-
+  if (cur_utf8) {
+    if (get_wch(&keypress) == KEY_CODE_YES)
+                ch = keypress;
+    else
+                ch = to_latin9(keypress);
+    }
+  else
+                ch = getch();
+#else
+  ch = getch();
 #ifdef WIN32
 if (ch < 0) ch = 256 + ch;
+#endif
+#endif /* UTF8 */
+#endif /* EMBEDDED */
+}
+#ifdef UTF8
+  if (ch == 191) {
+     keypress = mlyesno("Non-mappable char: loosing - ACCEPT");
+     mlerase();
+     update(TRUE);
+     if (!keypress) ch = 0;
+  }
 #endif
 #ifdef hpux
 	/* hp-emulation returns a "RETURN" after every function-key! */
 	if (hpterm && ch>=KEY_F(0) && ch<=KEY_F(12))
 		getch();
 #endif
-  }
 	return ch;
 #else
 	return(fgetc(stdin));

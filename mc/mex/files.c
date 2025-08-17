@@ -19,6 +19,15 @@
 
 extern int ctrlg();
 
+#ifndef EMBEDDED
+int cur_utf8 =
+#ifdef UTF8
+               1;
+#else
+               0;
+#endif
+#endif
+
 /*
  * file fileio.c:
  *

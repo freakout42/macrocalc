@@ -860,9 +860,8 @@ int mainloop(char *fil, WINDOW *scr) {
       return 0;
     }
     fileindex = 1;
-/*  addline(fil, curbp);
- *  curwp->w_flag |= WFMOVE|WFHARD|WFFORCE;
- */
+//    addline(fil, curbp);
+//    curwp->w_flag |= WFMOVE|WFHARD|WFFORCE;
   }
 
 	kbdm[0] = CTLX|')';			/* Empty macro		*/
@@ -1752,34 +1751,34 @@ ctrlg()
 }
 
 #ifdef nonono
-  CNTL|'@',   setmark,         /*  0                                                        */
-  CNTL|'A',   gotobol,         /*  1 KEY_HOME:        /* HOME key */       c = (CNTL | 'A') */
-  CNTL|'B',   backchar,        /*  2 KEY_LEFT:        /* left arrow */     c = (CNTL | 'B') */
-  CNTL|'C',   quit,            /*  3                                                        */
-  CNTL|'D',   forwdel,         /*  4 KEY_DC:          /* delete key */     c = (CNTL | 'D') */
-  CNTL|'E',   gotoeol,         /*  5 KEY_END:         /* END key */        c = (CNTL | 'E') */
-  CNTL|'F',   forwchar,        /*  6 KEY_RIGHT:       /* right arrow */    c = (CNTL | 'F') */
-  CNTL|'G',   undo,            /*  7                                                        */
-  CNTL|'H',   backdel,         /*  8 KEY_BACKSPACE:   /* backspace */      c = (CNTL | 'H') */
-  CNTL|'I',   tab,             /*  9 KEY_NEXT:        /* tabulator */      c = (CNTL | 'I') */
-  CNTL|'J',   tnewline,        /* 10                                                        */
-  CNTL|'K',   killtxt,         /* 11                                                        */
-  CNTL|'L',   rxfresh,         /* 12                                                        */
-  CNTL|'M',   tnewline,        /* 13                                                        */
-  CNTL|'N',   forwline,        /* 14 KEY_DOWN:        /* down arrow */     c = (CNTL | 'N') */
-  CNTL|'O',   openline/IC!,    /* 15 KEY_IC:          /* Ins toggle */     c = (CNTL | 'O') */
-  CNTL|'P',   backline,        /* 16 KEY_UP:          /* up arrow */       c = (CNTL | 'P') */
-  CNTL|'Q',   TERMINAL START   /* 17                                                        */
-  CNTL|'R',   backpage,        /* 19 KEY_PPAGE:       /* PGUP key */       c = (CNTL | 'V') */
-  CNTL|'S',   TERMINAL STOP    /* 18                                                        */
-  CNTL|'T',   twiddle,         /* 20                                                        */
-  CNTL|'U',   MULTIPLE,        /* 21                                                        */
-  CNTL|'V',   forwpage,        /* 22 KEY_NPAGE:       /* PGDN key */       c = (CNTL | 'V') */
-  CNTL|'W',   killregion,      /* 23                                                        */
-  CNTL|'X',   META2,           /* 24                                                        */
-  CNTL|'Y',   yank,            /* 25                                                        */
-  CNTL|'Z',   quickexit,       /* 26 KEY_F(8):        /* F8 save/exit */   c = (CNTL | 'Z') */
-  ESC         META,            /* 27                                                        */
+  CNTL|'@',   setmark,         //  0
+  CNTL|'A',   gotobol,         //  1 KEY_HOME:        /* HOME key */       c = (CNTL | 'A')
+  CNTL|'B',   backchar,        //  2 KEY_LEFT:        /* left arrow */     c = (CNTL | 'B')
+  CNTL|'C',   quit,            //  3
+  CNTL|'D',   forwdel,         //  4 KEY_DC:          /* delete key */     c = (CNTL | 'D')
+  CNTL|'E',   gotoeol,         //  5 KEY_END:         /* END key */        c = (CNTL | 'E')
+  CNTL|'F',   forwchar,        //  6 KEY_RIGHT:       /* right arrow */    c = (CNTL | 'F')
+  CNTL|'G',   undo,            //  7
+  CNTL|'H',   backdel,         //  8 KEY_BACKSPACE:   /* backspace */      c = (CNTL | 'H')
+  CNTL|'I',   tab,             //  9 KEY_NEXT:        /* tabulator */      c = (CNTL | 'I')
+  CNTL|'J',   tnewline,        // 10
+  CNTL|'K',   killtxt,         // 11
+  CNTL|'L',   rxfresh,         // 12
+  CNTL|'M',   tnewline,        // 13
+  CNTL|'N',   forwline,        // 14 KEY_DOWN:        /* down arrow */     c = (CNTL | 'N')
+  CNTL|'O',   openline/IC!,    // 15 KEY_IC:          /* Ins toggle */     c = (CNTL | 'O')
+  CNTL|'P',   backline,        // 16 KEY_UP:          /* up arrow */       c = (CNTL | 'P')
+  CNTL|'Q',   TERMINAL START   // 17
+  CNTL|'R',   backpage,        // 19 KEY_PPAGE:       /* PGUP key */       c = (CNTL | 'V')
+  CNTL|'S',   TERMINAL STOP    // 18
+  CNTL|'T',   twiddle,         // 20
+  CNTL|'U',   MULTIPLE,        // 21
+  CNTL|'V',   forwpage,        // 22 KEY_NPAGE:       /* PGDN key */       c = (CNTL | 'V')
+  CNTL|'W',   killregion,      // 23
+  CNTL|'X',   META2,           // 24
+  CNTL|'Y',   yank,            // 25
+  CNTL|'Z',   quickexit,       // 26 KEY_F(8):        /* F8 save/exit */   c = (CNTL | 'Z')
+  ESC         META,            // 27
 
 KEY_IC:          /* Ins toggle */     c = (META | 'I')
 KEY_F(1):        /* F1 help */        c = (META | '?')

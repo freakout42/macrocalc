@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "7.1"
+#define VERSION "7.2"
 
 #define _XOPEN_SOURCE_EXTENDED 1
 
@@ -270,7 +270,7 @@
 #include <wchar.h>
 #include <locale.h>
 #ifdef NCURSES_WACS
-#define UTF8
+#define UTF8 1
 #define CURVARIANT w
 #define CHARSET "en_US.UTF-8"
 #else
@@ -284,6 +284,8 @@
 #include <termios.h>
 #endif
 #endif
+extern int cur_utf8;
+
 #if ! (defined(WINDOW) || defined(_CURSES_INCLUDED) || defined(_CURSES_H_) || defined(_CURSES_H) || defined(CURSES_H) || defined(__NCURSES_H))
 /*
  * There is a window structure allocated for
@@ -295,7 +297,6 @@
  * terms of decoupling, the full blown redisplay is just too
  * expensive to run for every input character. 
  */
-extern int cur_utf8;
 typedef struct  WINDOW {
 	struct  WINDOW *w_wndp;		/* Next window			*/
 	struct  BUFFER *w_bufp;		/* Buffer displayed in window	*/

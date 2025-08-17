@@ -12,23 +12,25 @@ else
   TINFOLIB := 
 endif
 
-CFLAGS=-Os -w
+CFLAGS=-O0 -Wall -Wextra -Wno-unused-parameter
 # -Os -w
-# -Wall -Wextra -Wno-unused-parameter
+# -O3 -Wall -Wextra -Wno-unused-parameter
 # -w
 # -g -O0
 LIBS=-l$(CURSESVARANT) $(TINFOLIB)
 SRC=utf82iso885915.c buffer.c cursor.c display.c files.c line.c random.c search.c term.c window.c word.c main.c
-OBJ=utf82iso885915.o buffer.o cursor.o display.o files.o line.o random.o search.o term.o window.o word.o help.o
+OBJ=utf82iso885915.o buffer.o cursor.o display.o         line.o random.o search.o        window.o word.o
 
 all: mex libmex.a
 
-mex: main.o $(OBJ)
-	$(CC) -o $@ $(LDFLAGS) main.o $(OBJ) $(LIBS)
+test: libmex.a
+
+mex: main.o $(OBJ) files.o term.o help.o
+	$(CC) -o $@ $(LDFLAGS) main.o $(OBJ) files.o term.o help.o $(LIBS)
 	strip $@
 
-libmex.a: mainloop.o $(OBJ)
-	$(AR) rcs $@ mainloop.o $(OBJ)
+libmex.a: mainloop.o filese.o terme.o $(OBJ)
+	$(AR) rcs $@ mainloop.o filese.o terme.o $(OBJ)
 
 $(SRC):	ed.h
 
@@ -37,6 +39,12 @@ main.o: main.c curkeys.h
 
 mainloop.o: main.c curkeys.h
 	$(CC) $(CFLAGS) -DEMBEDDED -Wno-missing-braces -c main.c -o $@
+
+filese.o: files.c
+	$(CC) $(CFLAGS) -DEMBEDDED -c files.c -o $@
+
+terme.o: term.c ed.h
+	$(CC) $(CFLAGS) -DEMBEDDED -I/usr/include/$(CURSESVARANT) -c term.c -o $@
 
 term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/$(CURSESVARANT) -c term.c
