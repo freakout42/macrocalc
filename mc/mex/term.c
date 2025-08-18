@@ -628,16 +628,16 @@ int ttgetc()
 #endif
 #if	V7
 #if	CURSES
-	int ch = 0;
+  int ch = 0;
 #ifdef UTF8
-  int keypress;
+  unsigned int keypress;
 #endif
 while (ch == 0) {
 #ifdef EMBEDDED
 extern int getkeypressed();
-  keypress = getkeypressed();
-  if (keypress < 0) ch = -keypress;
-  else ch = to_latin9(keypress);
+  ch = getkeypressed();
+  if (ch < 0) ch = -ch;
+  else ch = to_latin9(ch);
 #else
 #ifdef UTF8
   if (cur_utf8) {
