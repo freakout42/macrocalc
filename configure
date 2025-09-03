@@ -4,7 +4,7 @@ VERSID=`awk '{print substr($2,2)}' mc/Name`
 case `uname -s` in
   Linux|CYGWIN_NT-*)   HARDID=`uname -i 2>/dev/null`
            if [ "$HARDID" = "x86_64" ]; then PLATID=l6; else PLATID=lu; fi
-           test -f /usr/include/ncursesw/curses.h && PLATID=lw
+           test -f /usr/include/ncursesw/curses.h -o -f /usr/lib/libcursesw.so && PLATID=lw
            grep -q gentoo /etc/os-release 2>/dev/null && PLATID=lo
            test "${HARDID:-unknown}" = "unknown" && HARDID=`uname -m`
            test "${HARDID}" = "GenuineIntel" && HARDID=`uname -m`

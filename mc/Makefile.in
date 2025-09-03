@@ -262,11 +262,11 @@ pol2tex.o:	pol2tex.c lotus.h mcelldef.h mcelladr.h mcfunc.h \
 
 mc2pary.o:	mcpary.c lotus.h mc.h
 	cp mcpary.c mc2pary.c
-	$(CC) $(CFLAGS) -Dlint -DLOTUS -c mc2pary.c
+	$(CC) --std=c99 $(CFLAGS) -Dlint -DLOTUS -c mc2pary.c
 	rm -f mc2pary.c
 
 mcpary.o:	mcpary.c mc.h mcomplex.h
-	$(CC) $(CFLAGS) -Dlint -c mcpary.c
+	$(CC) --std=c99 $(CFLAGS) -Dlint -c mcpary.c
 
 mcomplex.o: mcelldef.h mcfunc.h
 
@@ -285,16 +285,16 @@ mcparl.c:	mcparl.l mc.h mcinput.h mcell.h mcellact.h mcelladr.h mcparse.h mcftab
 	mv lex.yy.c $@
 
 mcparl.o:	mcparl.c l.tab.h
-	$(CC) $(CFLAGS) -Wno-error -c mcparl.c
+	$(CC) --std=c99 $(CFLAGS) -Wno-error -c mcparl.c
 
 mcparyd.o:	mcpary.c
 	cp mcpary.c mcparyd.c
-	$(CC) -g $(CFLAGS) -DYYDEBUG -c mcparyd.c
+	$(CC) --std=c99 -g $(CFLAGS) -DYYDEBUG -c mcparyd.c
 	rm mcparyd.c
 
 mcparld.o:	mcparl.c l.tab.h mc.h
 	cp mcparl.c mcparld.c
-	$(CC) -g $(CFLAGS) -DLEXDEBUG -c mcparld.c
+	$(CC) --std=c99 -g $(CFLAGS) -DLEXDEBUG -c mcparld.c
 	rm mcparld.c
 
 mcelladr.o:	mcelladr.c mc.h mcparse.h mcutil.h
@@ -302,10 +302,11 @@ mcelladr.o:	mcelladr.c mc.h mcparse.h mcutil.h
 mcunit.o:	mcunit.c mc.h
 
 mcftab.o:	mcftab.c mcfunc.h f.tab.h
+	$(CC) --std=c99 $(CFLAGS) -c mcftab.c
 
 mc2ftab.o:	mcftab.c mcfunc.h f.tab.h
 	cp mcftab.c mc2ftab.c
-	$(CC) $(CFLAGS) -DLOTUS -c mc2ftab.c
+	$(CC) --std=c99 $(CFLAGS) -DLOTUS -c mc2ftab.c
 	rm -f mc2ftab.c
 
 mctime.o:	mctime.c mc.h
@@ -459,8 +460,18 @@ nroclean:
 soelim: nro
 	cp nro $@
 
-nro:	nro.o nrotxt.o nrocmd.o
-	$(CC) nro.o nrotxt.o nrocmd.o -o $@
+NROBJ=nro.o nrotxt.o nrocmd.o
+$(NROBJ): nro.h
+
+nro.o:	nro.c
+	$(CC) --std=c99 -c $<
+nrotxt.o:	nrotxt.c
+	$(CC) --std=c99 -c $<
+nrocmd.o:	nrocmd.c
+	$(CC) --std=c99 -c $<
+
+nro:	$(NROBJ)
+	$(CC) $(NROBJ) -o $@
 
 nro.man:	nro nro.an nro.nro
 	-./nro nro.an nro.nro >$@

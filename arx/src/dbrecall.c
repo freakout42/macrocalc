@@ -5,16 +5,13 @@
 #include "arx_def.h"
 #include "dbf_def.h"
 
-int errorex(n)
-  int n;
+int errorex(int n)
 {
   fprintf(stderr, "error: %d usage: dbrecall dbf recno\n", n);
   exit(n);
 }
 
-int main (argc, argv)
-  int argc;
-  char *argv[];
+int main (int argc, char *argv[])
 {
 struct DBFPROLOG2 d2;
 unsigned char fld;

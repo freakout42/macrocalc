@@ -23,6 +23,7 @@
  * MicroEMACS screen editor.
  */
 #include	<setjmp.h>
+#include	<stdlib.h>
 #include	<stdio.h>
 #include	<string.h>
 #include	"ed.h"

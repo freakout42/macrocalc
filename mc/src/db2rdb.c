@@ -420,7 +420,7 @@ if (dataproc)
 	drdb->dashlength= dashlen;
 	drdb->convdate	= cnvdate;
 	drdb->trim	= dotrim;
-	drdb->bool	= boolean;
+	drdb->boolean	= boolean;
 	drdb->todrop	= todrop;
 	drdb->towhat	= to_;
 

@@ -5,8 +5,7 @@
 #include <sys/stat.h>
 #include <arx_def.h>
 
-long lib_fsiz (file)
-	int file;
+long lib_fsiz (int file)
 {
 struct stat status;
 

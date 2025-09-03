@@ -10,9 +10,7 @@
 #include <ctype.h>
 #include <arx_def.h>
 
-int	str_abbr (s, a)
-	const char *s; const char *a;
-
+int	str_abbr (const char *s, const char *a)
 {
 if (!*a) return FALSE;
 while (toupper (*s) == toupper (*a) && isalnum (*s)) s++, a++;

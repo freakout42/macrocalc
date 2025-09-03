@@ -44,7 +44,7 @@
 #define min(x, y)	(((x) < (y)) ? (x) : (y))
 #endif
 
-#if defined(i386) || defined(_I386) || defined(_M_IX86) || defined(__x86_64)
+#if defined(i386) || defined(_I386) || defined(_M_IX86) || defined(__x86_64) || defined(__i386)
 #define lib_cano(v)
 #define lib_2iee(d)	d
 #define lib_iee2(d)	d

@@ -145,7 +145,7 @@ while (!done)					/* input loop		*/
 	if (cur_slen(so) > width && sx < endx) mvwaddch(w, y, endx, '>');
 	wmove(w, y, sx);			/* move to cursor pos	*/
 	wrefresh(w);				/* show the screen	*/
-	switch (c = cur_getk (w))		/* get pressed key	*/
+	switch (c = cur_getk())		/* get pressed key	*/
 	 {
 	 case -KEY_HOME:				/* go to start of field	*/
 		pos	= 0;

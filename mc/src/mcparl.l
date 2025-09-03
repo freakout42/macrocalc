@@ -3,6 +3,8 @@
 %{
 /* mcparl.l */
 
+#define __USE_MISC
+#define __USE_XOPEN
 #include <math.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -17,6 +19,7 @@
 #include "mcparse.h"
 #include "mcftab.h"
 #include "mcfunc.h"
+int fileno(FILE *stream);
 
 #include "l.tab.h"
 

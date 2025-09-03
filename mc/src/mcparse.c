@@ -14,9 +14,9 @@
 extern int 	yydebug;
 int		yybegin();
 int		yyparse();
-void		yysetbuf();
+void		yysetbuf(char *p);
 void		yyclrbuf();
-int		yybufpos();
+int		yybufpos(char *p);
 
 #ifdef LOTUS
 #include "lotus.h"

@@ -98,7 +98,7 @@ char	dashline PACK2;		/* dashline				*/
 char	dashlength PACK2;	/* dashlength				*/
 char	convdate PACK2;		/* convert dates			*/
 char	trim PACK2;		/* trim strings				*/
-char	bool PACK2;		/* boolean				*/
+char	boolean PACK2;		/* boolean				*/
 char	nullpad PACK2;		/* nullpadding				*/
 enum TODROP {DROPIT, NODROP}
 	todrop PACK2;

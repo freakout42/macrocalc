@@ -63,7 +63,7 @@ do	{
 	maxcode	= active;
 	cur_satt (w, A_NORMAL);
 	wmove (w, cy, cx);
-	key = cur_getk (w);
+	key = cur_getk();
 	if (key>0 && key<=0xff && isalpha(key)) key = toupper (key);
 	switch (key)
 	 {

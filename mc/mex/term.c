@@ -6,6 +6,7 @@
  * All operating systems.
  */
 #define TERMC 1
+#define _POSIX_C_SOURCE 1
 #include	"ed.h"
 
 WINDOW *windw1 = NULL;
@@ -107,9 +108,11 @@ struct  termios  ostate;
 struct  termios  nstate;
 #else
 #ifndef WIN32
+#if !CURSES
 #include <termio.h>
 struct  termio  ostate;
 struct  termio  nstate;
+#endif
 #endif
 #endif
 #endif

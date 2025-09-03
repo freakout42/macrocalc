@@ -67,7 +67,7 @@ extern HANDLE stdinHandle;
 
 #if defined(_STDIO_H) || defined(_STDIO_INCLUDED) || defined(__STDIO_H__) || defined(_STDIO_H_) || defined(_H_STDIO) || defined(WIN32)
 extern FILE	*std_in, *std_out, *std_err, *std_erread;
-FILE		*cur_maco();
+FILE *cur_maco(char *mf);
 #endif
 
 WINDOW *cur_init (int around, int *ysz, int *xsz, unsigned char *col);

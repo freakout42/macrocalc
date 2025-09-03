@@ -15,7 +15,7 @@ endif
 ifeq (small,$(MAKECMDGOALS))
   CFLAGS=-Os -w
 else
-  CFLAGS=-O3 -Wall -Wextra -Wno-unused-parameter
+  CFLAGS=--std=c99 -O3 -Wall -Wextra -Wno-unused-parameter
 endif
 # -Os -w
 # -O3 -Wall -Wextra -Wno-unused-parameter
@@ -54,8 +54,11 @@ terme.o: term.c ed.h
 term.o: term.c ed.h
 	$(CC) $(CFLAGS) -I/usr/include/$(CURSESVARANT) -c term.c
 
+utf82iso885915.o: utf82iso885915.c
+	$(CC) -c utf82iso885915.c
+
 curkeys.h: curkeys.c
-	$(CC) -I/usr/include/$(CURSESVARANT) curkeys.c -o curkey2
+	$(CC) --std=c99 -I/usr/include/$(CURSESVARANT) curkeys.c -o curkey2
 	./curkey2 >$@
 	rm curkey2
 

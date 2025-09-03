@@ -54,7 +54,7 @@ for (fld=0; fld<sd->fields; fld++)
 	 case 'F':
 		goto putfield;
 	 case 'L':
-		if (td->bool)
+		if (td->boolean)
 			{
 			if (strchr ("TtYyJjOo1", *s) != NULL)
 				*s = '1';
