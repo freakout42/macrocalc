@@ -3,8 +3,10 @@
 %{
 /* mcparl.l */
 
+#ifndef __USE_MISC
 #define __USE_MISC
 #define __USE_XOPEN
+#endif
 #include <math.h>
 #include <ctype.h>
 #include <stdlib.h>

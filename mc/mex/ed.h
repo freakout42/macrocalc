@@ -1,4 +1,4 @@
-/* $Id: ed.h,v 1.58 2025/07/23 14:01:29 axel Exp $
+/* $Id: ed.h,v 1.60 2025/09/03 12:40:16 axel Exp $
  * This file is the general header file for
  * all parts of the MicroEMACS display editor. It contains
  * definitions used by everyone, and it contains the stuff

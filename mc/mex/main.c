@@ -59,7 +59,7 @@ void edmore(char fname[]);
 #define DASTART	990		/* starting the DA	*/
 #define DACLOSE	991		/* closing the DA	*/
 
-char	*rcsid = "$Id: main.c,v 1.47 2025/07/23 14:01:29 axel Exp $";
+char	*rcsid = "$Id: main.c,v 1.48 2025/09/03 12:40:16 axel Exp $";
 jmp_buf loop1;
 int changedandstored;
 int	logit = LOGIT;			/* mb: log keystrokes		*/
