@@ -16,6 +16,8 @@
 #include <cur_def.h>
 #include "oem2iso.h"
 
+void strncpy_t (char *tgt, char *src, int max) { strncpy (tgt, src, max); }
+
 char *arx_vers(char *rcs) {
 #ifdef UTF8
 static char version[132];

@@ -185,7 +185,7 @@ changed = TRUE;
 autorecalc();
 } /* deletecol */
 
-void insertcol(col) int col;
+void insertcol(int col)
 /* Inserts a column */
 {
 int	ccnt;
@@ -214,7 +214,7 @@ changed = TRUE;
 autorecalc();
 } /* deleterow */
 
-void insertrow (row) int row;
+void insertrow (int row)
 /* Inserts a row */
 {
 moverange (0, row+1, 0, row, MAXCOLS, MAXROWS);

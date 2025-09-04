@@ -539,8 +539,7 @@ Bad:
 
 #ifdef MAINUNIT
 #ifndef USEPRECOMPILED
-char *getname (b)
-	char *b;
+char *getname (char *b)
 {
 	register char *s, *t;
 	register int c;

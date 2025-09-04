@@ -245,7 +245,7 @@ for (rg = rnames; rg != NULL; rg = rg->next)
 	r.opcode		= L_NAME;
 	r.reclen		= LL_name;
 	strncpy (r.data.name.rangename, rg->name,
-		 sizeof(r.data.name.rangename));
+		 sizeof(r.data.name.rangename)-1);
 	str_upr (r.data.name.rangename);
 	r.data.name.cell1.col	= rg->adr[0].col;
 	r.data.name.cell1.row	= rg->adr[0].row;

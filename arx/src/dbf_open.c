@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include "arx_def.h"
 #include "dbf_def.h"
+#include "str_def.h"
 
 int dbf_open (struct DBF *d)
 {
@@ -135,7 +136,7 @@ switch (d->p.dbf_version & DBVERSION)	/* read into field description array III *
  case DBMANFILE:
 	for (fld=0; fld<d->fields; fld++)
 		{
-		strncpy (d->fields_ptr[fld].name, fm[fld].name, MAX_FIELDNAME);
+		strncpy_t (d->fields_ptr[fld].name, fm[fld].name, MAX_FIELDNAME);
 		d->fields_ptr[fld].typ	= fm[fld].typ;
 		d->fields_ptr[fld].len	= fm[fld].len;
 		d->fields_ptr[fld].dec	= fm[fld].dec;
@@ -144,7 +145,7 @@ switch (d->p.dbf_version & DBVERSION)	/* read into field description array III *
  case DB2FILE:
 	for (fld=0; fld<d->fields; fld++)
 		{
-		strncpy (d->fields_ptr[fld].name, f2[fld].name, MAX_FIELDNAME);
+		strncpy_t (d->fields_ptr[fld].name, f2[fld].name, MAX_FIELDNAME);
 		d->fields_ptr[fld].typ	= f2[fld].typ;
 		d->fields_ptr[fld].len	= f2[fld].len;
 		d->fields_ptr[fld].dec	= f2[fld].dec;

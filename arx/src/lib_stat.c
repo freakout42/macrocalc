@@ -34,7 +34,7 @@ char			*fn;
 
 if (stat (f, &stbuf) == -1) return NULL;
 fn	= strrchr (f, PATHSEP);
-strncpy (basename, fn ? fn+1 : f, NAME_MAX+1);
+strncpy (basename, fn ? fn+1 : f, NAME_MAX);
 fi.name	= basename;
 fi.mode	= stbuf.st_mode;
 fi.gid	= stbuf.st_gid;

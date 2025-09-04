@@ -46,8 +46,7 @@ struct Macrotab
 	,{NULL, 0}
 	};
 
-void putout (s)
-	char *s;
+void putout (char *s)
 {
 for (; *s; s++) printf ("%d\n", *s);
 }

@@ -391,9 +391,7 @@ while (gets(s))
 int curcol = 2; /* C */
 int currow = 2; /* 3 */
 
-int main(argc, argv)
-	int argc;
-	char *argv[];
+int main(int argc, char *argv[])
 {
 #ifdef COLS
 int cl;
