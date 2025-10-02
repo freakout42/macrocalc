@@ -205,7 +205,7 @@ for (p = s; *p; p++) {
  }
 }
 n -= f;
-if (z > 0) {
+if (z > 0 && r > z) {
   sv = *p;
   *p = '\0';
 }
@@ -223,7 +223,7 @@ if (o-n > 0) {
  } } else {
   strcpy(tg, q);
 }
-if (z > 0) *p = sv;
+if (z > 0 && r > z) *p = sv;
 return tg;
 }
 
