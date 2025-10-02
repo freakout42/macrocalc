@@ -11,7 +11,6 @@ ex. DATE(87,5,20) = 31917
 .IP TODAY() 3
 Returns the serial number of days to now.
 .IP TIME(HR,MIN,SEC)
-.br
 Fraction of day corresponding to HR:MIN:SEC
 .IP DAY(X) 3
 The Day in X.
