@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "7.3"
+#define VERSION "7.4"
 
 #define _XOPEN_SOURCE_EXTENDED 1
 
@@ -62,6 +62,7 @@
 #endif
 
 #if (__FreeBSD__ | __APPLE__)
+#define _DARWIN_C_SOURCE 1
 #define V7      1
 #define SYS_V   1
 #define BSD     1

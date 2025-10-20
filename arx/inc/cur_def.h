@@ -48,6 +48,7 @@ int beep (void);
 #endif
 
 #if (__FreeBSD__ | __APPLE__)
+#define _DARWIN_C_SOURCE 1
 #include <termios.h>
 #endif
 
