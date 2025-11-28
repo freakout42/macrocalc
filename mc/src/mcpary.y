@@ -641,7 +641,7 @@ y : UNIT
 #ifdef	LOTUS
 static char	*yyopcode (opcode, buffer, length)
 	unsigned char 	opcode;
-	char		*buffer;
+	void		*buffer;
 	size_t		length;
 {
 char	*bufp;
