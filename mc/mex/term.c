@@ -102,17 +102,11 @@ void ttreverse()
 struct  sgttyb  ostate;			/* saved tty state */
 struct	sgttyb	nstate;			/* values for editor mode */
 #else
-#if BSD
+#ifndef WIN32
+#if !CURSES
 #include <termios.h>
 struct  termios  ostate;
 struct  termios  nstate;
-#else
-#ifndef WIN32
-#if !CURSES
-#include <termio.h>
-struct  termio  ostate;
-struct  termio  nstate;
-#endif
 #endif
 #endif
 #endif
