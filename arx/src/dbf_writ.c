@@ -1,5 +1,4 @@
-/* $Id: dbf_writ.c,v 1.2 1996/11/04 09:06:55 axel Exp $
- */
+/* dbf_writ.c */
 #include <stdio.h>
 #include "arx_def.h"
 #include "dbf_def.h"
