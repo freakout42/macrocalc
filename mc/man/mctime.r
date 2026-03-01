@@ -1,4 +1,4 @@
-.Id $Id: mctime.r,v 1.3 1999/10/14 18:44:53 axel Exp $
+.Id mctime.r
 .SH "Date/Time functions"
 .IP DATE(YY,MM,DD) 3
 Serial number of days from Jan 1 1900 to Year = YY,

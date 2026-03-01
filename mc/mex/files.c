@@ -20,11 +20,13 @@
 extern int ctrlg();
 
 #ifndef EMBEDDED
+#if CURSES
 int cur_utf8 =
 #ifdef UTF8
                1;
 #else
                0;
+#endif
 #endif
 #endif
 
@@ -519,6 +521,7 @@ int ffgetline(char buf[], int nbuf)
 		return (FIOEOF);
 	}
 
+#if CURSES
   if (cur_utf8) if (to_utf16(buf, nbuf) < 0)
 		if (!noiso885915ucode) {
 				t = mlyesno("File has non-mappable chars: loosing - REALLY EDIT");
@@ -527,6 +530,7 @@ int ffgetline(char buf[], int nbuf)
 				mlwrite("File has non-mappable chars: loosing");
         noiso885915ucode = TRUE;
 				}
+#endif
 
 	return (FIOSUC);
 }
@@ -649,7 +653,9 @@ int ffputline(char buf[], int nbuf, int closeit)
 {
   int i, c;
 
+#if CURSES
   if (cur_utf8 ^ ((curbp->b_flag&BFUTF8)==BFUTF8)) nbuf = to_utf8(buf, nbuf);
+#endif
 	c = 0;				/* in case nbuf==0 */
 	for (i=0; i<nbuf; ++i) {
 #if BFILES

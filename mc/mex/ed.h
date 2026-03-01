@@ -1,4 +1,4 @@
-/* $Id: ed.h,v 1.61 2026/01/23 08:36:25 axel Exp $
+/* $Id: ed.h,v 1.62 2026/03/01 08:38:23 axel Exp $
  * This file is the general header file for
  * all parts of the MicroEMACS display editor. It contains
  * definitions used by everyone, and it contains the stuff
@@ -8,7 +8,7 @@
  * which were changed to char.
  * um: for UN*X System V set the defines V7 ``and'' SYS_V to 1 !!
  */
-#define VERSION "7.4"
+#define VERSION "7.5"
 
 #define _XOPEN_SOURCE_EXTENDED 1
 

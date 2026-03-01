@@ -107,6 +107,7 @@ if (ch < 0) ch = 256 + ch;
 #endif
 #endif
 
+if (ch == 0x7f) ch = KEY_CTRL('H');
 switch (ch)
  {
  case KEY_BS:        return -KEY_BACKSPACE;

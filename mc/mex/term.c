@@ -56,7 +56,7 @@ int	ibufi;				/* Read index			*/
 int	oldmode[2];			/* Old TTY mode bits		*/
 int	newmode[2];			/* New TTY mode bits		*/
 short	iochan;				/* TTY I/O channel		*/
-#endif
+#endif /* VMS */
 
 #if	CPM
 #include	<bdos.h>
@@ -93,7 +93,7 @@ void ttreverse()
 	else
 		ttnormal();
 }
-#endif
+#endif /* MSDOS */
 
 #if V7
 #include	<stdio.h>
@@ -104,19 +104,20 @@ struct	sgttyb	nstate;			/* values for editor mode */
 #else
 #ifndef WIN32
 #if !CURSES
-#include <termios.h>
-struct  termios  ostate;
-struct  termios  nstate;
-#endif
-#endif
-#endif
+#include <termio.h>
+struct  termio  ostate;
+struct  termio  nstate;
+#endif /* !CURSES */
+#endif /* !WIN32 */
+#endif /* !SYS_V */
 
 #if	CURSES
 #ifdef hpux
 	static int hpterm = FALSE;
 #endif
 #endif
-#endif
+
+#endif /* V7 */
 
 /*
  * This function is called once
@@ -166,7 +167,7 @@ int ttopen()
 			  newmode, sizeof(newmode), 0, 0, 0, 0);
 	if (status!=SS$_NORMAL || (iosb[0]&0xFFFF)!=SS$_NORMAL)
 		exit(status);
-#endif
+#endif /* VMS */
 #if	CPM
 #endif
 #if VT100
@@ -193,7 +194,7 @@ SetConsoleMode(stdoutHandle, outMode);
 GetConsoleScreenBufferInfo(stdoutHandle, &csbi);
 term.t_ncol = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
-#endif
+#endif /* W32 */
 #if	MSDOS
 	struct text_info tinfo;
 	putch(' ');			/* get orig attr for normvideo() */
@@ -205,7 +206,7 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 	nrmlvidattr = curvidattr = tinfo.attribute;
 	if (vidrev)
 		ttinverse();
-#endif
+#endif /* MSDOS */
 #if	AtST
 	if (vidrev) {
 		/* set background color to black, foreground to white */
@@ -228,7 +229,7 @@ term.t_nrow = csbi.srWindow.Bottom - csbi.srWindow.Top;
 	nstate.sg_flags |= RAW;
 	nstate.sg_flags &= ~(ECHO|CRMOD);	/* no echo for now... */
 	stty(1, &nstate);			/* set mode */
-#else
+#else /* V7 SYS_V */
 #if	CURSES
   int y, x, y1, x1;
 #ifndef WIN32
@@ -290,7 +291,7 @@ term.t_nrow += -1;
 term.t_ncol +=  0;
 wrefresh(windw1);
 }
-#else
+#else /* CURSES */
 	ioctl(0, TCGETA, &ostate);
 	nstate = ostate;
 	nstate.c_lflag &= ~(ICANON|ECHO|ISIG);
@@ -918,7 +919,8 @@ int ansiopen()
 
 	if ((cp = getenv("TERM")) == NULL) {
 		puts("Shell variable TERM not defined!");
-		exit(1);
+		sleep(2);
+/*		exit(1); */
 	}
 	if (strncmp(cp, "vt", 2) != 0 &&
 	    strncmp(cp, "ansi", 4) != 0 &&
