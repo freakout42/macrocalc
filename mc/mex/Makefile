@@ -25,22 +25,18 @@ OBY=main.o                                    display.o files.o                 
 OBE=mainloop.o                                display.o filese.o                                terme.o
 OBV=mainvt1.o                                displayv.o filesv.o                                termv.o
 
-all: mes
+all: mex me1 libmex.a
 
-test: libmex.a
+test: 
 
-small: test
+small: mex libmex.a
 
 mex: $(OBY) $(OBJ)
 	$(CC) -o $@ $(LDFLAGS) $(OBY) $(OBJ) $(LIBS)
 	strip $@
 
-mes: mex me1 libmex.a
-	$(CC) -static -o $@ $(LDFLAGS) $(OBY) $(OBJ) /opt/o2/lib/ctypeb.o $(LIBS)
-	strip $@
-
 me1: $(OBV) $(OBJ)
-	$(CC) -static -o $@ $(LDFLAGS) $(OBV) $(OBJ) /opt/o2/lib/ctypeb.o $(LIBS)
+	$(CC) -static -o $@ $(LDFLAGS) $(OBV) $(OBJ) $(LIBS)
 	strip $@
 
 libmex.a: $(OBE) $(OBJ)
