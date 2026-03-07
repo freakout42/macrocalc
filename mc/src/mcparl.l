@@ -21,7 +21,9 @@
 #include "mcparse.h"
 #include "mcftab.h"
 #include "mcfunc.h"
+#ifndef fileno
 int fileno(FILE *stream);
+#endif
 
 #include "l.tab.h"
 
