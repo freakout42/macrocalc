@@ -8,6 +8,6 @@ show_edgerelease: false
 show_archrelease: true
 show_footer: false
 logo: /assets/logo.jpg
-edgerelease: "11.03"
-latestrel: "11.03"
-archrelease: "10.53"
+edgerelease: "11.52"
+latestrel: "11.52"
+archrelease: "11.04"
