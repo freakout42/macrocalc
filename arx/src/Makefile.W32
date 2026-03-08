@@ -9,7 +9,6 @@ OBJS=lib_akey.o lib_2iee.o lib_mesg.o \
 	rdb_open.o rdb_crea.o rdb_clos.o rdb_read.o rdb_writ.o rdb_2dbf.o \
 	dbf_open.o dbf_crea.o dbf_clos.o dbf_read.o dbf_writ.o dbf_2rdb.o \
 	dbf_from.o dbf_info.o dbf_afix.o \
-	utf82iso885915.o \
 	sql_crea.o sql_writ.o sql_crep.o sql_wrip.o sql_wrio.o yml_crea.o yml_writ.o
 OBJC=cur_init.o cur_exit.o cur_getk.o cur_gets.o cur_satt.o \
 	cur_syst.o cur_goll.o cur_rest.o cur_fixt.o cur_gmnu.o
