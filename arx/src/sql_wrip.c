@@ -25,7 +25,12 @@ for (fld=0; fld<d->fields; fld++)
 	t = d->record_ptr + f->field_data_address;
 	switch (f->typ)
 	 {
-	 case 'D': fprintf (d->ofile_ptr, "'%4.4s-%2.2s-%2.2s'", t, t+4, t+6); break;
+	 case 'D': if (isdigit(*t)) {
+               fprintf (d->ofile_ptr, "'%4.4s-%2.2s-%2.2s'", t, t+4, t+6);
+             } else {
+               fprintf (d->ofile_ptr, "null");
+             }
+             break;
 	 case 'N':
 	 case 'F': fprintf (d->ofile_ptr, "%s", *t=='\0' ? "null" : t); break;
 	 case 'L': fprintf (d->ofile_ptr, "%s", (*t=='\0' ? "null" : ((strchr("TtYyJjOo1", *t)) ? "'t'" : "'f'"))); break;
