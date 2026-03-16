@@ -2,9 +2,9 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "arx_def.h"
 #include "dbf_def.h"
-#include <ctype.h>
 
 int sql_wrio (struct DBF *d)
 {
