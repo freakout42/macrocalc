@@ -10,7 +10,7 @@
 #include <str_def.h>
 #include <cur_def.h>
 #include <fcntl.h>
-#if (COHERENT | linux | __CYGWIN__)
+#if (COHERENT | __linux | __CYGWIN__)
 #include <term.h>
 #endif
 

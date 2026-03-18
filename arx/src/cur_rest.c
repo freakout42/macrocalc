@@ -6,7 +6,7 @@
 #include "arx_def.h"
 #include "cur_def.h"
 #include <term.h>
-#ifndef linux
+#ifndef __linux
 #ifdef DEBUG
 #include <sgtty.h>
 #endif
@@ -14,7 +14,7 @@
 
 void cur_rest (void)
 {
-#ifndef linux
+#ifndef __linux
 #ifdef	DEBUG
 struct sgttyb	state;
 

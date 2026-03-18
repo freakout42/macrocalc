@@ -5,7 +5,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <unistd.h>
-#if defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
+#if defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(__linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #include <sys/wait.h>
 #else
 #ifndef WIN32

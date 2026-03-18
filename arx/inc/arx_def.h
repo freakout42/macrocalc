@@ -94,7 +94,7 @@ double lib_iee2 (double d);
 #define PLATFORM	"FreeBSD" __PLATFORM__
 /* __PLATFORM__ */
 
-#elif linux
+#elif __linux
 #ifdef OSINFO
 #define PLATFORM	OSINFO
 #else
@@ -128,7 +128,7 @@ double lib_iee2 (double d);
 #endif
 
 #define	COPYRIGHT	PLATFORM " (c)" "2025" " " CORPORATION
-#if defined(unix) || defined(__unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
+#if defined(unix) || defined(__unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(__linux) || defined(_AIX) || defined(__DARWIN_UNIX03)
 #define UNIX
 #endif
 

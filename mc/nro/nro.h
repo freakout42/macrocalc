@@ -8,7 +8,7 @@
  *	adapted to ms-dos 10/17/86 pjv
  *
  */
-#if defined(unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(linux)
+#if defined(unix) || defined(__hpux) || defined(COHERENT) || defined(__FreeBSD__) || defined(__linux)
 #define UNIX
 #endif
 

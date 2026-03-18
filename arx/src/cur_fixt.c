@@ -6,7 +6,7 @@
 #include "arx_def.h"
 #include "cur_def.h"
 #include <term.h>
-#ifndef linux
+#ifndef __linux
 #ifdef DEBUG
 #include <sgtty.h>
 #endif
@@ -14,7 +14,7 @@
 
 void cur_fixt (void)
 {
-#ifndef linux
+#ifndef __linux
 #ifdef	DEBUG
 struct sgttyb	state;
 
@@ -25,7 +25,7 @@ fprintf (stderr, "tflags: %4x\n", state.sg_flags);
 
 fixterm();
 
-#ifndef linux
+#ifndef __linux
 #ifdef	DEBUG
 state.sg_flags |= XTABS;
 gtty (1, &state);
