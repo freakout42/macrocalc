@@ -489,7 +489,7 @@ me:	Makefile
 
 #-------------------------------------------------------------------------------
 tstall: .tested
-	ident ../bin/mc ../bin/me 2>/dev/null || true
+	for EXE in mc me; do ident ../bin/$$EXE 2>/dev/null; done || true
 	@: echo "$@ done"
 
 .tested:

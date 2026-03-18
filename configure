@@ -2,7 +2,7 @@
 test -f mc/Name || exit 1
 VERSID=`awk '{print substr($2,2)}' mc/Name`
 case `uname -s` in
-  Linux|CYGWIN_NT-*)   HARDID=`uname -i 2>/dev/null`
+  Linux|CYGWIN_NT-*)   HARDID=`uname -m 2>/dev/null`
            if [ "$HARDID" = "x86_64" ]; then PLATID=l6; else PLATID=lu; fi
            test "`hostname`" = "bongo" && PLATID=lw
            grep -q gentoo /etc/os-release 2>/dev/null && PLATID=lo
