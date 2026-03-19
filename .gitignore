@@ -1,3 +1,11 @@
+*.o
+bin
+!mc/bin/mc2conv
+!mc/bin/mcellval
+!mc/bin/mcmsg.awk
+!mc/bin/mcprint
+!mc/bin/mcrdb
+!arx/bin/arxreport
 dist
 archive
 /Makefile
