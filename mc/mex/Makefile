@@ -27,7 +27,7 @@ OBV=mainvt1.o                                displayv.o filesv.o                
 
 all: mex me1 libmex.a
 
-test: 
+test: libmex.a
 
 small: mex libmex.a
 
