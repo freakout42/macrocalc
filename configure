@@ -10,9 +10,10 @@ case `uname -s` in
            test "${HARDID}" = "GenuineIntel" && HARDID=`uname -m`
            test "${HARDID}" = "i686" && HARDID=i386
            ;;
-  FreeBSD) case `uname -K` in
-            14*) PLATID=f4;;
-            *)   PLATID=fb;;
+  FreeBSD) case `uname -r` in
+            [0-9].*)  PLATID=fb ;; # 0.x - 9.x (there was no 0.x)
+            1[0-3].*) PLATID=fb ;; # 10.x - 13.x
+            *)        PLATID=f4 ;; # 14.x+
            esac
            HARDID=`uname -p`;;
   Darwin)  PLATID=md; HARDID=`uname -m`;;
